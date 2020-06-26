@@ -1,0 +1,136 @@
+{%load staticfiles%}
+
+                      {%block developer%}
+                      <div id="c_developer" class="container-fluid">
+                        <div class="row justify-content-center">
+                          <div class="col-md-12 col-xs-12 col-sm-12 col-lg-10">
+                            <div class="row mt-5">
+                              <div id="col_dev_photo" class="col-12">
+                                <div id="container_dev" style="display:inline-block;border:1px solid orange;width:100%;">
+
+
+
+
+                                          <div id="div_code_comment" class="mr-1 p-0" >
+                                          <p class="ml-1">
+                                        <span style="color:orange;"> <a href="#container_disqus"><i class="fa fa-comments fa-2x" aria-hidden="true"></i><span id="s_commenta" style="color:orange;">&nbspCommenta</span></a>
+                                        </span>
+                                          </p>
+                                          </div>
+
+
+
+
+
+
+                                  <div id="c_foto_devloper" style="display:inline-block;" >
+
+                                  <a onmouseover="" href="tutorial/{{developer.name}}">   <!-- Magari qui posso mettere un link a tutti i post del programmatorre -->
+                                    <div style="position:relative;width:100%;">
+                                    <img id="img_film" class="img img-rounded" src='{%static "/images/"%} <!-- Nome del programmatore{{titleserie.locandina}}'-->
+
+                                     width="200px" height="271px" alt="non posso caricare immaggini">
+                                        <i class="fas fa-play" style="position:absolute; !important;opacity:0.7;color:green;font-size:3vw;left:40%;top:40%"></i>
+                                        </div>
+                                     </div>
+                                   </a>
+
+
+
+
+                                    <div id="c_developer_info" >
+                                      <div id="div_dev_name" style="margin-top:3px;">
+                                        <a  href="{%url 'homepage:developer'%}/{{titleserie.title}}" >
+
+                                        <span id="span_name" class="badge badge-primary "><b>Nome</b>:</span>
+                                            <span id="s_name" style="color:blue;">
+                                              <b>{{developer.name|slice:":40"}}</b></span>
+                                            </a>
+                                            </div>
+
+
+                                            <div id="Language"  style="height:auto;margin-top:3px;"">
+
+                                              <span id="s_genere_badge" class="badge badge-info"><b>&nbspGenere</b>:</span>
+                                                  <span id="s_genere" class="badge badge-info"style="color:white;background-color:black;">
+                                                    {% for genere in titleserie.generi.all %}{{genere}} {%endfor%}</span>
+                                                  </div>
+
+                                              <div id="film_exitdate" style="margin-top:3px;">
+                                                  <span id="s_date" class="badge badge-info"><b>&nbspUscito</b>:</span>
+                                                  <span id="s_date" class="badge badge-info" style="color:white;background-color:black;">
+                                                    {{titleserie.exit_date}}</span>
+                                                  </div>
+
+                                                  {% if not "nessuno" in titleserie.premi%}
+                                              <div id="film_premi" style="display:inline-block !important;height:auto;margin-top:3px;">
+                                            <span id="s_premi"  class="badge badge-info"<b>&nbspPremi</b>:</span>
+                                            <p id="p_premi" style="display:inline;margin:0 auto;color:white;">
+                                              &nbsp{{titleserie.premi}}</p>
+                                              </div>
+                                              {% endif %}
+
+                                            {% if titleserie.stagione > 0%}
+                                          <div id="film_stagione" style="display:inline-block !important;height:auto;margin-top:3px;">
+                                        <span id="s_stagione"  class="badge badge-info"<b>&nbspStagione</b>:</span>
+                                        <p id="p_stagione" style="display:inline;margin:0 auto;color:white;">
+                                          <span class="badge badge-warning">{{titleserie.stagione}}</span></p>
+                                          </div>
+                                          {% endif %}
+
+
+
+                                          <!--div class="row">
+                                            <div class="col-md-12">
+                                          <p class="ml-1">
+                                        <span class="badge badge-info"> <i class="fas fa-trophy"></i></span>
+                                          <span>{{titleserie.premi}}</span></p>
+                                        </div>
+                                      </div-->
+
+
+
+                                                          </div>
+
+
+
+                                                        <div id="card_trama" class="card-body mt-1" >
+                                                          <!--h4  class="card-title"><span style="color:orange;padding:1%;">Trama</span></h4!-->
+                                                          <p id="p_storia"   class="card-text align-items-start">{{titleserie.storia|slice:":800"}}<small><span style="color:grey"> ..continua </span></small></p>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                      </div>
+                                                  {%endfor%}
+                                                </div>
+                                              </div>
+                                            </div>
+                                            {%for titleserie in titleVideo%}
+                                            <div id="c_foto_films_lowres">
+                                              <div id="c_child_foto"class="mt-5">
+
+
+
+                                                <a onmouseover="this.style.opacity=1;"href="documentari/selected/{{titleserie.title}}">
+
+                                                  <img id="img_film" class="img img-thumbnail border" src='{%static "/images/"%}{{titleserie.locandina}}'
+                                                   width="200px" height="271px" alt="non posso caricare immaggini"></a>
+
+
+
+
+
+
+
+                                            <!--a  onmouseover="this.style.opacity=1;"href="/videoselezionato/{{titleserie.title}}">
+                                              <img id="img_film" class="img img-thumbnail border" src='{%static "/images/"%}{{titleserie.locandina}}'
+                                               width="200px" height="271px" alt="non posso caricare immaggini2"></a-->
+                                               <div id="card_trama" class="card_trama card-body">
+
+                                                 <h6  class="card-title"><span style="color:orange;padding:1%;">{{titleserie.title}}</span></h6>
+                                                 <p id="p_storia"  class="card-text">{{titleserie.storia|slice:":250"}}<small style="display:inline!important;"><span style="color:grey;display:inline!important;"> ..continua </span></small></p>
+                                                   </div>
+                                                   </div>
+                                               </div>
+
+                                            {%endblock film%}
