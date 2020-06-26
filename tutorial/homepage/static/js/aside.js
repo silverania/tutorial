@@ -1,55 +1,61 @@
 $(document).ready(function(){
-    var s = $("a[id^='a_html']");
-/* quando il mouse tocca la freccia , quest' ultima si sposterà di 14 pixel e assumera un opacità di 0.5 . Tutto cio in 400 millisecondi*/
-//alert(window.innerWidth);
-//alert($('#d_tutorial_section').width());
-//alert($('#d_tutorial_section').offset().left);
+ alert(window.innerWidth)
+  var mydiv=document.getElementById('d_divaside');
+  var s = $("a[id^='a_html']");
+  var toHCenter=$(document).innerWidth()/2;
+  var toBegin="0px";
+  var divaside=document.getElementById('d_divaside');
   $('#asidebar').hover(function(){
     $('#asidebar').animate({ "margin-left" : '14px','opacity' : '0.5',},400);
-  $('#d_tutorial_section').animate({'margin-left':'0px'},600);
+    $('#d_tutorial_section').animate({'margin-left':'-15px'},600);
   },
 
-/* quando il mouse si allontenerà dalla freccia quest' ultima tornerà nella posizione iniziale e l' opacita tornerà a 1*/
+  /* quando il mouse si allontenerà dalla freccia quest' ultima tornerà nella posizione iniziale e l' opacita tornerà a 1*/
 
   function(){
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '1',},400);
   }
-  );
+);
 
 /* quando cliccheremo sulla freccia comparirà il menu .... a 0px torna visibile visto che la posizione iniziale era -700px: quindi era nascosta*/
 
-  $('#asidebar').click(function(){
+$('#asidebar').click(function(event){
+  $target = $(event.target);
 
+  alternateMenu();
+  function alternateMenu(){
+    s.css('display' , 'block');
+    showDivaside(toBegin);
+    function showDivaside(hposition){
+      hposition=hposition.toString();
+      $('.d_divaside').animate({ "margin-left" : "0px" ,},400);
+    }
 
-        s.css('display' , 'block');
-    $('.d_divaside').animate({ "left" : '0px',},400);
     if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
-      {
-            $('#d_tutorial_section').animate({'margin-left':'-510px'},600);
-            $('.d_divaside').animate({ "left": '0px',},300);
-            $('#d_htmlmenu').css('display','none');
-              $('#d_linux_menu').css('display','none');
-                $('#d_django_menu').css('display','none');
-      }
-      if(!$target.closest('.d_divaside').length && $('.d_divaside').offset().left==-15)  {
-        /*var paragraph = document.getElementById("asidebar");
-        var t=paragraph.textContent;
-        var mes ='Autori';
-        var sz=t.search(mes);
-        if(sz<0){
-          var text = document.createTextNode("Autori");
-          paragraph.appendChild(text);
-        }*/
-        $('.d_divaside').animate({ "left": '-700px',},300);
-        $('#d_htmlmenu').css('display','none');
-          $('#d_linux_menu').css('display','none');
-            $('#d_django_menu').css('display','none');
-              $('#d_tutorial_section').animate({'margin-left':'0px'},600);
-      }
+    {
+
+      $('#d_tutorial_section').animate({'margin-left':'-510px'},600);
+      $('.d_divaside').animate({ "margin-left": '700px',"margin-top" : "0px"},300);
+      $('#d_Web_menu').css('display','none');
+      $('#d_Linux_menu').css('display','none');
+      $('#d_Django_menu').css('display','none');
+    }
+    if(!$target.closest('.d_divaside').length && $('.d_divaside').offset().left==0)  {
+      $('.d_divaside').animate({ "margin-left": '-700px',"margin-top" : "0px"},300);
+      $('#d_Web_menu').css('display','none');
+      $('#d_Linux_menu').css('display','none');
+      $('#d_Django_menu').css('display','none');
+      $('#d_tutorial_section').animate({'margin-left':'-15px'},600);
+    }
   }
-  );
+}
+);
+
+
+
+
 $('#a_html2').hover(function(){
-  $('#d_htmlmenu').css('cursor','pointer');
+  $('#d_Web_menu').css('cursor','pointer');
 
 },
 function(){
@@ -57,57 +63,83 @@ function(){
 });
 /*quando clicchiamo fuori dagli elementi .d_divaside e fa-angle-right tornerà tutto alla posizione iniziale */
 $('#a_html2').click(function(){
-  $('#d_htmlmenu').css('display','block'); // mostro il menu che mi interessa
+  showHtmlMenu();
+  function showHtmlMenu(){
+    $('#d_Web_menu').css('display','block'); // mostro il menu che mi interessa
+    $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+    $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  }
+
   //$('#a_tutorial_html_menu').css('display','block');
-  $('#d_django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-    $('#d_linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+
 });
 $('#a_html3').click(function(){
-  $('#d_linux_menu').css('display','block'); // mostro il menu che mi interessa
-//  $('#a_tutorial_pdf_converter').css('display','block');// mostro il menu che mi interessa
-    $('#d_django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-      $('#d_htmlmenu').css('display','none');// nascondo questo menù nel caso sia visibile
+  showLinuxMenu();
+  function showLinuxMenu(){
+    $('#d_Linux_menu').css('display','block'); // mostro il menu che mi interessa
+    //  $('#a_tutorial_pdf_converter').css('display','block');// mostro il menu che mi interessa
+    $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+    $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  }
 });
-$('#a_html1').click(function(){
-  $('#d_django_menu').css('display','block'); // mostro il menu che mi interessa
-    //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-  $('#d_linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-    $('#d_htmlmenu').css('display','none');// nascondo questo menù nel caso sia visibile
 
+$('#a_html1').click(function(){
+  showDjangoMenu();
+  function showDjangoMenu(){
+    $('#d_Django_menu').css('display','block'); // mostro il menu che mi interessa
+    //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
+    $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+    $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  }
 });
 // click sui pulsanti sull header
-$('#a-linux').click(function(){
+$('#a-Linux').click(function(){
+  showLinuxMenu();
+  function showLinuxMenu(){
     var s = $("a[id^='a_html']");
-        s.css('display' , 'none');
-    $('.d_divaside').animate({ "left" : '140%'},400);
+    s.css('display' , 'none');
+    offset=mydiv.offsetTop;
+    $('.d_divaside').animate({ "margin-left" : '300%',"margin-top" : -(offset) },400);
 
-  $('#d_linux_menu').css('display','block'); // mostro il menu che mi interessa
+    $('#d_Linux_menu').css('display','block'); // mostro il menu che mi interessa
     //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-  $('#d_django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-    $('#d_htmlmenu').css('display','none');// nascondo questo menù nel caso sia visibile
-
+    $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+    $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  }
 });
 
-$('#a-django').click(function(){
-    var s = $("a[id^='a_html']");
-        s.css('display' , 'none');
-    $('.d_divaside').animate({ "left" : '120%'},400);
+$('#a-Django').click(function(){
+  var s = $("a[id^='a_html']");
+  offset=mydiv.offsetTop;
+  s.css('display' , 'none');
+  $('.d_divaside').animate({ "margin-left" : '330%',"margin-top" : -(offset)},400);
 
-  $('#d_django_menu').css('display','block'); // mostro il menu che mi interessa
-    //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-  $('#d_linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-    $('#d_htmlmenu').css('display','none');// nascondo questo menù nel caso sia visibile
+
+  $('#d_Django_menu').css('display','block'); // mostro il menu che mi interessa
+  //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
+  $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
 
 });
-$('#a-web').click(function(){
-    var s = $("a[id^='a_html']");
-        s.css('display' , 'none');
-    $('.d_divaside').animate({ "left" : '160%'},400);
+$('#a-Web').click(function(){
+  offset=mydiv.offsetTop;
+  var s = $("a[id^='a_html']");
+  s.css('display' , 'none');
 
-  $('#d_htmlmenu').css('display','block'); // mostro il menu che mi interessa
-    //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-  $('#d_linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-    $('#d_django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+
+  if(mydiv.offsetLeft>0){
+    alert('>')
+    $('.d_divaside').animate({ "margin-left" : '-260%',"margin-top" : "0%"},400);
+  }
+  else{
+    $('.d_divaside').animate({ "margin-left" : '260%',"margin-top" : -(offset)},1400);
+  alert(mydiv.offsetLeft);
+  }
+
+  $('#d_Web_menu').css('display','block'); // mostro il menu che mi interessa
+  //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
+  $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
 
 });
 
@@ -116,16 +148,17 @@ $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
   $('.d_divaside').is(":visible")) {
-    $('.d_divaside').animate({ "left": '-700px',},300);
-    $('#d_htmlmenu').css('display','none');
-      $('#d_linux_menu').css('display','none');
-        $('#d_django_menu').css('display','none');
+    //$('.d_divaside').animate({ "left": '-700px',},300);
+  /*  $('#d_Html_menu').css('display','none');
+    $('#d_Linux_menu').css('display','none');
+    $('#d_Django_menu').css('display','none');*/
+    $('.d_divaside').animate({ "margin-left" : '0%',"margin-top" : "0%"},400);
   }
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
-    {
-      //alert();
-          $('#d_tutorial_section').animate({'margin-left':'-510px'},600);
-    }
+  {
+    alert("animate ...");
+    $('#d_tutorial_section').animate({'margin-left':'-510px'},600);
+  }
 });
 
 });

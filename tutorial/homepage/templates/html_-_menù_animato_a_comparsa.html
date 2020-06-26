@@ -16,7 +16,7 @@
      {% block tut_title %}
        <a class="badge badge-pill badge-light" style="width:100%;display:inline-block!important;margin:0 auto!important;">
          <span id="s_title">Html - </span>
-       <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;">Menù A Comparsa</span></a>{% endblock tut_title %}
+       <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;">Menù A Comparsa Animato</span></a>{% endblock tut_title %}
 
 
 
@@ -26,7 +26,7 @@
 {% block content %}
 
 
-    <p id="p_content" style="font-weight:normal;" >
+    <p id="p_content">
     In questo tutorial andremo a creare un menù a comparsa, proprio come quello che si può vedere in alto a sinistra dopo aver cliccato sull' icona a freccia :
     <img style="display:inline-block;width:30px;height:auto;"  class="img img-thumbnail"src='{% static 'images/angle-right2.png' %}'\>
     (<span style="font-color:orange" title="fontawesome è una libreria di icone di cui esiste una versione opensource e una a pagamento">fontawesome angle right</span>)
@@ -63,7 +63,7 @@
              &lt;a id="a_html" class="list-group-item list-group-item-action" data-toggle="list" href="#d_html_inasidemenu" role="tab">&lt;span id="s_leftmenu" style="color:orange!important;">html&lt;/span>&lt;/a>
            &lt;!-- Tab panes -->
            &lt;div id="d_htmlmenu" class="list-group">
-               &lt;a id="a_html" class="list-group-item list-group-item-action"   href="{% url 'tutorial:tutorial_list' %}?title=menu_a_comparsa">
+               &lt;a id="a_html" class="list-group-item list-group-item-action"   href="#">
                  &lt;span id="s_leftmenu" style="color:orange!important;">Menu Animato&lt;/span>
              &lt;/a>
            &lt;/div>
@@ -229,13 +229,13 @@
                &lt;a id="a_html3" class="list-group-item list-group-item-action" data-toggle="list" href="#tutorial_linux" role="tab">&lt;span id="s_leftmenu_linux" style="color:orange!important;">Linux&lt;/span>&lt;/a>
 
                &lt;div id="d_htmlmenu" class="list-group">
-                 &lt;a id="a_tutorial_html_menu" class="list-group-item list-group-item-action"   href="{% url 'tutorial:tutorial_list' %}?title=menu_a_comparsa">
+                 &lt;a id="a_tutorial_html_menu" class="list-group-item list-group-item-action"   href="#">
                    &lt;span id="s_leftmenu1" style="color:orange!important;">Menu Animato&lt;/span>
                  &lt;/a>
-                 &lt;a id="a_tutorial_django_urls" class="list-group-item list-group-item-action"   href="{% url 'tutorial:tutorial_list' %}?title=urls_py">
+                 &lt;a id="a_tutorial_django_urls" class="list-group-item list-group-item-action"   href="#">
                    &lt;span id="s_leftmenu2" style="color:orange!important;">urls.py in django&lt;/span>
                  &lt;/a>
-                 &lt;a id="a_tutorial_pdf_converter" class="list-group-item list-group-item-action"  href="{% url 'tutorial:tutorial_list' %}?title=menu_a_comparsa">
+                 &lt;a id="a_tutorial_pdf_converter" class="list-group-item list-group-item-action"  href="#">
                    &lt;span id="s_leftmenu3" style="color:orange!important;">Converti Testo&lt;/span>
                  &lt;/a>
                &lt;/div>

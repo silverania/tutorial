@@ -1,36 +1,40 @@
 
 
     {%block header%}
-    <header>
-    <div style="margin:0!important;padding:0!important;" class="container-fluid">
+    <header style="margin:0px;width:100%;padding:0px">
+    <div  class="container-fluid" >
     <nav  class="navbar navbar-icon-top navbar-expand-lg">
-      <a class="navbar-brand mt-2" href="{% url 'homepage:tutorial_list' %}"><h3><i style="color:orange;"class="fas fa-circle"></i><i style="color:orange;"class="fas fa-circle"></i><b>
-        <span  id="span_title" style='font-weight:normal;font-style:italic;margin-left:-2%;font-color:blue;'>...</span>
-          <span  id="span_title" style='font-weight:normal;font-style:italic;color:blue;'>Breaking</span>
+      <div id="a_logo">
+
+        <span  id="span_title">&nbsp..</span>
+          <span  id="span_title_2">Breaking</span>
+          <span  id="span_title_w">WEB</span>
 
 
-          <span  id="span_title_w" style="color:orange;margin-left:-3%;font-family:'Baloo_2';font-style:italic;">WEB</span></b></h3>
-      </a>
+
+      </div>
+
       <button id="button_bars"class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"><i class="fas fa-bars" style="color:orange;"></i></span>
       </button>
       <div  class="collapse navbar-collapse" id="navbarSupportedContent" style="background-color:white;">
 
-        <ul id="header_menu"  class="list-group list-group-horizontal" style="margin:0 auto;" >
-            <li  id="a-linux" class="i-search list-group-item active"  aria-pressed="true">
-              <span id="s_center_menu" style="margin:0 auto;color:orange;"><b>Linux <span style="color:whitesmoke;">In Pratica</span></b></span>
+        <ul id="header_menu"  class="list-group list-group-horizontal" >
+          {% for c in categorie %}
+            <li  id="a-{{c.title}}" class="i-search list-group-item"  aria-pressed="true">
+              <span id="s_center_menu"><b>{{c.title}} <span style="color:whitesmoke;">In Pratica</span></b></span>
               <span class="sr-only">(current)</span>
             </li>
+            {% endfor %}
 
-
-            <li  id="a-django" class="i-search list-group-item active" aria-pressed="true">
-              <span id="s_center_menu" style="color:orange;"><b>Django <span style="color:whitesmoke;">In Pratica</span></b></span>
+            <!--li  id="a-django" class="i-search list-group-item" aria-pressed="true">
+              <span id="s_center_menu"><b>Django <span style="color:whitesmoke;">In Pratica</span></b></span>
               <span class="sr-only">(current)</span>
             </li>
-            <li  id="a-web" class="i-search list-group-item active"  aria-pressed="true">
-              <span id="s_center_menu" style="color:orange;"><b>Web <span style="color:whitesmoke;">In Pratica</span></b></span>
+            <li  id="a-web" class="i-search list-group-item"  aria-pressed="true">
+              <span id="s_center_menu" ><b>Web <span style="color:whitesmoke;">In Pratica</span></b></span>
               <span class="sr-only">(current)</span>
-            </li>
+            </li-->
         </ul>
 
 
@@ -54,7 +58,7 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" href="/user/login">
-              <span id=""><b>Entra</b></span>
+              <span id="entra"><b>Entra</b></span>
             </a>
           </li>
           {%endif%}

@@ -7,30 +7,44 @@ from django.shortcuts import render, get_object_or_404
 from .models import Tutorial,Visite
 from django.urls import path
 from .models import User,Category
+import datetime
+#from django.http import urllib
 
 import os
 
+def getLink(title):
+    template=tutorial.title.replace(" ","_").lower()+".html"
+    return template
 
 
-def tutorial_list(request):
+def tutorial_detail(request, **kwargs):
+    for key,value in kwargs.items():
+        print(str(key)+str(value))
+        if "post" in str(key) :
+            post=value
+        elif 'year' in key :
+            year=str(value)
+        elif 'month' in key:
+            month=str(value)
+        elif 'day' in key:
+            day=str(value)
     tutorial_all = Tutorial.objects.all()
+
     categorie=Category.objects.all()
-    for cat in categorie:
-        cat.title=str(cat.title)
+    users=User.objects.all()
+    try:
+        tutorial = get_object_or_404(Tutorial, slug=post)
+        print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day))
+        tutorial = get_object_or_404(Tutorial, slug=post,
+        publish__year=year,
+        )
+    except UnboundLocalError :
+        if 'homepage' in request.path:
+            tutorial=Tutorial.objects.latest('publish')
+    template=tutorial.title.replace(" ","_").lower()+".html"
+    print("template="+template)
     if request.user.is_authenticated:
         login=True
-        t=Tutorial
-        for tut in tutorial_all:
-            author_name=str(tut.author.first_name)+" "+str(tut.author.last_name)
-            user_name=str(request.user.first_name)+" "+str(request.user.last_name)
-            if user_name in author_name:
-                us_author=User.objects.filter(first_name__contains=str(request.user.first_name))
-                print("#############"+str(us_author))
-
-                tutorials_author=Tutorial.objects.get(title=tut.title)
-                tutorials_author.save()
-                print("tut_autor="+str(tut.author))
-                tut.title=str(tut.title)
     else:
         login=False
     vis=Visite()
@@ -40,48 +54,16 @@ def tutorial_list(request):
     except :
         vis.visite=1
     vis.save()
-    print(str(request.path))
-    pat=request.path
-    print("PAT="+pat)
-
-    #return render(request,'blog/post/list.html',{'posts': posts})
-    if 'title' in request.GET and request.GET['title']:
-        title=request.GET.get('title')
-        tut_title=title.replace("_"," ")
-        tutorial = Tutorial.objects.filter(title__icontains=tut_title)
-        print(str(tutorial)+"=tutorial "+title)
-        page=title+".html"
-    elif "homepage" in request.path:
-        page = "html_-_menu_a_comparsa.html"
-        tutorial = Tutorial.objects.filter(title__icontains="menu_a_comparsa")
-    else: 
-        page = "html_-_menu_a_comparsa.html"
-        tutorial = Tutorial.objects.filter(title__icontains="menu_a_comparsa")
-    return render(request,page,{'tutorial': tutorial,'visitato':vis,'login':login,'tutorial_all':tutorial_all,'categorie':categorie})
-
-def tutorial_detail(request, year, month, day, post):
-    post = get_object_or_404(Post, slug=post,
-    status='published',
-    publish__year=year,
-    publish__month=month,
-    publish__day=day)
-    return render(request,'blog/post/detail.html',{'post': post})
+    return render(request,template,{'tutorial': tutorial,'visitato':vis,'login':login,'tutorial_all':tutorial_all,'categorie':categorie,'users':users})
 
 
 
-class home(View):
-    def get(self, request, *args, **kwargs):
-        t = get_template('tutorial.html')
-        html = t.render({'request':request,'pat':path,'titlecarousel':s,'titleVideo' : lista , 'numeropagine': numeroPagine,'pagina':pag,'login':login,'filmsNumber':count})
-        return HttpResponse(html)
 
 
-class tutorials_all(View):
-    def get(self,request):
-        tutorial=Tutorial.objects.all()
-        users=User.objects.all()
-        return render(request,"tutorials_list.html",{'users':users,'tutorial':tutorial })
 
 
+def readInfoClient(request):
+    req=request.META['HTTP_USER_AGENT']
+    return str(req)
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

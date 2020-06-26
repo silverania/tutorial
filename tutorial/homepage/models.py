@@ -4,7 +4,19 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime
 # Create your models here.
 from django.contrib.auth.models import User
+from django.urls import reverse
 
+#custom modelmanager classe per visualizzare tutorial  in admin
+class PublishedManager(models.Manager):
+    def get_queryset(self):
+        return super(PublishedManager,
+        self).get_queryset().filter(status='pubblicato')
+
+#custo modelmanager classe per visualizzare tutorial bozza in admin
+class BozzaManager(models.Manager):
+    def get_queryset(self):
+        return super(BozzaManager,
+        self).get_queryset().filter(status='bozza')
 
 class Visite(models.Model):
     visite=models.PositiveIntegerField(default=1)
@@ -47,8 +59,8 @@ class User(models.Model):
 
 class Tutorial(models.Model):
     STATUS_CHOICES = (
-    ('draft', 'Draft'),
-    ('published', 'Published'),)
+    ('bozza', 'Bozza'),
+    ('pubblicato', 'Pubblicato'),)
     title = models.CharField(max_length=250)
     overview = models.TextField(default="tutorial")
     slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)
@@ -58,40 +70,26 @@ class Tutorial(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     cat=Category
-    category=models.ForeignKey(Category,on_delete=models.CASCADE)
-    status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='draft')
+    category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="tutorials")
+    status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
+        # decommentare una delle seguenti tre righe per selezionare un custom model manager
+    #objects = models.Manager() # The default manager.
+    #bozza=BozzaManager() # Our bozza solo manager
+    #published = PublishedManager() # Our publicato custom manager.
+
+
     class Meta:
         ordering = ('-publish',)
     def __str__(self):
         return "%s" % (self.title)
     def get_absolute_url(self):
-        return reverse('blog:post_detail',
+        return reverse('homepage:tutorial_detail',
         args=[self.publish.year,
         self.publish.month,
         self.publish.day,
         self.slug])
 
-class Post(models.Model):
-    STATUS_CHOICES = (
-    ('draft', 'Draft'),
-    ('published', 'Published'),)
-    title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250,
-    unique_for_date='publish')
-    author = models.ForeignKey(User,
-    on_delete=models.CASCADE,
-    related_name='blog_posts')
-    body = models.TextField()
-    publish = models.DateTimeField(default=timezone.now)
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    status = models.CharField(max_length=10,
-    choices=STATUS_CHOICES,
-    default='draft')
-    class Meta:
-        ordering = ('-publish',)
-    def __str__(self):
-        return self.title
+
 
 
 # la classe category definisce le categorie in cui sarannno inseriti i singoli tutorials

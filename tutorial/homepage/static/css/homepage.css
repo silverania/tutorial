@@ -1,6 +1,7 @@
+{% load staticfiles %}
 @font-face {
   font-family: 'Roboto';
-  src: url('../webfonts/Roboto-Black.ttf');
+  src: url('../webfonts/Roboto-Regular.ttf');
 }
 @font-face {
 font-family: 'Orbitron';
@@ -18,26 +19,66 @@ src: url('../webfonts/WorkSans-Regular.ttf') ;
 font-family: 'Baloo_2';
 src: url('../webfonts/Baloo2-ExtraBold.ttf') ;
 }
+@font-face {
+font-family: 'Carter_One';
+src: url('../webfonts/CarterOne-Regular.ttf') ;
+}
+@font-face {
+font-family: 'Assistant-regular';
+src: url('../webfonts/Assistant-Regular.ttf') ;
+}
+@font-face {
+font-family: 'ShareTechMono-Regular';
+src: url('../webfonts/ShareTechMono-Regular.ttf') ;
+}
 body {
- background: whitesmoke;
- font-family:'WorkSans';
- style="margin:0!important;padding:0!important;width:100%;"
+ font-family:'WorkSans','Assistant-regular','WorkSans';
+background-color:#e6ffff;
+size:16px;
 }
 header{
+  width:100%;
+  max-width:100%;
   background-color:white;
 }
-
+#header_menu{
+  margin-left:auto;
+  width:auto;
+}
+#a_logo{
+  border-radius:6px!important;
+  border:12px solid orange;
+  background-color:yellow;
+  margin :auto 3%;
+align-items: center;
+text-decoration:none;
+opacity:.9;
+}
+#c_aside{
+  margin-top:3%;
+}
 #d_title{
+  font-family: "ShareTechMono-Regular.ttf"
   margin-bottom:3%;
   margin-top:3%;
 }
-
+#h_title2 {
+margin-top:1%;
+}
 #d_content{
   margin-top:2%;
 }
 
-[id^="a-"]:hover{
+li[id^="a-"]{
+  width:auto;
+  margin:0 auto;
+  display:inline-block!important;
+  background-color: orange!important;
+}
+
+li[id^="a-"]:hover{
   cursor:pointer!important;
+  background-color: green!important;
 }
 
 #col_content{
@@ -52,16 +93,25 @@ code{
     font-size:2rem!important;
 }
 #span_title{
-font-family: 'Roboto';
-
+  font-family: 'Carter_One';  font-weight:normal;font-style:italic;
+  color:orange;
+  opacity:0.9;
+  }
+#span_title_2{
+font-family: 'Carter_One';  font-weight:bold;font-style:italic;color:#00bfff;
+opacity:0.9;
 }
+
 #span_title_w{
-font-family: 'Baloo_2';
+font-family: 'Carter_One';
+/*color:#ff00bf;*/
+color:#ffc0cb;
+opacity:0.9;
 
 }
 
-#s_center_menu{
-  font-size:1rem!important;
+li #s_center_menu{
+  color:blue!important;
 }
 
 #col_aside{
@@ -96,17 +146,16 @@ font-family: 'Baloo_2';
 }
 [id^=s_leftmenu]{
   font-size:1rem;
+  color:blue;
 }
 
 #topnav{
   display:none;
 }
 #s_title{
-  font-size:1.4rem;
   color:orange;
 }
 #s_title_2{
-  font-size:1.4rem;
   color:black;
 }
 #s_kernel{
@@ -327,10 +376,10 @@ tr{
   display:none;
 }
 #s_title{
-  font-size:0.8rem;
+  font-size:0.4rem;
 }
 #s_title_2{
-  font-size:0.8rem;
+  font-size:0.4rem;
 }
 
 #d_head > h4 {
@@ -338,14 +387,30 @@ tr{
   font-size: 0.6rem;
 }
 #asidebar .fa-angle-right{
- font-size:3rem!important;
+ font-size:1.4rem!important;
 }
 #p_content{
   font-size:0.7rem;
   margin-top:0px;
 }
-[id^=span_title]{
-  font-size:1rem;
+#a_logo{
+  border-radius:3px!important;
+  border:3px solid orange;
+  background-color:yellow;
+  margin :0 auto;
+align-items: center;
+text-decoration:none;
+opacity:.9;
+}
+#span_title{
+  font-size:0.5rem;
+  }
+#span_title_2{
+size:0.5rem;
+}
+
+#span_title_w{
+size:0.5rem;
 }
 .fa-circle{
   font-size:1rem!important;
@@ -353,8 +418,8 @@ tr{
 #esci, #registrati, #entra{
   font-size:0.7rem!important;
 }
-#s_center_menu{
-  font-size:0.6rem!important;
+li #s_center_menu{
+  font-size:0.5rem!important;
 }
 }
 
@@ -362,16 +427,37 @@ tr{
  body {
   /*background: yellow;*/
  }
-
+ #a_logo{
+   border-radius:3px!important;
+ }
  #x_code{
    padding:0px;
    margin-left:0px!important;
-   font-size:0.8rem;
+   font-size:0.4rem;
+ }
+ #span_title{
+   font-size:1rem;
+   }
+ #span_title_2{
+ font-size:1rem;
  }
 
+ #span_title_w{
+ font-size:1rem;
+ margin-right:6px;
+ }
+ #s_title{
+   font-size:0.6rem;
+ }
+ #s_title_2{
+   font-size:0.6rem;
+ }
  #asidebar{
   # display:block;
  }
+ #asidebar .fa-angle-right{
+  font-size:1.5rem!important;
+}
  #circle {
     -webkit-transform: scale(0.5,0.5);
   }
@@ -389,7 +475,7 @@ tr{
    font-size:1.3vw;
  }
  #p_content{
-   font-size:0.7rem;
+   font-size:0.5rem;
  }
  #d_head > h4{
    font-size:0.6rem!important;
@@ -409,16 +495,21 @@ tr{
 }
 
 @media screen and (min-width: 600px) {
- body {
-/*  background: pink;*/
- }
-
+  li #s_center_menu{
+      font-size:0.8rem!important;
+    }
  #asidebar{
    display:block;
+ }
+ #asidebar .fa-angle-right{
+  font-size:5.4rem!important;
  }
  #h-logo{
    font-size:3vw!important;
  }
+ li #s_center_menu{
+     font-size:0.8rem!important;
+   }
  #p_content{
    font-size:0.9rem;
  }
@@ -449,13 +540,47 @@ tr{
  }
 }
 @media screen and (min-width: 768px) {
+  #header_menu{
+    margin:0 auto;
+    width:auto;
+  }
+  li #s_center_menu{
+      font-size:1rem!important;
+    }
  code{
    font-size:1.5vw;
  }
  #d_user{
 
  }
+ #s_title,#s_title_2{
+    font-size:0.8rem;
+  }
+  #span_title{
+    font-family: 'Carter_One';  font-weight:normal;font-style:italic;margin-left:-2%;
+    color:orange;
+    opacity:0.9;
+    font-size:1.3;
+    }
+  #span_title_2{
+  font-family: 'Carter_One';  font-weight:bold;font-style:italic;color:#00bfff;margin-left:-10px;
+  opacity:0.9;
+  font-size:1.3rem;
+  }
 
+  #span_title_w{
+  font-family: 'Carter_One';
+  /*color:#ff00bf;*/
+  color:#ffc0cb;
+  opacity:0.9;
+  font-size:1.3rem;
+
+  }
+
+
+  #esci, #registrati, #entra{
+    font-size:0.8rem!important;
+  }
  #asidebar{
    display:block;
  }
@@ -479,9 +604,8 @@ tr{
 
 }
 @media screen and (min-width: 1024px) {
- body {
-  /*background: blue;*/
- }
+
+
  td{
    font-size:1.3rem;
  }
@@ -502,10 +626,10 @@ tr{
  }
 
 #s_title,#s_title_2{
-   font-size:2rem;
+   font-size:1rem;
  }
  #p_content{
-   font-size:1.1rem;
+   font-size:0.9rem;
    margin-top:1%!important;
  }
  #d_head > h4{
@@ -524,9 +648,23 @@ tr{
  }
 }
 @media screen and (min-width: 1200px) {
- body {
-  /*background: gray;*/
- }
+  li #s_center_menu{
+      font-size:1.1rem!important;
+    }
+ #s_title,#s_title_2{
+    font-size:1.1rem;
+  }
+  #span_title{
+    font-size:1.6rem;
+    }
+  #span_title_2{
+  font-size:1.6rem;
+  }
+
+  #span_title_w{
+  font-size:1.6rem;
+
+  }
 
  #asidebar{
    display:block;
@@ -534,6 +672,25 @@ tr{
 
  code{
    font-size:0.8vw;
+ }
+
+}
+
+@media screen and (min-width: 1500px) {
+  li #s_center_menu{
+      font-size:1.4rem!important;
+    }
+ #s_title,#s_title_2{
+    font-size:1.8rem;
+  }
+ #asidebar{
+   display:block;
+ }
+ code{
+   font-size:0.8vw;
+ }
+ #p_content{
+   font-size:1.3rem;
  }
 
 }

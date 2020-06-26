@@ -1,8 +1,8 @@
 from django.contrib import admin
 from .models import Tutorial,User,Category
 class PostAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug', 'publish','status')
-    search_fields = ('title', 'slug', 'publish','status')
+    list_display = ('title', 'slug','status')
+    search_fields = ('title', 'slug','status')
 class UserData(admin.ModelAdmin):
     search_fields = ('first_name', 'last_name','email','users')
     list_display = ('first_name', 'last_name','email','users')

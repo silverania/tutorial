@@ -15,28 +15,25 @@
   <script src="{% static "js/all.min.js"%}"></script>
   <script  src="{% static 'js/popper.min.js'%}"></script>
   <script  src="{% static 'js/jquery.min.js' %}"></script>
-
   <script  src="{% static 'js/aside.js' %}"></script>
+  <script  src="{% static 'js/style.js' %}"></script>
   <script  src="{% static 'js/bootstrap.min.js' %}"></script>
   <script  src="{% static 'js/bootstrap.js' %}"></script>
   <script data-ad-client="ca-pub-1430448184465088" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
-
 </head>
-
-
-  <!--script  src="{% static 'js/blog.js'%}"></script-->
-
-
 {% endblock head %}
-<body style="margin:0!important;padding:0!important;width:100%;">
-<div class="container-fluid" style="margin:0!important;padding:0!important;">
 
-
-
-
-
-                           {% block header %}{% include '_header.html'%}{% endblock header %}
-
+<body>
+<div class="container-fluid" >
+<div class="row">
+<div id="col_header" class="col-12"style="margin:0px;width:100%;padding:0px">
+{% block header %}
+  {% include '_header.html'%}
+{% endblock header %}
+</div>
+</div>
+</div>
+<div id="c_aside" class="container-fluid"  >
                        <div class="row">
                          <div class="col-3">
          <div id="asidebar">
@@ -62,7 +59,7 @@
   {% else %}
     {% for t in categorie %}
       <tr>
-          <th id="th_{{t.category}}"scope="row" style="border-bottom:1px solid orange;">{{t.title}}</th>
+          <th id=""scope="row" style="border-bottom:1px solid orange;"></th>
           {% for tut in tutorial_all %}{% ifequal t.category tut.category.title|lower %}<td id="td_{{t.category}}">{{tut.title}}</td>{% endifequal%}{% endfor %}
         </tr>
         {% endfor %}
@@ -70,65 +67,25 @@
   </tbody>
   </table>
 </div>
-
 </div>
-
-
-
-
-
-          <div  class="d_divaside">
+          <div  id="d_divaside" class="d_divaside">
             <div id="d_in_divaside" class="list-group"  role="tablist">
-              <a  id="a_html1" class="list-group-item list-group-item-action" data-toggle="list" href="#tutorial_django" role="tab"><span id="s_leftmenu_django" style="color:orange!important;">Django</span></a>
-              <a id="a_html2" class="list-group-item list-group-item-action" data-toggle="list" href="#tutorial_html" role="tab"><span id="s_leftmenu_html" style="color:orange!important;">Html</span></a>
-              <a id="a_html3" class="list-group-item list-group-item-action" data-toggle="list" href="#tutorial_linux" role="tab"><span id="s_leftmenu_linux" style="color:orange!important;">Linux</span></a>
-
-            <div id="d_htmlmenu" class="list-group">
-                <a id="a_tutorial_html_menu" class="list-group-item list-group-item-action"   href="{% url 'tutorial:tutorial_list' %}?title=html_-_menu_animato_a_comparsa">
-                  <span id="s_leftmenu1" style="color:orange!important;">pagina html con menu animato</span>
+                {% for c in categorie %}
+              <a  id="a_html1" class="list-group-item list-group-item-action" data-toggle="list"role="tab"><span id="s_leftmenu_django" style="color:orange!important;">--{{c.title}}</span></a>
+            <div id="d_{{c.title}}_menu" class="list-group">
+              {% for a in c.tutorials.all %}
+                <a id="a_tutorial_{{a.title}}" class="list-group-item list-group-item-action" href={{a.get_absolute_url}}>
+                  <span id="s_leftmenu1" >{{a.title}}</span>
               </a>
-
+              {% endfor %}
             </div>
-            <div id="d_django_menu" class="list-group">
-              <a id="a_tutorial_django_urls" class="list-group-item list-group-item-action"   href="{% url 'tutorial:tutorial_list' %}?title=urls">
-                <span id="s_leftmenu2" style="color:orange!important;">funzione di urls.py in django</span>
-            </a>
-          </div>
-          <div id="d_linux_menu" class="list-group" style="background-color:#ffffff;">
-            <a id="a_tutorial_pdf_converter" class="list-group-item list-group-item-action"  href="{% url 'tutorial:tutorial_list' %}?title=linux_-_convertire_testi_con_calibre">
-              <span id="s_leftmenu3" style="color:orange!important;">convertire un ebook da un formato a un altro</span>
-          </a>
-          <a id="a_tutorial_compilare_il_kernel_su_linux" class="list-group-item list-group-item-action"  href="{% url 'tutorial:tutorial_list' %}?title=linux_-_compilare_il_kernel">
-            <span id="s_leftmenu3" style="color:orange!important;">Compilare il kernel su linux</span>
-        </a>
-        <a id="a_tutorial_user_logout" class="list-group-item list-group-item-action"  href="{% url 'tutorial:tutorial_list' %}?title=user_logout">
-          <span id="s_leftmenu3" style="color:orange!important;">Logout Automatico Di Un Utente</span>
-      </a>
-      <a id="a_tutorial_apache_show_directory" class="list-group-item list-group-item-action"  href="{% url 'tutorial:tutorial_list' %}?title=apache_directory">
-        <span id="s_leftmenu3" style="color:orange!important;">Nascondere Le Directory In Apache</span>
-    </a>
+            {% endfor %}
             </div>
          </div>
-            </div>
-          </div>
+       </div>
 
-
-
-<div  class="col-9  col-md-7 col-lg-6 " style="margin-left:0px!important;background-color:white;" >
-
-
-
-  <!--div class="col-md-3 col-sm-3">
-
-</div-->
-
-
-
-
-
-
+<div  class="col-9 col-sm-9 col-md-6 col-lg-6 col-xl-6 " style="margin-left:0px!important;background-color:white;" >
       <div id="d_title" style="position:relative;width:100%;">
-
            <div id="d_photo_author" style="position:absolute;top:-10%;">
              <div style="width:60px;">
              <img class="img img-fluid rounded-circle border" src='{% block photo %}{% endblock photo %}'
@@ -137,19 +94,17 @@
            <div  style="width:60px;"><span class="badge badge-pill badge-warning" id="s_nome_autore">mario</span></div>
          </div>
              {% block tut_title %}{% endblock tut_title %} <h6 id="h_title2"> <span style="background-color:purple;display:inline-block;color:white;opacity:0.5;margin-top:30px;">&nbspDi&nbsp</span>
-             <span style="color:orange;">{{tutorial.0.author}}</span>
-          <span style="color:grey;opacity:0.5;">,</span><span style="color:orange;"> {{tutorial.0.publish}}</span></h6>
-
-
+             <span style="color:orange;font-family:ShareTechMono-Regular">{{tutorial.author}}</span>
+          <span style="color:grey;opacity:0.5;"> , </span><span style="color:orange;">{{tutorial.publish}}</span></h6>
        </div>
 
 <div class="d_content">
 {% block content %}
-{% endblock content %}
+  {% endblock content %}
 </div>
 </div>
-<div id="d_amazon_1" class="mt-5 col-12 col-sm-12 col-md-15 col-lg-3 col-xl-3">
 
+<div id="d_amazon_1" class="mt-5 col-md-3 col-lg-3 col-xl-3" >
   <div style="width:100%;height:auto;margin-right:0px!important;">
       <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">Best Seller</span>
     </div>
@@ -168,21 +123,14 @@
       <div class="container">
         <div class="row">
           <div class="col-md-2">
-            <!--span id="s_footer" style="color:grey">
-          pagina visitata {{visitato.visite}} volte !
-        </span-->
             </div>
             </div>
             </div>
-      <!--p class="mt-1"><h6><span class="badge badge-info">Head Developer:</span> <span class="badge badge-success" style="color:black">Marios</span></h6></p-->
-      <!--p style="disply:inline;"><h6><span  class="badge badge-info">Programmers:</span><span class="badge badge-success" style="color:black;"> Silvestro,Honey,E.T,Topo<a href="mailto:spaceissimo@gmail.com"></a></span> </p-->
     </div>
   </footer>
   {% endblock footer %}
 </div>
 </div>
 </div>
-
-
 </body>
 </html>

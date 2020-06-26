@@ -7,7 +7,7 @@
 {% block description %}Linux - La Compilazione Del Kernel: The Standard Way{% endblock description%}
 {% block photo %}{%static "/images/mestesso.jpg"%}{% endblock photo %}
 {% block tut_title %}
-  <a class="badge badge-pill badge-light" style="width:100%;display:inline-block!important;margin:0 auto!important;" href="{%url 'homepage:home'%}">
+  <a class="badge badge-pill badge-light" style="width:100%;display:inline-block!important;margin:0 auto!important;" href="{%url 'homepage:tutorial_detail'%}">
     <span id="s_title">Linux - </span>
   <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;"> Compilare Il Kernel</span></a>{% endblock tut_title %}
 
@@ -165,23 +165,30 @@ ora scaricheremo è codice comprensibile ad un uomo , ad esempio : <code> functi
   }
 }</code> che noi <b><mark>compileremo</mark></b> in codice comprensibile ad una macchina (linguaggio macchina) : <b> 0 1 0 0 1 </b> attraverso l' uso di un compilatore <code>C , C ++</code> , con l ' ausilio dello strumento MAKE.
 può sembrare compilcato , ma ricordo che un argomento è complicato finchè non lo si conosce , dal momento
-che lo si è appreso diventa semplice.<br><br><br><hr>
+che lo si è appreso diventa semplice.<br><br><br>
+</p>
+<hr></hr>
 
 
   <span id="s_kernel"class="badge badge-info">Download Del Kernel</span><br><br>
-  Quindi dopo aver installato le dipendenze per la buona riuscita della compilazione ,<mark> scarichiamo il kernel ,
-   una versione uguale a quella in uso dal sistema è la scelta ottimale perchè useremo <code> localmodconfig </code> per scrivere il file : <code>.config</code>
+  Quindi dopo aver installato le dipendenze per la buona riuscita della compilazione ,<mark> scarichiamo il kernel
+    <a href="https://kernel.org" title="download del kernel Linux" target="_blank"> qui</a>.</mark>
+
+   una versione del kernel uguale a quella in uso dal sistema è la scelta ottimale perchè useremo <code> localmodconfig </code> per scrivere il file <code>.config</code>
    nella cartella del kernel .
+  Il file scaricato dovrebbe essere compresso, quindi:
+<br><br>
 
-  <a href="https://kernel.org" title="download del kernel Linux" target="_blank">qui</a>.</mark>
-  Il file scaricato dovrebbe essere compresso, quindi:<br><br></p>
-  <div id="d_head" class="badge badge-outline-info" style="width:50%!important;max-width:50%!important;display:inline-block!important;"><h4>decomprimiamolo cosi :</h4><br>
+  <div id="d_head"  style="width:50%!important;max-width:50%!important;display:inline-block!important;"><h4><b>decomprimiamolo cosi </b>:</h4>
   <code> $ unxz linux-a.x.by.tar.xz</code></div>
-  <div id="d_head" class="badge badge-outline-info" style="width:50%!important;display:inline-block!important;float:right;"> <img width="100%" src='{% static 'images/kernel_extract_2.jpg' %}'\></div>
-  <br><br><br><br><br><br><br><div  id="d_head" class="badge badge-outline-info" style="width:50%!important;display:inline-block!important;"><h4>estraiamo l' archivio tar :</h4>
-    <br> <code> $ tar xvf linux-a.x.by.tar</code></div>
+  <div id="d_head" class="badge badge-info" style="width:50%!important;display:inline-block!important;float:right;"> <img width="100%" src='{% static 'images/kernel_extract_2.jpg' %}'\></div>
 
-<div class="badge badge-outline-info" style="width:50%!important;display:inline-block!important;float:right;">
+  <br><br><br><br><br><br><br>
+
+  <div  id="d_head" style="width:50%!important;display:inline-block!important;margin-bottom:10%;"><h4><b>estraiamo l' archivio tar </b>:</h4>
+    <code> $ tar xvf linux-a.x.by.tar</code></div>
+
+<div class="badge badge-info" style="width:50%!important;display:inline-block!important;float:right;margin-bottom:10%;">
 <img width="100%" src='{% static 'images/linux_kernel_4.png' %}'\></div>
 
 <p id="p_content"  style="margin-top:5%;font-weight:normal;">A questo punto abbiamo la cartella : <code>linux-x.y.ab</code>
@@ -285,7 +292,7 @@ che lo si è appreso diventa semplice.<br><br><br><hr>
 
 
                 - creiamo il file mod contenente l' output del comando <code title="comando che visualizza i moduli del kernel attivi">lsmod</code>:<br>
-                <br><span class="badge badge-warning" style="color:blue;width:20%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> sudo lsmod > mod</span><br>
+                <br><span class="badge badge-warning" style="color:blue;width:30%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> sudo lsmod > mod</span><br>
                 il comando della riga precedente redirige , per mezzo del simbolo : <span class="badge badge-info">></span> , il risultato  del comando :  <span class="badge badge-info">lsmod</span> appunto ,
                 che serve a visualizzare la lista dei moduli del kernel caricati dal sistema operativo , in un file che abbiamo chiamato <span class="badge badge-info">mod</span> , ma avremo potuto usare qualsiasi altro nome ovviamente .<br><br>
             <br>- Controlliamo che sia stato creato il file :<code title="comando che visualizza i moduli del kernel attivi"> mod</code>:<br>
@@ -293,9 +300,9 @@ che lo si è appreso diventa semplice.<br><br><br><hr>
 
               <br> - Se il file  non è vuoto si può procedere a scrivere la configurazione in <code>.config</code> così:<br><br>
                 <span id="s_kernel"class="badge badge-info">Attiviamo I Moduli In .config</span><br><br><br><br>
-                     <span class="badge badge-warning" style="color:blue;width:30%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
+                     <span class="badge badge-warning" style="color:blue;width:50%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
                      <br><br><code>localmodoconfig</code> legge i moduli nel file <code>mod</code>
-                     che abbiamo creato precedentemente , e configura il kernel allo stesso modo , attraverso la scrittura del file <code>.config</code> al cui
+                     che abbiamo creato precedentemente , e configura il kernel allo stesso modo , attraverso la scrittura del file <code>.config</code>al cui
                      interno saranno attivati i stessi moduli del kernel attualmente in uso . Questa procedura riduce al minimo il rischio di ritrovarsi con una
                      configurazione inconsistente e quindi con un sistema che non parte (cosa che al sottoscritto è capitata un migliaio di volte) .
 
@@ -406,7 +413,7 @@ che lo si è appreso diventa semplice.<br><br><br><hr>
                       Se volete vedere tutte le versioni di kernel disponibili , queste sono elencate in &nbsp<code>/lib/modules</code>
                       Se volete sapere la versione del kernel in uso dal sistema eseguite :<br><br> <code>$ echo $(uname -r)</code>
 </p>
-    <p id="p_content" >  <span id="s_kernel" class="badge badge-info">Configurare Grub Per L' Avvio del Sistema</span></p>
+    <p id="p_content" >  <span id="s_kernel" class="badge badge-info">Configurare Grub Per L' Avvio</span></p>
     <p>
     Questo passo dovrebbe non essere necessario perchè il comando <code> make install </code> lo svolge automaticamente .
       Sui sistemi Debian/Ubuntu eseguire :<br><br> <code>update-grub</code><br><br>
@@ -415,32 +422,3 @@ che lo si è appreso diventa semplice.<br><br><br><hr>
       <code>grub-mkconfig -o /boot/grub/grub.cfg</code><br><br> Riavviate il pc per provare il kernel .
 </p>
 {% endblock content %}
-{% block amazon_right %}
-
-<div style="width:100%;">
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1326160842&linkId=7801875206462716ded86930aa26cbe5"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B075NWD4J1&linkId=d04c2e3d0c0a11e33e21aa2a82d3a531"></iframe>
-
-
-
-
-
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B077DFV5J3&linkId=0ecb60022e16aa044ba34071b889c42e"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07YDD498C&linkId=e829af07e431be4808572af2ab729915"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1789611806&linkId=f6c0e73abb7b1f2b1f113a438d2578c1"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=B07ZP8FH9M&linkId=cd6f4f0f4b685c61a32f4a929c953a58"></iframe>
-
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=0244403716&linkId=3ce8e01d49e76f7bd81c68a793ab5577"></iframe>
-
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=0244403716&linkId=3ce8e01d49e76f7bd81c68a793ab5577"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=8871924045&linkId=ac0f92f1c13af01d9a23afa698eea2c3"></iframe>
-
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1520569912&linkId=bd71f95b1d566217c4d7190b3a067ba8"></iframe>
-
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=0244403716&linkId=3ce8e01d49e76f7bd81c68a793ab5577"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=0244403716&linkId=3ce8e01d49e76f7bd81c68a793ab5577"></iframe>
-<iframe style="width:120px;height:240px;margin-left:20px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=0244403716&linkId=3ce8e01d49e76f7bd81c68a793ab5577"></iframe>
-
-</div>
-
-{% endblock %}
