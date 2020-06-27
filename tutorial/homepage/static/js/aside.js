@@ -1,6 +1,8 @@
 $(document).ready(function(){
- alert(window.innerWidth)
-  var mydiv=document.getElementById('d_divaside');
+  mydiv=document.getElementById('d_divaside');
+  headWeb=$('#a-Web');
+  headLinux=$('#a-Linux');
+  headDjango=$('#a-Django');
   var s = $("a[id^='a_html']");
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
@@ -24,29 +26,29 @@ $('#asidebar').click(function(event){
 
   alternateMenu();
   function alternateMenu(){
-    s.css('display' , 'block');
+    //s.css('display' , 'block');
     showDivaside(toBegin);
     function showDivaside(hposition){
       hposition=hposition.toString();
-      $('.d_divaside').animate({ "margin-left" : "0px" ,},400);
+      //$('.d_divaside').animate({ "margin-left" : "0px" ,},400);
     }
 
     if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
     {
 
       $('#d_tutorial_section').animate({'margin-left':'-510px'},600);
-      $('.d_divaside').animate({ "margin-left": '700px',"margin-top" : "0px"},300);
+      //$('.d_divaside').animate({ "margin-left": '700px',"margin-top" : "0px"},300);
       $('#d_Web_menu').css('display','none');
       $('#d_Linux_menu').css('display','none');
       $('#d_Django_menu').css('display','none');
     }
-    if(!$target.closest('.d_divaside').length && $('.d_divaside').offset().left==0)  {
+  /*  if(!$target.closest('.d_divaside').length && $('.d_divaside').offset().left==0)  {
       $('.d_divaside').animate({ "margin-left": '-700px',"margin-top" : "0px"},300);
       $('#d_Web_menu').css('display','none');
       $('#d_Linux_menu').css('display','none');
       $('#d_Django_menu').css('display','none');
       $('#d_tutorial_section').animate({'margin-left':'-15px'},600);
-    }
+    }*/
   }
 }
 );
@@ -93,53 +95,43 @@ $('#a_html1').click(function(){
   }
 });
 // click sui pulsanti sull header
-$('#a-Linux').click(function(){
-  showLinuxMenu();
-  function showLinuxMenu(){
-    var s = $("a[id^='a_html']");
-    s.css('display' , 'none');
-    offset=mydiv.offsetTop;
-    $('.d_divaside').animate({ "margin-left" : '300%',"margin-top" : -(offset) },400);
-
-    $('#d_Linux_menu').css('display','block'); // mostro il menu che mi interessa
-    //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-    $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-    $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-  }
-});
-
-$('#a-Django').click(function(){
-  var s = $("a[id^='a_html']");
-  offset=mydiv.offsetTop;
-  s.css('display' , 'none');
-  $('.d_divaside').animate({ "margin-left" : '330%',"margin-top" : -(offset)},400);
 
 
-  $('#d_Django_menu').css('display','block'); // mostro il menu che mi interessa
-  //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-  $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-  $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-
-});
-$('#a-Web').click(function(){
+$("li[id^='a-']").click(function(event){
+  text=(this.id);
+  alert(text);
   offset=mydiv.offsetTop;
   var s = $("a[id^='a_html']");
   s.css('display' , 'none');
 
 
   if(mydiv.offsetLeft>0){
-    alert('>')
     $('.d_divaside').animate({ "margin-left" : '-260%',"margin-top" : "0%"},400);
   }
   else{
     $('.d_divaside').animate({ "margin-left" : '260%',"margin-top" : -(offset)},1400);
-  alert(mydiv.offsetLeft);
-  }
 
-  $('#d_Web_menu').css('display','block'); // mostro il menu che mi interessa
-  //$('#a_tutorial_django_urls').css('display','block'); // mostro il menu che mi interessa
-  $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
-  $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+  }
+  switch (text){
+    case "a-Web":
+      $('d_Web_menu').css('display','block');
+      $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+      $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+      break;
+   case "a-Linux":
+   alert("linux ok")
+      $('#d_Linux_menu').css('display','block');
+      $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+      $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+      break;
+  case "a-Django":
+      $('#d_Linux_menu').css('display','none');
+      $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
+      $('#d_Django_menu').css('display','block');// nascondo questo menù nel caso sia visibile
+      break;
+  default :
+    alert('errore inatteso su click menu');
+}
 
 });
 

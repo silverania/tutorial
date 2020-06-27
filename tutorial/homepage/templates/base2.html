@@ -71,7 +71,7 @@
           <div  id="d_divaside" class="d_divaside">
             <div id="d_in_divaside" class="list-group"  role="tablist">
                 {% for c in categorie %}
-              <a  id="a_html1" class="list-group-item list-group-item-action" data-toggle="list"role="tab"><span id="s_leftmenu_django" style="color:orange!important;">--{{c.title}}</span></a>
+              <!--a  id="a_html1" class="list-group-item list-group-item-action" data-toggle="list"role="tab"><span id="s_leftmenu_django" style="color:orange!important;">--{{c.title}}</span></a-->
             <div id="d_{{c.title}}_menu" class="list-group">
               {% for a in c.tutorials.all %}
                 <a id="a_tutorial_{{a.title}}" class="list-group-item list-group-item-action" href={{a.get_absolute_url}}>
