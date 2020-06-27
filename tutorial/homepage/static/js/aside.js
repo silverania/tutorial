@@ -99,7 +99,6 @@ $('#a_html1').click(function(){
 
 $("li[id^='a-']").click(function(event){
   text=(this.id);
-  alert(text);
   offset=mydiv.offsetTop;
   var s = $("a[id^='a_html']");
   s.css('display' , 'none');
@@ -109,17 +108,16 @@ $("li[id^='a-']").click(function(event){
     $('.d_divaside').animate({ "margin-left" : '-260%',"margin-top" : "0%"},400);
   }
   else{
-    $('.d_divaside').animate({ "margin-left" : '260%',"margin-top" : -(offset)},1400);
+    $('.d_divaside').animate({ "margin-left" : '260%',"margin-top" : -(offset)},400);
 
   }
   switch (text){
     case "a-Web":
-      $('d_Web_menu').css('display','block');
+      $('#d_Web_menu').css('display','block');
       $('#d_Linux_menu').css('display','none');// nascondo questo menù nel caso sia visibile
       $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
       break;
    case "a-Linux":
-   alert("linux ok")
       $('#d_Linux_menu').css('display','block');
       $('#d_Web_menu').css('display','none');// nascondo questo menù nel caso sia visibile
       $('#d_Django_menu').css('display','none');// nascondo questo menù nel caso sia visibile
@@ -148,7 +146,6 @@ $(document).click(function(event) {
   }
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
   {
-    alert("animate ...");
     $('#d_tutorial_section').animate({'margin-left':'-510px'},600);
   }
 });
