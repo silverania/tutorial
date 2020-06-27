@@ -29,7 +29,6 @@ def tutorial_detail(request, **kwargs):
         elif 'day' in key:
             day=str(value)
     tutorial_all = Tutorial.objects.all()
-
     categorie=Category.objects.all()
     users=User.objects.all()
     try:

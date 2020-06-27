@@ -68,7 +68,10 @@ margin-top:1%;
 #d_content{
   margin-top:2%;
 }
-
+#t_header{
+  background-color: white;
+  color:orange;
+}
 [id^="a-"]{
   width:auto;
   margin:0 auto;

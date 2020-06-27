@@ -1,6 +1,6 @@
 $(document).ready(function(){
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
-  alert(horizontalHeaderMenuPosition);
+  var table_author=$('#td_autore');
   var table_tutorial=$('#d_tutorial_section');
   mydiv=document.getElementById('d_divaside');
   headWeb=$('#a-Web');
@@ -10,6 +10,12 @@ $(document).ready(function(){
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
   var divaside=document.getElementById('d_divaside');
+//############### Quando il mouse genera un hover sul nome autore nella table side left : elenca i tutorials dell autore
+
+$("td[id^='td_autore_']").hover(function(event){
+  text=(this.id);
+
+});
 // ##################################### Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
     $('#d_tutorial_section').css('display','block');

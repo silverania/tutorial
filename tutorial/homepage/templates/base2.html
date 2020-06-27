@@ -49,27 +49,17 @@
          <div id="d_tutorial_section">
           <div id="t_left" class="table-responsive">
   <table class="table table-hover table-light table-lg">
-     <thead class="thead-dark">
- <tr scope="row">
-   <th class="offset-3">Tutorials</th>
- </tr>
-     </thead>
+     <thead class="">
+ <tr scope="row"
+   id="t_header">Tutorials : Lista Autori ...</tr>
 <tbody>
-  {% if login %}
-     {% for t in tutorial_all %}
+     {% for t in users %}
   <tr>
-      <th scope="row">{{t.author}}</th>
-      <td id="">{{t.title}}</td>
+      <td id="td_autore_{{t.first_name}}_{{t.last_name}}">{{t.first_name}} {{t.last_name}}</td>
+      {% for s in tutorial_all %} <td> {% if t.last_name in s.author.last_name %}{{s}}{% endif %}</td>{% endfor %}
+      <script></script>
     </tr>
     {% endfor %}
-  {% else %}
-    {% for t in categorie %}
-      <tr>
-          <th id=""scope="row" style="border-bottom:1px solid orange;"></th>
-          {% for tut in tutorial_all %}{% ifequal t.category tut.category.title|lower %}<td id="td_{{t.category}}">{{tut.title}}</td>{% endifequal%}{% endfor %}
-        </tr>
-        {% endfor %}
-    {% endif %}
   </tbody>
   </table>
 </div>
