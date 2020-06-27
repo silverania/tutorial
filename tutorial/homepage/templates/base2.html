@@ -24,6 +24,12 @@
 {% endblock head %}
 
 <body>
+  <script type="text/javascript">
+  $(document).ready(function(){
+   var a = "{{tutorial.category}}";
+   setActiveHeaderMenu(a);
+ });
+</script>
 <div class="container-fluid" >
 <div class="row">
 <div id="col_header" class="col-12"style="margin:0px;width:100%;padding:0px">
@@ -105,7 +111,7 @@
 
 <div id="d_amazon_1" class="mt-5 col-md-3 col-lg-3 col-xl-3" >
   <div style="width:100%;height:auto;margin-right:0px!important;">
-      <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">Best Seller</span>
+      <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">I Migliori Libri</span>
     </div>
   {% block amazon_right %}
       {% endblock %}
