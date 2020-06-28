@@ -120,10 +120,7 @@ $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
   $('.d_divaside').is(":visible")) {
-    //$('.d_divaside').animate({ "left": '-700px',},300);
-    /*  $('#d_Html_menu').css('display','none');
-    $('#d_Linux_menu').css('display','none');
-    $('#d_Django_menu').css('display','none');*/
+
     $('.d_divaside').animate({ "margin-left" : '0%',"margin-top" : "0%"},400);
   }
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
@@ -132,11 +129,12 @@ $(document).click(function(event) {
   }
 });
 /* THE END */
+});
 
 /* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
-$('#div_author_text').click(function(){
-  
-});
-
-
-});
+function showAuthorTutorial(name,surname,tutorials) {
+  alert("entrypoint show...");
+  for( i=0;i<tutorials.length;i++){
+    alert(tutorials[i].author.toString());
+    }
+  }

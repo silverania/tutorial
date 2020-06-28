@@ -1,6 +1,6 @@
 $(document).ready(function(){
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
-  alert(horizontalHeaderMenuPosition);
+  var table_author=$('#td_autore');
   var table_tutorial=$('#d_tutorial_section');
   mydiv=document.getElementById('d_divaside');
   headWeb=$('#a-Web');
@@ -10,6 +10,12 @@ $(document).ready(function(){
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
   var divaside=document.getElementById('d_divaside');
+//############### Quando il mouse genera un hover sul nome autore nella table side left : elenca i tutorials dell autore
+
+$("td[id^='td_autore_']").hover(function(event){
+  text=(this.id);
+
+});
 // ##################################### Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
     $('#d_tutorial_section').css('display','block');
@@ -107,17 +113,14 @@ $("li[id^='a-']").click(function(event){
   }
 }
 });
-// END #########################################################################
+/*  THE END */
 
 /*nascondo tutto se clicco al di fuori del documento*/
 $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
   $('.d_divaside').is(":visible")) {
-    //$('.d_divaside').animate({ "left": '-700px',},300);
-    /*  $('#d_Html_menu').css('display','none');
-    $('#d_Linux_menu').css('display','none');
-    $('#d_Django_menu').css('display','none');*/
+
     $('.d_divaside').animate({ "margin-left" : '0%',"margin-top" : "0%"},400);
   }
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
@@ -125,6 +128,18 @@ $(document).click(function(event) {
     $('#d_tutorial_section').animate({'margin-left': -off},600);
   }
 });
-// END ##################################################################
+/* THE END */
 
+/* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
+function showAuthorTutorial(name,surname,tutorials) {
+  alert("entrypoint show...");
+  for( i=0;i<tutorials.length;i++){
+    if(tutorials[i].search(surname) > 1) {
+      alert(tutorials[i]);
+    }
+    else{
+      alert("manc o cazz!!")
+    }
+  }
+}
 });

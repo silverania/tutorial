@@ -55,7 +55,12 @@
 
  {% for t in users %}
   <div id="d_author">
-  <div id="div_author_text" class="text-center">  {{t.first_name}} {{t.last_name}}</div>
+  <div id="div_author_text" class="text-center">
+    <a href="#" onclick='
+    {% for tut in tutorial_all %}{% ifequal t.last_name tut.author.last_name %}
+    alert("{{tut}}");{% endifequal %}{% endfor %}
+    '>
+   {{t.first_name}} {{t.last_name}}</a></div>
 </div>
   {% endfor %}
 
