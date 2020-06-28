@@ -130,16 +130,14 @@ $(document).click(function(event) {
 });
 /* THE END */
 
-/* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
-function showAuthorTutorial(name,surname,tutorials) {
-  alert("entrypoint show...");
-  for( i=0;i<tutorials.length;i++){
-    if(tutorials[i].search(surname) > 1) {
-      alert(tutorials[i]);
-    }
-    else{
-      alert("manc o cazz!!")
-    }
-  }
-}
 });
+
+/* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
+function createSubMenuTutorialsForAuthorName(tutorial,name,surname,tutoriallength) {
+  alert("ahoo"+tutorial);
+  var element = document.getElementById("a_author_text_"+name+"_"+surname);
+    var text = document.createTextNode(tutorial);
+    tag.appendChild(text);
+    element.click(false);
+    element.appendChild(tag);
+  }

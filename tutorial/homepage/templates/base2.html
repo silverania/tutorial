@@ -56,9 +56,10 @@
  {% for t in users %}
   <div id="d_author">
   <div id="div_author_text" class="text-center">
-    <a href="#" onclick='
+    <a id="a_author_text_{{ t.first_name}}_{{t.last_name}}"
+     onclick='
     {% for tut in tutorial_all %}{% ifequal t.last_name tut.author.last_name %}
-    alert("{{tut}}");{% endifequal %}{% endfor %}
+    createSubMenuTutorialsForAuthorName("{{ tut }}","{{t.first_name}}","{{t.last_name}}","{{ tutorial_all | length }}");{% endifequal %}{% endfor %}
     '>
    {{t.first_name}} {{t.last_name}}</a></div>
 </div>

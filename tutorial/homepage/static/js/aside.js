@@ -129,12 +129,13 @@ $(document).click(function(event) {
   }
 });
 /* THE END */
+
 });
 
 /* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
-function showAuthorTutorial(name,surname,tutorials) {
-  alert("entrypoint show...");
-  for( i=0;i<tutorials.length;i++){
-    alert(tutorials[i].author.toString());
-    }
+function createSubMenuTutorialsForAuthorName(tutorial,name,surname,tutoriallength) {
+  alert("ahoo"+tutorial);
+  var element = document.getElementById("a_author_text_"+name+"_"+surname);
+  var node = document.createTextNode(tutorial);
+element.appendChild(node);
   }
