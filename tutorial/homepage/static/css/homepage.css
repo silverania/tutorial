@@ -33,7 +33,7 @@ header{
 }
 
 #d_content{
-  margin-top:2%;
+  margin:2% auto;
 }
 
 [id^="a-"]:hover{
