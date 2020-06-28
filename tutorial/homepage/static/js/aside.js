@@ -131,11 +131,20 @@ $(document).click(function(event) {
 /* THE END */
 
 });
-
+var isFill=0;
 /* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
 function createSubMenuTutorialsForAuthorName(tutorial,name,surname,tutoriallength) {
-  alert("ahoo"+tutorial);
-  var element = document.getElementById("a_author_text_"+name+"_"+surname);
+  if(!(isFill==tutoriallength)){
+  var element = document.getElementById("div_author_text");
+  var aelement=document.getElementById("a_author_text"+"_"+name+"_"+surname);
+  var tag = document.createElement('div');
+    var tagspan = document.createElement('span');
+  tag.setAttribute("id", "div_tutorial_title");
+    tagspan.setAttribute("id", "span_tutorial_title");
+    tag.appendChild(tagspan);
   var node = document.createTextNode(tutorial);
-element.appendChild(node);
+tagspan.appendChild(node);
+(element , aelement).appendChild(tag);
+isFill++;
   }
+}

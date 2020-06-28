@@ -46,13 +46,13 @@ header{
   width:auto;
 }
 #a_logo{
+  
   border-radius:6px!important;
   border:3px solid orange;
   background-color:yellow;
   margin :auto 3%;
 align-items: center;
 text-decoration:none;
-opacity:.9;
 }
 #c_aside{
   margin-top:3%;
@@ -66,7 +66,7 @@ opacity:.9;
   display:none;
   border-radius:4px;
   position:static;
-  width:50%;
+  width:100%;
   font-size:1rem;
   /*left:0%;*/
   color:white;
@@ -100,10 +100,19 @@ opacity:.9;
 #div_author_text{
   font-size:0.7rem;
 }
-#div_author_text:hover{
-  cursor:pointer;
-  background-color: white;
-  color:orange;
+
+#div_tutorial_title{
+  width:auto;
+  height:auto;
+
+}
+#span_tutorial_title{
+    font-size:0.8rem;
+    color:white;
+}
+#div_tutorial_title:hover{
+  background-color:green;
+  color:blue;
 }
 #h_title2 {
 margin-top:1%;
