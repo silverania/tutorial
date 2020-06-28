@@ -46,12 +46,12 @@ header{
   width:auto;
 }
 #a_logo{
-  
+
   border-radius:6px!important;
   border:3px solid orange;
   background-color:yellow;
-  margin :auto 3%;
-align-items: center;
+  margin-left:2%;
+align-items: left;
 text-decoration:none;
 }
 #c_aside{
@@ -486,7 +486,6 @@ li #s_center_menu{
 
  #span_title_w{
  font-size:1rem;
- margin-right:6px;
  }
  #s_title{
    font-size:0.6rem;
@@ -587,7 +586,7 @@ li #s_center_menu{
     width:auto;
   }
   li #s_center_menu{
-      font-size:1rem!important;
+      font-size:0.8rem!important;
     }
  code{
    font-size:1.5vw;
@@ -599,14 +598,14 @@ li #s_center_menu{
     font-size:0.8rem;
   }
   #span_title{
-    font-size:2rem;
+    font-size:1.7rem;
     }
   #span_title_2{
-  font-size:2rem;
+  font-size:1.7rem;
   }
 
   #span_title_w{
-  font-size:2rem;
+  font-size:1.7rem;
   }
 
 
@@ -636,8 +635,23 @@ li #s_center_menu{
 
 }
 @media screen and (min-width: 1024px) {
+  li #s_center_menu{
+      font-size:0.8rem!important;
+    }
+  #span_title{
+    font-size:1.2rem;
+    }
+  #span_title_2{
+  font-size:1.2rem;
+  }
 
+  #span_title_w{
+  font-size:1.2rem;
 
+  }
+  #esci, #registrati, #entra{
+    font-size:0.7rem!important;
+  }
  td{
    font-size:1.3rem;
  }
@@ -681,7 +695,7 @@ li #s_center_menu{
 }
 @media screen and (min-width: 1200px) {
   li #s_center_menu{
-      font-size:1.1rem!important;
+      font-size:1rem!important;
     }
  #s_title,#s_title_2{
     font-size:1.1rem;

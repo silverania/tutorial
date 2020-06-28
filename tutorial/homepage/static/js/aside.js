@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  alert(window.innerWidth);
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
   var table_author=$('#td_autore');
   var table_tutorial=$('#d_tutorial_section');
