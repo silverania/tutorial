@@ -113,7 +113,7 @@ $("li[id^='a-']").click(function(event){
   }
 }
 });
-// END #########################################################################
+/*  THE END */
 
 /*nascondo tutto se clicco al di fuori del documento*/
 $(document).click(function(event) {
@@ -131,6 +131,12 @@ $(document).click(function(event) {
     $('#d_tutorial_section').animate({'margin-left': -off},600);
   }
 });
-// END ##################################################################
+/* THE END */
+
+/* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
+$('#div_author_text').click(function(){
+  
+});
+
 
 });

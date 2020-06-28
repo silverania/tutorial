@@ -62,11 +62,54 @@ opacity:.9;
   margin-bottom:3%;
   margin-top:3%;
 }
+#d_tutorial_section{
+  display:none;
+  border-radius:4px;
+  position:static;
+  width:50%;
+  font-size:1rem;
+  /*left:0%;*/
+  color:white;
+  margin-left:-510px;
+  height:auto;
+}
+#t_left{
+  border-top-left-radius:7px;
+  border-top-right-radius: 7px;
+  border-bottom-left-radius:4px;
+  border-bottom-right-radius: 4px;
+
+  display:block;
+  margin:3px;
+  width:auto;
+  height:auto;
+  background-color: black;
+}
+#div_autori_title{
+  background-color:orange;
+  border-top-left-radius:7px;
+  border-top-right-radius: 7px;
+  color:white;
+}
+#d_author{
+  border-radius:4px;
+  display:block;
+  padding:1%;
+  margin:0 auto;
+}
+#div_author_text{
+  font-size:0.7rem;
+}
+#div_author_text:hover{
+  cursor:pointer;
+  background-color: white;
+  color:orange;
+}
 #h_title2 {
 margin-top:1%;
 }
 #d_content{
-  margin-top:2%;
+  margin:2% auto;
 }
 #t_header{
   background-color: white;
@@ -246,18 +289,7 @@ background-color: red;
 #table_tutorial{
   display:none;
 }
-#d_tutorial_section{
-  display:none;
-  position:static;
-  width:100%;
-  max-width:100%;
-  font-size:1rem;
-  /*left:0%;*/
-  color:white;
-  margin-left:-510px;
-  height:auto;
-  z-index:100!important;
-}
+
 
 #d_htmlmenu{
   display:none;

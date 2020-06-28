@@ -50,8 +50,8 @@ class User(models.Model):
     first_name = models.CharField(max_length=30)
     last_name = models.CharField(max_length=30)
     email = models.EmailField()
-    users = User.objects.all()
-    user=models.OneToOneField(User,on_delete=models.CASCADE)
+    #users = User.objects.all()
+    #user=models.OneToOneField(User,on_delete=models.CASCADE)
     categories = models.ManyToManyField(Category,related_name='users')
     def __str__(self):
         return "%s %s" % (self.first_name, self.last_name)
@@ -69,7 +69,7 @@ class Tutorial(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    cat=Category
+    #cat=Category
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="tutorials")
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
         # decommentare una delle seguenti tre righe per selezionare un custom model manager
