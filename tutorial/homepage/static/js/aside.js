@@ -131,25 +131,20 @@ $(document).click(function(event) {
 });
 /* THE END */
 
+e=$('.select_autori');
+e.click(function(){
+  d=$('.select_autori :selected').text();
+  alert(d);
 });
-var isFill=0;
-/* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
-function createSubMenuTutorialsForAuthorName(tutorial,name,surname,tutoriallength,url) {
-  if(!(isFill==tutoriallength)){
-  var element = document.getElementById("div_author_text");
-  var aelement=document.getElementById("a_author_text"+"_"+name+"_"+surname);
-    var helement=document.getElementById("header_author"+"_"+name+"_"+surname);
-  var tag = document.createElement('div');
-    var tagspan = document.createElement('span');
-    var aspan = document.createElement('a');
-  tag.setAttribute("id", "div_tutorial_title");
-    aspan.setAttribute("id", "a_tutorial_title");
-      aspan.setAttribute("href", url);
+});
+  /*  tag.setAttribute("id", "div_tutorial_title"+"_"+name+"_"+surname);
+    tagspan.setAttribute("id","span_tutorial_left"+"_"+name+"_"+surname);
+    aspan.setAttribute("id", "a_tutorial_title"+"_"+name+"_"+surname);
+    aspan.setAttribute("href", url);
     tag.appendChild(aspan);
     aspan.appendChild(tagspan);
-  var node = document.createTextNode(tutorial);
-tagspan.appendChild(node);
-(element , aelement , helement).appendChild(tag);
-isFill++;
-  }
-}
+    var node = document.createTextNode(tutorial);
+    tagspan.appendChild(node);
+    (element , aelement , helement).appendChild(tag);
+    value++;
+  }*/

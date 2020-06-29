@@ -45,6 +45,11 @@ header{
   margin-left:auto;
   width:auto;
 }
+
+a ,a > span {
+  border:none;
+  color:orange;
+}
 #a_logo{
 
   border-radius:6px!important;
@@ -54,6 +59,8 @@ header{
 align-items: left;
 text-decoration:none;
 }
+
+
 #c_aside{
   margin-top:3%;
 }
@@ -63,56 +70,23 @@ text-decoration:none;
   margin-top:3%;
 }
 #d_tutorial_section{
-  display:none;
-  border-radius:4px;
-  position:static;
-  width:100%;
-  font-size:1rem;
-  /*left:0%;*/
-  color:white;
-  margin-left:-510px;
-  height:auto;
+  width:100%!important;
+  max-width:100%!important;
 }
-#t_left{
-  border-top-left-radius:7px;
-  border-top-right-radius: 7px;
-  border-bottom-left-radius:4px;
-  border-bottom-right-radius: 4px;
-
-  display:block;
-  margin:3px;
-  width:auto;
-  height:auto;
-  background-color: black;
-}
-#div_autori_title{
-  background-color:orange;
-  border-top-left-radius:7px;
-  border-top-right-radius: 7px;
-  color:white;
-}
-#d_author{
-  border-radius:4px;
-  display:block;
-  padding:1%;
-  margin:0 auto;
-}
-#div_author_text{
-  font-size:0.7rem;
+#form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials{
+  margin-right:auto!important;
+  width:100%!important;
+  max-width:100%!important;
 }
 
-#div_tutorial_title{
-  width:auto;
-  height:auto;
-  background-color:orange;
-}
+
+
+
+
+
 #span_tutorial_title{
     font-size:0.8rem;
     color:white;
-}
-#div_tutorial_title:hover{
-  background-color:green;
-  color:blue;
 }
 #h_title2 {
 margin-top:1%;
@@ -251,8 +225,11 @@ font-weight:bold;
   border:2px solid #007bff;
 }
 [id^="a_tutorial"]{
-  border:2px solid;
-  width:inherit%!important;
+  width:auto!important;
+}
+[id^="a_tutorial"]:hover{
+  background-color:black;
+  color:orange;
 }
 
 a:hover{
@@ -372,9 +349,8 @@ margin-left:3%!important;
    #h_title2 {
     display:none;
    }
-  #d_tutorial_section{
-    display:none;
-  }
+
+
   #d_photo_author{
    margin-top:-3%;
   }
@@ -400,9 +376,9 @@ tr{
    font-size:0.5rem;
 
  }
-#s_left_tutorial{
-  font-size:0.4rem;
-}
+
+
+
 #img_user{
   display:none;
 }
@@ -502,6 +478,7 @@ li #s_center_menu{
  #circle {
     -webkit-transform: scale(0.5,0.5);
   }
+
  #center-menu{
    display:none!important;
  }
@@ -548,6 +525,7 @@ li #s_center_menu{
  #h-logo{
    font-size:3vw!important;
  }
+
  li #s_center_menu{
      font-size:0.8rem!important;
    }
@@ -591,9 +569,8 @@ li #s_center_menu{
  code{
    font-size:1.5vw;
  }
- #d_user{
 
- }
+
  #s_title,#s_title_2{
     font-size:0.8rem;
   }
@@ -638,6 +615,7 @@ li #s_center_menu{
   li #s_center_menu{
       font-size:0.8rem!important;
     }
+
   #span_title{
     font-size:1.2rem;
     }

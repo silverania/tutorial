@@ -24,12 +24,12 @@
 {% endblock head %}
 
 <body>
-  <script type="text/javascript">
+  <script>
   $(document).ready(function(){
    var a = "{{tutorial.category}}";
    setActiveHeaderMenu(a);
  });
-</script>
+ </script>
 <div class="container-fluid" >
 <div class="row">
 <div id="col_header" class="col-12"style="margin:0px;width:100%;padding:0px">
@@ -47,33 +47,38 @@
          </div>
 
          <div id="d_tutorial_section">
+         <form>
+         <div id="form" class="form-group">
+    <label for="labelFormAutori">Seleziona Un Autore Dalla Lista</label>
+    <select class="form-control select_autori" id="selecFormAutori">
+{%for t in users %}
+      <option id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}}" class="option_autori">{{t.first_name}} {{t.last_name}} </option>
+      {%endfor%}
+    </select>
+  </div>
 
-          <div id="t_left">
-            <div id="div_autori_title">
-            <div class="text-center" style="font-family: 'ShareTechMono-Regular';">  Autori </div>
-            </div>
 
- {% for t in users %}
-  <div id="d_author"style="background-color:red;">
-  <div id="div_author_text" class="text-center"style="background-color:red;">
-    <header id="header_author_{{t.first_name}}_{{t.last_name}}">
-    <a id="a_author_text_{{ t.first_name}}_{{t.last_name}}"
-     style="text-decoration:none"
-     onclick='
-    {% for tut in tutorial_all %}{% ifequal t.last_name tut.author.last_name %}
-    createSubMenuTutorialsForAuthorName("{{ tut }}","{{t.first_name}}","{{t.last_name}}","{{ tutorial_all | length }}","{{ tut.get_absolute_url }}");{% endifequal %}{% endfor %}
-    'style="background-color:red;">
-   <span class="badge badge-info">{{ t.first_name }} {{t.last_name}}</span></a>
-</header>
- </div>
-</div>
-  {% endfor %}
-
+  <div class="form-group">
+    <label for="labelFormTutorials">Seleziona Un Tutorial Dalla Lista</label>
+    <select multiple class="form-control" id="selectFormTutorials">
+      {% for s in tutorial_all %}
+      <option id="option_tutorial_{{s.title}}_{{s.author.first_name}}_{{s.author.last_name}}" >{{s.title}}</option>
+      {% endfor %}
+    </select>
+  </div>
+</form>
 </div>
 
 
 
-</div>
+
+
+
+
+
+
+
+
           <div  id="d_divaside" class="d_divaside">
             <div id="d_in_divaside" class="list-group"  role="tablist">
                 {% for c in categorie %}
