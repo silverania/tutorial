@@ -104,7 +104,7 @@ text-decoration:none;
 #div_tutorial_title{
   width:auto;
   height:auto;
-
+  background-color:orange;
 }
 #span_tutorial_title{
     font-size:0.8rem;
