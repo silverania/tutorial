@@ -1,4 +1,5 @@
 $(document).ready(function(){
+  alert(window.innerWidth);
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
   var table_author=$('#td_autore');
   var table_tutorial=$('#d_tutorial_section');
@@ -130,14 +131,20 @@ $(document).click(function(event) {
 });
 /* THE END */
 
+e=$('.select_autori');
+e.click(function(){
+  d=$('.select_autori :selected').text();
+  alert(d);
 });
-
-/* Gestione del click sul div tutorial laterale .... al click visualizzo la lista tutorial appartenente al user in questione  */
-function createSubMenuTutorialsForAuthorName(tutorial,name,surname,tutoriallength) {
-  alert("ahoo"+tutorial);
-  var element = document.getElementById("a_author_text_"+name+"_"+surname);
-    var text = document.createTextNode(tutorial);
-    tag.appendChild(text);
-    element.click(false);
-    element.appendChild(tag);
-  }
+});
+  /*  tag.setAttribute("id", "div_tutorial_title"+"_"+name+"_"+surname);
+    tagspan.setAttribute("id","span_tutorial_left"+"_"+name+"_"+surname);
+    aspan.setAttribute("id", "a_tutorial_title"+"_"+name+"_"+surname);
+    aspan.setAttribute("href", url);
+    tag.appendChild(aspan);
+    aspan.appendChild(tagspan);
+    var node = document.createTextNode(tutorial);
+    tagspan.appendChild(node);
+    (element , aelement , helement).appendChild(tag);
+    value++;
+  }*/

@@ -16,8 +16,9 @@
      {% block tut_title %}
        <a class="badge badge-pill badge-light" style="width:100%;display:inline-block!important;margin:0 auto!important;">
          <span id="s_title">Html - </span>
-       <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;">Menù A Comparsa Animato</span></a>{% endblock tut_title %}
+       <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;">Menù A Comparsa Animato</span></a>
 
+       {% endblock tut_title %}
 
 
 
@@ -70,9 +71,9 @@
         &lt;/div>
            &lt;/div>
         &lt;/div>
-        &lt;script  src="{% static 'js/jquery.min.js' %}">&lt;/script>
+        &lt;script  src="js/jquery.min.js">&lt;/script>
         &lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">&lt;/script>
-        &lt;script  src="{% static 'js/aside.js' %}">&lt;/script>
+        &lt;script  src="js/aside.js">&lt;/script>
         &lt;/body>
         &lt;/html>
        </pre></code>
@@ -243,9 +244,9 @@
            &lt;/div>
          &lt;/div>
 
-         &lt;script  src="{% static 'js/jquery.min.js' %}">&lt;/script>
+         &lt;script  src="js/jquery.min.js">&lt;/script>
          &lt;script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">&lt;/script>
-         &lt;script  src="{% static 'js/aside.js' %}">&lt;/script>
+         &lt;script  src="js/aside.js">&lt;/script>
          &lt;/body>
          &lt;/html>
          </pre>
@@ -371,3 +372,4 @@
 
 
   {% endblock %}
+ {% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer %}

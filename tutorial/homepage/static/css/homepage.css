@@ -31,10 +31,16 @@ src: url('../webfonts/Assistant-Regular.ttf') ;
 font-family: 'ShareTechMono-Regular';
 src: url('../webfonts/ShareTechMono-Regular.ttf') ;
 }
+html{
+  width:100%;
+  height:100%;
+}
 body {
  font-family:'WorkSans','Assistant-regular','WorkSans';
 background-color:#e6ffff;
 size:16px;
+width:100%;
+height:100%;
 }
 header{
   width:100%;

@@ -12,6 +12,7 @@
   <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}">
   <link rel="stylesheet" href="{% static "css/all.css" %}">
   <link rel="stylesheet" href="{% static "css/homepage.css" %}">
+    <link rel="stylesheet" href="{% static "css/footer.css" %}">
   <script src="{% static "js/all.min.js"%}"></script>
   <script  src="{% static 'js/popper.min.js'%}"></script>
   <script  src="{% static 'js/jquery.min.js' %}"></script>
@@ -32,7 +33,7 @@
  </script>
 <div class="container-fluid" >
 <div class="row">
-<div id="col_header" class="col-12"style="margin:0px;width:100%;padding:0px">
+<div role="header" id="col_header" class="col-12"style="margin:0px;width:100%;padding:0px">
 {% block header %}
   {% include '_header.html'%}
 {% endblock header %}
@@ -42,6 +43,9 @@
 <div id="c_aside" class="container-fluid"  >
                        <div class="row">
                          <div class="col-3">
+        <section role="navigation" id="section_left_navbar">
+          <aside>
+          <nav>
          <div id="asidebar">
             <span id="asidebar"><i  class="fas fa-angle-right" aria-hidden="true"></i></span>
          </div>
@@ -92,9 +96,14 @@
             {% endfor %}
             </div>
          </div>
+       </nav>
+     </aside>
+       </section>
        </div>
 
-<div  class="col-9 col-sm-9 col-md-6 col-lg-6 col-xl-6 " style="margin-left:0px!important;background-color:white;" >
+<div  role="main" class="col-9 col-sm-9 col-md-6 col-lg-6 col-xl-6 " style="margin-left:0px!important;background-color:white;" >
+<article>
+  <header>
       <div id="d_title" style="position:relative;width:100%;">
            <div id="d_photo_author" style="position:absolute;top:-10%;">
              <div style="width:60px;">
@@ -107,40 +116,50 @@
              <span style="color:orange;font-family:ShareTechMono-Regular">{{tutorial.author}}</span>
           <span style="color:grey;opacity:0.5;"> , </span><span style="color:orange;">{{tutorial.publish}}</span></h6>
        </div>
-
+</header>
 <div class="d_content">
+
 {% block content %}
   {% endblock content %}
+
 </div>
+</article>
 </div>
 
+
 <div id="d_amazon_1" class="mt-5 col-md-3 col-lg-3 col-xl-3" >
+  <section id="section_right_aside">
+    <aside>
   <div style="width:100%;height:auto;margin-right:0px!important;">
       <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">I Migliori Libri</span>
     </div>
   {% block amazon_right %}
       {% endblock %}
+    </aside>
+      </section>
     </div>
+
 </div>
 </div>
 
-<div class="container-fluid">
-<div class="row">
-<div class="col-md-12">
+
   {% block footer %}
-  <footer>
-    <div class="jumbotron pt-1" style= "margin-top:120px;background-color:#2f3136;">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-2">
-            </div>
-            </div>
-            </div>
-    </div>
-  </footer>
+<footer>
+      <div id="div_main_footer">
+                    <div class="div_footer">
+                         <img class="img img-fluid rounded-circle border" src='{% block photo_footer %}{% endblock photo_footer%}'
+                             width="40px" alt="non posso caricare immaggini">
+                           </div>
+                           <div class="div_footer_text">
+          <p id="p_footer_nome"><span id="footer_span_nome" style="color:grey;">Mario Spanò<em> <span id="footer_span_nome" style="color:grey;">spaceissimo@gmail.com</em></span>
+          </p>
+            <p style="line-height:1;"class="p_footer"><span></span><span class="copyright-year" style="color:grey;">2020</span><span class="copyright-year">&nbsp;</span><span class="copyright-year">comefare.it</span><span>&nbsp;</span><span class="copyright-year">All Rights Reserved.</span></p>
+        </div>
+
+
+</div>
+</footer>
   {% endblock footer %}
-</div>
-</div>
-</div>
+
 </body>
 </html>
