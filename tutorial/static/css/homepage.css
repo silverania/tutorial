@@ -154,7 +154,10 @@ font-weight:bold;
   border:2px solid;
   width:inherit%!important;
 }
-
+#p_content{
+  margin:0 auto;
+  padding:20px;
+}
 a:hover{
   cursor:pointer;
 }
