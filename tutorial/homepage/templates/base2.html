@@ -25,12 +25,8 @@
 {% endblock head %}
 
 <body>
-  <script>
-  $(document).ready(function(){
-   var a = "{{tutorial.category}}";
-   setActiveHeaderMenu(a);
- });
- </script>
+
+
 <div class="container-fluid" >
 <div class="row">
 <div role="header" id="col_header" class="col-12"style="margin:0px;width:100%;padding:0px">
@@ -51,29 +47,60 @@
          </div>
 
          <div id="d_tutorial_section">
-         <form>
+
          <div id="form" class="form-group">
-    <label for="labelFormAutori">Seleziona Un Autore Dalla Lista</label>
-    <select class="form-control select_autori" id="selecFormAutori">
-{%for t in users %}
-      <option id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}}" class="option_autori">{{t.first_name}} {{t.last_name}} </option>
-      {%endfor%}
-    </select>
-  </div>
+    <label id="label_autore" for="labelFormAutori"><span id="span_autore" class="badge badge-warning">Scegli Autore</span></label>
+    <select  onclick="remove(this.value);" class="form-control select_autori" id="selecFormAutori">
+{% for t in users %}
 
+      <option  id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}} {{t.last_name}}" class="option_autori">{{t.first_name}} {{t.last_name}} </option>
 
-  <div class="form-group">
-    <label for="labelFormTutorials">Seleziona Un Tutorial Dalla Lista</label>
-    <select multiple class="form-control" id="selectFormTutorials">
-      {% for s in tutorial_all %}
-      <option id="option_tutorial_{{s.title}}_{{s.author.first_name}}_{{s.author.last_name}}" >{{s.title}}</option>
       {% endfor %}
     </select>
   </div>
-</form>
+
+
+
+    <label id="label_tutorial" for="labelFormTutorials"><span id="span_tutorial" class="badge badge-warning">Visualizza Tutorial</span></label>
+    <select multiple class="form-control select_tutorial" onclick="window.open(this.value);" id="selectFormTutorials">
+
+    </select>
+
+
 </div>
+<script>
+$(document).ready(function(){
+ var a = "{{tutorial.category}}";
+ setActiveHeaderMenu(a);
+});
+</script>
 
+<script>
+function remove(e){
+  $('.mytutorialByAuthor').remove();
+  getIndex(e);
+}
+function getIndex(e) {
+var autore=e;
+var tag=document.getElementById('selectFormTutorials');
 
+{% for tut in tutorial_all %}
+ toCompare="{{tut.author.first_name}}"+" "+"{{tut.author.last_name}}";
+if (autore==toCompare){
+  var optio = document.createElement('option');
+  title="d"+"{{tut.title}}";
+  url="{{tut.get_absolute_url}}";
+optio.setAttribute("class","mytutorialByAuthor");
+optio.value=url;
+optio.innerHTML = title;
+optio.text=title;
+
+tag.appendChild(optio);
+}
+{% endfor %}
+
+}
+</script>
 
 
 

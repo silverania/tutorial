@@ -15,8 +15,16 @@ import os
 def getLink(title):
     template=tutorial.title.replace(" ","_").lower()+".html"
     return template
-
-
+"""
+def tutorial_to_author(request, **kwargs):
+    tutorials=Tutorial
+    for key,value in kwargs.items():
+        if 'autore' in key:
+            print("trovato autore")
+            nome , cognome=value.split()
+        tuorial_per_autore=Tutorial.objects.filter(author__first_name=nome)
+        return HttpResponse()
+"""
 def tutorial_detail(request, **kwargs):
     for key,value in kwargs.items():
         print(str(key)+str(value))
@@ -32,13 +40,11 @@ def tutorial_detail(request, **kwargs):
     categorie=Category.objects.all()
     users=User.objects.all()
     try:
-        tutorial = get_object_or_404(Tutorial, slug=post)
+        tutorial = Tutorial.objects.get(slug=post,
+        publish__year=year,)
         print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day))
-        tutorial = get_object_or_404(Tutorial, slug=post,
-        publish__year=year,
-        )
     except UnboundLocalError :
-        if 'homepage' in request.path:
+        if '' in request.path:
             tutorial=Tutorial.objects.latest('publish')
     template=tutorial.title.replace(" ","_").lower()+".html"
     print("template="+template)

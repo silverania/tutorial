@@ -1,7 +1,6 @@
 $(document).ready(function(){
   alert(window.innerWidth);
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
-  var table_author=$('#td_autore');
   var table_tutorial=$('#d_tutorial_section');
   mydiv=document.getElementById('d_divaside');
   headWeb=$('#a-Web');
@@ -11,19 +10,18 @@ $(document).ready(function(){
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
   var divaside=document.getElementById('d_divaside');
+  table_tutorial_WIDTH=table_tutorial.css('width');
+  table_tutorial_WIDTH_initial_position=(parseInt(table_tutorial_WIDTH))+15;
+  table_tutorial.css('margin-left', -table_tutorial_WIDTH_initial_position );
 //############### Quando il mouse genera un hover sul nome autore nella table side left : elenca i tutorials dell autore
 
-$("td[id^='td_autore_']").hover(function(event){
-  text=(this.id);
 
-});
 // ##################################### Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
-    $('#d_tutorial_section').css('display','block');
+     table_tutorial.animate({'margin-left':'0'},400);
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '0.9',},100);
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
     $('#asidebar').css('color','green');
-    $('#d_tutorial_section').animate({'margin-left':'-15px'},300);
   },
 
   /* quando il mouse si allontenerà dalla freccia quest' ultima tornerà nella posizione iniziale e l' opacita tornerà a 1*/
@@ -128,13 +126,6 @@ $(document).click(function(event) {
   {
     $('#d_tutorial_section').animate({'margin-left': -off},600);
   }
-});
-/* THE END */
-
-e=$('.select_autori');
-e.click(function(){
-  d=$('.select_autori :selected').text();
-  alert(d);
 });
 });
   /*  tag.setAttribute("id", "div_tutorial_title"+"_"+name+"_"+surname);
