@@ -87,6 +87,7 @@ text-decoration:none;
   margin:10px auto ! important;
 }
 #d_tutorial_section{
+  box-sizing: content-box;
   display:block;
   position:relative;
   width:100%!important;
@@ -292,9 +293,7 @@ background-color: red;
   height:inherit;
 }
 
-#table_tutorial{
-  display:none;
-}
+
 
 
 #d_htmlmenu{
