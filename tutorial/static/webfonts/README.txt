@@ -1,21 +1,36 @@
-Dancing Script Variable Font
-============================
+Work Sans Variable Font
+=======================
 
-This download contains Dancing Script as both a variable font and static fonts.
+This download contains Work Sans as both variable fonts and static fonts.
 
-Dancing Script is a variable font with this axis:
+Work Sans is a variable font with this axis:
   wght
 
-This means all the styles are contained in a single file:
-  DancingScript-VariableFont_wght.ttf
+This means all the styles are contained in these files:
+  WorkSans-VariableFont_wght.ttf
+  WorkSans-Italic-VariableFont_wght.ttf
 
 If your app fully supports variable fonts, you can now pick intermediate styles
 that aren’t available as static fonts. Not all apps support variable fonts, and
-in those cases you can use the static font files for Dancing Script:
-  static/DancingScript-Regular.ttf
-  static/DancingScript-Medium.ttf
-  static/DancingScript-SemiBold.ttf
-  static/DancingScript-Bold.ttf
+in those cases you can use the static font files for Work Sans:
+  static/WorkSans-Thin.ttf
+  static/WorkSans-ExtraLight.ttf
+  static/WorkSans-Light.ttf
+  static/WorkSans-Regular.ttf
+  static/WorkSans-Medium.ttf
+  static/WorkSans-SemiBold.ttf
+  static/WorkSans-Bold.ttf
+  static/WorkSans-ExtraBold.ttf
+  static/WorkSans-Black.ttf
+  static/WorkSans-ThinItalic.ttf
+  static/WorkSans-ExtraLightItalic.ttf
+  static/WorkSans-LightItalic.ttf
+  static/WorkSans-Italic.ttf
+  static/WorkSans-MediumItalic.ttf
+  static/WorkSans-SemiBoldItalic.ttf
+  static/WorkSans-BoldItalic.ttf
+  static/WorkSans-ExtraBoldItalic.ttf
+  static/WorkSans-BlackItalic.ttf
 
 Get started
 -----------

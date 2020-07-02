@@ -82,7 +82,6 @@ function getIndex(e) {
 var autore=e;
 var tag=document.getElementById('selectFormTutorials');
 
-<<<<<<< HEAD
 {% for tut in tutorial_all %}
  toCompare="{{tut.author.first_name}}"+" "+"{{tut.author.last_name}}";
 if (autore==toCompare){
@@ -93,9 +92,8 @@ optio.setAttribute("class","mytutorialByAuthor");
 optio.value=url;
 optio.innerHTML = title;
 optio.text=title;
-=======
-<div  class="col-12 col-sm-12  col-md-7 col-lg-6 col-xl-6" style="margin-left:0px!important;background-color:white;" >
->>>>>>> 2d397112af25fbb4363751bf241834c7a0fb6dd6
+
+
 
 tag.appendChild(optio);
 }

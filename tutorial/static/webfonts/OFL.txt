@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-Copyright 2019 The Work Sans Project Authors (https://github.com/weiweihuanghuang/Work-Sans)
-
->>>>>>> 2d397112af25fbb4363751bf241834c7a0fb6dd6
 This Font Software is licensed under the SIL Open Font License, Version 1.1.
 This license is copied below, and is also available with a FAQ at:
 http://scripts.sil.org/OFL

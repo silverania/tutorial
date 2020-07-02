@@ -1,29 +1,29 @@
 $(document).ready(function(){
-  alert(window.innerWidth);
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
-  var table_author=$('#td_autore');
   var table_tutorial=$('#d_tutorial_section');
   mydiv=document.getElementById('d_divaside');
   headWeb=$('#a-Web');
   headLinux=$('#a-Linux');
   headDjango=$('#a-Django');
   var s = $("a[id^='a_html']");
+  var off;
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
   var divaside=document.getElementById('d_divaside');
+  table_tutorial_WIDTH=table_tutorial.css('width');
+  table_tutorial_WIDTH_initial_position=(parseInt(table_tutorial_WIDTH))+15;
+  table_tutorial.css('margin-left', -table_tutorial_WIDTH_initial_position );
 //############### Quando il mouse genera un hover sul nome autore nella table side left : elenca i tutorials dell autore
 
-$("td[id^='td_autore_']").hover(function(event){
-  text=(this.id);
 
-});
 // ##################################### Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
-    $('#d_tutorial_section').css('display','block');
+    table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
+    off=table_tutorial_width+15;
+     table_tutorial.animate({'margin-left':'0'},400);
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '0.9',},100);
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
     $('#asidebar').css('color','green');
-    $('#d_tutorial_section').animate({'margin-left':'-15px'},300);
   },
 
   /* quando il mouse si allontenerà dalla freccia quest' ultima tornerà nella posizione iniziale e l' opacita tornerà a 1*/
@@ -50,9 +50,13 @@ $('#asidebar').click(function(event){
       $('#d_Linux_menu').css('display','none');
       $('#d_Django_menu').css('display','none');
     }
+    // l 'elemento table_tutorial deve ritornare a 0px anche quando clicco sulla freecia , oltre che nell hover della freccia !'
     else{
-        $('#d_tutorial_section').animate({'margin-left': '-15px'},300);
+      if ( table_tutorial.offset().left<0) {
+        $('#d_tutorial_section').animate({'margin-left': '0px'},300);
+      }
     }
+    // FINE COMMENTO
 }
 
 );
@@ -84,15 +88,16 @@ $("li[id^='a-']").click(function(event){
   var leftOffset=mydiv.offsetLeft;
 
   if(leftOffset>0){
-
-    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "0%"},800);
-      $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : -topOffset },200);
+    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "-30%"},300);
+      $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "90%"},300);
+      $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : "0" },300);
     showHeader(text);
   }
   else{
     showHeader(text);
     $('.d_divaside').css('display', 'block');
-    $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : -topOffset },200);
+    //$('.d_divaside').css('position', 'absolute');
+    $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"top" : "0px" },200);
   }
   function showHeader(text){
   switch (text){
@@ -110,7 +115,6 @@ $("li[id^='a-']").click(function(event){
     $('#d_Django_menu').css('display','block');// nascondo questo menù nel caso sia visibile
     break;
     default :
-    alert('errore inatteso su click menu');
   }
 }
 });
@@ -121,20 +125,13 @@ $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
   $('.d_divaside').is(":visible")) {
-
-    $('.d_divaside').animate({ "margin-left" : '0%',"margin-top" : "0%"},400);
+    $('.d_divaside').css( 'left' , '-700px');
   }
-  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==0)
+
+  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==15)
   {
     $('#d_tutorial_section').animate({'margin-left': -off},600);
   }
-});
-/* THE END */
-
-e=$('.select_autori');
-e.click(function(){
-  d=$('.select_autori :selected').text();
-  alert(d);
 });
 });
   /*  tag.setAttribute("id", "div_tutorial_title"+"_"+name+"_"+surname);

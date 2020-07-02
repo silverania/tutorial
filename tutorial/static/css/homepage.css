@@ -31,11 +31,19 @@ src: url('../webfonts/Assistant-Regular.ttf') ;
 font-family: 'ShareTechMono-Regular';
 src: url('../webfonts/ShareTechMono-Regular.ttf') ;
 }
+html{
+  width:100%;
+  height:100%;
+}
 body {
  font-family:'WorkSans','Assistant-regular','WorkSans';
 background-color:#e6ffff;
 size:16px;
+width:100%;
+height:100%;
 }
+
+
 header{
   width:100%;
   max-width:100%;
@@ -53,13 +61,28 @@ a ,a > span {
 #a_logo{
 
   border-radius:6px!important;
-  border:3px solid orange;
-  background-color:yellow;
+  border:5px solid orange;
+  background-color:white;
   margin-left:2%;
 align-items: left;
 text-decoration:none;
 }
+#span_title{
+  font-family: 'Carter_One';  font-weight:normal;font-style:italic;
+  color:purple;
+  }
+#span_title_2{
+font-family: 'Carter_One';  font-weight:bold;
+font-style:italic;
+color:#008BE7;
+}
 
+#span_title_w{
+font-family: 'Carter_One';
+/*color:#ff00bf;*/
+color:orange;
+margin-right:5px;
+}
 
 #c_aside{
   margin-top:3%;
@@ -69,12 +92,25 @@ text-decoration:none;
   margin-bottom:3%;
   margin-top:3%;
 }
+#span_autore,#span_tutorial{
+  display:block!important;
+  font-size:1rem!important;
+}
+#label_autore,#label_tutorial{
+  opacity:0.8;
+  display:block!important;
+  margin:10px auto ! important;
+}
 #d_tutorial_section{
+  box-sizing: content-box;
+  display:block;
+  position:relative;
   width:100%!important;
   max-width:100%!important;
+  margin-right:10%!important;
 }
 #form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials{
-  margin-right:auto!important;
+  border:2px solid orange;
   width:100%!important;
   max-width:100%!important;
 }
@@ -93,13 +129,10 @@ margin-top:1%;
 }
 #d_content{
   margin:2% auto;
-<<<<<<< HEAD
 }
 #t_header{
   background-color: white;
   color:orange;
-=======
->>>>>>> 2d397112af25fbb4363751bf241834c7a0fb6dd6
 }
 [id^="a-"]{
   width:auto;
@@ -124,19 +157,7 @@ code{
   color:orange;
     font-size:2rem!important;
 }
-#span_title{
-  font-family: 'Carter_One';  font-weight:normal;font-style:italic;
-  color:purple;
-  }
-#span_title_2{
-font-family: 'Carter_One';  font-weight:bold;font-style:italic;color:purple;
-}
 
-#span_title_w{
-font-family: 'Carter_One';
-/*color:#ff00bf;*/
-color:#ffc0cb;
-}
 
 li #s_center_menu{
   color:blue!important;
@@ -154,7 +175,7 @@ li #s_center_menu{
 
  #asidebar .fa-angle-right{
   font-size:7rem!important;
-  color:black!important;
+  color:green!important;
 }
 #logo{
   display:block!important;
@@ -174,7 +195,7 @@ li #s_center_menu{
 }
 [id^=s_leftmenu]{
   font-size:1rem;
-  color:blue;
+  color:orange;
 }
 
 #topnav{
@@ -229,6 +250,8 @@ font-weight:bold;
 }
 [id^="a_tutorial"]{
   width:auto!important;
+  background-color: grey;
+  color:orange;
 }
 [id^="a_tutorial"]:hover{
   background-color:black;
@@ -242,26 +265,17 @@ a:hover{
   cursor:pointer;
 }
 
-#d_user{
-  width:100%;
-margin:0 auto;
-
-background-color: red;
-}
-
 #img_user{
   /*margin-left:-20px;*/
   /*margin-top:-1%;*/
 }
 
-#d_user{
-  display:none;
-}
+
 
 
 .d_divaside{
   display:none;
-  position:relative;
+  position:absolute;
   width:100%;
   padding:0;
   margin:0;
@@ -278,9 +292,7 @@ background-color: red;
   height:inherit;
 }
 
-#table_tutorial{
-  display:none;
-}
+
 
 
 #d_htmlmenu{
