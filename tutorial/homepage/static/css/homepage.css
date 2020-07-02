@@ -262,21 +262,12 @@ a:hover{
   cursor:pointer;
 }
 
-#d_user{
-  width:100%;
-margin:0 auto;
-
-background-color: red;
-}
-
 #img_user{
   /*margin-left:-20px;*/
   /*margin-top:-1%;*/
 }
 
-#d_user{
-  display:none;
-}
+
 
 
 .d_divaside{

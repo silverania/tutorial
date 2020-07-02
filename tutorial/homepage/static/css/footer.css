@@ -30,6 +30,7 @@ footer{
   background-color:orange;
   height:20%!important;
   min-height:20%!important;
+  border:3px solid black;
 }
 #footer_div_col,footer_row{
   width:100%;
@@ -63,7 +64,6 @@ footer{
     width:35%;
     height:100%;
     position:relative!important;
-  background-color: red!important;
   }
 }
 @media screen and (min-width: 1200px) {
@@ -86,7 +86,6 @@ footer{
     width:35%;
     height:100%;
     position:relative!important;
-  background-color: red!important;
   }
   }
 @media screen and (min-width: 1000px) {
@@ -109,6 +108,5 @@ footer{
     width:25%;
     height:30%;
     position:relative!important;
-  background-color: red!important;
   }
   }

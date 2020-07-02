@@ -34,7 +34,7 @@
 </div>
 </div>
 </div>
-<div id="c_aside" class="container-fluid"  >
+<div id="c_aside" class="container-fluid" style="margin-bottom:5%;" >
                        <div class="row">
                          <div class="col-3">
         <section role="navigation" id="section_left_navbar">
@@ -86,7 +86,7 @@ var tag=document.getElementById('selectFormTutorials');
  toCompare="{{tut.author.first_name}}"+" "+"{{tut.author.last_name}}";
 if (autore==toCompare){
   var optio = document.createElement('option');
-  title="d"+"{{tut.title}}";
+  title="{{tut.title}}";
   url="{{tut.get_absolute_url}}";
 optio.setAttribute("class","mytutorialByAuthor");
 optio.value=url;
@@ -156,7 +156,7 @@ tag.appendChild(optio);
   <section id="section_right_aside">
     <aside>
   <div style="width:100%;height:auto;margin-right:0px!important;">
-      <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">I Migliori Libri</span>
+      <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">Libri</span>
     </div>
   {% block amazon_right %}
       {% endblock %}
@@ -172,13 +172,13 @@ tag.appendChild(optio);
 <footer>
       <div id="div_main_footer">
                     <div class="div_footer">
-                         <img class="img img-fluid rounded-circle border" src='{% block photo_footer %}{% endblock photo_footer%}'
+                         <img class="img img-fluid rounded-circle border" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
                              width="40px" alt="non posso caricare immaggini">
                            </div>
                            <div class="div_footer_text">
           <p id="p_footer_nome"><span id="footer_span_nome" style="color:grey;">Mario Spanò<em> <span id="footer_span_nome" style="color:grey;">spaceissimo@gmail.com</em></span>
           </p>
-            <p style="line-height:1;"class="p_footer"><span></span><span class="copyright-year" style="color:grey;">2020</span><span class="copyright-year">&nbsp;</span><span class="copyright-year">comefare.it</span><span>&nbsp;</span><span class="copyright-year">All Rights Reserved.</span></p>
+            <p style="line-height:1;"class="p_footer"><span></span><span class="copyright-year" style="color:grey;">2020</span><span class="copyright-year">&nbsp;</span><span class="copyright-year">breakingweb.it</span><span>&nbsp;</span><span class="copyright-year">All Rights Reserved.</span></p>
         </div>
 
 

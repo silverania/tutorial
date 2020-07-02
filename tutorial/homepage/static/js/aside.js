@@ -1,5 +1,4 @@
 $(document).ready(function(){
-  alert(window.innerWidth);
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
   var table_tutorial=$('#d_tutorial_section');
   mydiv=document.getElementById('d_divaside');
@@ -116,7 +115,6 @@ $("li[id^='a-']").click(function(event){
     $('#d_Django_menu').css('display','block');// nascondo questo menù nel caso sia visibile
     break;
     default :
-    alert('errore inatteso su click menu');
   }
 }
 });
