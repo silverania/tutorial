@@ -61,13 +61,28 @@ a ,a > span {
 #a_logo{
 
   border-radius:6px!important;
-  border:3px solid orange;
-  background-color:yellow;
+  border:5px solid orange;
+  background-color:white;
   margin-left:2%;
 align-items: left;
 text-decoration:none;
 }
+#span_title{
+  font-family: 'Carter_One';  font-weight:normal;font-style:italic;
+  color:purple;
+  }
+#span_title_2{
+font-family: 'Carter_One';  font-weight:bold;
+font-style:italic;
+color:#008BE7;
+}
 
+#span_title_w{
+font-family: 'Carter_One';
+/*color:#ff00bf;*/
+color:orange;
+margin-right:5px;
+}
 
 #c_aside{
   margin-top:3%;
@@ -142,19 +157,7 @@ code{
   color:orange;
     font-size:2rem!important;
 }
-#span_title{
-  font-family: 'Carter_One';  font-weight:normal;font-style:italic;
-  color:purple;
-  }
-#span_title_2{
-font-family: 'Carter_One';  font-weight:bold;font-style:italic;color:purple;
-}
 
-#span_title_w{
-font-family: 'Carter_One';
-/*color:#ff00bf;*/
-color:#ffc0cb;
-}
 
 li #s_center_menu{
   color:blue!important;

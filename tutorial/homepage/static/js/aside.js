@@ -43,15 +43,20 @@ $('#asidebar').click(function(event){
   let x=$('#d_tutorial_section').offset().left;
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==-15)
     {
-
+      console.log("exec 1")
       $('#d_tutorial_section').animate({'margin-left': -off},300);
       $('#d_Web_menu').css('display','none');
       $('#d_Linux_menu').css('display','none');
       $('#d_Django_menu').css('display','none');
     }
+    // l 'elemento table_tutorial deve ritornare a 0px anche quando clicco sulla freecia , oltre che nell hover della freccia !'
     else{
-        $('#d_tutorial_section').animate({'margin-left': '-15px'},300);
+      if ( table_tutorial.offset().left<0) {
+        console.log("exec 2")
+        $('#d_tutorial_section').animate({'margin-left': '0px'},300);
+      }
     }
+    // FINE COMMENTO
 }
 
 );
