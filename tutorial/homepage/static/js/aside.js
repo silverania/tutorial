@@ -7,6 +7,7 @@ $(document).ready(function(){
   headLinux=$('#a-Linux');
   headDjango=$('#a-Django');
   var s = $("a[id^='a_html']");
+  var off;
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
   var divaside=document.getElementById('d_divaside');
@@ -18,6 +19,8 @@ $(document).ready(function(){
 
 // ##################################### Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
+    table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
+    off=table_tutorial_width+15;
      table_tutorial.animate({'margin-left':'0'},400);
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '0.9',},100);
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
@@ -43,7 +46,6 @@ $('#asidebar').click(function(event){
   let x=$('#d_tutorial_section').offset().left;
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==-15)
     {
-      console.log("exec 1")
       $('#d_tutorial_section').animate({'margin-left': -off},300);
       $('#d_Web_menu').css('display','none');
       $('#d_Linux_menu').css('display','none');
@@ -52,7 +54,6 @@ $('#asidebar').click(function(event){
     // l 'elemento table_tutorial deve ritornare a 0px anche quando clicco sulla freecia , oltre che nell hover della freccia !'
     else{
       if ( table_tutorial.offset().left<0) {
-        console.log("exec 2")
         $('#d_tutorial_section').animate({'margin-left': '0px'},300);
       }
     }
@@ -88,9 +89,9 @@ $("li[id^='a-']").click(function(event){
   var leftOffset=mydiv.offsetLeft;
 
   if(leftOffset>0){
-
-    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : -topOffset},800);
-      $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : -topOffset },200);
+    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "-30%"},300);
+      $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "90%"},300);
+      $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : "0" },300);
     showHeader(text);
   }
   else{
@@ -126,7 +127,7 @@ $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
   $('.d_divaside').is(":visible")) {
-    $('.d_divaside').animate({ "margin-left" : '0%',"margin-top" : "0%"},400);
+    $('.d_divaside').css( 'left' , '-700px');
   }
 
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==15)
