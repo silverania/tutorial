@@ -257,7 +257,10 @@ font-weight:bold;
   background-color:black;
   color:orange;
 }
-
+#p_content{
+  margin:0 auto;
+  padding:20px;
+}
 a:hover{
   cursor:pointer;
 }

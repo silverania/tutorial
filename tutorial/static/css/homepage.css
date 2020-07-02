@@ -93,10 +93,13 @@ margin-top:1%;
 }
 #d_content{
   margin:2% auto;
+<<<<<<< HEAD
 }
 #t_header{
   background-color: white;
   color:orange;
+=======
+>>>>>>> 2d397112af25fbb4363751bf241834c7a0fb6dd6
 }
 [id^="a-"]{
   width:auto;
@@ -231,7 +234,10 @@ font-weight:bold;
   background-color:black;
   color:orange;
 }
-
+#p_content{
+  margin:0 auto;
+  padding:20px;
+}
 a:hover{
   cursor:pointer;
 }
