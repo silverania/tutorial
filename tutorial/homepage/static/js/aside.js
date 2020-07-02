@@ -84,14 +84,15 @@ $("li[id^='a-']").click(function(event){
 
   if(leftOffset>0){
 
-    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "0%"},800);
+    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : -topOffset},800);
       $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : -topOffset },200);
     showHeader(text);
   }
   else{
     showHeader(text);
     $('.d_divaside').css('display', 'block');
-    $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : -topOffset },200);
+    //$('.d_divaside').css('position', 'absolute');
+    $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"top" : "0px" },200);
   }
   function showHeader(text){
   switch (text){
@@ -117,17 +118,14 @@ $("li[id^='a-']").click(function(event){
 
 /*nascondo tutto se clicco al di fuori del documento*/
 $(document).click(function(event) {
-    alert('applico off');
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
-
   $('.d_divaside').is(":visible")) {
-alert('applico off_1');
     $('.d_divaside').animate({ "margin-left" : '0%',"margin-top" : "0%"},400);
   }
+
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==15)
   {
-    alert('applico off_2');
     $('#d_tutorial_section').animate({'margin-left': -off},600);
   }
 });

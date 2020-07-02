@@ -192,7 +192,7 @@ li #s_center_menu{
 }
 [id^=s_leftmenu]{
   font-size:1rem;
-  color:blue;
+  color:orange;
 }
 
 #topnav{
@@ -247,6 +247,8 @@ font-weight:bold;
 }
 [id^="a_tutorial"]{
   width:auto!important;
+  background-color: grey;
+  color:orange;
 }
 [id^="a_tutorial"]:hover{
   background-color:black;
@@ -276,7 +278,7 @@ background-color: red;
 
 .d_divaside{
   display:none;
-  position:relative;
+  position:absolute;
   width:100%;
   padding:0;
   margin:0;
