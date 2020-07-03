@@ -14,7 +14,7 @@
 
 {% block content %}
 
-      <p  id="p_content"  style="font-weight:normal;">
+      <p  id="p_content">
 
       Non sono in alcun modo responsabile per eventuali cattivi funzionamenti del vostro sistema .
 
@@ -24,7 +24,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
   distribuzione.
   </p>
   <p style="width:100%;max-width:100%;" id="p_content">
-    <span id="s_kernel"class="badge badge-info">Installiamo Le Dipendenze</span><br><br>
+    <span id="s_paragrafo"class="badge badge-info">Installiamo Le Dipendenze</span><br><br>
 
    La maggior parte dei pacchetti elencati nella  <span style="color:blu"><a href="#dipendenze" title="visualizza le dipendenze per la compilazione">figura 0.a</a></span>
    dovrebbero essere già installati sulle distribuzioni Linux più usate .
@@ -41,20 +41,21 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
 </p>
 <br><br>
 <span style="color:orange;">0.a</span>
-<table id="dipendenze" class="table table-dark" border="2" style="width:100%;height:auto;">
-  <thead valign="bottom">
+<table id="dipendenze" class="table  table-dark" border="2" style="width:50%!important;height:auto;">
+  <thead class="thead-dark">
     <tr>
       <th>Programma</th>
       <th>Versione Minima</th>
       <th>Comando</th>
     </tr>
   </thead>
-  <tbody valign="top" >
-    <tr class=""><td>GNU C</td>
+  <tbody>
+    <tr><td>GNU C</td>
       <td>3.2</td>
       <td>gcc –version</td>
     </tr>
-    <tr><td>GNU make</td>
+    <tr>
+      <td>GNU make</td>
       <td>3.80</td>
       <td>make –version</td>
     </tr>
@@ -70,7 +71,8 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
       <td>0.9.10</td>
       <td>depmod -V</td>
     </tr>
-    <tr ><td>e2fsprogs</td>
+    <tr>
+      <td>e2fsprogs</td>
       <td>1.41.4</td>
       <td>e2fsck -V</td>
     </tr>
@@ -79,11 +81,13 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
       <td>1.1.3</td>
       <td>fsck.jfs -V</td>
     </tr>
-    <tr ><td>reiserfsprogs</td>
+    <tr>
+      <td>reiserfsprogs</td>
       <td>3.6.3</td>
       <td>reiserfsck -V</td>
     </tr>
-    <tr><td>xfsprogs</td>
+    <tr>
+      <td>xfsprogs</td>
       <td>2.6.0</td>
       <td>xfs_db -V</td>
     </tr>
@@ -91,7 +95,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
       <td>4.0</td>
       <td>mksquashfs -version</td>
     </tr>
-    <tr ><td>btrfs-progs</td>
+    <tr><td>btrfs-progs</td>
       <td>0.18</td>
       <td>btrfsck</td>
     </tr>
@@ -99,55 +103,55 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
       <td>004</td>
       <td>pccardctl -V</td>
     </tr>
-    <tr ><td>quota-tools</td>
+    <tr><td>quota-tools</td>
       <td>3.09</td>
       <td>quota -V</td>
     </tr>
-    <tr ><td>PPP</td>
+    <tr><td>PPP</td>
       <td>2.4.0</td>
       <td>pppd –version</td>
     </tr>
-    <tr ><td>isdn4k-utils</td>
+    <tr><td>isdn4k-utils</td>
       <td>3.1pre1</td>
       <td>isdnctrl 2&gt;&amp;1|grep version</td>
     </tr>
-    <tr ><td>nfs-utils</td>
+    <tr><td>nfs-utils</td>
       <td>1.0.5</td>
       <td>showmount –version</td>
     </tr>
-    <tr ><td>procps</td>
+    <tr><td>procps</td>
       <td>3.2.0</td>
       <td>ps –version</td>
     </tr>
-    <tr ><td>oprofile</td>
+    <tr><td>oprofile</td>
       <td>0.9</td>
       <td>oprofiled –version</td>
     </tr>
-    <tr ><td>udev</td>
+    <tr><td>udev</td>
       <td>081</td>
       <td>udevd –version</td>
     </tr>
-    <tr ><td>grub</td>
+    <tr><td>grub</td>
       <td>0.93</td>
       <td>grub –version || grub-install –version</td>
     </tr>
-    <tr ><td>mcelog</td>
+    <tr><td>mcelog</td>
       <td>0.6</td>
       <td>mcelog –version</td>
     </tr>
-    <tr ><td>iptables</td>
+    <tr><td>iptables</td>
       <td>1.4.2</td>
       <td>iptables -V</td>
     </tr>
-    <tr ><td>openssl &amp; libcrypto</td>
+    <tr><td>openssl &amp; libcrypto</td>
       <td>1.0.0</td>
       <td>openssl version</td>
     </tr>
-    <tr ><td>bc</td>
+    <tr><td>bc</td>
       <td>1.06.95</td>
       <td>bc –version</td>
     </tr>
-    <tr ><td>Sphinx</td>
+    <tr><td>Sphinx</td>
       <td>1.2</td>
       <td>sphinx-build –version</td>
     </tr>
@@ -170,7 +174,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 <hr></hr>
 
 
-  <span id="s_kernel"class="badge badge-info">Download Del Kernel</span><br><br>
+  <span id="s_paragrafo"class="badge badge-info">Download Del Kernel</span><br><br>
   Quindi dopo aver installato le dipendenze per la buona riuscita della compilazione ,<mark> scarichiamo il kernel
     <a href="https://kernel.org" title="download del kernel Linux" target="_blank"> qui</a>.</mark>
 
@@ -179,13 +183,14 @@ che lo si è appreso diventa semplice.<br><br><br>
   Il file scaricato dovrebbe essere compresso, quindi:
 <br><br>
 
-  <div id="d_head"  style="width:50%!important;max-width:50%!important;display:inline-block!important;"><h4><b>decomprimiamolo cosi </b>:</h4>
+  <div id="d_head"  style="width:50%!important;max-width:50%!important;display:inline-block!important;"><h4><b><span class=".s_unzip">decomprimiamolo cosi </span></b>:</h4>
   <code> $ unxz linux-a.x.by.tar.xz</code></div>
   <div id="d_head" class="badge badge-info" style="width:50%!important;display:inline-block!important;float:right;"> <img width="100%" src='{% static 'images/kernel_extract_2.jpg' %}'\></div>
 
   <br><br><br><br><br><br><br>
 
-  <div  id="d_head" style="width:50%!important;display:inline-block!important;margin-bottom:10%;"><h4><b>estraiamo l' archivio tar </b>:</h4>
+  <div  id="d_head" style="width:50%!important;display:inline-block!important;margin-bottom:10%;"><h4><b>
+    estraiamo l' archivio tar </b>:</h4>
     <code> $ tar xvf linux-a.x.by.tar</code></div>
 
 <div class="badge badge-info" style="width:50%!important;display:inline-block!important;float:right;margin-bottom:10%;">
@@ -226,7 +231,7 @@ che lo si è appreso diventa semplice.<br><br><br>
   l' immagine giù e presa da Wikipedia :<br><br>
       <img width="100%" src='{% static 'images/kernel_1.jpg' %}'\>
       </p>
-<p  id="content" style="margin-top:2%;font-weight:normal;">
+<p  id="p_content" style="margin-top:2%;">
 
     - Entriamo nella cartella linux e azzeriamo
     le dipendenze con il comando <code>mrproper</code></p>
@@ -239,7 +244,7 @@ che lo si è appreso diventa semplice.<br><br><br>
         fate un backup prima di eseguire <b>mrproper</b> . basta rinominare il file <b>.config</b> in <b>config.bak</b> e <b>mrproper</b>
          non lo cancellerà più. <br><br>
          </p>
-         <span id="s_kernel"class="badge badge-info">Configuriamo Il Kernel Per La Compilazione</span>
+         <span id="s_paragrafo"class="badge badge-info">Configurazione Del Kernel</span>
 
         <br>
          <p  id="p_content" style="margin-top:2%;font-weight:normal;">
@@ -285,21 +290,21 @@ che lo si è appreso diventa semplice.<br><br><br>
               solo se installo un kernel dal gestore dei pacchetti . Se prendo il kernel dal sito "kernel.org" ovviamente devo operare da solo.
               Di seguito la procedura per riscrivere il file <b>.config</b> con "make lsmod":</p><br>
 
-              <p id="p_content"  style="margin-top:2%;font-weight:normal;">
+              <p id="p_content"  style="margin-top:2%;text-align:center;">
 
-                <span id="s_kernel"class="badge badge-info">Creiamo La Lista Dei Moduli</span><br><br>
+                <span id="s_paragrafo" class="badge badge-info forresp">Creiamo La Lista Dei Moduli</span><br><br>
 
 
 
                 - creiamo il file mod contenente l' output del comando <code title="comando che visualizza i moduli del kernel attivi">lsmod</code>:<br>
-                <br><span class="badge badge-warning" style="color:blue;width:30%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> sudo lsmod > mod</span><br>
-                il comando della riga precedente redirige , per mezzo del simbolo : <span class="badge badge-info">></span> , il risultato  del comando :  <span class="badge badge-info">lsmod</span> appunto ,
+                <br><span class="badge badge-warning" style="text-align:center!important;color:blue;margin:0 auto!important;"><span style="color:yellow">$</span> sudo lsmod > mod</span><br><br>
+                il comando della riga precedente redirige , per mezzo del simbolo :<span class="badge badge-info" style="whitespace:nowrap!important;">></span> , il risultato  del comando :  <span class="badge badge-info">lsmod</span> appunto ,
                 che serve a visualizzare la lista dei moduli del kernel caricati dal sistema operativo , in un file che abbiamo chiamato <span class="badge badge-info">mod</span> , ma avremo potuto usare qualsiasi altro nome ovviamente .<br><br>
             <br>- Controlliamo che sia stato creato il file :<code title="comando che visualizza i moduli del kernel attivi"> mod</code>:<br>
               <br><span class="badge badge-warning" style="color:blue;width:20%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> cat mod</span><br>
 
               <br> - Se il file  non è vuoto si può procedere a scrivere la configurazione in <code>.config</code> così:<br><br>
-                <span id="s_kernel"class="badge badge-info">Attiviamo I Moduli In .config</span><br><br><br><br>
+                <span id="s_paragrafo"class="badge badge-info">Attiviamo I Moduli In .config</span><br><br><br><br>
                      <span class="badge badge-warning" style="color:blue;width:50%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
                      <br><br><code>localmodoconfig</code> legge i moduli nel file <code>mod</code>
                      che abbiamo creato precedentemente , e configura il kernel allo stesso modo , attraverso la scrittura del file <code>.config</code>al cui
@@ -319,7 +324,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 
             <br><br><hr>
 
-            <span id="s_kernel"class="badge badge-info">Prima Di Compilare</span>
+            <span id="s_paragrafo"class="badge badge-info">Prima Di Compilare</span>
 
 
 
@@ -342,7 +347,7 @@ che lo si è appreso diventa semplice.<br><br><br>
                  </p>
                   <hr>
 
-                  <span id="s_kernel"class="badge badge-info">Compilazione</span><br><br>
+                  <span id="s_paragrafo"class="badge badge-info">Compilazione</span><br><br>
                    Compiliamo con :<br>
                   <code style="color:yellow;background-color:black;">mario@androgenic:~/Scaricati/linux-5.6.10$<span style="color:white"> make</span></code>
                   <br><br><br>
@@ -356,7 +361,7 @@ che lo si è appreso diventa semplice.<br><br><br>
                   <br>
                   <br>
                     <br><br><br><hr>
-                    <span id="s_kernel"class="badge badge-info">Installiamo I Moduli</span><br><br>
+                    <span id="s_paragrafo"class="badge badge-info">Installiamo I Moduli</span><br><br>
 
                   installiamo i moduli con :<br>
 
@@ -367,7 +372,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 
                       <br><br><hr>
 
-                      <span id="s_kernel"class="badge badge-info">Installiamo il Kernel In Boot ...</span><br><br>
+                      <span id="s_paragrafo"class="badge badge-info">Installiamo il Kernel In Boot ...</span><br><br>
                       <mark>Assicuratevi che la partizione <code>boot</code> sia montata</mark> , perchè il comando <code>make install</code> che useremo dovrà scrivere dei files
                       al suo interno.
                       Se volete usare <code>initrd</code> , installate il pacchetto <b><code>initramfs-tools</code></b> necessario per la sua creazione. installiamo il kernel e copiamo alcuni file nella cartella boot con :<br><br>
@@ -389,14 +394,14 @@ che lo si è appreso diventa semplice.<br><br><br>
             <hr style="background-color:black;border:2px solid;width:100%;">
 
               <p id="p_content" style="margin-top:2%;font-weight:normal;">
-              <span id="s_kernel"class="badge badge-info">  Initrd o Initramfs</span><br><br>
+              <span id="s_paragrafo"class="badge badge-info">  Initrd o Initramfs</span><br><br>
                 <mark>Il file Initrd o il più recente initramfs contiene essenzialmente i moduli (drivers) che servono ad un pc per avviarsi</mark> . Initrd
                 emula un filesystem di root che può essere montato sulla ram , su una periferica di loopback , su un floppy .
                il sistema dopo aver eseguito initrd , libera la memoria e monta la partizione vera di root del
                 sistema operativo.
                 </p><br><br><br>
                   <p style="margin:2% auto;font-weight:normal;">
-              <span id="s_kernel" class="badge badge-info">Creazione di initramfs</span>
+              <span id="s_paragrafo" class="badge badge-info">Creazione di initramfs</span>
 
                   <br><br>
                    Per creare initrd
@@ -413,7 +418,7 @@ che lo si è appreso diventa semplice.<br><br><br>
                       Se volete vedere tutte le versioni di kernel disponibili , queste sono elencate in &nbsp<code>/lib/modules</code>
                       Se volete sapere la versione del kernel in uso dal sistema eseguite :<br><br> <code>$ echo $(uname -r)</code>
 </p>
-    <p id="p_content" >  <span id="s_kernel" class="badge badge-info">Configurare Grub Per L' Avvio</span></p>
+    <p id="p_content" >  <span id="s_paragrafo" class="badge badge-info">Configurare Grub Per L' Avvio</span></p>
     <p>
     Questo passo dovrebbe non essere necessario perchè il comando <code> make install </code> lo svolge automaticamente .
       Sui sistemi Debian/Ubuntu eseguire :<br><br> <code>update-grub</code><br><br>

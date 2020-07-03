@@ -128,7 +128,9 @@ margin-right:5px;
 margin-top:1%;
 }
 #d_content{
-  margin:2% auto;
+  width:100%;
+  height:auto;
+  margin-top:2% ;
 }
 #t_header{
   background-color: white;
@@ -207,11 +209,10 @@ li #s_center_menu{
 #s_title_2{
   color:black;
 }
-#s_kernel{
+#s_paragrafo{
   text-align: left;
   font-size:1.7rem!important;
   width:100%!important;
-max-width:100%!important;
 color:orange!important;
 }
 table{
@@ -260,6 +261,7 @@ font-weight:bold;
 #p_content{
   margin:0 auto;
   padding:20px;
+  background-color: white;
 }
 a:hover{
   cursor:pointer;
@@ -387,6 +389,7 @@ margin-left:3%!important;
 td{
   font-size:0.7rem;
 }
+
 tr{
    font-size:0.8rem!important;
  }
@@ -425,12 +428,24 @@ tr{
 #asidebar .fa-angle-right{
  font-size:1.4rem!important;
 }
-#span_autore,#span_tutorial,.option_autori{
+#span_autore,#span_tutorial{
   font-size:0.4rem!important;
 }
+#select_autori{
+  font-size:5pt;
+}
+
 #p_content{
-  font-size:0.7rem;
+  font-size:0.4rem;
   margin-top:0px;
+}
+
+
+#s_paragrafo#s_paragrafo{
+  font-size:0.1rem!important;
+}
+.s_unzip{
+  font-size:0.2rem!important;
 }
 #a_logo{
   border-radius:3px!important;
@@ -456,6 +471,9 @@ size:0.5rem;
 }
 #esci, #registrati, #entra{
   font-size:0.7rem!important;
+}
+#d_approfondimenti{
+  display:none;
 }
 li #s_center_menu{
   font-size:0.5rem!important;
@@ -522,7 +540,7 @@ li #s_center_menu{
  #s_footer{
    font-size:2vw;
  }
- #s_kernel{
+ #s_paragrafo{
    font-size:2vw;
  }
 }

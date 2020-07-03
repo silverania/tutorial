@@ -1,6 +1,9 @@
 $(document).ready(function(){
+  var topNav=$('#nav_top');
+  var WINDOW_WIDTH=window.innerWidth
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
   var table_tutorial=$('#d_tutorial_section');
+  var navleft=$('#section_left_navbar');
   mydiv=document.getElementById('d_divaside');
   headWeb=$('#a-Web');
   headLinux=$('#a-Linux');
@@ -13,10 +16,8 @@ $(document).ready(function(){
   table_tutorial_WIDTH=table_tutorial.css('width');
   table_tutorial_WIDTH_initial_position=(parseInt(table_tutorial_WIDTH))+15;
   table_tutorial.css('margin-left', -table_tutorial_WIDTH_initial_position );
-//############### Quando il mouse genera un hover sul nome autore nella table side left : elenca i tutorials dell autore
 
-
-// ##################################### Animazione destra-sinistra dell elemento Angle-Right
+// Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
     table_tutorial.css('display','block');
     table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
@@ -34,32 +35,31 @@ $(document).ready(function(){
       $('#asidebar').css('color','black');
   }
 );
-// END ########################################################################
+  // END
 
 /*Se la table tutorial è in posizione left=0 vuol dire che è visibile , quindi l 'evento click su angle , la nascondera
 di nuovo ponendola in posizione margin-left= -510px' .......e viceversa
 */
 $('#asidebar').click(function(event){
+  table_tutorial.css('display','block');
   table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
   off=table_tutorial_width+15;
   $target = $(event.target);
   let x=$('#d_tutorial_section').offset().left;
-  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==-15)
-    {
-      $('#d_tutorial_section').animate({'margin-left': -off},300);
-      $('#d_Web_menu').css('display','none');
-      $('#d_Linux_menu').css('display','none');
-      $('#d_Django_menu').css('display','none');
-    }
+
     // l 'elemento table_tutorial deve ritornare a 0px anche quando clicco sulla freecia , oltre che nell hover della freccia !'
-    else{
       if ( table_tutorial.offset().left<0) {
         $('#d_tutorial_section').animate({'margin-left': '0px'},300);
       }
-    }
     // FINE COMMENTO
-}
 
+  /* se left  è > 0 : vuol dire che l elelemento table_tutorial è visibile quindi lo mando a fan culo nuovamente nei meandri del monitor
+ pronto a ritornare davanti ai coglioni al momento giusto .......o sbagliato , a secondo del punto di vista
+  */
+    if ( table_tutorial.offset().left > 0) {
+      hideTutorial();
+    }
+}
 );
 // funzioni per visulizzare menu clickati
 function showHtmlMenu(){
@@ -128,21 +128,14 @@ $(document).click(function(event) {
   $('.d_divaside').is(":visible")) {
     $('.d_divaside').css( 'left' , '-700px');
   }
-
-  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==15)
+ // se il clicc non si verifica sull elemento d_tutorial_section && tutorial_section è in posizione left==15 e il click non si verfica /// da fa-angle-right : allora nascondi l elemento d_tutorial_section !
+  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==15 && !$target.closest('.fa-angle-right').length)
   {
-    $('#d_tutorial_section').animate({'margin-left': -off},600);
+    hideTutorial();
   }
 });
+function hideTutorial(){
+  $('#d_tutorial_section').animate({'margin-left': -off },300);
+    $('#d_tutorial_section').css('display','none');
+}
 });
-  /*  tag.setAttribute("id", "div_tutorial_title"+"_"+name+"_"+surname);
-    tagspan.setAttribute("id","span_tutorial_left"+"_"+name+"_"+surname);
-    aspan.setAttribute("id", "a_tutorial_title"+"_"+name+"_"+surname);
-    aspan.setAttribute("href", url);
-    tag.appendChild(aspan);
-    aspan.appendChild(tagspan);
-    var node = document.createTextNode(tutorial);
-    tagspan.appendChild(node);
-    (element , aelement , helement).appendChild(tag);
-    value++;
-  }*/

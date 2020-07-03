@@ -110,3 +110,31 @@ footer{
     position:relative!important;
   }
   }
+  @media screen and (max-width: 480px) {
+    .div_footer{
+      left:15px;
+      top:0px;
+      position:absolute;
+      display:inline-block!important;
+    }
+    .div_footer_text{
+      left:70px;
+      top:0px;
+      position:absolute!important;
+      display:inline-block!important;
+    }
+    #div_main_footer{
+      height:inherit;
+      left:30%!important;
+      top:20%!important;
+      width:25%;
+      height:100%;
+      position:relative!important;
+    }
+    #photo_author{
+      display:none;
+    }
+    .s_font{
+      font-size:0.02rem!important;
+    }
+  }

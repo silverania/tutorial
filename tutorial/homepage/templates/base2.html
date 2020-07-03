@@ -35,11 +35,11 @@
 </div>
 </div>
 <div id="c_aside" class="container-fluid" style="margin-bottom:5%;" >
-                       <div class="row">
-                         <div class="col-4 col-md-3">
-        <section role="navigation" id="section_left_navbar">
+                       <div class="row justify-content-center">
+                         <div class="col-12 col-md-3"  id="section_left_navbar">
+        <section role="navigation">
           <aside>
-          <nav>
+          <nav id="nav_top">
          <div id="asidebar">
             <span id="asidebar"><i  class="fas fa-angle-right" aria-hidden="true"></i></span>
          </div>
@@ -48,10 +48,11 @@
 
          <div id="form" class="form-group">
     <label id="label_autore" for="labelFormAutori"><span id="span_autore" class="badge badge-warning">Scegli Autore</span></label>
-    <select  onclick="remove(this.value);" class="form-control select_autori" id="selecFormAutori">
+    <select onclick="remove(this.value);" class="" id="selecFormAutori">
 {% for t in users %}
 
-      <option  id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}} {{t.last_name}}" class="option_autori"><span class="span_option badge badge-info">{{t.first_name}} {{t.last_name}} </span></option>
+      <option  id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}} {{t.last_name}}" class="option_autori">
+      {{t.first_name}} {{t.last_name}}</option>
 
       {% endfor %}
     </select>
@@ -79,35 +80,24 @@ function remove(e){
   getIndex(e);
 }
 function getIndex(e) {
-var autore=e;
-var tag=document.getElementById('selectFormTutorials');
+  var autore=e;
+  var tag=document.getElementById('selectFormTutorials');
 
-{% for tut in tutorial_all %}
- toCompare="{{tut.author.first_name}}"+" "+"{{tut.author.last_name}}";
-if (autore==toCompare){
-  var optio = document.createElement('option');
-  title="{{tut.title}}";
-  url="{{tut.get_absolute_url}}";
-optio.setAttribute("class","mytutorialByAuthor");
-optio.value=url;
-optio.innerHTML = title;
-optio.text=title;
-
-
-
-tag.appendChild(optio);
-}
-{% endfor %}
-
+  {% for tut in tutorial_all %}
+  toCompare="{{tut.author.first_name}}"+" "+"{{tut.author.last_name}}";
+  if (autore==toCompare){
+    var optio = document.createElement('option');
+    title="{{tut.title}}";
+    url="{{tut.get_absolute_url}}";
+    optio.setAttribute("class","mytutorialByAuthor");
+    optio.value=url;
+    optio.innerHTML = title;
+    optio.text=title;
+    tag.appendChild(optio);
+  }
+  {% endfor %}
 }
 </script>
-
-
-
-
-
-
-
 
 
           <div  id="d_divaside" class="d_divaside">
@@ -128,7 +118,7 @@ tag.appendChild(optio);
        </section>
        </div>
 
-<div  role="main" class="col-8 col-md-6 col-lg-6 col-xl-6 " style="margin-left:0px!important;background-color:white;" >
+<div  role="main" class=" col-12 col-md-6 col-lg-6 col-xl-6 ">
 <article>
   <header>
       <div id="d_title" style="position:relative;width:100%;">
@@ -157,7 +147,7 @@ tag.appendChild(optio);
 <div id="d_amazon_1" class="mt-5 col-md-3 col-lg-3 col-xl-3" >
   <section id="section_right_aside">
     <aside>
-  <div style="width:100%;height:auto;margin-right:0px!important;">
+  <div id="d-approfondimenti"style="width:100%;height:auto;margin-right:0px!important;">
       <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">Approfondimenti</span>
     </div>
   {% block amazon_right %}
@@ -174,13 +164,13 @@ tag.appendChild(optio);
 <footer>
       <div id="div_main_footer">
                     <div class="div_footer">
-                         <img class="img img-fluid rounded-circle border" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
-                             width="40px" alt="non posso caricare immaggini">
+                         <img id="photo_author" class="img img-fluid rounded-circle border" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
+                              alt="non posso caricare immaggini">
                            </div>
                            <div class="div_footer_text">
-          <p id="p_footer_nome"><span id="footer_span_nome" style="color:grey;">Mario Spanò<em> <span id="footer_span_nome" style="color:grey;">spaceissimo@gmail.com</em></span>
+          <p id="p_footer_nome"><span id="footer_span_nome" style="color:grey;"class="s_font">Mario Spanò<em> <span id="footer_span_nome" style="color:grey;" class="s_font">spaceissimo@gmail.com</em></span>
           </p>
-            <p style="line-height:1;"class="p_footer"><span></span><span class="copyright-year" style="color:grey;">2020</span><span class="copyright-year">&nbsp;</span><span class="copyright-year">breakingweb.it</span><span>&nbsp;</span><span class="copyright-year">All Rights Reserved.</span></p>
+            <p style="line-height:1;"class="p_footer"><span></span><span  class="copyright-year s_font" style="color:grey;">2020</span><span class="copyright-year">&nbsp;</span><span class="copyright-year s_font">breakingweb.it</span><span>&nbsp;</span><span class="copyright-year s_font">All Rights Reserved.</span></p>
         </div>
 
 
