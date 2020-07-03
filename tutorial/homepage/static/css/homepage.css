@@ -103,7 +103,7 @@ margin-right:5px;
 }
 #d_tutorial_section{
   box-sizing: content-box;
-  display:block;
+  display:none;
   position:relative;
   width:100%!important;
   max-width:100%!important;
@@ -424,6 +424,9 @@ tr{
 }
 #asidebar .fa-angle-right{
  font-size:1.4rem!important;
+}
+#span_autore,#span_tutorial,.option_autori{
+  font-size:0.4rem!important;
 }
 #p_content{
   font-size:0.7rem;

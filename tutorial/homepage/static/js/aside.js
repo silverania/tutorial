@@ -18,6 +18,7 @@ $(document).ready(function(){
 
 // ##################################### Animazione destra-sinistra dell elemento Angle-Right
   $('#asidebar').hover(function(){
+    table_tutorial.css('display','block');
     table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
     off=table_tutorial_width+15;
      table_tutorial.animate({'margin-left':'0'},400);
