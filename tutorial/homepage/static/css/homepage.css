@@ -615,7 +615,7 @@ li #s_center_menu{
 
 
  #s_title,#s_title_2{
-    font-size:0.8rem;
+    font-size:0.9rem;
   }
   #span_title{
     font-size:1.7rem;
@@ -636,8 +636,13 @@ li #s_center_menu{
    display:block;
  }
  #p_content{
-   font-size:1rem;
+   font-size:0.8rem;
    margin-top:5%!important;
+ }
+ .s_title_paragraph{
+   text-align: left;
+   font-size:0.9rem!important;
+ color:white!important;
  }
 
  #x_code{
