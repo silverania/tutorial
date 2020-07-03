@@ -48,7 +48,7 @@
 
          <div id="form" class="form-group">
     <label id="label_autore" for="labelFormAutori"><span id="span_autore" class="badge badge-warning">Scegli Autore</span></label>
-    <select onclick="remove(this.value);" class="" id="form-control selecFormAutori">
+    <select onclick="remove(this.value);" class="form-control select_tutorial" id="selecFormAutori">
 {% for t in users %}
 
       <option  id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}} {{t.last_name}}" class="option_autori">
