@@ -65,6 +65,10 @@ footer{
     height:100%;
     position:relative!important;
   }
+  #photo_author#photo_author{
+   width:50%!important;
+   height:auto!important;
+ }
 }
 @media screen and (min-width: 1200px) {
   .div_footer{
@@ -87,6 +91,11 @@ footer{
     height:100%;
     position:relative!important;
   }
+   #photo_author#photo_author{
+    width:80%!important;
+    height:auto!important;
+  }
+
   }
 @media screen and (min-width: 1000px) {
   .div_footer{
@@ -104,7 +113,7 @@ footer{
   #div_main_footer{
     height:inherit;
     left:75%!important;
-    top:70%!important;
+    top:50%!important;
     width:25%;
     height:30%;
     position:relative!important;
@@ -125,6 +134,7 @@ footer{
     }
     #div_main_footer{
       height:inherit;
+      min-height:100px%;
       left:30%!important;
       top:20%!important;
       width:25%;

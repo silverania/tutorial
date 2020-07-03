@@ -42,7 +42,7 @@
 
 
 
-      <span class="badge badge-info" style="color:white;">index.html
+      <span class="badge badge-warning s_title_paragraph" style="color:white;">index.html
       </span><br>
       <code>
       <pre id="x_code">
@@ -81,13 +81,13 @@
 
 
   <p id="p_content">
-    <span id="title_paragrafo" class="badge badge-info"style="color:white;">Applichiamo gli stili in css3 :</span><br><br>
+    <span  class="badge badge-warning s_title_paragraph"style="color:white;">Applichiamo gli stili in css3 :</span><br><br>
     <span style="font-weight:normal;">impostiamo le proprietà nel file css. E' importante e ovvio che il menu  sia inizialmente nascosto, deve essere nascosto perchè
       esso va visualizzato quando il client che usa la pagina clicca sulla freccia <mark>angle-right</mark>,perciò per farlo apparire inizialmente nascosto ,
        imposteremo la proprietà <b>left</b> a : <code>left:-700px;</code>
     in seguito il click del mouse sulla freccia eseguirà la funzione javascript che renderà l' elemento nascosto , di nuovo visibile.
      impostando <code>left: 0px;</code><br><br>
-    <span class="badge badge-info" style="color:white;">homepage.css
+    <span class="badge badge-warning s_title_paragraph" style="color:white;">homepage.css
     </span>
       <code>
           <pre id="x_code">
@@ -126,7 +126,7 @@
 
 
   <p id="p_content">
-      <b><span class="badge badge-info" id="title_paragrafo" style="color:white;">Creiamo il file javascript per gestire gli eventi:</span></b><br><br>
+      <b><span class="badge badge-warning s_title_paragraph" id="title_paragrafo" style="color:white;">Creiamo il file javascript per gestire gli eventi:</span></b><br><br>
     <span style="font-weight:normal"> Per mostrare il menu al click del mouse sulla freccia , bisogna intercettare a livello di codice ,
       l' evento click appunto . Il linguaggio scelto per fare ciò è javascript . Nel codice javascript sottostante , la porzione di codice che intercetta il click del mouse
       sulla pagina html è questa :<code> $('#asidebar').click(function(){.... ecc...</code>
@@ -143,7 +143,7 @@
 
 
 
-  <span class="badge badge-info" style="color:white;">aside.js :
+  <span class="badge badge-warning s_title_paragraph" style="color:white;">aside.js :
   </span>
   <code>  <pre id="x_code">
     $(document).ready(function(){
@@ -195,7 +195,7 @@
     <code>&lt;i class="fas fa-angle-right">&lt;i></code>
 
 <hr><br><br>
-<h2><span class="badge badge-warning">Alternare i Menù Visualizzati</span></h2>
+<h2><span class="badge badge-warning s_title_paragraph">Alternare i Menù Visualizzati</span></h2>
 <p id="p_content" class="mt-1">
   Un problema da superare è : che dobbiamo nascondere il sub-menù visualizzato quando si fa click su una nuova opzione del menù, per evitare che si sovrappongano due sub-menù , evento ovviamente indesiderato .
    Se ad esempio faccio click sul menu "html" la pagina visualizza l' opzione "menu animato" , però se subito dopo decido di cliccare sul menu "Linux" mi tocca nascondere
@@ -203,9 +203,9 @@
   Un altro problema da superare, è ,come nascondere tutti i menù, quando l' utente fa click con il mouse sulla pagina , però fuori dal menù . Questo problema è affrontato nell' ultima funzione
    javascript , quella che gestisce <code>$(document).click(function(){ .....</code>
   Sotto i files : <mark>html,css,javascript</mark> modificati . La prima modifica riguarda il file
-  html , in cui vanno aggiunte un paio di voci ai menu . Quindi di seguito il nuovo file html :<br><br>
+  html , in cui vanno aggiunte un paio di voci ai menu. Quindi di seguito il nuovo file html<br><br>
 
-  <span class="badge badge-info" style="color:white;">index.html
+  <span class="badge badge-warning s_title_paragraph" style="color:white;">index.html
   </span><br>
 
   <pre id="x_code">
@@ -251,9 +251,9 @@
          </pre>
 
          <br><br>
-         <h2><span class="badge badge-warning">Qui Il file css3 modificato</span></h2>
+         <h2><span class="badge badge-warning s_title_paragraph">Qui Il file css</span></h2>
          <br><br>
-        <span class="badge badge-info" style="color:white;">homepage.css</span><br><br>
+
 
         <code>
          <pre id="x_code">
@@ -288,9 +288,7 @@
          </code></pre>
 
          <br><br>
-         <h2><span class="badge badge-warning">Il file javascript</span></h2><br><br>
-         <span class="badge badge-info" style="color:white;">aside.js :
-         </span><br><br>
+         <h2><span class="badge badge-warning s_title_paragraph">Il file javascript aside.js</span></h2><br><br>
           <pre id="x_code">
            $(document).ready(function(){
            /* quando il mouse tocca la freccia , quest' ultima si sposterà di 14 pixel e assumera un opacità di 0.5 . Tutto cio in 400 millisecondi*/

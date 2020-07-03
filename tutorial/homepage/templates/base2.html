@@ -124,7 +124,7 @@ function getIndex(e) {
       <div id="d_title" style="position:relative;width:100%;">
            <div id="d_photo_author" style="position:absolute;top:-10%;">
              <div style="width:60px;">
-             <img class="img img-fluid rounded-circle border" src='{% block photo %}{% endblock photo %}'
+             <img class="img img-fluid rounded-circle" src='{% block photo %}{% endblock photo %}'
              width="40px" alt="non posso caricare immaggini">
            </div>
            <div  style="width:60px;"><span class="badge badge-pill badge-warning" id="s_nome_autore">mario</span></div>
@@ -164,7 +164,7 @@ function getIndex(e) {
 <footer>
       <div id="div_main_footer">
                     <div class="div_footer">
-                         <img id="photo_author" class="img img-fluid rounded-circle border" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
+                         <img id="photo_author" class="img img-fluid rounded-circle" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
                               alt="non posso caricare immaggini">
                            </div>
                            <div class="div_footer_text">

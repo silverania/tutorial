@@ -24,7 +24,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
   distribuzione.
   </p>
   <p style="width:100%;max-width:100%;" id="p_content">
-    <span id="s_paragrafo"class="badge badge-info">Installiamo Le Dipendenze</span><br><br>
+    <span class="badge badge-info s_title_paragraph">Installiamo Le Dipendenze</span><br><br>
 
    La maggior parte dei pacchetti elencati nella  <span style="color:blu"><a href="#dipendenze" title="visualizza le dipendenze per la compilazione">figura 0.a</a></span>
    dovrebbero essere già installati sulle distribuzioni Linux più usate .
@@ -174,7 +174,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 <hr></hr>
 
 
-  <span id="s_paragrafo"class="badge badge-info">Download Del Kernel</span><br><br>
+  <span class="badge badge-info s_title_paragraph">Download Del Kernel</span><br><br>
   Quindi dopo aver installato le dipendenze per la buona riuscita della compilazione ,<mark> scarichiamo il kernel
     <a href="https://kernel.org" title="download del kernel Linux" target="_blank"> qui</a>.</mark>
 
@@ -244,7 +244,7 @@ che lo si è appreso diventa semplice.<br><br><br>
         fate un backup prima di eseguire <b>mrproper</b> . basta rinominare il file <b>.config</b> in <b>config.bak</b> e <b>mrproper</b>
          non lo cancellerà più. <br><br>
          </p>
-         <span id="s_paragrafo"class="badge badge-info">Configurazione Del Kernel</span>
+         <span class="badge badge-info s_title_paragraph">Configurazione Del Kernel</span>
 
         <br>
          <p  id="p_content" style="margin-top:2%;font-weight:normal;">
@@ -292,7 +292,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 
               <p id="p_content"  style="margin-top:2%;text-align:center;">
 
-                <span id="s_paragrafo" class="badge badge-info forresp">Creiamo La Lista Dei Moduli</span><br><br>
+                <span  class="badge badge-info s_title_paragraph forresp">Creiamo La Lista Dei Moduli</span><br><br>
 
 
 
@@ -304,7 +304,7 @@ che lo si è appreso diventa semplice.<br><br><br>
               <br><span class="badge badge-warning" style="color:blue;width:20%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> cat mod</span><br>
 
               <br> - Se il file  non è vuoto si può procedere a scrivere la configurazione in <code>.config</code> così:<br><br>
-                <span id="s_paragrafo"class="badge badge-info">Attiviamo I Moduli In .config</span><br><br><br><br>
+                <span class="badge badge-info s_title_paragraph">Attiviamo I Moduli In .config</span><br><br><br><br>
                      <span class="badge badge-warning" style="color:blue;width:50%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
                      <br><br><code>localmodoconfig</code> legge i moduli nel file <code>mod</code>
                      che abbiamo creato precedentemente , e configura il kernel allo stesso modo , attraverso la scrittura del file <code>.config</code>al cui
@@ -324,7 +324,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 
             <br><br><hr>
 
-            <span id="s_paragrafo"class="badge badge-info">Prima Di Compilare</span>
+            <span class="badge badge-info s_title_paragraph">Prima Di Compilare</span>
 
 
 
@@ -347,7 +347,7 @@ che lo si è appreso diventa semplice.<br><br><br>
                  </p>
                   <hr>
 
-                  <span id="s_paragrafo"class="badge badge-info">Compilazione</span><br><br>
+                  <span class="badge badge-info s_title_paragraph">Compilazione</span><br><br>
                    Compiliamo con :<br>
                   <code style="color:yellow;background-color:black;">mario@androgenic:~/Scaricati/linux-5.6.10$<span style="color:white"> make</span></code>
                   <br><br><br>
@@ -361,7 +361,7 @@ che lo si è appreso diventa semplice.<br><br><br>
                   <br>
                   <br>
                     <br><br><br><hr>
-                    <span id="s_paragrafo"class="badge badge-info">Installiamo I Moduli</span><br><br>
+                    <span class="s_title_paragraph badge badge-info">Installiamo I Moduli</span><br><br>
 
                   installiamo i moduli con :<br>
 
@@ -372,7 +372,7 @@ che lo si è appreso diventa semplice.<br><br><br>
 
                       <br><br><hr>
 
-                      <span id="s_paragrafo"class="badge badge-info">Installiamo il Kernel In Boot ...</span><br><br>
+                      <span class="s_title_paragraph badge badge-info">Installiamo il Kernel In Boot ...</span><br><br>
                       <mark>Assicuratevi che la partizione <code>boot</code> sia montata</mark> , perchè il comando <code>make install</code> che useremo dovrà scrivere dei files
                       al suo interno.
                       Se volete usare <code>initrd</code> , installate il pacchetto <b><code>initramfs-tools</code></b> necessario per la sua creazione. installiamo il kernel e copiamo alcuni file nella cartella boot con :<br><br>
@@ -394,14 +394,14 @@ che lo si è appreso diventa semplice.<br><br><br>
             <hr style="background-color:black;border:2px solid;width:100%;">
 
               <p id="p_content" style="margin-top:2%;font-weight:normal;">
-              <span id="s_paragrafo"class="badge badge-info">  Initrd o Initramfs</span><br><br>
+              <span class="s_title_paragraph badge badge-info">  Initrd o Initramfs</span><br><br>
                 <mark>Il file Initrd o il più recente initramfs contiene essenzialmente i moduli (drivers) che servono ad un pc per avviarsi</mark> . Initrd
                 emula un filesystem di root che può essere montato sulla ram , su una periferica di loopback , su un floppy .
                il sistema dopo aver eseguito initrd , libera la memoria e monta la partizione vera di root del
                 sistema operativo.
                 </p><br><br><br>
                   <p style="margin:2% auto;font-weight:normal;">
-              <span id="s_paragrafo" class="badge badge-info">Creazione di initramfs</span>
+              <span  class="s_title_paragraph badge badge-info">Creazione di initramfs</span>
 
                   <br><br>
                    Per creare initrd
@@ -418,7 +418,7 @@ che lo si è appreso diventa semplice.<br><br><br>
                       Se volete vedere tutte le versioni di kernel disponibili , queste sono elencate in &nbsp<code>/lib/modules</code>
                       Se volete sapere la versione del kernel in uso dal sistema eseguite :<br><br> <code>$ echo $(uname -r)</code>
 </p>
-    <p id="p_content" >  <span id="s_paragrafo" class="badge badge-info">Configurare Grub Per L' Avvio</span></p>
+    <p id="p_content" >  <span  class="s_title_paragraph badge badge-info">Configurare Grub Per L' Avvio</span></p>
     <p>
     Questo passo dovrebbe non essere necessario perchè il comando <code> make install </code> lo svolge automaticamente .
       Sui sistemi Debian/Ubuntu eseguire :<br><br> <code>update-grub</code><br><br>
