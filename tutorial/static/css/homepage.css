@@ -103,7 +103,7 @@ margin-right:5px;
 }
 #d_tutorial_section{
   box-sizing: content-box;
-  display:block;
+  display:none;
   position:relative;
   width:100%!important;
   max-width:100%!important;
@@ -128,7 +128,9 @@ margin-right:5px;
 margin-top:1%;
 }
 #d_content{
-  margin:2% auto;
+  width:100%;
+  height:auto;
+  margin-top:2% ;
 }
 #t_header{
   background-color: white;
@@ -207,12 +209,10 @@ li #s_center_menu{
 #s_title_2{
   color:black;
 }
-#s_kernel{
+.s_title_paragraph{
   text-align: left;
   font-size:1.7rem!important;
-  width:100%!important;
-max-width:100%!important;
-color:orange!important;
+color:white!important;
 }
 table{
   border:3px solid orange;
@@ -260,6 +260,7 @@ font-weight:bold;
 #p_content{
   margin:0 auto;
   padding:20px;
+  background-color: white;
 }
 a:hover{
   cursor:pointer;
@@ -387,6 +388,7 @@ margin-left:3%!important;
 td{
   font-size:0.7rem;
 }
+
 tr{
    font-size:0.8rem!important;
  }
@@ -395,6 +397,11 @@ tr{
 
  }
 
+ #x_code{
+   padding:0px;
+   margin-left:0px!important;
+   font-size:0.2rem!important;
+ }
 
 
 #img_user{
@@ -425,9 +432,24 @@ tr{
 #asidebar .fa-angle-right{
  font-size:1.4rem!important;
 }
+#span_autore,#span_tutorial{
+  font-size:0.4rem!important;
+}
+#select_autori{
+  font-size:5pt;
+}
+
 #p_content{
-  font-size:0.7rem;
+  font-size:0.4rem;
   margin-top:0px;
+}
+
+
+.s_title_paragraph.s_title_paragraph{
+  font-size:0.1rem!important;
+}
+.s_unzip{
+  font-size:0.2rem!important;
 }
 #a_logo{
   border-radius:3px!important;
@@ -453,6 +475,9 @@ size:0.5rem;
 }
 #esci, #registrati, #entra{
   font-size:0.7rem!important;
+}
+#d_approfondimenti{
+  display:none;
 }
 li #s_center_menu{
   font-size:0.5rem!important;
@@ -519,7 +544,7 @@ li #s_center_menu{
  #s_footer{
    font-size:2vw;
  }
- #s_kernel{
+ .s_title_paragraph{
    font-size:2vw;
  }
 }
@@ -590,7 +615,7 @@ li #s_center_menu{
 
 
  #s_title,#s_title_2{
-    font-size:0.8rem;
+    font-size:0.9rem;
   }
   #span_title{
     font-size:1.7rem;
@@ -611,8 +636,13 @@ li #s_center_menu{
    display:block;
  }
  #p_content{
-   font-size:1rem;
+   font-size:0.8rem;
    margin-top:5%!important;
+ }
+ .s_title_paragraph{
+   text-align: left;
+   font-size:0.9rem!important;
+ color:white!important;
  }
 
  #x_code{
