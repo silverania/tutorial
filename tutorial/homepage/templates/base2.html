@@ -1,6 +1,6 @@
 {%load staticfiles%}
 <!DOCTYPE html>
-<html lang="it">
+<html lang="it" id="page" >
 {% block head %}
 <head>
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -22,9 +22,8 @@
 </head>
 {% endblock head %}
 
-<body>
-
-
+<body id="body"  onscroll="var h=document.body.scrollHeight;getPosition(h);">
+  <progress value="0" max="100" id="progressbar"></progress>
 <div class="container-fluid" >
 <div class="row">
 <div role="header" id="col_header" class="col-12" style="margin:0px;width:100%;padding:0px">

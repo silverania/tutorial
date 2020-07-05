@@ -1,6 +1,7 @@
 $(document).ready(function(){
+  var object=$('#progress');
   var topNav=$('#nav_top');
-  var WINDOW_WIDTH=window.innerWidth
+  var WINDOW_WIDTH=window.innerWidth;
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
   var table_tutorial=$('#d_tutorial_section');
   var navleft=$('#section_left_navbar');
@@ -138,4 +139,22 @@ function hideTutorial(){
   $('#d_tutorial_section').animate({'margin-left': -off },300);
     $('#d_tutorial_section').css('display','none');
 }
+/* Funzione per evidenziare la percentuale di scrolling verticale della pagina */
+
+
 });
+/* Funzione che prende l' altezza della pagina per costruire una progress bar indicante la posizione, espressa in percentuale dello scroll sulla pagina*/
+function getPosition(height) {
+  let totalHeight=height;
+  let tagElmnt = document.getElementById("page");
+  var actualHeight = tagElmnt.scrollTop;
+  let rapport=(actualHeight/totalHeight)*100;
+  createProgressBar(rapport);
+}
+function createProgressBar(actualValue){
+  $(document).ready(function(){
+  var object=document.getElementById('progressbar');
+  object.value=parseInt(actualValue,10);
+  alert("chiamata"+actualValue);
+});
+}

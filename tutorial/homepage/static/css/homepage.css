@@ -34,15 +34,28 @@ src: url('../webfonts/ShareTechMono-Regular.ttf') ;
 html{
   width:100%;
   height:100%;
+  overflow:auto;
 }
 body {
  font-family:'WorkSans','Assistant-regular','WorkSans';
 background-color:#e6ffff;
 size:16px;
-width:100%;
-height:100%;
-}
 
+}
+#progressbar{
+  display:block;
+  position:fixed;
+width:100%;
+  height:40px;
+  left:0px;
+  top:0px;
+  margin:0;
+  padding-left:0px0;
+  padding-right:0px;
+  padding-top:10px;
+  padding-bottom:10px;
+  z-index:2;
+}
 
 header{
   width:100%;
