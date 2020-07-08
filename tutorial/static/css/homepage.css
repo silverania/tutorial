@@ -34,15 +34,24 @@ src: url('../webfonts/ShareTechMono-Regular.ttf') ;
 html{
   width:100%;
   height:100%;
+  overflow:auto;
 }
 body {
  font-family:'WorkSans','Assistant-regular','WorkSans';
 background-color:#e6ffff;
 size:16px;
-width:100%;
-height:100%;
+
 }
 
+#progressbar{
+position:fixed;
+color: orange;
+width:100%;
+top:-10px;
+height:20px;;
+margin:0 auto;
+z-index:2;
+}
 
 header{
   width:100%;
@@ -120,10 +129,7 @@ margin-right:5px;
 
 
 
-#span_tutorial_title{
-    font-size:0.8rem;
-    color:white;
-}
+
 #h_title2 {
 margin-top:1%;
 }
@@ -197,7 +203,7 @@ li #s_center_menu{
 }
 [id^=s_leftmenu]{
   font-size:1rem;
-  color:orange;
+  color:white;
 }
 
 #topnav{
@@ -209,6 +215,7 @@ li #s_center_menu{
 #s_title_2{
   color:black;
 }
+
 .s_title_paragraph{
   text-align: left;
   font-size:1.7rem!important;
@@ -250,8 +257,8 @@ font-weight:bold;
 }
 [id^="a_tutorial"]{
   width:auto!important;
-  background-color: grey;
-  color:orange;
+  background-color: orange;
+  color:white;
 }
 [id^="a_tutorial"]:hover{
   background-color:black;
@@ -507,10 +514,10 @@ li #s_center_menu{
  font-size:1rem;
  }
  #s_title{
-   font-size:0.6rem;
+   font-size:1.1rem;
  }
  #s_title_2{
-   font-size:0.6rem;
+   font-size:1.1rem;
  }
  #asidebar{
   # display:block;

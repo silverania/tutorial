@@ -1,6 +1,7 @@
 $(document).ready(function(){
+  var object=$('#progress');
   var topNav=$('#nav_top');
-  var WINDOW_WIDTH=window.innerWidth
+  var WINDOW_WIDTH=window.innerWidth;
   var horizontalHeaderMenuPosition=(window.innerWidth/2).toString();
   var table_tutorial=$('#d_tutorial_section');
   var navleft=$('#section_left_navbar');
@@ -138,4 +139,31 @@ function hideTutorial(){
   $('#d_tutorial_section').animate({'margin-left': -off },300);
     $('#d_tutorial_section').css('display','none');
 }
+/* Funzione per evidenziare la percentuale di scrolling verticale della pagina */
+
+
 });
+/* Funzione che prende l' altezza della pagina per costruire una progress bar indicante la posizione, espressa in percentuale dello scroll sulla pagina*/
+function getPosition() {
+    $(document).ready(function(){
+      docBodyScrollHeight=document.body.scrollHeight;
+      docDocElementScrollHeight=document.documentElement.scrollHeight;
+      docBodyOffsetHeight=document.body.offsetHeight;
+      docDocElementOffsetHeight=  document.documentElement.offsetHeight;
+      docBodyClientHeight=document.body.clientHeight;
+      docDocElementClientHeight=document.documentElement.clientHeight;
+      let totalHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    );
+     val=docBodyScrollHeight-docDocElementOffsetHeight;
+  let tagElmnt = document.getElementById("page");
+  var actualHeight = document.documentElement.scrollTop;
+  let rapport=(actualHeight/val)*100;
+  createProgressBar(rapport,totalHeight,actualHeight);
+});}
+function createProgressBar(actualValue){
+  var object=document.getElementById('progressbar');
+  object.value=parseInt(actualValue,10);
+}

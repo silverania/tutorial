@@ -23,10 +23,16 @@
 {% endblock head %}
 
 <body id="body"  onscroll="var h=document.body.scrollHeight;getPosition(h);">
-  <progress value="0" max="100" id="progressbar"></progress>
-<div class="container-fluid" >
+
+
+
+
+<div class="container-fluid " >
+  <div class="row ">
+  <progress  value="0" max="100" id="progressbar"></progress>
+</div>
 <div class="row">
-<div role="header" id="col_header" class="col-12" style="margin:0px;width:100%;padding:0px">
+<div role="header" id="col_header" class="col-12" style="margin:0px;width:100%;padding:0px;z-index:3!important;">
 {% block header %}
   {% include '_header.html'%}
 {% endblock header %}
@@ -128,9 +134,9 @@ function getIndex(e) {
            </div>
            <div  style="width:60px;"><span class="badge badge-pill badge-warning" id="s_nome_autore">mario</span></div>
          </div>
-             {% block tut_title %}{% endblock tut_title %} <h6 id="h_title2"> <span style="background-color:purple;display:inline-block;color:white;opacity:0.5;margin-top:30px;">&nbspDi&nbsp</span>
-             <span style="color:orange;font-family:ShareTechMono-Regular">{{tutorial.author}}</span>
-          <span style="color:grey;opacity:0.5;"> , </span><span style="color:orange;">{{tutorial.publish}}</span></h6>
+             {% block tut_title %}{% endblock tut_title %} <h6 id="h_title2"> <span class="s_title" style="background-color:purple;display:inline-block;color:white;opacity:0.5;margin-top:30px;">&nbspDi&nbsp</span>
+             <span class="s_title" style="color:orange;font-family:ShareTechMono-Regular">{{tutorial.author}}</span>
+          <span style="color:grey;opacity:0.5;" class="s_title"> , </span><span  class="s_title" style="color:orange;">{{tutorial.publish}}</span></h6>
        </div>
 </header>
 <div class="d_content">

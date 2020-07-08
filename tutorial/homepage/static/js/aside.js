@@ -144,17 +144,26 @@ function hideTutorial(){
 
 });
 /* Funzione che prende l' altezza della pagina per costruire una progress bar indicante la posizione, espressa in percentuale dello scroll sulla pagina*/
-function getPosition(height) {
-  let totalHeight=height;
+function getPosition() {
+    $(document).ready(function(){
+      docBodyScrollHeight=document.body.scrollHeight;
+      docDocElementScrollHeight=document.documentElement.scrollHeight;
+      docBodyOffsetHeight=document.body.offsetHeight;
+      docDocElementOffsetHeight=  document.documentElement.offsetHeight;
+      docBodyClientHeight=document.body.clientHeight;
+      docDocElementClientHeight=document.documentElement.clientHeight;
+      let totalHeight = Math.max(
+      document.body.scrollHeight, document.documentElement.scrollHeight,
+      document.body.offsetHeight, document.documentElement.offsetHeight,
+      document.body.clientHeight, document.documentElement.clientHeight
+    );
+     val=docBodyScrollHeight-docDocElementOffsetHeight;
   let tagElmnt = document.getElementById("page");
-  var actualHeight = tagElmnt.scrollTop;
-  let rapport=(actualHeight/totalHeight)*100;
-  createProgressBar(rapport);
-}
+  var actualHeight = document.documentElement.scrollTop;
+  let rapport=(actualHeight/val)*100;
+  createProgressBar(rapport,totalHeight,actualHeight);
+});}
 function createProgressBar(actualValue){
-  $(document).ready(function(){
   var object=document.getElementById('progressbar');
   object.value=parseInt(actualValue,10);
-  alert("chiamata"+actualValue);
-});
 }

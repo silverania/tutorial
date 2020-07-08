@@ -42,19 +42,15 @@ background-color:#e6ffff;
 size:16px;
 
 }
+
 #progressbar{
-  display:block;
-  position:fixed;
+position:fixed;
+color: orange;
 width:100%;
-  height:40px;
-  left:0px;
-  top:0px;
-  margin:0;
-  padding-left:0px0;
-  padding-right:0px;
-  padding-top:10px;
-  padding-bottom:10px;
-  z-index:2;
+top:-10px;
+height:20px;;
+margin:0 auto;
+z-index:2;
 }
 
 header{
@@ -133,10 +129,7 @@ margin-right:5px;
 
 
 
-#span_tutorial_title{
-    font-size:0.8rem;
-    color:white;
-}
+
 #h_title2 {
 margin-top:1%;
 }
@@ -210,7 +203,7 @@ li #s_center_menu{
 }
 [id^=s_leftmenu]{
   font-size:1rem;
-  color:orange;
+  color:white;
 }
 
 #topnav{
@@ -222,6 +215,7 @@ li #s_center_menu{
 #s_title_2{
   color:black;
 }
+
 .s_title_paragraph{
   text-align: left;
   font-size:1.7rem!important;
@@ -263,8 +257,8 @@ font-weight:bold;
 }
 [id^="a_tutorial"]{
   width:auto!important;
-  background-color: grey;
-  color:orange;
+  background-color: orange;
+  color:white;
 }
 [id^="a_tutorial"]:hover{
   background-color:black;
@@ -348,29 +342,10 @@ margin:0 0 auto auto;
 }
 
 
-#c_nav{
-margin-left:3%!important;
-}
-.navbar-expand-lg .navbar-nav .nav-link {
-  text-align: center;
-  display: table-cell;
-  height: 70px;
-  vertical-align: middle;
-  padding-top: 0;
-  padding-bottom: 0;
-}
-.navbar-expand-md .navbar-nav .nav-link {
-  text-align: center;
-  display: table-cell;
-    height: 70px;
-    vertical-align: middle;
-    padding-top: 0px;
-    padding-bottom: 0px;
-  }
 
-  #c_nav{
-    display:none !important;*/
-  }
+.ul_wrap{
+ margin-left:auto;
+}
 
   #d_compile > #s_compile{
     font-size:1.5rem!important;
@@ -520,10 +495,10 @@ li #s_center_menu{
  font-size:1rem;
  }
  #s_title{
-   font-size:0.6rem;
+   font-size:1.1rem;
  }
  #s_title_2{
-   font-size:0.6rem;
+   font-size:1.1rem;
  }
  #asidebar{
   # display:block;
@@ -576,7 +551,7 @@ li #s_center_menu{
    display:block;
  }
  #asidebar .fa-angle-right{
-  font-size:5.4rem!important;
+  font-size:2.4rem!important;
  }
  #h-logo{
    font-size:3vw!important;
@@ -620,8 +595,14 @@ li #s_center_menu{
     width:auto;
   }
   li #s_center_menu{
-      font-size:0.8rem!important;
+      font-size:0.7rem!important;
     }
+
+  [id^="a-"]{
+    width:auto;
+    margin:0%;
+  }
+
  code{
    font-size:1.5vw;
  }
@@ -631,14 +612,14 @@ li #s_center_menu{
     font-size:0.9rem;
   }
   #span_title{
-    font-size:1.7rem;
+    font-size:1.6rem;
     }
   #span_title_2{
-  font-size:1.7rem;
+  font-size:1.6rem;
   }
 
   #span_title_w{
-  font-size:1.7rem;
+  font-size:1.6rem;
   }
 
 
@@ -700,7 +681,9 @@ li #s_center_menu{
  code{
    font-size:1vw;
  }
-
+ #asidebar .fa-angle-right{
+  font-size:4.4rem!important;
+ }
  #asidebar{
    font-size:2vw;
      display:block;
