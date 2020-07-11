@@ -7,9 +7,9 @@
 {% block description %}Linux - La Compilazione Del Kernel: The Standard Way{% endblock description%}
 {% block photo %}{%static "/images/mestesso.jpg"%}{% endblock photo %}
 {% block tut_title %}
-  <a class="badge badge-pill badge-light" style="width:100%;display:inline-block!important;margin:0 auto!important;" href="{%url 'homepage:tutorial_detail'%}">
+  <span class="badge badge-pill badge-light" style="width:100%;display:inline-block!important;margin:0 auto!important;">
     <span id="s_title">Linux - </span>
-  <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;"> Compilare Il Kernel</span></a>{% endblock tut_title %}
+  <span id="s_title_2" style="display:inline-block;color:black;font-weight:bold;"> Compilare Il Kernel</span></span>{% endblock tut_title %}
 
 
 {% block content %}
@@ -287,7 +287,7 @@ che lo si è appreso diventa semplice.<br><br><br>
               Il modo migliore per scrivere un file <code>.config</code> funzionale , penso che sia
               quello di usare <code>lsmod</code> con <code>make localmodconfig</code> per poi rifinere la configurazione manualmente  . lsmod serve a visualizzare i moduli del kernel caricati dal sistema operativo che sta girando.
               Questo comando se usato con <code>make</code> ci copia la configurazione attuale del kernel in uso nel file <code>.config</code> del kernel che ci apprestiamo a compilare .
-              C' è da dire che molte distribuzioni linux applicano questo strumento automaticamente , scrivendo per noi il file .config , ma questo avviene
+              C' è da dire che molte distribuzioni linux applicano questo strumento automaticamente , scrivendo per noi il file&nbsp.config&nbsp,&nbspma questo avviene
               solo se installo un kernel dal gestore dei pacchetti . Se prendo il kernel dal sito "kernel.org" ovviamente devo operare da solo.
               Di seguito la procedura per riscrivere il file <b>.config</b> con "make lsmod":</p><br>
 
@@ -429,12 +429,12 @@ che lo si è appreso diventa semplice.<br><br><br>
 </p>
 {% endblock content %}
 {% block amazon_right %}
-<div style="margin-right:0;">
+
   <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1597494860&linkId=9762d964c5d52f9b08ddf653a35dccab"></iframe>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1593279124&linkId=f5cb7b44c84a8f8e715550c7ff585e50"></iframe>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1118787315&linkId=0f2214a03e99911ef6424535e3ad71b0"></iframe>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1593272901&linkId=bad9b00c63850de0fae7bbdaa4fda379"></iframe>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=1119367689&linkId=ae2303ed5317c382513dfb075afbaa86"></iframe>
 <iframe style="width:120px;height:240px;" marginwidth="0" marginheight="0" scrolling="no" frameborder="0" src="//rcm-eu.amazon-adsystem.com/e/cm?lt1=_blank&bc1=000000&IS2=1&bg1=FFFFFF&fc1=000000&lc1=0000FF&t=marios01-21&language=it_IT&o=29&p=8&l=as4&m=amazon&f=ifr&ref=as_ss_li_til&asins=8830454397&linkId=55705ae45836e453d9fc4a7b9734e69e"></iframe>
-  </div>
+
   {% endblock %}

@@ -9,6 +9,7 @@
   <meta name="keywords" content="{%block keywords%}{%endblock keywords%}">
   <meta name="description" content="{%block description%}{%endblock description%}">
   <title>{% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" href="{% static "css/reset.css"%}">
   <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}">
   <link rel="stylesheet" href="{% static "css/all.css" %}">
   <link rel="stylesheet" href="{% static "css/homepage.css" %}">
@@ -134,7 +135,7 @@ function getIndex(e) {
            </div>
            <div  style="width:60px;"><span class="badge badge-pill badge-warning" id="s_nome_autore">mario</span></div>
          </div>
-             {% block tut_title %}{% endblock tut_title %} <h6 id="h_title2"> <span class="s_title" style="background-color:purple;display:inline-block;color:white;opacity:0.5;margin-top:30px;">&nbspDi&nbsp</span>
+             <a href="{{tutorial.get_absolute_url}}">{% block tut_title %}{% endblock tut_title %} </a><h6 id="h_title2"> <span class="s_title" style="background-color:purple;display:inline-block;color:white;opacity:0.5;margin-top:30px;">&nbspDi&nbsp</span>
              <span class="s_title" style="color:orange;font-family:ShareTechMono-Regular">{{tutorial.author}}</span>
           <span style="color:grey;opacity:0.5;" class="s_title"> , </span><span  class="s_title" style="color:orange;">{{tutorial.publish}}</span></h6>
        </div>
@@ -152,11 +153,13 @@ function getIndex(e) {
 <div id="d_amazon_1" class="mt-5 col-md-3 col-lg-3 col-xl-3" >
   <section id="section_right_aside">
     <aside>
-  <div id="d-approfondimenti"style="width:100%;height:auto;margin-right:0px!important;">
-      <span style="position:relative!important;top:-30px;width:100%!important;"class="badge badge-pill badge-warning">Approfondimenti</span>
+  <div id="d-approfondimenti">
+      <span id="s_approfondimenti" class="badge badge-pill badge-warning">Approfondimenti</span>
     </div>
+    <div style="text-align:center;">
   {% block amazon_right %}
       {% endblock %}
+      </div>
     </aside>
       </section>
     </div>
@@ -167,19 +170,16 @@ function getIndex(e) {
 
   {% block footer %}
 <footer>
-      <div id="div_main_footer">
-                    <div class="div_footer">
-                         <img id="photo_author" class="img img-fluid rounded-circle" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
+  <div class='container2'>
+      <div>
+                         <img  class=" iconDetails" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
                               alt="non posso caricare immaggini">
-                           </div>
-                           <div class="div_footer_text">
-          <p id="p_footer_nome"><span id="footer_span_nome" style="color:grey;"class="s_font">Mario Spanò<em> <span id="footer_span_nome" style="color:grey;" class="s_font">spaceissimo@gmail.com</em></span>
-          </p>
-            <p style="line-height:1;"class="p_footer"><span></span><span  class="copyright-year s_font" style="color:grey;">2020</span><span class="copyright-year">&nbsp;</span><span class="copyright-year s_font">breakingweb.it</span><span>&nbsp;</span></p>
-        </div>
-
-
-</div>
+                            </div>
+                          <div class="d_breakingweb_fonts">
+                          breakingWeb.it
+                          <div class="d_info_fonts">mario Spanò , 2020</div>
+                          </div>
+                      </div>
 </footer>
   {% endblock footer %}
 

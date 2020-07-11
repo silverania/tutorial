@@ -89,6 +89,11 @@ class Tutorial(models.Model):
         self.publish.day,
         self.slug])
 
+class HashTag(models.Model):
+    name = models.CharField(max_length=64, unique=True)
+    tweet = models.ManyToManyField(Tweet)
+    def __unicode__(self):
+        return self.name
 
 
 

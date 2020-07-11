@@ -1,6 +1,6 @@
 $(document).ready(function(){
   height_footer=window.innerHeight/6;
-document.getElementById('div_main_footer').setAttribute("style","height:"+height_footer+"px");
+//document.getElementById('div_main_footer').setAttribute("style","height:"+height_footer+"px");
   var object=$('#progress');
   var topNav=$('#nav_top');
   var WINDOW_WIDTH=window.innerWidth;

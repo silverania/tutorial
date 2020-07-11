@@ -26,6 +26,9 @@ def tutorial_to_author(request, **kwargs):
         return HttpResponse()
 """
 def tutorial_detail(request, **kwargs):
+    tutorial_all = Tutorial.objects.all()
+    categorie=Category.objects.all()
+    users=User.objects.all()
     for key,value in kwargs.items():
         print(str(key)+str(value))
         if "post" in str(key) :
@@ -36,9 +39,6 @@ def tutorial_detail(request, **kwargs):
             month=str(value)
         elif 'day' in key:
             day=str(value)
-    tutorial_all = Tutorial.objects.all()
-    categorie=Category.objects.all()
-    users=User.objects.all()
     try:
         tutorial = Tutorial.objects.get(slug=post,
         publish__year=year,)
