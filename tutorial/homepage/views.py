@@ -6,7 +6,8 @@ from .forms import LoginForm
 from django.shortcuts import render, get_object_or_404
 from .models import Tutorial,Visite
 from django.urls import path
-from .models import User,Category
+from .models import Category
+#User
 import datetime
 #from django.http import urllib
 
@@ -15,16 +16,8 @@ import os
 def getLink(title):
     template=tutorial.title.replace(" ","_").lower()+".html"
     return template
-"""
-def tutorial_to_author(request, **kwargs):
-    tutorials=Tutorial
-    for key,value in kwargs.items():
-        if 'autore' in key:
-            print("trovato autore")
-            nome , cognome=value.split()
-        tuorial_per_autore=Tutorial.objects.filter(author__first_name=nome)
-        return HttpResponse()
-"""
+
+
 def tutorial_detail(request, **kwargs):
     tutorial_all = Tutorial.objects.all()
     categorie=Category.objects.all()

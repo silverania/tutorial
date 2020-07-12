@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Tutorial,User,Category
+from .models import Tutorial,Category
+from user.models import User
 class PostAdmin(admin.ModelAdmin):
     list_display = ('title', 'slug','status')
     search_fields = ('title', 'slug','status')

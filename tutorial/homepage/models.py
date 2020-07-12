@@ -5,6 +5,7 @@ from datetime import datetime
 # Create your models here.
 from django.contrib.auth.models import User
 from django.urls import reverse
+from .models import User
 
 #custom modelmanager classe per visualizzare tutorial  in admin
 class PublishedManager(models.Manager):
@@ -35,7 +36,7 @@ class Category(models.Model):
     django='Django'
     generica='Generica'
     title = models.CharField(max_length=250)
-    user = models.ManyToManyField(User,related_name='categories')
+    user = models.ManyToManyField(User,related_name='categorie')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     category = models.CharField(max_length=50,
@@ -46,15 +47,7 @@ class Category(models.Model):
     def __str__(self):
         return "%s" % (self.title)
 
-class User(models.Model):
-    first_name = models.CharField(max_length=30)
-    last_name = models.CharField(max_length=30)
-    email = models.EmailField()
-    #users = User.objects.all()
-    #user=models.OneToOneField(User,on_delete=models.CASCADE)
-    categories = models.ManyToManyField(Category,related_name='users')
-    def __str__(self):
-        return "%s %s" % (self.first_name, self.last_name)
+
 
 
 class Tutorial(models.Model):
@@ -64,12 +57,11 @@ class Tutorial(models.Model):
     title = models.CharField(max_length=250)
     overview = models.TextField(default="tutorial")
     slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)
-    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    author = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
-    #cat=Category
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="tutorials")
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
         # decommentare una delle seguenti tre righe per selezionare un custom model manager
@@ -89,11 +81,6 @@ class Tutorial(models.Model):
         self.publish.day,
         self.slug])
 
-class HashTag(models.Model):
-    name = models.CharField(max_length=64, unique=True)
-    tweet = models.ManyToManyField(Tweet)
-    def __unicode__(self):
-        return self.name
 
 
 
