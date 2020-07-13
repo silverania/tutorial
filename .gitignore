@@ -8,3 +8,4 @@ node_modules
 processing-3.5.4
 youtube
 auto_learning/*
+migrations/
