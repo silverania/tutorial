@@ -7,6 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Tutorial,Visite
 from django.urls import path
 from .models import Category
+from user.models import User
 #User
 import datetime
 #from django.http import urllib

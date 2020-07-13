@@ -45,12 +45,11 @@ size:16px;
 }
 
 
-#progressbar{
+progress#progressbar{
 position:fixed;
-color: orange;
 width:100%;
-top:-10px;
-height:20px;;
+top:-8px;
+height:30px;;
 margin:0 auto;
 z-index:2;
 }

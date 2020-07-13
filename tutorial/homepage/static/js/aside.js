@@ -159,11 +159,14 @@ function getPosition() {
       document.body.offsetHeight, document.documentElement.offsetHeight,
       document.body.clientHeight, document.documentElement.clientHeight
     );
-     val=docBodyScrollHeight-docDocElementOffsetHeight;
+     val=docDocElementOffsetHeight-docDocElementClientHeight;
   let tagElmnt = document.getElementById("page");
   var actualHeight = document.documentElement.scrollTop;
-  let rapport=(actualHeight/val)*100;
-  createProgressBar(rapport,totalHeight,actualHeight);
+  /*alert(actualHeight+"val_"+docBodyScrollHeight+"_"+docDocElementOffsetHeight+"_docbodyoffsetheight"+docBodyOffsetHeight
+  +"docDocElementOffsetHeight"+docDocElementOffsetHeight+"docBodyClientHeight"+docBodyClientHeight+"docDocElementClientHeight"+docDocElementClientHeight);*/
+  let rapport=parseInt((actualHeight/val)*100);
+
+  createProgressBar(rapport);
 });}
 function createProgressBar(actualValue){
   var object=document.getElementById('progressbar');
