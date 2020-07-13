@@ -176,20 +176,39 @@ want to bark?" maxlength="140"></textarea>
 </div>
 
 
-  {% block footer %}
-<footer>
-  <div class='container2'>
-      <div>
-                         <img  class=" iconDetails" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
-                              alt="non posso caricare immaggini">
-                            </div>
-                          <div class="d_breakingweb_fonts">
-                          breakingWeb.it
-                          <div class="d_info_fonts">mario Spanò , 2020</div>
-                          </div>
-                      </div>
+{% block footer %}
+<footer class="footer">
+<div class="row">
+  <div class="col-12 col-sm-8 col-md-4 col-lg-3" style="padding:2%;">
+  <div>
+    <img  class=" iconDetails" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
+    alt="non posso caricare immaggini">
+  </div>
+  <div class="d_breakingweb_fonts">
+
+    <dl>
+        <dt class="badge badge-info">BreakingWeb.it</dt>
+        <dd><address><a href="mailto:spaceissimo@gmail.com">Mario Spanò</a></address></dd>
+      </dl>
+
+
+
+
+
+  </div>
+</div>
+  <div class="col-sm-4 col-md-8 col-lg-9">
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-12 col-md-12 col-lg-12 text-center">
+     <small id="small_text_license">Tutti i contenuti sono prottetti dalla licenza creative commons</small>
+  </div>
+</div>
 </footer>
-  {% endblock footer %}
+
+{% endblock footer %}
 
 </body>
 </html>

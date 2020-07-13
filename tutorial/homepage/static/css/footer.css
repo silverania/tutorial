@@ -1,9 +1,7 @@
-footer{
-  position:absolute;
-  bottom:0;
+.footer{
   width:100%;
-  height:auto;
-  min-height:200px;
+  height:200%;
+  min-height:200%;
   background-color: pink;
 }
 .iconDetails {
@@ -15,14 +13,9 @@ border-radius: 40px;
 opacity:0.6;
 }
 
-.container2 {
-   width:100%;
-   height:auto;
-   padding:1%;
-}
 
 .d_breakingweb_fonts{
-  margin-left:110px!important;
+  margin-left:70px!important;
 color:grey;
 }
 .d_info_fonts {
@@ -37,7 +30,9 @@ color:grey;
       font-size: .5rem;
     margin-left:70px!important;
   }
-
+#small_text_license{
+  font-size:0.5rem;
+}
 }
 
 @media screen and (min-width: 480px) {
@@ -50,12 +45,14 @@ color:grey;
   float:left!important;
   }
 
-  .container2 {
-     padding:1%;
-  }
+
   .d_breakingweb_fonts{
-    margin-left:90px!important;
+    margin-left:70px!important;
       font-size: .4rem;
+  }
+  #small_text_license{
+    font-size:0.5rem;
+    opacity:0.7;
   }
 }
 
@@ -66,6 +63,6 @@ color:grey;
   }
   .d_breakingweb_fonts{
       font-size: .8rem;
-    margin-left:115px!important;
+    margin-left:70px!important;
   }
 }
