@@ -20,6 +20,10 @@ def getLink(title):
 
 
 def tutorial_detail(request, **kwargs):
+    if request.user.is_authenticated:
+        login=True
+    else:
+        login=False
     tutorial_all = Tutorial.objects.all()
     categorie=Category.objects.all()
     users=User.objects.all()
@@ -42,10 +46,7 @@ def tutorial_detail(request, **kwargs):
             tutorial=Tutorial.objects.latest('publish')
     template=tutorial.title.replace(" ","_").lower()+".html"
     print("template="+template)
-    if request.user.is_authenticated:
-        login=True
-    else:
-        login=False
+
     vis=Visite()
     try:
         lastobj=Visite.objects.latest('visite')

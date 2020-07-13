@@ -19,6 +19,7 @@
   <script  src="{% static 'js/jquery.min.js' %}"></script>
   <script  src="{% static 'js/aside.js' %}"></script>
   <script  src="{% static 'js/style.js' %}"></script>
+  <script  src="{% static 'js/blog.js' %}"></script>
   <script  src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 {% endblock head %}
@@ -165,12 +166,25 @@ function getIndex(e) {
     </div>
 
 </div>
+<div class="container-fluid">
 <div class="row justify-content-center">
-  <div class="col-12">
+  <div class="col-md-8 offset-md-4  offset-lg-3 col-lg-6 text-center">
 <section id="blog">
-  <textarea class="form-control" rows="4" placeholder="What you
-want to bark?" maxlength="140"></textarea>
+
+<div  class="blog_title">
+  <span id="s_blog" class="badge badge-warning"><i class="fas fa-comments"></i>&nbsp&nbspCommenti/Discussioni
+</span></div>
+<form class="form">
+  <textarea onclick="writeMsg('{{login}}');" id="t_textarea" class="form-control" rows="4" placeholder="io rispetto te , tu rispetti me" maxlength="140"></textarea>
 </section>
+</div>
+<div class="col-md-2 col-lg-3 text-center">
+
+</div>
+<div class="col-md-2 col-lg-3 text-center">
+
+</div>
+
 </div>
 </div>
 </div>
