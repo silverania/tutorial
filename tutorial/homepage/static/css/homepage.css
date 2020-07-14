@@ -44,7 +44,14 @@ background-color:#e6ffff;
 size:16px;
 }
 
-
+.badge.badge-info.badge-outlined-info{
+  background-color:transparent!important;
+  color:DodgerBlue;;
+}
+#s_blog_text{
+  color:grey;
+  font-size:inherit!important;
+}
 progress#progressbar{
 position:fixed;
 width:100%;
