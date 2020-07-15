@@ -48,6 +48,12 @@ size:16px;
   background-color:transparent!important;
   color:DodgerBlue;;
 }
+/* button commenti */
+#multiarea{
+  box-sizing:border-box;
+  width:100%;
+}
+
 #s_blog_text{
   color:grey;
   font-size:inherit!important;
