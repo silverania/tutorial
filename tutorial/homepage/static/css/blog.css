@@ -1,0 +1,21 @@
+#s_blog_text{
+  color:grey;
+  font-size:inherit!important;
+}
+
+.fa-comments{
+ color:orange;
+}
+
+  @media screen and (max-width: 780px) {
+  .fa-comments,#s_blog
+  {
+      size:2rem!important;
+    }
+  }
+
+@media screen and (max-width: 1024px) {
+  .fa-comments,#s_blog{
+    font-size:1.5rem;
+  }
+}
