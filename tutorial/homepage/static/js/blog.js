@@ -25,14 +25,14 @@ function disableButtonComment(element){
 }
 function writeMsg(id,login){
   console.log("login"+login)
-  if(login==false){
+  if(login=="False"){
     console.log("sto for")
-
+    document.writeln("<h3>Il Sistema Di Messaggi arriva a giorni ! ..........se vuoi  effettua il <a href='user/login'>login</a> per postare messaggi, oppure <a href='user/register'>Registrati</a> !</h3>")
 }
   else
     {
     console.log("i stray aint")
-  }
+
   var figlio=document.getElementById(id);
   var id=id;
   var el;
@@ -46,5 +46,5 @@ function writeMsg(id,login){
     }
   }
     new Blog();
-
+}
 }

@@ -62,10 +62,7 @@ textarea{
   color:grey;
 }
 
-#s_blog_text{
-  color:grey;
-  font-size:inherit!important;
-}
+
 progress#progressbar{
 position:fixed;
 width:100%;
@@ -74,10 +71,7 @@ height:30px;;
 margin:0 auto;
 z-index:2;
 }
- .fa-comments{
-   font-siz
-  color:yellow;
-}
+
 header{
   width:100%;
   max-width:100%;
@@ -753,10 +747,8 @@ li #s_center_menu{
  #s_footer{
    font-size:0.9vw;
  }
- .fa-comments,#s_blog{
-   font-size:1.5rem;
 }
-}
+
 @media screen and (min-width: 1200px) {
   li #s_center_menu{
       font-size:1rem!important;
