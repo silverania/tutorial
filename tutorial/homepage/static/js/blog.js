@@ -3,14 +3,24 @@ function addTextArea(){
   padre=document.getElementById("multiarea");
   area=document.createElement("TEXTAREA");
   area.setAttribute("rows","12");
+  area.setAttribute("title","devi essere autenticato per usare la chat !")
   padre.prepend(area);
-  $(area).animate({'width':'100%','margin-left':'-200px'},2000);
+  $(area).animate({'width':'100%'},2000);
   return 0;
 }
 function disableButtonComment(element){
   element.disabled=true;
 }
 function writeMsg(id,login){
+  console.log("login"+login)
+  if(login==false){
+    console.log("sto for")
+
+}
+  else
+    {
+    console.log("i stray aint")
+  }
   var figlio=document.getElementById(id);
   var id=id;
   var el;
