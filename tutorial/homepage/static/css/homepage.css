@@ -50,8 +50,16 @@ size:16px;
 }
 /* button commenti */
 #multiarea{
-  box-sizing:border-box;
-  width:100%;
+  margin:0px;
+  padding:0px;
+}
+textarea{
+    font-family: 'WorkSans';
+    font-size: 1rem;
+    line-height:1;
+  outline:none;
+  padding:5%;
+  color:grey;
 }
 
 #s_blog_text{

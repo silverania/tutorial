@@ -1,9 +1,21 @@
-function addTextArea(){
+border="4px solid orange"
+class textArea {
+  constructor(){
+  }
+   create(){
+    var area=document.createElement("TEXTAREA");
+    area.setAttribute("id","post_comment")
+    area.setAttribute("rows","2");
+    $(area).css("border", border)
+    area.setAttribute("title","devi essere autenticato per usare la chat !")
+    return area;
+  }
+}
+function addTextArea(id){
   let title=document.getElementsByClassName("blog_title");
   padre=document.getElementById("multiarea");
-  area=document.createElement("TEXTAREA");
-  area.setAttribute("rows","12");
-  area.setAttribute("title","devi essere autenticato per usare la chat !")
+  a=new textArea();
+  area=a.create(id)
   padre.prepend(area);
   $(area).animate({'width':'100%'},2000);
   return 0;
