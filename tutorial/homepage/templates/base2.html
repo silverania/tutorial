@@ -175,10 +175,12 @@ function getIndex(e) {
 <div  class="blog_title">
   <span id="s_blog_icon" class="badge badge-info badge-outlined-info"><i class="fas fa-comments"></i>  <span id="s_blog_text" >
 </span></div>
-<div id="multiarea">
-<button id="button_blog" class="btn btn-block btn-outline-info" onclick="writeMsg(this.id,'{{login}}')">Commenta
+<form action="submit">
+<div class="form-group" id="multiarea">
+<button type="button" id="button_blog" class="btn btn-block btn-outline-info" onclick="writeMsg(this.id,'{{login}}')">Commenta
 </button>
 </div>
+</form>
   <!--textarea onclick="writeMsg(this.id,'{{login}}');" id="t_textarea" class="form-control" rows="4" placeholder="Cosa Ti Affligge ?" maxlength="140"></textarea-->
 
 </section>

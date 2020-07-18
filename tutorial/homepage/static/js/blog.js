@@ -6,6 +6,7 @@ class textArea {
     var area=document.createElement("TEXTAREA");
     area.setAttribute("id","post_comment")
     area.setAttribute("rows","2");
+    area.setAttribute("name","q")
     $(area).css("border", border)
     area.setAttribute("title","devi essere autenticato per usare la chat !")
     return area;
@@ -14,16 +15,23 @@ class textArea {
 function addTextArea(id){
   let title=document.getElementsByClassName("blog_title");
   padre=document.getElementById("multiarea");
+  // controllo che non sia stata gia creata la textarea per evitare di sovrapporne piu di una
   if (!(typeof(a)=="object"))
   {
     a=new textArea();
     area=a.create(id)
     padre.prepend(area);
     $(area).animate({'width':'100%'},2000);
+
     return 0;
   }
   else {
-    return -1
+    el=document.getElementById(id);
+    if(!(area.value=="")) {
+      console.log("area="+area.value)
+    el.setAttribute("type","submit");
+    }
+    return 1
   }
 }
 function disableButtonComment(element){
@@ -46,11 +54,12 @@ function writeMsg(id,login){
     let i=addTextArea(id);
     alert("i="+i+"typeof="+typeof(a))
     enableButtonComment(id)
-  var figlio=document.getElementById(id);
-  var id=id;
-  var el;
-  var padre;
-  var area;
+    var figlio=document.getElementById(id);
+    figlio.setAttribute("click","")
+    var id=id;
+    var el;
+    var padre;
+    var area;
 
 }
 }
