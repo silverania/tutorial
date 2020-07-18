@@ -14,15 +14,27 @@ class textArea {
 function addTextArea(id){
   let title=document.getElementsByClassName("blog_title");
   padre=document.getElementById("multiarea");
-  a=new textArea();
-  area=a.create(id)
-  padre.prepend(area);
-  $(area).animate({'width':'100%'},2000);
-  return 0;
+  if (!(typeof(a)=="object"))
+  {
+    a=new textArea();
+    area=a.create(id)
+    padre.prepend(area);
+    $(area).animate({'width':'100%'},2000);
+    return 0;
+  }
+  else {
+    return -1
+  }
 }
 function disableButtonComment(element){
   element.disabled=true;
 }
+
+function enableButtonComment(element){
+  element.disabled=false;
+  alert('enabled')
+}
+
 function writeMsg(id,login){
   console.log("login"+login)
   if(login=="False"){
@@ -31,20 +43,14 @@ function writeMsg(id,login){
 }
   else
     {
-    console.log("i stray aint")
-
+    let i=addTextArea(id);
+    alert("i="+i+"typeof="+typeof(a))
+    enableButtonComment(id)
   var figlio=document.getElementById(id);
   var id=id;
   var el;
   var padre;
   var area;
-    class Blog{
-      constructor(){
-        if(addTextArea(id)==0){
-          disableButtonComment(figlio);
-        }
-    }
-  }
-    new Blog();
+
 }
 }
