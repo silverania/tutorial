@@ -27,7 +27,7 @@ function writeMsg(id,login){
   console.log("login"+login)
   if(login=="False"){
     console.log("sto for")
-    document.writeln("<h3>Il Sistema Di Messaggi arriva a giorni ! ..........se vuoi  effettua il <a href='user/login'>login</a> per postare messaggi, oppure <a href='user/register'>Registrati</a> !</h3>")
+    document.writeln("<h3> Blog in programmazione ! ..........effettua il <a href='user/login'>login</a> , oppure <a href='user/register'>Registrati</a> !</h3>")
 }
   else
     {
