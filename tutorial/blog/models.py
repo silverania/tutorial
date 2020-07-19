@@ -2,6 +2,7 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 from homepage.models import Tutorial
+from django.urls import reverse
 # Create your models here.
 
 class Comment(models.Model):
@@ -18,6 +19,8 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
+    def get_absolute_url(self):
+        return reverse('blog:newPost',args=[self.publish.year,self.publish.month,self.publish.day, self.slug])
     class Meta:
         ordering = ('-publish',)
     def __str__(self):

@@ -19,5 +19,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('homepage.urls', namespace='tutorial')),
     path('user/', include('user.urls')),
-
+    path('post/', include('blog.urls')),
 ]
