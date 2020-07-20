@@ -10,3 +10,6 @@ youtube
 auto_learning/*
 migrations/
 virt*/
+bin/
+lib/
+lib64/
