@@ -40,11 +40,11 @@ function disableButtonComment(element){
 
 function enableButtonComment(element){
   element.disabled=false;
-  alert('enabled')
+  //alert('enabled')
 }
 
 function writeMsg(id,login){
-  console.log("login"+login)
+  //console.log("login"+login)
 /*  if(login=="False"){
     console.log("sto for")
     document.writeln("<h3>Per inviare messaggi devi <a href='user/login'>login</a><a href='user/register'></h3>")
@@ -52,7 +52,7 @@ function writeMsg(id,login){
   else
     {*/
     let i=addTextArea(id);
-    alert("i="+i+"typeof="+typeof(a))
+    //alert("i="+i+"typeof="+typeof(a))
     enableButtonComment(id)
     var figlio=document.getElementById(id);
     figlio.setAttribute("click","")
