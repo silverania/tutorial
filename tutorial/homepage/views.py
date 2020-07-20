@@ -7,7 +7,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import Tutorial,Visite
 from django.urls import path
 from .models import Category
-from user.models import User
+from user.models import Profile
 #User
 import datetime
 #from django.http import urllib
@@ -26,7 +26,7 @@ def tutorial_detail(request, **kwargs):
         login=False
     tutorial_all = Tutorial.objects.all()
     categorie=Category.objects.all()
-    users=User.objects.all()
+    users=Profile.objects.all()
     for key,value in kwargs.items():
         print(str(key)+str(value))
         if "post" in str(key) :

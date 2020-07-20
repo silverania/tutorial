@@ -4,11 +4,18 @@
 }
 
 .fa-comments{
- color:yellow;
+ color:orange;
 }
 
   @media screen and (max-width: 780px) {
-    .fas .fa-comments{
-      font-size:0.7rem;
+  .fa-comments,#s_blog
+  {
+      size:2rem!important;
     }
   }
+
+@media screen and (max-width: 1024px) {
+  .fa-comments,#s_blog{
+    font-size:1.5rem;
+  }
+}

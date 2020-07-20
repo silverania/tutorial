@@ -45,12 +45,12 @@ function enableButtonComment(element){
 
 function writeMsg(id,login){
   console.log("login"+login)
-  if(login=="False"){
+/*  if(login=="False"){
     console.log("sto for")
-    document.writeln("<h3> Blog in programmazione ! ..........effettua il <a href='user/login'>login</a> , oppure <a href='user/register'>Registrati</a> !</h3>")
+    document.writeln("<h3>Per inviare messaggi devi <a href='user/login'>login</a><a href='user/register'></h3>")
 }
   else
-    {
+    {*/
     let i=addTextArea(id);
     alert("i="+i+"typeof="+typeof(a))
     enableButtonComment(id)
@@ -61,5 +61,5 @@ function writeMsg(id,login){
     var padre;
     var area;
 
-}
+//}
 }
