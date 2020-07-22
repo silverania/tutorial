@@ -6,13 +6,13 @@ class textArea {
     var area=document.createElement("TEXTAREA");
     area.setAttribute("id","post_comment")
     area.setAttribute("rows","2");
-    area.setAttribute("name","q")
+    area.setAttribute("name","messaggio")
     $(area).css("border", border)
     area.setAttribute("title","devi essere autenticato per usare la chat !")
     return area;
   }
 }
-function addTextArea(id){
+function buttonCommentActionSelect(id){
   let title=document.getElementsByClassName("blog_title");
   padre=document.getElementById("multiarea");
   // controllo che non sia stata gia creata la textarea per evitare di sovrapporne piu di una
@@ -25,11 +25,27 @@ function addTextArea(id){
 
     return 0;
   }
+  // se la textarea esiste e il campo testo non è vuoto : sparo la request xmlhhtprequest al server per i dialoghi asincroni con esso
   else {
     el=document.getElementById(id);
     if(!(area.value=="")) {
+      messaggio=area.value;
       console.log("area="+area.value)
-    el.setAttribute("type","submit");
+    el.setAttribute("type","submit"); // cosicchè parta la request al server
+    // AJAX .....il pulito a casa mia
+    $.ajax({
+      url: '/post/getpost',
+      data: {
+        'messaggio': messaggio
+      },
+      dataType: 'json',
+      success: function (data) {
+        if (messaggio) {
+          alert("json is here !");
+        }
+      }
+    });
+    console.log("ajax call finished");
     }
     return 1
   }
@@ -44,22 +60,16 @@ function enableButtonComment(element){
 }
 
 function writeMsg(id,login){
-  //console.log("login"+login)
-/*  if(login=="False"){
-    console.log("sto for")
-    document.writeln("<h3>Per inviare messaggi devi <a href='user/login'>login</a><a href='user/register'></h3>")
-}
-  else
-    {*/
-    let i=addTextArea(id);
+
+
+    let i=buttonCommentActionSelect(id);
     //alert("i="+i+"typeof="+typeof(a))
     enableButtonComment(id)
     var figlio=document.getElementById(id);
-    figlio.setAttribute("click","")
+    //figlio.setAttribute("click","")
     var id=id;
     var el;
     var padre;
     var area;
 
-//}
 }

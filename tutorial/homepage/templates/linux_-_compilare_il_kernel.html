@@ -28,7 +28,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
 
    La maggior parte dei pacchetti elencati nella  <span style="color:blu"><a href="#dipendenze" title="visualizza le dipendenze per la compilazione">figura 0.a</a></span>
    dovrebbero essere già installati sulle distribuzioni Linux più usate .
-    i primi 5 della lista sono fondamentali , quindi assicuratevi che siano installati . <mark>Per installarli</mark> :<br>
+    i primi 5 della <a href="#image_0a"> lista </a>sono fondamentali , quindi assicuratevi che siano installati . <mark>Per installarli</mark> :<br>
     <br>Su <code>Debian/Ubuntu</code> e derivate :<br><br>
 
     <code style="color:yellow;background-color:black;">mario@androgenic:~/Scaricati/linux-5.6.10 #<span style="color:white">apt install build-essential libncurses5-dev</span></code>
@@ -42,7 +42,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
 <br><br>
 <p class="text-center">
 <span style="color:orange;">0.a</span></p>
-<table id="dipendenze" class="table  table-dark" border="2" style="width:50%!important;height:auto;margin:0 auto!important;">
+<table id="image_0a" class="table  table-dark" border="2" style="width:50%!important;height:auto;margin:0 auto!important;">
   <thead class="thead-dark">
     <tr>
       <th>Programma</th>
@@ -163,7 +163,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
  Alcuni pensano ,  che in informatica , compilare significhi : selezionare un opzione piuttosto
 che un altra da una lista di opzioni , altri  che
  significhi scrivere(compilare) codice di programmazione . <b>Compilare , in informatica , identifica il processo svolto appunto da un compilatore di codice (cc, gcc, javac ,ecc..)
-che consiste nella conversione di un listato di codice informatico comprensibile ad un uomo ( normale codice di programmazione ) in una sequenza di: 0 1  ,comprensibili per un computer</b> . Quindi il Kernel che
+che consiste nella conversione di un listato di codice informatico comprensibile ad un uomo ( normale codice di programmazione ) in una sequenza di: 0 1&nbsp,&nbspcomprensibili per un computer</b> . Quindi il Kernel che
 ora scaricheremo è codice comprensibile ad un uomo , ad esempio : <code> function scaricaKernel(link,os,version,) {
   if (url.validate==True) {
     .....
@@ -305,7 +305,7 @@ che lo si è appreso diventa semplice.<br><br><br>
               <br><span class="badge badge-warning" style="color:blue;width:20%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> cat mod</span><br>
 
               <br> - Se il file  non è vuoto si può procedere a scrivere la configurazione in <code>.config</code> così:<br><br>
-                <span class="badge badge-info s_title_paragraph">Attiviamo I Moduli In .config</span><br><br><br><br>
+                <br>
                      <span class="badge badge-warning" style="color:blue;width:50%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
                      <br><br><code>localmodoconfig</code> legge i moduli nel file <code>mod</code>
                      che abbiamo creato precedentemente , e configura il kernel allo stesso modo , attraverso la scrittura del file <code>.config</code>al cui
