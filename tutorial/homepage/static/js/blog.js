@@ -1,7 +1,39 @@
-border="4px solid orange"
-class textArea {
-  constructor(){
-  }
+var borderPost="4px solid orange";
+var borderResponse="2px solid blue";
+var id=id
+var el
+var padre
+var area
+var user
+var loginis="{{login}}"
+
+function createSectionDivSpan(){
+  alert("you have call section div span")
+  var bSection=document.createElement("SECTION");
+  var bSpan=document.createElement("SPAN");
+  var bSpanChild=document.createElement("SPAN");
+  var bdiv=document.createElement("DIV");
+  var bIcon=document.createElement("I");
+  var bbutton=document.createElement("Button");
+  var bForm=document.createElement("FORM");
+  var divFormChild=document.createElement("DIV");
+  bForm.setAttribute("action","post/getpost");
+  divFormChild.setAttribute("id","multiarea");
+  divFormChild.setAttribute("class","form-group");
+  bIcon.setAttribute("class","fas fa-comments");
+  bdiv.setAttribute("id","blog_title");
+  bsection.setAttribute("class","blog_title");
+  bSpan.setAttribute("id","s_blog_icon")
+  bSpan.setAttribute("class","badge badge-info badge-outlined-info")
+  bSpanChild.setAttribute("id","s_blog_text")
+  bbutton.setAttribute("id","button_post")
+  bbutton.setAttribute("type","button")
+  bbutton.setAttribute("class","btn btn-block btn-outline-info")
+  bbutton.setAttribute("class","writeMsg("+this.id+","+loginis+")")
+}
+
+
+/*class postArea {
    create(){
     var area=document.createElement("TEXTAREA");
     area.setAttribute("id","post_comment")
@@ -9,20 +41,37 @@ class textArea {
     area.setAttribute("name","messaggio")
     $(area).css("border", border)
     area.setAttribute("title","devi essere autenticato per usare la chat !")
+    $(area).animate({'width':'100%'},2000);
     return area;
   }
-}
-function buttonCommentActionSelect(id){
+}*/
+
+
+
+
+/*class responseArea {
+   create(){
+    var area=document.createElement("TEXTAREA");
+    area.setAttribute("id","post_response")
+    area.setAttribute("rows","2");
+    area.setAttribute("name","messaggio")
+    $(area).css("border", border)
+    area.setAttribute("title","devi essere autenticato per usare la chat !")
+    $(area).animate({'width':'100%'},2000);
+    return area;
+  }
+}*/
+
+
+/*function buttonCommentActionSelect(id,login){
   let title=document.getElementsByClassName("blog_title");
-  padre=document.getElementById("multiarea");
+  padre=document.getElementById(id);
   // controllo che non sia stata gia creata la textarea per evitare di sovrapporne piu di una
   if (!(typeof(a)=="object"))
   {
-    a=new textArea();
+    a=new postArea();
     area=a.create(id)
     padre.prepend(area);
-    $(area).animate({'width':'100%'},2000);
-
     return 0;
   }
   // se la textarea esiste e il campo testo non è vuoto : sparo la request xmlhhtprequest al server per i dialoghi asincroni con esso
@@ -49,27 +98,25 @@ function buttonCommentActionSelect(id){
     }
     return 1
   }
-}
-function disableButtonComment(element){
+}*/
+
+
+/*function disableButtonComment(element){
   element.disabled=true;
 }
 
+
 function enableButtonComment(element){
   element.disabled=false;
-  //alert('enabled')
-}
-
-function writeMsg(id,login){
+}*/
 
 
-    let i=buttonCommentActionSelect(id);
-    //alert("i="+i+"typeof="+typeof(a))
-    enableButtonComment(id)
-    var figlio=document.getElementById(id);
-    //figlio.setAttribute("click","")
-    var id=id;
-    var el;
-    var padre;
-    var area;
-
+function initBlogSGang(id,login,user,password){
+    console.log("you have call me")
+    loginis=login
+    idis=id;
+    //let i=buttonCommentActionSelect(id,login);
+  //  enableButtonComment()
+    //var figlio=document.getElementById(id);
+    createSectionDivSpan();
 }
