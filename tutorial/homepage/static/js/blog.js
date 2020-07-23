@@ -7,8 +7,7 @@ var area
 var user
 var loginis="{{login}}"
 
-function createSectionDivSpan(){
-  alert("you have call section div span")
+function createSectionDivSpan(parent){
   var bSection=document.createElement("SECTION");
   var bSpan=document.createElement("SPAN");
   var bSpanChild=document.createElement("SPAN");
@@ -22,7 +21,8 @@ function createSectionDivSpan(){
   divFormChild.setAttribute("class","form-group");
   bIcon.setAttribute("class","fas fa-comments");
   bdiv.setAttribute("id","blog_title");
-  bsection.setAttribute("class","blog_title");
+  bSection.setAttribute("class","blog_title");
+  bSection.setAttribute("id","blog_title");
   bSpan.setAttribute("id","s_blog_icon")
   bSpan.setAttribute("class","badge badge-info badge-outlined-info")
   bSpanChild.setAttribute("id","s_blog_text")
@@ -30,6 +30,13 @@ function createSectionDivSpan(){
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","btn btn-block btn-outline-info")
   bbutton.setAttribute("class","writeMsg("+this.id+","+loginis+")")
+   var txt2 = document.createTextNode("Some text in section..");
+   bSection.appendChild(txt2)
+  alert(parent+bSection)
+  show(parent,bSection)
+  function show(parent,element){
+    document.getElementById(parent).appendChild(element);
+  }
 }
 
 
@@ -112,11 +119,10 @@ function enableButtonComment(element){
 
 
 function initBlogSGang(id,login,user,password){
-    console.log("you have call me")
     loginis=login
     idis=id;
     //let i=buttonCommentActionSelect(id,login);
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
-    createSectionDivSpan();
+    createSectionDivSpan(idis);
 }
