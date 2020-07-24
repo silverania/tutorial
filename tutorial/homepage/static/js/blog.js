@@ -1,11 +1,16 @@
-var borderPost="4px solid orange";
+var borderPost="1px solid orange";
 var borderResponse="2px solid blue";
 var id=id
 var el
 var padre
-var area
 var user
-var loginis="{{login}}"
+var loginis=false
+var bbutton=document.createElement("Button");
+var area=document.createElement("TEXTAREA");
+var divFormChild=document.createElement("DIV");
+var bH5=document.createElement("h5")
+var post;
+
 
 function createSectionDivSpan(parent){
   var bSection=document.createElement("SECTION");
@@ -13,46 +18,56 @@ function createSectionDivSpan(parent){
   var bSpanChild=document.createElement("SPAN");
   var bdiv=document.createElement("DIV");
   var bIcon=document.createElement("I");
-  var bbutton=document.createElement("Button");
   var bForm=document.createElement("FORM");
-  var divFormChild=document.createElement("DIV");
+  bH5.setAttribute("class","text-left");
   bForm.setAttribute("action","post/getpost");
   divFormChild.setAttribute("id","multiarea");
   divFormChild.setAttribute("class","form-group");
   bIcon.setAttribute("class","fas fa-comments");
   bdiv.setAttribute("id","blog_title");
-  bSection.setAttribute("class","blog_title");
-  bSection.setAttribute("id","blog_title");
+  bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
   bSpan.setAttribute("class","badge badge-info badge-outlined-info")
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","btn btn-block btn-outline-info")
-  bbutton.setAttribute("class","writeMsg("+this.id+","+loginis+")")
-   var txt2 = document.createTextNode("Some text in section..");
-   bSection.appendChild(txt2)
-  alert(parent+bSection)
-  show(parent,bSection)
-  function show(parent,element){
-    document.getElementById(parent).appendChild(element);
-  }
+  bbutton.textContent="Commenta"
+  document.getElementById(parent).appendChild(bSection);
+  bSection.appendChild(bdiv)
+  bdiv.appendChild(bSpan)
+  bSpan.appendChild(bIcon)
+  bSpan.appendChild(bSpanChild)
+  bSection.appendChild(bForm)
+  bForm.appendChild(divFormChild)
+  divFormChild.appendChild(bbutton)
 }
 
 
-/*class postArea {
+class postArea {
+   create(){
+   area.setAttribute("id","post_response")
+   area.setAttribute("rows","2");
+   area.setAttribute("name","messaggio")
+   $(area).css("border", borderPost)
+   area.setAttribute("title","devi essere autenticato per usare la chat !")
+   $(area).animate({'width':'100%'},2000);
+   return area;
+  }
+}
+
+class respArea {
    create(){
     var area=document.createElement("TEXTAREA");
-    area.setAttribute("id","post_comment")
-    area.setAttribute("rows","2");
-    area.setAttribute("name","messaggio")
-    $(area).css("border", border)
-    area.setAttribute("title","devi essere autenticato per usare la chat !")
-    $(area).animate({'width':'100%'},2000);
-    return area;
+   area.setAttribute("id","post_response")
+   area.setAttribute("rows","2");
+   area.setAttribute("name","messaggio")
+   $(area).css("border", borderResponse)
+   area.setAttribute("title","devi essere autenticato per usare la chat !")
+   $(area).animate({'width':'100%'},2000);
+   return area;
   }
-}*/
-
+}
 
 
 
@@ -118,11 +133,42 @@ function enableButtonComment(element){
 }*/
 
 
-function initBlogSGang(id,login,user,password){
-    loginis=login
+function initBlogSGang(id,login){
+    if(login=="False"||login=="false"||login=="none"){
+      login="Commento Anonimo"
+    }
+    else{
+      loginis=login
+    }
     idis=id;
     //let i=buttonCommentActionSelect(id,login);
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
     createSectionDivSpan(idis);
 }
+
+/* make textarea for comments */
+
+
+/* EVENT SECTION */
+$(bbutton).click(function(){
+  if (!(post instanceof postArea ))
+  {
+    post=new postArea()
+    $(divFormChild).prepend(post.create())
+  }
+  else{
+    /*alert("textarea gia creata !")
+    resp=new respArea()
+    $('#multiarea').prepend(resp.create())
+    bH5.textContent=loginis+" , ha scritto ...  "
+      $('#multiarea').prepend(bH5)*/
+      $('#post_response').animate({"width":"10%"},200)
+      $('#post_response').animate({"width":"100%"},200)
+       $('#post_response').css("border", "3px solid blue")
+       bH5.textContent=loginis+" , ha scritto ...  "
+         $('#multiarea').prepend(bH5)
+         bbutton.textContent="Rispondi a ..."+loginis
+  }
+return area
+});
