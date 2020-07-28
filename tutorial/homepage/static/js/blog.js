@@ -48,6 +48,7 @@ class postArea {
   constructor(postarea){
     this.empty=true
     this.postarea=postarea
+    this.disabled=false
   }
    create(){
      postarea.setAttribute("id","post_response")
@@ -58,10 +59,38 @@ class postArea {
      $(postarea).animate({'width':'100%'},2000);
      return postarea;
   }
-  disable(){
 
+  disable(){
+    postarea.setAttribute('disabled','true')
+    this.disabled=true
   }
-}
+
+  sendToServer(msg,user){
+      el=document.getElementById("post_response");
+      if(!msg=="") {
+        messaggio=msg;
+        console.log("messaggio letto="+messaggio)
+      el.setAttribute("type","submit"); // cosicchè parta la request al server
+      // AJAX .....il pulito a casa mia
+      $.ajax({
+        url: '/post/getpost',
+        data: {
+          'messaggio': messaggio
+        },
+        dataType: 'json',
+        success: function (data) {
+          if (messaggio) {
+            alert("json is here !");
+          }
+        }
+      });
+      console.log("ajax call finished");
+      }
+      return 0
+    }
+  }
+
+
 
 
 
@@ -173,24 +202,22 @@ $(bbutton).click(function(){
   }
   else if (post instanceof postArea ) {
     if (post.postarea.value==''){
-      postArea.prototype.x=2
-      alert("sebbene il silenzio abbia significato , è superfluo postare messaggi vuoti ! percio :::::SCRIVI !=§"+post.x)
-    }
-    /*alert("textarea gia creata !")
-    resp=new respArea()
-    $('#multiarea').prepend(resp.create())
-    bH5.textContent=loginis+" , ha scritto ...  "
-    $('#multiarea').prepend(bH5)*/
-    else {
-      $('#post_response').animate({"width":"10%"},200)
-      .animate({"width":"100%"},200)
-      $('#post_response').css("border", "3px solid blue")
 
+      alert("sebbene il silenzio abbia significato , è superfluo postare messaggi vuoti ! percio :::::SCRIVI !")
+    }
+    else {
+      /* l' animazione non deve partire se la textarea e disabled ! */
+      if(!(post.disabled==true)){
+        $('#post_response').animate({"width":"10%"},200)
+      .animate({"width":"100%"},200)
+    }
+      $('#post_response').css("border", "3px solid blue")
       bH5.textContent=loginis+" , ha scritto ...  "
       $('#multiarea').prepend(bH5)
       bbutton.textContent="Rispondi a ..."+loginis
       /* congelo la textarea in quanto è stata usata */
-
+      post.sendToServer()
+      post.disable()
     }
   }
 }
