@@ -6,11 +6,11 @@ var padre
 var user
 var loginis=false
 var bbutton=document.createElement("Button");
-var area=document.createElement("TEXTAREA");
+var postarea=document.createElement("TEXTAREA");
 var divFormChild=document.createElement("DIV");
 var bH5=document.createElement("h5")
-var post;
-
+var post=new Object();
+var empty;
 
 function createSectionDivSpan(parent){
   var bSection=document.createElement("SECTION");
@@ -31,7 +31,7 @@ function createSectionDivSpan(parent){
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
   bbutton.setAttribute("type","button")
-  bbutton.setAttribute("class","btn btn-block btn-outline-info")
+  bbutton.setAttribute("class","btn btn-block btn-lg btn-outline-info")
   bbutton.textContent="Commenta"
   document.getElementById(parent).appendChild(bSection);
   bSection.appendChild(bdiv)
@@ -45,18 +45,27 @@ function createSectionDivSpan(parent){
 
 
 class postArea {
+  constructor(postarea){
+    this.empty=true
+    this.postarea=postarea
+  }
    create(){
-   area.setAttribute("id","post_response")
-   area.setAttribute("rows","2");
-   area.setAttribute("name","messaggio")
-   $(area).css("border", borderPost)
-   area.setAttribute("title","devi essere autenticato per usare la chat !")
-   $(area).animate({'width':'100%'},2000);
-   return area;
+     postarea.setAttribute("id","post_response")
+     postarea.setAttribute("rows","2");
+     postarea.setAttribute("name","messaggio")
+     $(postarea).css("border", borderPost)
+     postarea.setAttribute("title","devi essere autenticato per usare la chat !")
+     $(postarea).animate({'width':'100%'},2000);
+     return postarea;
+  }
+  disable(){
+
   }
 }
 
-class respArea {
+
+
+/*class respArea {
    create(){
     var area=document.createElement("TEXTAREA");
    area.setAttribute("id","post_response")
@@ -67,7 +76,7 @@ class respArea {
    $(area).animate({'width':'100%'},2000);
    return area;
   }
-}
+}*/
 
 
 
@@ -99,7 +108,7 @@ class respArea {
   // se la textarea esiste e il campo testo non è vuoto : sparo la request xmlhhtprequest al server per i dialoghi asincroni con esso
   else {
     el=document.getElementById(id);
-    if(!(area.value=="")) {
+    if(!(area.value=="")asdasdasdasdasdasdasdas) {
       messaggio=area.value;
       console.log("area="+area.value)
     el.setAttribute("type","submit"); // cosicchè parta la request al server
@@ -145,7 +154,12 @@ function initBlogSGang(id,login){
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
     createSectionDivSpan(idis);
+
 }
+
+
+/*function setPostarea()*/
+
 
 /* make textarea for comments */
 
@@ -154,21 +168,30 @@ function initBlogSGang(id,login){
 $(bbutton).click(function(){
   if (!(post instanceof postArea ))
   {
-    post=new postArea()
+    post=new postArea(postarea)
     $(divFormChild).prepend(post.create())
   }
-  else{
+  else if (post instanceof postArea ) {
+    if (post.postarea.value==''){
+      postArea.prototype.x=2
+      alert("sebbene il silenzio abbia significato , è superfluo postare messaggi vuoti ! percio :::::SCRIVI !=§"+post.x)
+    }
     /*alert("textarea gia creata !")
     resp=new respArea()
     $('#multiarea').prepend(resp.create())
     bH5.textContent=loginis+" , ha scritto ...  "
-      $('#multiarea').prepend(bH5)*/
+    $('#multiarea').prepend(bH5)*/
+    else {
       $('#post_response').animate({"width":"10%"},200)
-      $('#post_response').animate({"width":"100%"},200)
-       $('#post_response').css("border", "3px solid blue")
-       bH5.textContent=loginis+" , ha scritto ...  "
-         $('#multiarea').prepend(bH5)
-         bbutton.textContent="Rispondi a ..."+loginis
+      .animate({"width":"100%"},200)
+      $('#post_response').css("border", "3px solid blue")
+
+      bH5.textContent=loginis+" , ha scritto ...  "
+      $('#multiarea').prepend(bH5)
+      bbutton.textContent="Rispondi a ..."+loginis
+      /* congelo la textarea in quanto è stata usata */
+
+    }
   }
-return area
-});
+}
+);

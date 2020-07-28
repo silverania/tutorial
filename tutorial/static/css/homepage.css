@@ -173,9 +173,9 @@ li[id^="a-"]:hover{
   background-color: green!important;
 }
 
-.blog_title{
+.blog_title,#blog_title{
   width:auto!important;
-  margin-top:3%!important;
+  margin-top:5%!important;
   margin-bottom:3%;
 }
 
