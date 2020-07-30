@@ -1,3 +1,7 @@
+#col_blog{
+  width:0px!important;
+}
+
 #s_blog_text{
   color:grey;
   font-size:inherit!important;
