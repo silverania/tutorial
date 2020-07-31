@@ -6,19 +6,19 @@ var padre
 var user
 var loginis=false
 var bbutton=document.createElement("Button");
-var postarea=document.createElement("TEXTAREA");
 var divFormChild=document.createElement("DIV");
 var bH5=document.createElement("h5")
 var post=new Object();
 var empty;
+var bSection=document.createElement("SECTION");
+var bSpan=document.createElement("SPAN");
+var bSpanChild=document.createElement("SPAN");
+var bdiv=document.createElement("DIV");
+var bIcon=document.createElement("I");
+var bForm=document.createElement("FORM");
 
 function createSectionDivSpan(parent){
-  var bSection=document.createElement("SECTION");
-  var bSpan=document.createElement("SPAN");
-  var bSpanChild=document.createElement("SPAN");
-  var bdiv=document.createElement("DIV");
-  var bIcon=document.createElement("I");
-  var bForm=document.createElement("FORM");
+
   bH5.setAttribute("class","text-left");
   bForm.setAttribute("action","post/getpost");
   divFormChild.setAttribute("id","multiarea");
@@ -43,103 +43,82 @@ function createSectionDivSpan(parent){
   divFormChild.appendChild(bbutton)
 }
 
+// la classe che astrae il post
+class Post{
+  constructor(){
+    this.sent=false
+  }
+  sendToServer(type,msg,user){
+      if(type=="post"){
+      el=document.getElementById("post_response");
+      }
+      else if (type=="resp"){
+        el=document.getElementsByClassName("post_response");
+      }
+      if(!msg=="") {
+        let messaggio=msg;
+        alert("read msg="+messaggio)
+
+        // AJAX .....il pulito a casa mia
+        $.ajax({
+          url: '/post/getpost',
+          data: {
+            'messaggio': messaggio
+          },
+          dataType: 'json',
+          success: function (data) {
+            if (messaggio) {
+              alert("json is here !");
+            }
+          }
+      });
+      console.log("ajax call finished");
+      }
+      return 0
+    }
+}
+
 
 class postArea {
-  constructor(postarea){
+  constructor(post){
+    this.type=post
+    this.postarea=document.createElement("TEXTAREA");
     this.empty=true
-    this.postarea=postarea
+    this.disabled=false
+    this.msg=""
   }
+   createButton(){
+     if(this.type=="resp"){
+       alert("resp")
+       var bbutton2=document.createElement("Button");
+       bbutton2.setAttribute("type","button")
+       bbutton2.setAttribute("id","button_resp")
+       bbutton2.setAttribute("class","button_resp btn btn-block btn-lg btn-outline-info")
+       bbutton2.textContent="Rispondi Ad"+loginis
+       divFormChild.appendChild(bbutton2)
+     }
+   }
    create(){
-     postarea.setAttribute("id","post_response")
-     postarea.setAttribute("rows","2");
-     postarea.setAttribute("name","messaggio")
-     $(postarea).css("border", borderPost)
-     postarea.setAttribute("title","devi essere autenticato per usare la chat !")
-     $(postarea).animate({'width':'100%'},2000);
-     return postarea;
-  }
-  disable(){
-    
-  }
-}
-
-
-
-/*class respArea {
-   create(){
-    var area=document.createElement("TEXTAREA");
-   area.setAttribute("id","post_response")
-   area.setAttribute("rows","2");
-   area.setAttribute("name","messaggio")
-   $(area).css("border", borderResponse)
-   area.setAttribute("title","devi essere autenticato per usare la chat !")
-   $(area).animate({'width':'100%'},2000);
-   return area;
-  }
-}*/
-
-
-
-/*class responseArea {
-   create(){
-    var area=document.createElement("TEXTAREA");
-    area.setAttribute("id","post_response")
-    area.setAttribute("rows","2");
-    area.setAttribute("name","messaggio")
-    $(area).css("border", border)
-    area.setAttribute("title","devi essere autenticato per usare la chat !")
-    $(area).animate({'width':'100%'},2000);
-    return area;
-  }
-}*/
-
-
-/*function buttonCommentActionSelect(id,login){
-  let title=document.getElementsByClassName("blog_title");
-  padre=document.getElementById(id);
-  // controllo che non sia stata gia creata la textarea per evitare di sovrapporne piu di una
-  if (!(typeof(a)=="object"))
-  {
-    a=new postArea();
-    area=a.create(id)
-    padre.prepend(area);
-    return 0;
-  }
-  // se la textarea esiste e il campo testo non è vuoto : sparo la request xmlhhtprequest al server per i dialoghi asincroni con esso
-  else {
-    el=document.getElementById(id);
-    if(!(area.value=="")asdasdasdasdasdasdasdas) {
-      messaggio=area.value;
-      console.log("area="+area.value)
-    el.setAttribute("type","submit"); // cosicchè parta la request al server
-    // AJAX .....il pulito a casa mia
-    $.ajax({
-      url: '/post/getpost',
-      data: {
-        'messaggio': messaggio
-      },
-      dataType: 'json',
-      success: function (data) {
-        if (messaggio) {
-          alert("json is here !");
-        }
+     if(this.type=="post"){
+       this.postarea.setAttribute("id","post_response")
       }
-    });
-    console.log("ajax call finished");
+    else{
+      this.postarea.setAttribute("class","post_response")
     }
-    return 1
+     this.postarea.setAttribute("rows","2");
+     this.postarea.setAttribute("name","messaggio")
+     $(this.postarea).css("border", borderPost)
+     this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
+     $(this.postarea).animate({'width':'100%'},2000);
+     return this.postarea;
   }
-}*/
 
+  disable(){
+    this.disabled=true
+    this.postarea.setAttribute('disabled','true')
 
-/*function disableButtonComment(element){
-  element.disabled=true;
-}
-
-
-function enableButtonComment(element){
-  element.disabled=false;
-}*/
+  }
+  }
 
 
 function initBlogSGang(id,login){
@@ -154,7 +133,6 @@ function initBlogSGang(id,login){
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
     createSectionDivSpan(idis);
-
 }
 
 
@@ -168,29 +146,45 @@ function initBlogSGang(id,login){
 $(bbutton).click(function(){
   if (!(post instanceof postArea ))
   {
-    post=new postArea(postarea)
+    post=new postArea("post") // passo post come argomento
+    mess=new Post()
     $(divFormChild).prepend(post.create())
   }
   else if (post instanceof postArea ) {
+    let result
+    alert("istance")
     if (post.postarea.value==''){
-      alert("sebbene il silenzio abbia significato , è superfluo postare messaggi vuoti ! percio :::::SCRIVI !")
+      alert("empty msg")
     }
-    /*alert("textarea gia creata !")
-    resp=new respArea()
-    $('#multiarea').prepend(resp.create())
-    bH5.textContent=loginis+" , ha scritto ...  "
-    $('#multiarea').prepend(bH5)*/
     else {
-      $('#post_response').animate({"width":"10%"},200)
-      .animate({"width":"100%"},200)
-      $('#post_response').css("border", "3px solid blue")
-
-      bH5.textContent=loginis+" , ha scritto ...  "
-      $('#multiarea').prepend(bH5)
-      bbutton.textContent="Rispondi a ..."+loginis
-      /* congelo la textarea in quanto è stata usata */
-
+      /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
+      /* sotto , gestione evento di invio post */
+      if(!(post.disabled==true)){
+        alert("active enabled"+post.disabled)
+        post.msg=post.postarea.value
+        $('#post_response').css("border", "3px solid blue")
+        bH5.textContent=loginis+" , ha scritto ...  "
+        $('#multiarea').prepend(bH5)
+        bbutton.textContent="Rispondi a ..."+loginis
+      /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
+        post.disable()
+      if ((result=mess.sendToServer("resp",post.postarea.value,loginis)==0)) {
+      mess.sent=true
+      }
+      alert("result="+mess.sent)
+    }
+    else {
+      if (!(post.postarea.value=="") && mess.sent==true) {
+      alert("creo text per rispondere")
+        //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
+      //divFormChild.appendChild(new postArea().create())
+      post2=new postArea("resp")
+      bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
+      post2.createButton()
     }
   }
+  }
+  }
+
 }
 );

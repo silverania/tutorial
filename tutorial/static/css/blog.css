@@ -1,3 +1,11 @@
+#col_blog{
+  width:0px!important;
+}
+
+.post_response{
+    margin-bottom:50px;
+}
+
 #s_blog_text{
   color:grey;
   font-size:inherit!important;
