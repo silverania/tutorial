@@ -44,10 +44,13 @@ function createSectionDivSpan(parent){
 }
 
 // la classe che astrae il post
+
+
 class Post{
   static state=0
   constructor(){
     this.sent=false
+    this.title=""
   }
   sendToServer(type,msg,user){
       if(type=="post"){
@@ -80,13 +83,29 @@ class Post{
 }
 
 
+
+
 class postArea {
   constructor(post){
+    function getPostTitleFromClient() {
+      if(post=="post"){
+        var title = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
+        if (title != null) {
+          parent.innerHTML =
+          "Ok hai inserito :" + title + "Non dire cazzate!";
+          return title
+        }
+      }
+    }
     this.type=post
     this.postarea=document.createElement("TEXTAREA");
     this.empty=true
     this.disabled=false
     this.msg=""
+    this.title=getPostTitleFromClient()
+    var pos=new Post()
+    pos.title=this.title
+    alert("postarea titolo="+this.title+" Post titolo="+pos.title)
   }
    createButton(){
      if(this.type=="resp"){
@@ -113,13 +132,13 @@ class postArea {
      $(this.postarea).animate({'width':'100%'},2000);
      return this.postarea;
   }
-
   disable(){
     this.disabled=true
     this.postarea.setAttribute('disabled','true')
+  }
+  }
 
-  }
-  }
+
 
 
 function initBlogSGang(id,login){
