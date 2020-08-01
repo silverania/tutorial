@@ -45,6 +45,7 @@ function createSectionDivSpan(parent){
 
 // la classe che astrae il post
 class Post{
+  static state=0
   constructor(){
     this.sent=false
   }
@@ -94,7 +95,7 @@ class postArea {
        bbutton2.setAttribute("type","button")
        bbutton2.setAttribute("id","button_resp")
        bbutton2.setAttribute("class","button_resp btn btn-block btn-lg btn-outline-info")
-       bbutton2.textContent="Rispondi Ad"+loginis
+       bbutton2.textContent="Rispondi"
        divFormChild.appendChild(bbutton2)
      }
    }
@@ -151,7 +152,9 @@ $(bbutton).click(function(){
     $(divFormChild).prepend(post.create())
   }
   else if (post instanceof postArea ) {
+    let i=0
     let result
+    let post2=Object()
     alert("istance")
     if (post.postarea.value==''){
       alert("empty msg")
@@ -175,16 +178,29 @@ $(bbutton).click(function(){
     }
     else {
       if (!(post.postarea.value=="") && mess.sent==true) {
-      alert("creo text per rispondere")
+
+      alert("creo text per rispondere...post2="+post2)
         //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
       //divFormChild.appendChild(new postArea().create())
+
+        if (Post.state==0){
+          makeTextAreaResp()
+      }
+    }
+    function makeTextAreaResp(){
       post2=new postArea("resp")
+      postresp=new Post()
       bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
       post2.createButton()
+      post2.disable()
+      if (post2.disabled==true){
+        Post.state=0
+    }
+  }
     }
   }
   }
-  }
+
 
 }
 );
