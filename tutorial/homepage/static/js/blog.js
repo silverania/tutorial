@@ -48,21 +48,20 @@ function createSectionDivSpan(parent){
 
 class Post{
   static state=0
+  static title=""
   constructor(){
     this.sent=false
-    this.title=""
   }
-  sendToServer(type,msg,user){
+  sendToServer(type,msgContent,postTitle,user){
       if(type=="post"){
       el=document.getElementById("post_response");
       }
       else if (type=="resp"){
         el=document.getElementsByClassName("post_response");
       }
-      if(!msg=="") {
-        let messaggio=msg;
-        alert("read msg="+messaggio)
-
+      if(!msgContent=="") {
+        let messaggio=msgContent;
+        alert("read msgContent="+messaggio)
         // AJAX .....il pulito a casa mia
         $.ajax({
           url: '/post/getpost',
@@ -96,6 +95,10 @@ class postArea {
           return title
         }
       }
+      else if (post=="resp"){
+        title=Post.title
+        return title
+      }
     }
     this.type=post
     this.postarea=document.createElement("TEXTAREA");
@@ -103,9 +106,8 @@ class postArea {
     this.disabled=false
     this.msg=""
     this.title=getPostTitleFromClient()
-    var pos=new Post()
-    pos.title=this.title
-    alert("postarea titolo="+this.title+" Post titolo="+pos.title)
+    Post.title=this.title
+    alert("postarea titolo="+this.title+" Post titolo="+Post.title)
   }
    createButton(){
      if(this.type=="resp"){
@@ -164,12 +166,14 @@ function initBlogSGang(id,login){
 
 /* EVENT SECTION */
 $(bbutton).click(function(){
+  // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
   if (!(post instanceof postArea ))
   {
     post=new postArea("post") // passo post come argomento
     mess=new Post()
     $(divFormChild).prepend(post.create())
   }
+    // caso click su textarea esistente
   else if (post instanceof postArea ) {
     let i=0
     let result
@@ -178,6 +182,7 @@ $(bbutton).click(function(){
     if (post.postarea.value==''){
       alert("empty msg")
     }
+    // caso click su textarea esistente e con testo all interno
     else {
       /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
       /* sotto , gestione evento di invio post */
@@ -190,7 +195,7 @@ $(bbutton).click(function(){
         bbutton.textContent="Rispondi a ..."+loginis
       /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
         post.disable()
-      if ((result=mess.sendToServer("resp",post.postarea.value,loginis)==0)) {
+      if ((result=mess.sendToServer("resp",post.msg,Post.title,loginis)==0)) {
       mess.sent=true
       }
       alert("result="+mess.sent)

@@ -1,11 +1,14 @@
 from django.shortcuts import render,redirect
 from user.models import Profile
 from blog.models import Comment
-from django.http import HttpResponse,JsonResponse;
+from django.http import HttpResponse,JsonResponse
 # Create your views here.
 def newPost(request):
+        print ("entrypoint to newPost")
+
         message=request.GET.get('messaggio',None)
-        print(str(message))
+        print("message="+message)
+        return HttpResponse(str("msg:"+message+"type:"))
 
         if request.user.is_authenticated:
             currentUser=request.user
