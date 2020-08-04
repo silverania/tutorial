@@ -16,7 +16,7 @@ var bSpanChild=document.createElement("SPAN");
 var bdiv=document.createElement("DIV");
 var bIcon=document.createElement("I");
 var bForm=document.createElement("FORM");
-
+var wait=true
 function createSectionDivSpan(parent){
 
   bH5.setAttribute("class","text-left");
@@ -68,7 +68,7 @@ class Post{
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': messaggio
+            'messaggio': messaggio,'type':type,'title':postTitle,'username':user,
           },
           dataType: 'json',
           success: function (data) {
@@ -87,9 +87,6 @@ class Post{
 
 
 class postArea {
-  static field(){
-  postArea.wait=true
-}
   constructor(post){
     function getPostTitleFromClient() {
       if(post=="post"){
@@ -211,7 +208,7 @@ $(bbutton).click(function(){
       alert("creo text per rispondere...post2="+post2)
         //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
       //divFormChild.appendChild(new postArea().create())
-        if (PostArea.wait==false){
+        if (wait==true){
           makeTextAreaResp()
       }
     }
@@ -221,7 +218,6 @@ $(bbutton).click(function(){
       bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
       post2.createButton()
       post2.disable()
-      PostArea.wait=true
   }
     }
   }

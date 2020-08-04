@@ -1,2 +1,3 @@
-ho un oggetto user e un oggetto tutorial , ad ogni user possono corrispondere più tutorial e ad ogni tutorial può corrispondere un solo user
-, quindi c'è un rapporto  
+- il button "rispondi" deve essere disabilitato fino a che l 'user non inserisce del testo nella   textarea.
+
+- la textarea di risposta deve essere piu corta rispetto alla textarea di post
