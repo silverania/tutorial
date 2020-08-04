@@ -47,8 +47,10 @@ function createSectionDivSpan(parent){
 
 
 class Post{
-  static state=0
-  static title=""
+  static field(){
+  Post.state=0
+  Post.title=""
+}
   constructor(){
     this.sent=false
   }
@@ -85,10 +87,13 @@ class Post{
 
 
 class postArea {
+  static field(){
+  postArea.wait=true
+}
   constructor(post){
     function getPostTitleFromClient() {
       if(post=="post"){
-        var title = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
+        let title = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
         if (title != null) {
           parent.innerHTML =
           "Ok hai inserito :" + title + "Non dire cazzate!";
@@ -96,7 +101,7 @@ class postArea {
         }
       }
       else if (post=="resp"){
-        title=Post.title
+        let title=Post.title
         return title
       }
     }
@@ -206,8 +211,7 @@ $(bbutton).click(function(){
       alert("creo text per rispondere...post2="+post2)
         //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
       //divFormChild.appendChild(new postArea().create())
-
-        if (Post.state==0){
+        if (PostArea.wait==false){
           makeTextAreaResp()
       }
     }
@@ -217,9 +221,7 @@ $(bbutton).click(function(){
       bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
       post2.createButton()
       post2.disable()
-      if (post2.disabled==true){
-        Post.state=0
-    }
+      PostArea.wait=true
   }
     }
   }
