@@ -215,7 +215,10 @@ $(bbutton).click(function(){
         //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
       //divFormChild.appendChild(new postArea().create())
         if (wait==true){
-          makeTextAreaResp()
+          callResult=makeTextAreaResp()
+          if(callResult==0){
+            this.setAttribute("disabled","true")
+          }
       }
     }
     function makeTextAreaResp(){
@@ -223,7 +226,7 @@ $(bbutton).click(function(){
       postresp=new Post()
       bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
       post2.createButton()
-      post2.disable()
+      return 0
   }
     }
   }
