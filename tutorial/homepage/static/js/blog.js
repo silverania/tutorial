@@ -17,6 +17,8 @@ var bdiv=document.createElement("DIV");
 var bIcon=document.createElement("I");
 var bForm=document.createElement("FORM");
 var wait=true
+var postTitle
+var tutorial
 function createSectionDivSpan(parent){
 
   bH5.setAttribute("class","text-left");
@@ -47,28 +49,28 @@ function createSectionDivSpan(parent){
 
 
 class Post{
-  static field(){
-  Post.state=0
-  Post.title=""
-}
+
   constructor(){
     this.sent=false
   }
-  sendToServer(type,msgContent,postTitle,user){
+  sendToServer(type,msg,postTitle,user,tutorial){
       if(type=="post"){
       el=document.getElementById("post_response");
       }
       else if (type=="resp"){
         el=document.getElementsByClassName("post_response");
       }
-      if(!msgContent=="") {
-        let messaggio=msgContent;
+      if(!msg=="") {
+        let messaggio=msg;
         alert("read msgContent="+messaggio)
+      if(!tutorial=="") {
+        let content=tutorial;
+        alert("read tutorial="+content)
         // AJAX .....il pulito a casa mia
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': messaggio,'type':type,'title':postTitle,'username':user,
+            'messaggio': messaggio,'type':type,'title':postTitle,'username':user,'argomento':argomento
           },
           dataType: 'json',
           success: function (data) {
@@ -82,7 +84,7 @@ class Post{
       return 0
     }
 }
-
+}
 
 
 
@@ -90,15 +92,15 @@ class postArea {
   constructor(post){
     function getPostTitleFromClient() {
       if(post=="post"){
-        let title = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
-        if (title != null) {
+        postTitle = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
+        if (postTitle != null) {
           parent.innerHTML =
-          "Ok hai inserito :" + title + "Non dire cazzate!";
-          return title
+          "Ok hai inserito :" + postTitle + "Non dire cazzate!";
+          return postTitle
         }
       }
       else if (post=="resp"){
-        let title=Post.title
+        let title=postTitle
         return title
       }
     }
@@ -117,23 +119,26 @@ class postArea {
        var bbutton2=document.createElement("Button");
        bbutton2.setAttribute("type","button")
        bbutton2.setAttribute("id","button_resp")
-       bbutton2.setAttribute("class","button_resp btn btn-block btn-lg btn-outline-info")
+       bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
        bbutton2.textContent="Rispondi"
+       //bbutton2.animate({'width':'80%'},1000);
        divFormChild.appendChild(bbutton2)
      }
    }
    create(){
      if(this.type=="post"){
        this.postarea.setAttribute("id","post_response")
+        $(this.postarea).animate({'width':'100%'},1000);
       }
     else{
       this.postarea.setAttribute("class","post_response")
+      $(this.postarea).animate({'width':'80%'},1000);
     }
      this.postarea.setAttribute("rows","2");
      this.postarea.setAttribute("name","messaggio")
      $(this.postarea).css("border", borderPost)
      this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
-     $(this.postarea).animate({'width':'100%'},2000);
+
      return this.postarea;
   }
   disable(){
@@ -145,7 +150,7 @@ class postArea {
 
 
 
-function initBlogSGang(id,login){
+function initBlogSGang(id,login,tutorial){
     if(login=="False"||login=="false"||login=="none"){
       login="Commento Anonimo"
     }
@@ -153,6 +158,7 @@ function initBlogSGang(id,login){
       loginis=login
     }
     idis=id;
+    tutorial=this.tutorial
     //let i=buttonCommentActionSelect(id,login);
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
@@ -197,7 +203,7 @@ $(bbutton).click(function(){
         bbutton.textContent="Rispondi a ..."+loginis
       /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
         post.disable()
-      if ((result=mess.sendToServer("resp",post.msg,Post.title,loginis)==0)) {
+      if ((result=mess.sendToServer("resp",post.msg,"{{tutorial.title}}",loginis)==0)) {
       mess.sent=true
       }
       alert("result="+mess.sent)

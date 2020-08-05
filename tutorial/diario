@@ -1,3 +1,7 @@
 - il button "rispondi" deve essere disabilitato fino a che l 'user non inserisce del testo nella   textarea.
 
 - la textarea di risposta deve essere piu corta rispetto alla textarea di post
+
+- devo raccogliere i messaggi dal database .... i piu recenti, per visualizzarli sulla pagina web
+
+- aggiungo la classe Resp al model in blog

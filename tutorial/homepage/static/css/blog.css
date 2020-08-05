@@ -15,6 +15,11 @@
  color:orange;
 }
 
+#button_resp{
+  width:70%!important;
+  margin:0 auto !important;
+}
+
   @media screen and (max-width: 780px) {
   .fa-comments,#s_blog
   {
