@@ -8,7 +8,7 @@ var loginis=false
 var bbutton=document.createElement("Button");
 var divFormChild=document.createElement("DIV");
 var bH5=document.createElement("h5")
-var post=new Object();
+var post,post2=new Object();
 var empty;
 var bSection=document.createElement("SECTION");
 var bSpan=document.createElement("SPAN");
@@ -19,8 +19,11 @@ var bForm=document.createElement("FORM");
 var wait=true
 var postTitle
 var tutorial
-function createSectionDivSpan(parent){
+var bbutton2=document.createElement("Button");
 
+
+
+function createSectionDivSpan(parent){
   bH5.setAttribute("class","text-left");
   bForm.setAttribute("action","post/getpost");
   divFormChild.setAttribute("id","multiarea");
@@ -89,8 +92,11 @@ class Post{
 
 
 class postArea {
+
   constructor(post){
+
     function getPostTitleFromClient() {
+
       if(post=="post"){
         postTitle = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
         if (postTitle != null) {
@@ -113,18 +119,18 @@ class postArea {
     Post.title=this.title
     alert("postarea titolo="+this.title+" Post titolo="+Post.title)
   }
+
    createButton(){
      if(this.type=="resp"){
        alert("resp")
-       var bbutton2=document.createElement("Button");
        bbutton2.setAttribute("type","button")
-       bbutton2.setAttribute("id","button_resp")
        bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
        bbutton2.textContent="Rispondi"
        //bbutton2.animate({'width':'80%'},1000);
        divFormChild.appendChild(bbutton2)
      }
    }
+
    create(){
      if(this.type=="post"){
        this.postarea.setAttribute("id","post_response")
@@ -138,15 +144,14 @@ class postArea {
      this.postarea.setAttribute("name","messaggio")
      $(this.postarea).css("border", borderPost)
      this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
-
      return this.postarea;
   }
+
   disable(){
     this.disabled=true
     this.postarea.setAttribute('disabled','true')
   }
   }
-
 
 
 
@@ -173,7 +178,14 @@ function initBlogSGang(id,login,tutorial){
 
 
 /* EVENT SECTION */
+$(bbutton2).click(function(){
+  alert("get but2click")
+  if(post2 instanceof postArea){
+    alert("resp istance of pèostarea")
+  }
+});
 $(bbutton).click(function(){
+  let result
   // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
   if (!(post instanceof postArea ))
   {
@@ -183,9 +195,6 @@ $(bbutton).click(function(){
   }
     // caso click su textarea esistente
   else if (post instanceof postArea ) {
-    let i=0
-    let result
-    let post2=Object()
     alert("istance")
     if (post.postarea.value==''){
       alert("empty msg")
@@ -235,3 +244,13 @@ $(bbutton).click(function(){
 
 }
 );
+
+
+$(document).ready(function(){
+
+   $("#post_response").change(function(){
+
+            alert("text area changed");
+      });
+
+   });

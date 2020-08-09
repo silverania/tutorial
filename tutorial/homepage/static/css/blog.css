@@ -15,9 +15,13 @@
  color:orange;
 }
 
-#button_resp{
+.button_resp{
   width:70%!important;
-  margin:0 auto !important;
+  margin:20px auto !important;
+}
+
+#button_post{
+  margin:20px auto;
 }
 
   @media screen and (max-width: 780px) {
