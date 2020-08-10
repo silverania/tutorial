@@ -65,10 +65,8 @@ class Post{
       }
       if(!msg=="") {
         let messaggio=msg;
-        alert("read msgContent="+messaggio)
       if(!tutorial=="") {
         let content=tutorial;
-        alert("read tutorial="+content)
         // AJAX .....il pulito a casa mia
         $.ajax({
           url: '/post/getpost',
@@ -78,7 +76,6 @@ class Post{
           dataType: 'json',
           success: function (data) {
             if (messaggio) {
-              alert("json is here !");
             }
           }
       });
@@ -117,12 +114,10 @@ class postArea {
     this.msg=""
     this.title=getPostTitleFromClient()
     Post.title=this.title
-    alert("postarea titolo="+this.title+" Post titolo="+Post.title)
   }
 
    createButton(){
      if(this.type=="resp"){
-       alert("resp")
        bbutton2.setAttribute("type","button")
        bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
        bbutton2.textContent="Rispondi"
@@ -179,9 +174,7 @@ function initBlogSGang(id,login,tutorial){
 
 /* EVENT SECTION */
 $(bbutton2).click(function(){
-  alert("get but2click")
   if(post2 instanceof postArea){
-    alert("resp istance of pèostarea")
   }
 });
 $(bbutton).click(function(){
@@ -195,16 +188,13 @@ $(bbutton).click(function(){
   }
     // caso click su textarea esistente
   else if (post instanceof postArea ) {
-    alert("istance")
     if (post.postarea.value==''){
-      alert("empty msg")
     }
     // caso click su textarea esistente e con testo all interno
     else {
       /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
       /* sotto , gestione evento di invio post */
       if(!(post.disabled==true)){
-        alert("active enabled"+post.disabled)
         post.msg=post.postarea.value
         $('#post_response').css("border", "3px solid blue")
         bH5.textContent=loginis+" , ha scritto ...  "
@@ -215,12 +205,9 @@ $(bbutton).click(function(){
       if ((result=mess.sendToServer("resp",post.msg,"{{tutorial.title}}",loginis)==0)) {
       mess.sent=true
       }
-      alert("result="+mess.sent)
     }
     else {
       if (!(post.postarea.value=="") && mess.sent==true) {
-
-      alert("creo text per rispondere...post2="+post2)
         //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
       //divFormChild.appendChild(new postArea().create())
         if (wait==true){
@@ -249,8 +236,6 @@ $(bbutton).click(function(){
 $(document).ready(function(){
 
    $("#post_response").change(function(){
-
-            alert("text area changed");
       });
 
    });
