@@ -3,7 +3,7 @@
 }
 
 .post_response{
-    margin-bottom:50px;
+    margin-top:50px;
 }
 
 #s_blog_text{
@@ -13,6 +13,15 @@
 
 .fa-comments{
  color:orange;
+}
+
+.button_resp{
+  width:70%!important;
+  margin:20px auto !important;
+}
+
+#button_post{
+  margin:20px auto;
 }
 
   @media screen and (max-width: 780px) {

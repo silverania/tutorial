@@ -8,7 +8,7 @@ var loginis=false
 var bbutton=document.createElement("Button");
 var divFormChild=document.createElement("DIV");
 var bH5=document.createElement("h5")
-var post=new Object();
+var post,post2=new Object();
 var empty;
 var bSection=document.createElement("SECTION");
 var bSpan=document.createElement("SPAN");
@@ -16,9 +16,14 @@ var bSpanChild=document.createElement("SPAN");
 var bdiv=document.createElement("DIV");
 var bIcon=document.createElement("I");
 var bForm=document.createElement("FORM");
+var wait=true
+var postTitle
+var tutorial
+var bbutton2=document.createElement("Button");
+
+
 
 function createSectionDivSpan(parent){
-
   bH5.setAttribute("class","text-left");
   bForm.setAttribute("action","post/getpost");
   divFormChild.setAttribute("id","multiarea");
@@ -44,11 +49,14 @@ function createSectionDivSpan(parent){
 }
 
 // la classe che astrae il post
+
+
 class Post{
+
   constructor(){
     this.sent=false
   }
-  sendToServer(type,msg,user){
+  sendToServer(type,msg,postTitle,user,tutorial){
       if(type=="post"){
       el=document.getElementById("post_response");
       }
@@ -57,18 +65,17 @@ class Post{
       }
       if(!msg=="") {
         let messaggio=msg;
-        alert("read msg="+messaggio)
-
+      if(!tutorial=="") {
+        let content=tutorial;
         // AJAX .....il pulito a casa mia
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': messaggio
+            'messaggio': messaggio,'type':type,'title':postTitle,'username':user,'argomento':argomento
           },
           dataType: 'json',
           success: function (data) {
             if (messaggio) {
-              alert("json is here !");
             }
           }
       });
@@ -77,51 +84,73 @@ class Post{
       return 0
     }
 }
+}
+
 
 
 class postArea {
+
   constructor(post){
+
+    function getPostTitleFromClient() {
+
+      if(post=="post"){
+        postTitle = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
+        if (postTitle != null) {
+          parent.innerHTML =
+          "Ok hai inserito :" + postTitle + "Non dire cazzate!";
+          return postTitle
+        }
+      }
+      else if (post=="resp"){
+        let title=postTitle
+        return title
+      }
+    }
     this.type=post
     this.postarea=document.createElement("TEXTAREA");
     this.empty=true
     this.disabled=false
     this.msg=""
+    this.title=getPostTitleFromClient()
+    Post.title=this.title
   }
+
    createButton(){
      if(this.type=="resp"){
-       alert("resp")
-       var bbutton2=document.createElement("Button");
        bbutton2.setAttribute("type","button")
-       bbutton2.setAttribute("id","button_resp")
-       bbutton2.setAttribute("class","button_resp btn btn-block btn-lg btn-outline-info")
-       bbutton2.textContent="Rispondi Ad"+loginis
+       bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
+       bbutton2.textContent="Rispondi"
+       //bbutton2.animate({'width':'80%'},1000);
        divFormChild.appendChild(bbutton2)
      }
    }
+
    create(){
      if(this.type=="post"){
        this.postarea.setAttribute("id","post_response")
+        $(this.postarea).animate({'width':'100%'},1000);
       }
     else{
       this.postarea.setAttribute("class","post_response")
+      $(this.postarea).animate({'width':'80%'},1000);
     }
      this.postarea.setAttribute("rows","2");
      this.postarea.setAttribute("name","messaggio")
      $(this.postarea).css("border", borderPost)
      this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
-     $(this.postarea).animate({'width':'100%'},2000);
      return this.postarea;
   }
 
   disable(){
     this.disabled=true
     this.postarea.setAttribute('disabled','true')
-
   }
   }
 
 
-function initBlogSGang(id,login){
+
+function initBlogSGang(id,login,tutorial){
     if(login=="False"||login=="false"||login=="none"){
       login="Commento Anonimo"
     }
@@ -129,6 +158,7 @@ function initBlogSGang(id,login){
       loginis=login
     }
     idis=id;
+    tutorial=this.tutorial
     //let i=buttonCommentActionSelect(id,login);
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
@@ -143,24 +173,28 @@ function initBlogSGang(id,login){
 
 
 /* EVENT SECTION */
+$(bbutton2).click(function(){
+  if(post2 instanceof postArea){
+  }
+});
 $(bbutton).click(function(){
+  let result
+  // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
   if (!(post instanceof postArea ))
   {
     post=new postArea("post") // passo post come argomento
     mess=new Post()
     $(divFormChild).prepend(post.create())
   }
+    // caso click su textarea esistente
   else if (post instanceof postArea ) {
-    let result
-    alert("istance")
     if (post.postarea.value==''){
-      alert("empty msg")
     }
+    // caso click su textarea esistente e con testo all interno
     else {
       /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
       /* sotto , gestione evento di invio post */
       if(!(post.disabled==true)){
-        alert("active enabled"+post.disabled)
         post.msg=post.postarea.value
         $('#post_response').css("border", "3px solid blue")
         bH5.textContent=loginis+" , ha scritto ...  "
@@ -168,23 +202,40 @@ $(bbutton).click(function(){
         bbutton.textContent="Rispondi a ..."+loginis
       /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
         post.disable()
-      if ((result=mess.sendToServer("resp",post.postarea.value,loginis)==0)) {
+      if ((result=mess.sendToServer("resp",post.msg,"{{tutorial.title}}",loginis)==0)) {
       mess.sent=true
       }
-      alert("result="+mess.sent)
     }
     else {
       if (!(post.postarea.value=="") && mess.sent==true) {
-      alert("creo text per rispondere")
         //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
       //divFormChild.appendChild(new postArea().create())
+        if (wait==true){
+          callResult=makeTextAreaResp()
+          if(callResult==0){
+            this.setAttribute("disabled","true")
+          }
+      }
+    }
+    function makeTextAreaResp(){
       post2=new postArea("resp")
+      postresp=new Post()
       bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
       post2.createButton()
+      return 0
+  }
     }
   }
   }
-  }
+
 
 }
 );
+
+
+$(document).ready(function(){
+
+   $("#post_response").change(function(){
+      });
+
+   });
