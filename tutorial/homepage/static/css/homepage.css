@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 @font-face {
   font-family: 'Roboto';
   src: url('../webfonts/Roboto-Regular.ttf');
