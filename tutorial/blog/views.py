@@ -8,7 +8,6 @@ from django.http import HttpResponse,JsonResponse
 
 def newPost(request):
         print ("entrypoint to newPost")
-
         if 'messaggio' in request.GET and request.GET['messaggio'] :
             message=request.GET.get('messaggio')
             print("message="+message)

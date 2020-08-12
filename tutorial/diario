@@ -5,3 +5,9 @@
 - devo raccogliere i messaggi dal database .... i piu recenti, per visualizzarli sulla pagina web
 
 - aggiungo la classe Resp al model in blog
+
+
+12 ago 2020
+
+- per l app blog E' necessario creare un utente che definisca proprietà aggiuntive rispetto all user django , che ha pochi dati che lo descrivono ,
+    per l app blog è necessario creare proprietà aggiuntive , come i post creati dall user ecc... quindi la soluzione sta nel associare un profilo creato adhoc con le proprietà necessarie e usare i signals che creano un profilo nuovo con i daqti necessari , nel momento che viene creato l User.
