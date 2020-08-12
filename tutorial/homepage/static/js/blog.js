@@ -56,28 +56,31 @@ class Post{
   constructor(){
     this.sent=false
   }
-  sendToServer(type,msg,postTitle,user,tutorial){
+  sendToServer(type,msg,postTitle,user){
+    alert("entry in sendtoserver")
       if(type=="post"){
+        alert("post")
       el=document.getElementById("post_response");
       }
       else if (type=="resp"){
+        alert("resp")
         el=document.getElementsByClassName("post_response");
       }
       if(!msg=="") {
-        let messaggio=msg;
+        alert("mess="+msg)
+
       if(!tutorial=="") {
+        alert("tutorial="+tutorial)
         let content=tutorial;
         // AJAX .....il pulito a casa mia
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': messaggio,'type':type,'title':postTitle,'username':user,'argomento':argomento
+            'messaggio': msg,'type':type,'title':postTitle,'username':user
           },
           dataType: 'json',
           success: function (data) {
-            if (messaggio) {
-            }
-          }
+          alert("json effettuata.")}
       });
       console.log("ajax call finished");
       }
@@ -150,7 +153,7 @@ class postArea {
 
 
 
-function initBlogSGang(id,login,tutorial){
+function initBlogSGang(id,login,tut){
     if(login=="False"||login=="false"||login=="none"){
       login="Commento Anonimo"
     }
@@ -158,7 +161,7 @@ function initBlogSGang(id,login,tutorial){
       loginis=login
     }
     idis=id;
-    tutorial=this.tutorial
+    tutorial=tut
     //let i=buttonCommentActionSelect(id,login);
   //  enableButtonComment()
     //var figlio=document.getElementById(id);
@@ -189,6 +192,7 @@ $(bbutton).click(function(){
     // caso click su textarea esistente
   else if (post instanceof postArea ) {
     if (post.postarea.value==''){
+      alert("is empty")
     }
     // caso click su textarea esistente e con testo all interno
     else {
@@ -202,7 +206,7 @@ $(bbutton).click(function(){
         bbutton.textContent="Rispondi a ..."+loginis
       /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
         post.disable()
-      if ((result=mess.sendToServer("resp",post.msg,"{{tutorial.title}}",loginis)==0)) {
+      if ((result=mess.sendToServer(post.type,post.msg,tutorial,loginis)==0)) {
       mess.sent=true
       }
     }

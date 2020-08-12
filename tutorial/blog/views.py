@@ -7,6 +7,7 @@ from django.http import HttpResponse,JsonResponse
 #    def show():
 
 def newPost(request):
+        return HttpResponse("sei un coglione")
         print ("entrypoint to newPost")
         if 'messaggio' in request.GET and request.GET['messaggio'] :
             message=request.GET.get('messaggio')
@@ -24,7 +25,7 @@ def newPost(request):
             if 'username' in request.GET and request.GET['username'] :
                 user=request.GET.get('username',None)
                 print("user non autenticato:"+user)
-            
+
             #currentUser.message=message
             #return HttpResponse("o yes , user logged is  "+str(currentUser.blog_posts.all()) +"and messages is #:"+currentUser.message+"from database:)
         data={'message':message,'type':type,'user':user}
