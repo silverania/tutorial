@@ -7,13 +7,13 @@ from django.http import HttpResponse,JsonResponse
 #    def show():
 
 def newPost(request):
-        return HttpResponse("sei un coglione")
         print ("entrypoint to newPost")
+
         if 'messaggio' in request.GET and request.GET['messaggio'] :
             message=request.GET.get('messaggio')
             print("message="+message)
         if 'type' in request.GET and request.GET['type'] :
-            type=request.GET.get('type',None)
+            type=request.GET.get('type')
             print("tipo:"+type)
         if 'argomento' in request.GET and request.GET['argomento'] :
             argomento=request.GET.get('argomento',None)
