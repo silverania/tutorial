@@ -171,7 +171,35 @@ function getIndex(e) {
 </div>
 <div class="container-fluid">
 <div class="row justify-content-center">
-  <div id="col_blog" class="col-12 col-md-8  col-lg-6 text-center">La Sezione Del Blog è Sperimentale ... non usarla !
+  <div id="col_blog" class="col-12 col-md-8  col-lg-6 text-center">
+
+    <div class="row" id="d_blog_reg">
+    <ul>
+      {%if login%}
+      <li class="nav-item"style="text-align:right!important;" >
+        <a class="nav-link" href="/user/logout">
+          <span id="esci"><b>Crea Un Tutorial</b></span>
+        </a>
+      </li>
+      <li class="nav-item"style="text-align:right!important;" >
+        <a class="nav-link" href="/user/logout">
+          <span id="esci"><b>Esci</b></span>
+        </a>
+      </li>
+      {%else%}
+      <li class="nav-item"style="text-align:right!important;" >
+        <a class="nav-link" href="/user/register">
+          <span id="registrati"><b>Registrati</b></span>
+        </a>
+      </li>
+      <li class="nav-item" style="text-align:right!important;" >
+        <a class="nav-link" href="/user/login">
+          <span id="entra"><b>Entra</b></span>
+        </a>
+      </li>
+      {%endif%}
+    </ul>
+  </div>
 <!--section id="blog">
 
 <div  class="blog_title">
@@ -181,6 +209,7 @@ function getIndex(e) {
 <div class="form-group" id="multiarea">
 <button type="button" id="button_blog" class="btn btn-block btn-outline-info" onclick="writeMsg(this.id,'{{login}}')">Commenta
 </button-->
+
 <script>initBlogSGang("col_blog","{{request.user}}","{{tutorial.title}}");</script>
 </div>
 </form>

@@ -18,8 +18,8 @@ def newPost(request):
             argomento=request.GET.get('argomento',None)
             print("argomento:"+argomento)
         if request.user.is_authenticated:
-            user=str(request.user)
-            print("user autenticato:"+str(user))
+            myuser=Profile.objects.get(pk=request.user.id)
+            print("user autenticato:"+str(myuser))
         else:
             if 'username' in request.GET and request.GET['username'] :
                 user=request.GET.get('username',None)
@@ -27,5 +27,5 @@ def newPost(request):
 
             #currentUser.message=message
             #return HttpResponse("o yes , user logged is  "+str(currentUser.blog_posts.all()) +"and messages is #:"+currentUser.message+"from database:)
-        data={'message':message,'type':type,'user':user}
+        data={'message':message,'type':type,'user':str(myuser.user.username)}
         return  JsonResponse(data)

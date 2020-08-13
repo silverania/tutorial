@@ -1,7 +1,10 @@
 #col_blog{
   width:0px!important;
 }
-
+#d_blog_reg {
+  width:100%;
+  margin-bottom:50px!important;
+}
 .post_response{
     margin-top:50px;
 }
@@ -36,7 +39,8 @@
     font-size:1.5rem;
   }
 }
-
-#blog{
-  margin:0 auto!important;
+.blog_title,#blog_title{
+  width:auto!important;
+  margin-top:5%!important;
+  margin-bottom:3%;
 }
