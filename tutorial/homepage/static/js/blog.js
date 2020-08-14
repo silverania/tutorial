@@ -50,8 +50,8 @@ function createSectionDivSpan(parent){
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","btn btn-block btn-lg btn-outline-info")
   bbutton.textContent="Commenta"
-  spanBlogReg.textContent="SignUp in Blog"
-  spanBlogEntra.textContent="Login in Blog"
+  spanBlogReg.textContent="Blog in Costruzione"
+  spanBlogEntra.textContent="..."
   spanBlogEsci.textContent="Exit"
   ulBlogReg.setAttribute("id","ul_blog")
   document.getElementById(parent).appendChild(bSection);
