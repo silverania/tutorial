@@ -5,6 +5,11 @@
   width:100%;
   margin-bottom:50px!important;
 }
+
+ul#ul_blog li{
+    display:inline;
+}
+
 .post_response{
     margin-top:50px;
 }

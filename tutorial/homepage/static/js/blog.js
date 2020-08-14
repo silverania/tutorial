@@ -50,9 +50,10 @@ function createSectionDivSpan(parent){
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","btn btn-block btn-lg btn-outline-info")
   bbutton.textContent="Commenta"
-  spanBlogReg.textContent="SignUp"
-  spanBlogEntra.textContent="Login"
+  spanBlogReg.textContent="SignUp in Blog"
+  spanBlogEntra.textContent="Login in Blog"
   spanBlogEsci.textContent="Exit"
+  ulBlogReg.setAttribute("id","ul_blog")
   document.getElementById(parent).appendChild(bSection);
   if(loginis=="anonymousUser"){
     aBlogReg.appendChild(spanBlogReg)
@@ -80,29 +81,21 @@ function createSectionDivSpan(parent){
   divFormChild.appendChild(bbutton)
 }
 
-// la classe che astrae il post
-
 
 class Post{
-
   constructor(){
     this.sent=false
   }
   sendToServer(type,msg,postTitle,user){
-    alert("entry in sendtoserver")
-      if(type=="post"){
-        alert("post")
+    if(type=="post"){
       el=document.getElementById("post_response");
-      }
-      else if (type=="resp"){
-        alert("resp")
-        el=document.getElementsByClassName("post_response");
-      }
-      if(!msg=="") {
-        alert("mess="+msg)
+    }
+    else if (type=="resp"){
+      el=document.getElementsByClassName("post_response");
+    }
+    if(!msg=="") {
 
       if(!tutorial=="") {
-        alert("tutorial="+tutorial)
         let content=tutorial;
         // AJAX .....il pulito a casa mia
         $.ajax({
@@ -112,80 +105,74 @@ class Post{
           },
           dataType: 'json',
           success: function (data) {
-          alert("json effettuata.")}
-      });
-      console.log("ajax call finished");
+            console.log("json effettuata.")}
+          });
+          console.log("ajax call finished");
+        }
+        return 0
       }
-      return 0
     }
-}
-}
+  }
 
 
 
-class postArea {
-
-  constructor(post){
-
-    function getPostTitleFromClient() {
-
-      if(post=="post"){
-        postTitle = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
-        if (postTitle != null) {
-          parent.innerHTML =
-          "Ok hai inserito :" + postTitle + "Non dire cazzate!";
-          return postTitle
+  class postArea {
+    constructor(post){
+      function getPostTitleFromClient() {
+        if(post=="post"){
+          postTitle = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
+          if (postTitle != null) {
+            parent.innerHTML =
+            "Ok hai inserito :" + postTitle + "Non dire cazzate!";
+            return postTitle
+          }
+        }
+        else if (post=="resp"){
+          let title=postTitle
+          return title
         }
       }
-      else if (post=="resp"){
-        let title=postTitle
-        return title
+      this.type=post
+      this.postarea=document.createElement("TEXTAREA");
+      this.empty=true
+      this.disabled=false
+      this.msg=""
+      this.title=getPostTitleFromClient()
+      Post.title=this.title
+    }
+    createButton(){
+      if(this.type=="resp"){
+        bbutton2.setAttribute("type","button")
+        bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
+        bbutton2.textContent="Rispondi"
+        //bbutton2.animate({'width':'80%'},1000);
+        divFormChild.appendChild(bbutton2)
       }
     }
-    this.type=post
-    this.postarea=document.createElement("TEXTAREA");
-    this.empty=true
-    this.disabled=false
-    this.msg=""
-    this.title=getPostTitleFromClient()
-    Post.title=this.title
-  }
-
-   createButton(){
-     if(this.type=="resp"){
-       bbutton2.setAttribute("type","button")
-       bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
-       bbutton2.textContent="Rispondi"
-       //bbutton2.animate({'width':'80%'},1000);
-       divFormChild.appendChild(bbutton2)
-     }
-   }
-
-   create(){
-     if(this.type=="post"){
-       this.postarea.setAttribute("id","post_response")
+    create(){
+      if(this.type=="post"){
+        this.postarea.setAttribute("id","post_response")
         $(this.postarea).animate({'width':'100%'},1000);
       }
-    else{
-      this.postarea.setAttribute("class","post_response")
-      $(this.postarea).animate({'width':'80%'},1000);
+      else{
+        this.postarea.setAttribute("class","post_response")
+        $(this.postarea).animate({'width':'80%'},1000);
+      }
+      this.postarea.setAttribute("rows","2");
+      this.postarea.setAttribute("name","messaggio")
+      $(this.postarea).css("border", borderPost)
+      this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
+      return this.postarea;
     }
-     this.postarea.setAttribute("rows","2");
-     this.postarea.setAttribute("name","messaggio")
-     $(this.postarea).css("border", borderPost)
-     this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
-     return this.postarea;
-  }
-
-  disable(){
-    this.disabled=true
-    this.postarea.setAttribute('disabled','true')
-  }
+    disable(){
+      this.disabled=true
+      this.postarea.setAttribute('disabled','true')
+    }
   }
 
 
 
-function initBlogSGang(id,login,tut){
+  function initBlogSGang(id,login,tut){
     if(login=="False"||login=="false"||login=="none"||login=="AnonymousUser"){
       loginis="anonymousUser"
     }
@@ -194,84 +181,71 @@ function initBlogSGang(id,login,tut){
     }
     idis=id;
     tutorial=tut
-    //let i=buttonCommentActionSelect(id,login);
-  //  enableButtonComment()
-    //var figlio=document.getElementById(id);
     createSectionDivSpan(idis);
-}
-
-
-/*function setPostarea()*/
-
-
-/* make textarea for comments */
-
-
-/* EVENT SECTION */
-$(bbutton2).click(function(){
-  if(post2 instanceof postArea){
   }
-});
-$(bbutton).click(function(){
-  let result
-  // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
-  if (!(post instanceof postArea ))
-  {
-    post=new postArea("post") // passo post come argomento
-    mess=new Post()
-    $(divFormChild).prepend(post.create())
-  }
+
+
+  /* EVENT SECTION */
+  $(bbutton2).click(function(){
+    if(post2 instanceof postArea){
+    }
+  });
+  $(bbutton).click(function(){
+    let result
+    // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
+    if (!(post instanceof postArea ))
+    {
+      post=new postArea("post") // passo post come argomento
+      mess=new Post()
+      $(divFormChild).prepend(post.create())
+    }
     // caso click su textarea esistente
-  else if (post instanceof postArea ) {
-    if (post.postarea.value==''){
-      alert("is empty")
-    }
-    // caso click su textarea esistente e con testo all interno
-    else {
-      /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
-      /* sotto , gestione evento di invio post */
-      if(!(post.disabled==true)){
-        post.msg=post.postarea.value
-        $('#post_response').css("border", "3px solid blue")
-        bH5.textContent=loginis+" , ha scritto ...  "
-        $('#multiarea').prepend(bH5)
-        bbutton.textContent="Rispondi a ..."+loginis
-      /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-        post.disable()
-      if ((result=mess.sendToServer(post.type,post.msg,tutorial,loginis)==0)) {
-      mess.sent=true
+    else if (post instanceof postArea ) {
+      if (post.postarea.value==''){
+        alert("is empty")
       }
-    }
-    else {
-      if (!(post.postarea.value=="") && mess.sent==true) {
-        //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
-      //divFormChild.appendChild(new postArea().create())
-        if (wait==true){
-          callResult=makeTextAreaResp()
-          if(callResult==0){
-            this.setAttribute("disabled","true")
+      // caso click su textarea esistente e con testo all interno
+      else {
+        /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
+        /* sotto , gestione evento di invio post */
+        if(!(post.disabled==true)){
+          post.msg=post.postarea.value
+          $('#post_response').css("border", "3px solid blue")
+          bH5.textContent=loginis+" , ha scritto ...  "
+          $('#multiarea').prepend(bH5)
+          bbutton.textContent="Rispondi a ..."+loginis
+          /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
+          post.disable()
+          if ((result=mess.sendToServer(post.type,post.msg,tutorial,loginis)==0)) {
+            mess.sent=true
           }
+        }
+        else {
+          if (!(post.postarea.value=="") && mess.sent==true) {
+            //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
+            //divFormChild.appendChild(new postArea().create())
+            if (wait==true){
+              callResult=makeTextAreaResp()
+              if(callResult==0){
+                this.setAttribute("disabled","true")
+              }
+            }
+          }
+          function makeTextAreaResp(){
+            post2=new postArea("resp")
+            postresp=new Post()
+            bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
+            post2.createButton()
+            return 0
+          }
+        }
       }
     }
-    function makeTextAreaResp(){
-      post2=new postArea("resp")
-      postresp=new Post()
-      bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
-      post2.createButton()
-      return 0
   }
-    }
-  }
-  }
-
-
-}
 );
 
 
 $(document).ready(function(){
-
-   $("#post_response").change(function(){
-      });
-
-   });
+  $("#post_response").change(function(){
+  });
+});
