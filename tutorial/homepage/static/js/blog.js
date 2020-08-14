@@ -4,9 +4,20 @@ var id=id
 var el
 var padre
 var user
-var loginis=false
+var loginis
 var bbutton=document.createElement("Button");
 var divFormChild=document.createElement("DIV");
+var divBlogReg=document.createElement("DIV");
+var ulBlogReg=document.createElement("UL");
+var liBlogReg=document.createElement("LI");
+var aBlogReg=document.createElement("A");
+var spanBlogReg=document.createElement("SPAN");
+var liBlogEntra=document.createElement("LI");
+var aBlogEntra=document.createElement("A");
+var spanBlogEntra=document.createElement("SPAN");
+var liBlogEsci=document.createElement("LI");
+var aBlogEsci=document.createElement("A");
+var spanBlogEsci=document.createElement("SPAN");
 var bH5=document.createElement("h5")
 var post,post2=new Object();
 var empty;
@@ -28,6 +39,7 @@ function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
   divFormChild.setAttribute("id","multiarea");
   divFormChild.setAttribute("class","form-group");
+  divBlogReg.setAttribute("id","d_blog_reg")
   bIcon.setAttribute("class","fas fa-comments");
   bdiv.setAttribute("id","blog_title");
   bSection.setAttribute("id","blog");
@@ -38,7 +50,27 @@ function createSectionDivSpan(parent){
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","btn btn-block btn-lg btn-outline-info")
   bbutton.textContent="Commenta"
+  spanBlogReg.textContent="SignUp"
+  spanBlogEntra.textContent="Login"
+  spanBlogEsci.textContent="Exit"
   document.getElementById(parent).appendChild(bSection);
+  if(loginis=="anonymousUser"){
+    aBlogReg.appendChild(spanBlogReg)
+    liBlogReg.appendChild(aBlogReg)
+    aBlogEntra.appendChild(spanBlogEntra)
+    liBlogEntra.appendChild(aBlogEntra)
+    ulBlogReg.appendChild(liBlogReg)
+    ulBlogReg.appendChild(liBlogEntra)
+    divBlogReg.appendChild(ulBlogReg)
+    bSection.appendChild(divBlogReg)
+  }
+  else {
+    aBlogEsci.appendChild(spanBlogEsci)
+    liBlogEsci.appendChild(aBlogEsci)
+    ulBlogReg.appendChild(liBlogEsci)
+    divBlogReg.appendChild(ulBlogReg)
+    bSection.appendChild(divBlogReg)
+  }
   bSection.appendChild(bdiv)
   bdiv.appendChild(bSpan)
   bSpan.appendChild(bIcon)
@@ -154,8 +186,8 @@ class postArea {
 
 
 function initBlogSGang(id,login,tut){
-    if(login=="False"||login=="false"||login=="none"){
-      login="Commento Anonimo"
+    if(login=="False"||login=="false"||login=="none"||login=="AnonymousUser"){
+      loginis="anonymousUser"
     }
     else{
       loginis=login
