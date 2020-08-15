@@ -52,7 +52,7 @@ function createSectionDivSpan(parent){
   bbutton.textContent="Commenta"
   spanBlogReg.textContent="Blog in Costruzione"
   spanBlogEntra.textContent="..."
-  spanBlogEsci.textContent="Exit"
+  spanBlogEsci.textContent="Blog in Costruzione ...Exit"
   ulBlogReg.setAttribute("id","ul_blog")
   document.getElementById(parent).appendChild(bSection);
   if(loginis=="anonymousUser"){

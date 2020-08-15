@@ -1,4 +1,4 @@
-{% load staticfiles %}
+{% load static %}
 @font-face {
   font-family: 'Roboto';
   src: url('../webfonts/Roboto-Regular.ttf');
@@ -41,7 +41,7 @@ body {
   height:auto;
  font-family:'WorkSans','Assistant-regular','WorkSans';
 background-color:#e6ffff;
-size:16px;
+font-size:20px;
 }
 
 .badge.badge-info.badge-outlined-info{
@@ -794,7 +794,7 @@ li #s_center_menu{
    font-size:0.8vw;
  }
  #p_content{
-   font-size:1.3rem;
+   font-size:1rem;
  }
  .fa-comments , #s_blog{
    font-size:1.7rem;
