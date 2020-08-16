@@ -5,7 +5,9 @@ var el
 var padre
 var user
 var loginis
+var photo
 var bbutton=document.createElement("Button");
+var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
 var divBlogReg=document.createElement("DIV");
 var ulBlogReg=document.createElement("UL");
@@ -36,7 +38,10 @@ var bbutton2=document.createElement("Button");
 
 function createSectionDivSpan(parent){
   bH5.setAttribute("class","text-left");
+  bH5.setAttribute("style","display:inline-block;margin:0 auto 20px auto");
   bForm.setAttribute("action","post/getpost");
+  bUserImg.setAttribute("WIDTH","50px")
+  bUserImg.setAttribute("style","border-radius:50%;")
   divFormChild.setAttribute("id","multiarea");
   divFormChild.setAttribute("class","form-group");
   divBlogReg.setAttribute("id","d_blog_reg")
@@ -105,7 +110,9 @@ class Post{
           },
           dataType: 'json',
           success: function (data) {
-            console.log("json effettuata.")}
+            photo=data.photo
+            bUserImg.setAttribute("src",photo)
+          }
           });
           console.log("ajax call finished");
         }
@@ -120,7 +127,7 @@ class Post{
     constructor(post){
       function getPostTitleFromClient() {
         if(post=="post"){
-          postTitle = prompt("Inserisci un titolo per il tuo post", "titolo a piacere");
+          postTitle = prompt("Inserisci un titolo per il tuo post", "Post");
           if (postTitle != null) {
             parent.innerHTML =
             "Ok hai inserito :" + postTitle + "Non dire cazzate!";
@@ -184,7 +191,6 @@ class Post{
     createSectionDivSpan(idis);
   }
 
-
   /* EVENT SECTION */
   $(bbutton2).click(function(){
     if(post2 instanceof postArea){
@@ -211,8 +217,10 @@ class Post{
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
           $('#post_response').css("border", "3px solid blue")
-          bH5.textContent=loginis+" , ha scritto ...  "
+          bH5.textContent=Post.title+" "+"di "+loginis
           $('#multiarea').prepend(bH5)
+
+          $('#multiarea').prepend(bUserImg)
           bbutton.textContent="Rispondi a ..."+loginis
           /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
           post.disable()

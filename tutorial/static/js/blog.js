@@ -52,7 +52,7 @@ function createSectionDivSpan(parent){
   bbutton.textContent="Commenta"
   spanBlogReg.textContent="Blog in Costruzione"
   spanBlogEntra.textContent="..."
-  spanBlogEsci.textContent="Exit"
+  spanBlogEsci.textContent="Blog in Costruzione ...Exit"
   ulBlogReg.setAttribute("id","ul_blog")
   document.getElementById(parent).appendChild(bSection);
   if(loginis=="anonymousUser"){
@@ -211,8 +211,9 @@ class Post{
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
           $('#post_response').css("border", "3px solid blue")
-          bH5.textContent=loginis+" , ha scritto ...  "
+          bH5.textContent=Post.title+" "+"di "+loginis
           $('#multiarea').prepend(bH5)
+          
           bbutton.textContent="Rispondi a ..."+loginis
           /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
           post.disable()
