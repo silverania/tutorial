@@ -112,23 +112,30 @@ margin-right:5px;
   margin-bottom:3%;
   margin-top:3%;
 }
-#span_autore,#span_tutorial{
+#span_autore{
   display:block!important;
   font-size:1rem!important;
 }
-#label_autore,#label_tutorial{
+#label_autore{
   opacity:0.8;
   display:block!important;
   margin:10px auto ! important;
 }
-#d_tutorial_section{
+#d_tutorial_section,#d_inside_tutorial_section{
   box-sizing: content-box;
-  display:none;
+  /*display:none;*/
   position:relative;
-  width:100%!important;
+  width:auto;
   max-width:100%!important;
-  margin-right:10%!important;
 }
+
+#d_inside_tutorial_section{
+  margin-left:-700px;
+  color:black;
+  width:100%!important;
+  z-index:2;
+}
+
 #form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials{
   border:2px solid orange;
   width:100%!important;
@@ -449,7 +456,7 @@ tr{
 #asidebar .fa-angle-right{
  font-size:1.4rem!important;
 }
-#span_autore,#span_tutorial{
+#span_autore{
   font-size:0.4rem!important;
 }
 #select_autori{
@@ -794,7 +801,7 @@ li #s_center_menu{
    font-size:0.8vw;
  }
  #p_content{
-   font-size:1rem;
+   font-size:20px;
  }
  .fa-comments , #s_blog{
    font-size:1.7rem;

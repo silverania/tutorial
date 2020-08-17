@@ -54,26 +54,29 @@
             <span id="asidebar"><i  class="fas fa-angle-right" aria-hidden="true"></i></span>
          </div>
 
-         <div id="d_tutorial_section">
+         <div id="d_aside_tutorial">
 
-         <div id="form" class="form-group">
-    <label id="label_autore" for="labelFormAutori"><span id="span_autore" class="badge badge-warning">Scegli Autore</span></label>
-    <select onclick="remove(this.value);" class="form-control select_tutorial" id="selecFormAutori">
+
+         <div id="d_tutorial_section" class="">
+    <ul  class="list-group select_tutorial" id="selecFormAutori">
 {% for t in users %}
-
-      <option  id="option_autori_{{t.first_name}}_{{t.last_name}}" value="{{t.first_name}} {{t.last_name}}" class="option_autori">
-      {{t.first_name}} {{t.last_name}}</option>
-
+      <li  onclick="show(this.innerHTML);" id="option_autori_{{t.user.username}}" value="{{t.user.username}}" class="list-group-item option_autori">
+      {{t.user.username}}</li>
       {% endfor %}
-    </select>
+    </ul>
   </div>
 
+  <div id="d_inside_tutorial_section" class="">
+<ul  class="list-group" id="ul_in_selecFormAutori">
+</ul>
+</div>
 
 
-    <label id="label_tutorial" for="labelFormTutorials"><span id="span_tutorial" class="badge badge-warning">Tutorial</span></label>
-    <select multiple class="form-control select_tutorial" onclick="window.open(this.value);" id="selectFormTutorials">
 
-    </select>
+    <!--label id="label_tutorial" for="labelFormTutorials"><span id="span_tutorial" class="badge badge-warning">Tutorial</span></label>
+    <multiple class="form-control select_tutorial" onclick="window.open(this.value);" id="selectFormTutorials">
+
+    </select-->
 
 
 </div>
@@ -85,31 +88,33 @@ $(document).ready(function(){
 </script>
 
 <script>
-function remove(e){
-  $('.mytutorialByAuthor').remove();
+function show(e){
   getIndex(e);
 }
 function getIndex(e) {
-  var autore=e;
-  var tag=document.getElementById('selectFormTutorials');
+  var autore=e.replace(/\s/g,'');
+  var tag=document.getElementById('ul_in_selecFormAutori');
 
   {% for tut in tutorial_all %}
-  toCompare="{{tut.author.first_name}}"+" "+"{{tut.author.last_name}}";
-  if (autore==toCompare){
-    var optio = document.createElement('option');
+  toCompare="{{tut.author.user.username}}";
+  toCompare=toCompare.replace(/\s/g,'');
+    alert(autore+toCompare)
+  if (autore.localeCompare(toCompare)==0){
+    alert(toCompare+autore+"_")
+    var optio = document.createElement('LI');
+    //$('#ul_in_selecFormAutori').css("display","block")
     title="{{tut.title}}";
     url="{{tut.get_absolute_url}}";
-    optio.setAttribute("class","mytutorialByAuthor");
-    optio.value=url;
+    optio.setAttribute("class","list-group-item");
+    //optio.value=url;
     optio.innerHTML = title;
-    optio.text=title;
     tag.appendChild(optio);
+    $('#d_inside_tutorial_section').css("display","block")
+      $('#d_inside_tutorial_section').animate({'margin-left': table_tutorial_WIDTH },300)
   }
   {% endfor %}
 }
 </script>
-
-
           <div  id="d_divaside" class="d_divaside">
             <div id="d_in_divaside" class="list-group"  role="tablist">
                 {% for c in categorie %}

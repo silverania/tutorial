@@ -38,7 +38,7 @@ var bbutton2=document.createElement("Button");
 
 function createSectionDivSpan(parent){
   bH5.setAttribute("class","text-left");
-  bH5.setAttribute("style","display:inline-block;margin:0 auto 20px auto");
+  bH5.setAttribute("style","display:inline-block;margin:0 auto 20px 20px");
   bForm.setAttribute("action","post/getpost");
   bUserImg.setAttribute("WIDTH","50px")
   bUserImg.setAttribute("style","border-radius:50%;")

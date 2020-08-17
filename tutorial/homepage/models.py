@@ -6,6 +6,7 @@ from datetime import datetime
 from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import User
+from user.models import Profile
 
 #custom modelmanager classe per visualizzare tutorial  in admin
 class PublishedManager(models.Manager):
@@ -57,7 +58,7 @@ class Tutorial(models.Model):
     title = models.CharField(max_length=250)
     overview = models.TextField(default="tutorial")
     slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)
-    author = models.ForeignKey(User,on_delete=models.CASCADE,blank=True,null=True)
+    author = models.ForeignKey(Profile,on_delete=models.CASCADE,blank=True,null=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)

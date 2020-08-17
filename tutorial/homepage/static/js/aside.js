@@ -30,15 +30,14 @@ $(document).ready(function(){
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
     $('#asidebar').css('color','green');
   },
-
   /* quando il mouse si allontenerà dalla freccia quest' ultima tornerà nella posizione iniziale e l' opacita tornerà a 1*/
-
   function(){
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '1',},100);
       $('#asidebar').css('color','black');
   }
 );
   // END
+
 
 /*Se la table tutorial è in posizione left=0 vuol dire che è visibile , quindi l 'evento click su angle , la nascondera
 di nuovo ponendola in posizione margin-left= -510px' .......e viceversa
@@ -64,6 +63,12 @@ $('#asidebar').click(function(event){
     }
 }
 );
+
+
+
+
+
+
 // funzioni per visulizzare menu clickati
 function showHtmlMenu(){
   $('#d_Web_menu').css('display','block'); // mostro il menu che mi interessa
