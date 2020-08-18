@@ -57,8 +57,9 @@
          <div id="d_aside_tutorial">
 
 
-         <div id="d_tutorial_section" class="">
+         <div id="d_tutorial_section">
     <ul  class="list-group select_tutorial" id="selecFormAutori">
+
 {% for t in users %}
       <li  onclick="show(this.innerHTML);" id="option_autori_{{t.user.username}}" value="{{t.user.username}}" class="list-group-item option_autori">
       {{t.user.username}}</li>
@@ -66,7 +67,7 @@
     </ul>
   </div>
 
-  <div id="d_inside_tutorial_section" class="">
+  <div id="d_inside_tutorial_section">
 <ul  class="list-group" id="ul_in_selecFormAutori">
 </ul>
 </div>
@@ -88,24 +89,28 @@ $(document).ready(function(){
 </script>
 
 <script>
+var name;
+var exist=0
 function show(e){
   getIndex(e);
 }
 function getIndex(e) {
+  name=e
   var autore=e.replace(/\s/g,'');
   var tag=document.getElementById('ul_in_selecFormAutori');
+  if (exist==0){
+    console.log("exist=0")
 
   {% for tut in tutorial_all %}
   toCompare="{{tut.author.user.username}}";
   toCompare=toCompare.replace(/\s/g,'');
-    alert(autore+toCompare)
   if (autore.localeCompare(toCompare)==0){
-    alert(toCompare+autore+"_")
     var optio = document.createElement('LI');
+    optio.setAttribute("id","tutorial_id_{{tut.id}}")
     //$('#ul_in_selecFormAutori').css("display","block")
     title="{{tut.title}}";
     url="{{tut.get_absolute_url}}";
-    optio.setAttribute("class","list-group-item");
+    optio.setAttribute("class","list-group-item li_tutorials");
     //optio.value=url;
     optio.innerHTML = title;
     tag.appendChild(optio);
@@ -113,6 +118,8 @@ function getIndex(e) {
       $('#d_inside_tutorial_section').animate({'margin-left': table_tutorial_WIDTH },300)
   }
   {% endfor %}
+  }
+  exist=1
 }
 </script>
           <div  id="d_divaside" class="d_divaside">

@@ -20,15 +20,18 @@ $(document).ready(function(){
   table_tutorial_WIDTH_initial_position=(parseInt(table_tutorial_WIDTH))+15;
   table_tutorial.css('margin-left', -table_tutorial_WIDTH_initial_position );
 
-// Animazione destra-sinistra dell elemento Angle-Right
-  $('#asidebar').hover(function(){
+  function showTutorial() {
     table_tutorial.css('display','block');
     table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
-    off=table_tutorial_width+15;
-     table_tutorial.animate({'margin-left':'0'},400);
+    off=table_tutorial_width+18;
+    $('#d_tutorial_section').animate({'margin-left': '-18px'},300);
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '0.9',},100);
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
     $('#asidebar').css('color','green');
+}
+// Animazione destra-sinistra dell elemento Angle-Right
+  $('#asidebar').hover(function(){
+    showTutorial()
   },
   /* quando il mouse si allontenerà dalla freccia quest' ultima tornerà nella posizione iniziale e l' opacita tornerà a 1*/
   function(){
@@ -45,21 +48,23 @@ di nuovo ponendola in posizione margin-left= -510px' .......e viceversa
 $('#asidebar').click(function(event){
   table_tutorial.css('display','block');
   table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
-  off=table_tutorial_width+15;
+  off=table_tutorial_width+18;
   $target = $(event.target);
   let x=$('#d_tutorial_section').offset().left;
 
     // l 'elemento table_tutorial deve ritornare a 0px anche quando clicco sulla freecia , oltre che nell hover della freccia !'
       if ( table_tutorial.offset().left<0) {
-        $('#d_tutorial_section').animate({'margin-left': '0px'},300);
+        $('#d_tutorial_section').animate({'margin-left': '-18px'},300);
       }
     // FINE COMMENTO
 
   /* se left  è > 0 : vuol dire che l elelemento table_tutorial è visibile quindi lo mando a fan culo nuovamente nei meandri del monitor
  pronto a ritornare davanti ai coglioni al momento giusto .......o sbagliato , a secondo del punto di vista
   */
-    if ( table_tutorial.offset().left > 0) {
+    if ( table_tutorial.offset().left > -18) {
       hideTutorial();
+      deleteTutorial();
+      exist=0
     }
 }
 );
@@ -90,7 +95,7 @@ function showDjangoMenu(){
 // END #####################################
 
 //gestione  click sui pulsanti sull header
-$("li[id^='a-']").click(function(event){
+$("li[id^='a-']").click(function(){
 
   text=(this.id);
   var topOffset=mydiv.offsetTop;
@@ -129,7 +134,7 @@ $("li[id^='a-']").click(function(event){
 });
 /*  THE END */
 
-/*nascondo tutto se clicco al di fuori del documento*/
+/*nascondo tutto se clicco al di fuori del elemento*/
 $(document).click(function(event) {
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
@@ -137,17 +142,35 @@ $(document).click(function(event) {
     $('.d_divaside').css( 'left' , '-700px');
   }
  // se il clicc non si verifica sull elemento d_tutorial_section && tutorial_section è in posizione left==15 e il click non si verfica /// da fa-angle-right : allora nascondi l elemento d_tutorial_section !
-  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left==15 && !$target.closest('.fa-angle-right').length)
+  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left>-18 && !$target.closest('.fa-angle-right').length
+    &&!$target.closest('#ul_in_selecFormAutori').length)
   {
     hideTutorial();
+    deleteTutorial();
+  }
+  if($target.closest('#d_tutorial_section').length)
+  {
+    if (deleteTutorial()==0){
+      console.log("deletetutorial=0")
+    }
   }
 });
 function hideTutorial(){
   $('#d_tutorial_section').animate({'margin-left': -off },300);
     $('#d_tutorial_section').css('display','none');
+    $('#d_inside_tutorial_section').css('display','none');
 }
-/* Funzione per evidenziare la percentuale di scrolling verticale della pagina */
-
+function deleteTutorial(){
+  try {
+  $('.li_tutorials').remove();
+  }
+  catch(typeError){
+    console.log("l elemento element è nullo")
+  }
+  exist=0
+  show(name)
+  return 0
+}
 
 });
 /* Funzione che prende l' altezza della pagina per costruire una progress bar indicante la posizione, espressa in percentuale dello scroll sulla pagina*/

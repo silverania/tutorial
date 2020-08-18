@@ -121,6 +121,9 @@ margin-right:5px;
   display:block!important;
   margin:10px auto ! important;
 }
+#d_aside_tutorial{
+  box-sizing:content-box;
+}
 #d_tutorial_section,#d_inside_tutorial_section{
   box-sizing: content-box;
   /*display:none;*/
@@ -136,7 +139,7 @@ margin-right:5px;
   z-index:2;
 }
 
-#form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials{
+#form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials,#ul_in_selecFormAutori{
   border:2px solid orange;
   width:100%!important;
   max-width:100%!important;

@@ -37,7 +37,6 @@ class Category(models.Model):
     django='Django'
     generica='Generica'
     title = models.CharField(max_length=250)
-    user = models.ManyToManyField(User,related_name='categorie')
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     category = models.CharField(max_length=50,

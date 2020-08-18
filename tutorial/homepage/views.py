@@ -28,7 +28,7 @@ def tutorial_detail(request, **kwargs):
     categorie=Category.objects.all()
     users=Profile.objects.all()
     for key,value in kwargs.items():
-        print(str(key)+str(value))
+        print("value="+str(key)+str(value))
         if "post" in str(key) :
             post=value
         elif 'year' in key :

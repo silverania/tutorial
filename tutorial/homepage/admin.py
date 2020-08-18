@@ -6,7 +6,6 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ('title', 'slug','status')
 
 class CategoryData(admin.ModelAdmin):
-    filter_horizontal = ('user',)
     search_fields = ('title','created','updated')
     list_display = ('title','created','updated')
 admin.site.register(Tutorial,PostAdmin)
