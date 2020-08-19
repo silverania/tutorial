@@ -96,11 +96,9 @@ function showDjangoMenu(){
 
 //gestione  click sui pulsanti sull header
 $("li[id^='a-']").click(function(){
-
   text=(this.id);
   var topOffset=mydiv.offsetTop;
   var leftOffset=mydiv.offsetLeft;
-
   if(leftOffset>0){
     $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "-30%"},300);
       $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "90%"},300);
@@ -136,28 +134,20 @@ $("li[id^='a-']").click(function(){
 
 /*nascondo tutto se clicco al di fuori del elemento*/
 $(document).click(function(event) {
-  alert("1 event")
+  let x=$('#d_divaside').offset().left;
   $target = $(event.target);
-  if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
-  $('.d_divaside').is(":visible")) {
-    $('.d_divaside').css( 'left' , '-700px');
-  }
- // se il clicc non si verifica sull elemento d_tutorial_section && tutorial_section è in posizione left==15 e il click non si verfica /// da fa-angle-right : allora nascondi l elemento d_tutorial_section !
-  if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left>-18 && !$target.closest('.fa-angle-right').length
-    &&!$target.closest('#ul_in_selecFormAutori').length && !$target.closest('#d_inside_tutorial_section').length)
-  {
-      alert("2 event")
-    hideTutorial();
+  if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length && !$target.closest('.fa-angle-right').length && !$target.closest('#d_tutorial_section').length && ($('#d_tutorial_section').css("margin-left")=="-18px" || x>0) && !$target.closest('#ul_in_selecFormAutori').length) {
+    if(x>0) {
+      $('#d_divaside').css( 'left' , '-700px');
+    }
+      hideTutorial();
   }
   /* intercetto il click nell elemento li che contiene i nomi autore dei tutorial*/
   if($target.closest('#d_tutorial_section').length)
   {
-
     shift=$('#d_inside_tutorial_section').css('margin-left')
     shift=shift.replace("px","")
-      alert(shift)
       if(shift>0){
-          alert("e maggiore di 0"+shift)
     if (deleteTutorial()==0)  {
       console.log("deletetutorial=0")
     }
