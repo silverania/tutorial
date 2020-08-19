@@ -62,8 +62,8 @@ $('#asidebar').click(function(event){
  pronto a ritornare davanti ai coglioni al momento giusto .......o sbagliato , a secondo del punto di vista
   */
     if ( table_tutorial.offset().left > -18) {
-      hideTutorial();
-      deleteTutorial();
+      //hideTutorial();
+      //deleteTutorial();
       exist=0
     }
 }
@@ -136,6 +136,7 @@ $("li[id^='a-']").click(function(){
 
 /*nascondo tutto se clicco al di fuori del elemento*/
 $(document).click(function(event) {
+  alert("1 event")
   $target = $(event.target);
   if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length &&
   $('.d_divaside').is(":visible")) {
@@ -143,33 +144,50 @@ $(document).click(function(event) {
   }
  // se il clicc non si verifica sull elemento d_tutorial_section && tutorial_section è in posizione left==15 e il click non si verfica /// da fa-angle-right : allora nascondi l elemento d_tutorial_section !
   if(!$target.closest('#d_tutorial_section').length && $('#d_tutorial_section').offset().left>-18 && !$target.closest('.fa-angle-right').length
-    &&!$target.closest('#ul_in_selecFormAutori').length)
+    &&!$target.closest('#ul_in_selecFormAutori').length && !$target.closest('#d_inside_tutorial_section').length)
   {
+      alert("2 event")
     hideTutorial();
-    deleteTutorial();
   }
+  /* intercetto il click nell elemento li che contiene i nomi autore dei tutorial*/
   if($target.closest('#d_tutorial_section').length)
   {
-    if (deleteTutorial()==0){
+
+    shift=$('#d_inside_tutorial_section').css('margin-left')
+    shift=shift.replace("px","")
+      alert(shift)
+      if(shift>0){
+          alert("e maggiore di 0"+shift)
+    if (deleteTutorial()==0)  {
       console.log("deletetutorial=0")
     }
   }
+}
 });
-function hideTutorial(){
+function animateTutorial()  {
+  $('#d_inside_tutorial_section').animate({'margin-left':'-700px'},500);
+  return 0
+}
+
+function hideTutorial() {
   $('#d_tutorial_section').animate({'margin-left': -off },300);
     $('#d_tutorial_section').css('display','none');
     $('#d_inside_tutorial_section').css('display','none');
 }
-function deleteTutorial(){
-  try {
-  $('.li_tutorials').remove();
+
+function deleteTutorial() {
+  if (animateTutorial()==0){
+    try {
+      $('.li_tutorials').remove();
+      exist=0
   }
   catch(typeError){
     console.log("l elemento element è nullo")
+    exist=1
   }
-  exist=0
+}
   show(name)
-  return 0
+  return exist
 }
 
 });

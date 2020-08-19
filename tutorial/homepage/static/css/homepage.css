@@ -62,6 +62,9 @@ textarea{
   color:grey;
 }
 
+li:hover{
+  cursor:pointer;
+}
 
 progress#progressbar{
 position:fixed;

@@ -111,11 +111,12 @@ function getIndex(e) {
     title="{{tut.title}}";
     url="{{tut.get_absolute_url}}";
     optio.setAttribute("class","list-group-item li_tutorials");
+    optio.setAttribute("onclick","window.open(url);")
     //optio.value=url;
     optio.innerHTML = title;
     tag.appendChild(optio);
     $('#d_inside_tutorial_section').css("display","block")
-      $('#d_inside_tutorial_section').animate({'margin-left': table_tutorial_WIDTH },300)
+      $('#d_inside_tutorial_section').animate({'margin-left': table_tutorial_WIDTH },2000)
   }
   {% endfor %}
   }
