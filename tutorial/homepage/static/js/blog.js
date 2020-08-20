@@ -27,7 +27,7 @@ var bSection=document.createElement("SECTION");
 var bSpan=document.createElement("SPAN");
 var bSpanChild=document.createElement("SPAN");
 var bdiv=document.createElement("DIV");
-var bIcon=document.createElement("I");
+var bIcon=document.createElement("IMG");
 var bForm=document.createElement("FORM");
 var wait=true
 var postTitle
@@ -43,9 +43,11 @@ function createSectionDivSpan(parent){
   bUserImg.setAttribute("WIDTH","50px")
   bUserImg.setAttribute("style","border-radius:50%;")
   divFormChild.setAttribute("id","multiarea");
-  divFormChild.setAttribute("class","form-group");
+  //divFormChild.setAttribute("class","form-group");
   divBlogReg.setAttribute("id","d_blog_reg")
-  bIcon.setAttribute("class","fas fa-comments");
+  bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
+  bIcon.setAttribute("WIDTH","50px")
+  bIcon.setAttribute("style","border-radius:50%;")
   bdiv.setAttribute("id","blog_title");
   bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
@@ -218,9 +220,11 @@ class Post{
           post.msg=post.postarea.value
           $('#post_response').css("border", "3px solid blue")
           bH5.textContent=Post.title+" "+"di "+loginis
-          $('#multiarea').prepend(bH5)
+          bH5.setAttribute("style","color:yellow;")
+
 
           $('#multiarea').prepend(bUserImg)
+            $('#multiarea').prepend(bH5)
           bbutton.textContent="Rispondi a ..."+loginis
           /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
           post.disable()

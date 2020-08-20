@@ -30,6 +30,7 @@ def newPost(request):
         else:
             if 'username' in request.GET and request.GET['username'] :
                 user=request.GET.get('username',None)
+                photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
                 print("user non autenticato:"+user)
-                data={'message':message,'type':type}
+                data={'message':message,'type':type,'photo':photo}
         return  JsonResponse(data)
