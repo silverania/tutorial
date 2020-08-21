@@ -39,7 +39,7 @@ def tutorial_detail(request, **kwargs):
             day=str(value)
     try:
         tutorial = Tutorial.objects.get(slug=post,
-        publish__year=year,)
+        publish__year=year)
         print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day))
     except UnboundLocalError :
         if '' in request.path:
