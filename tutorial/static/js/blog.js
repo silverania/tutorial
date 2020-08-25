@@ -9,6 +9,13 @@ var photo
 var bbutton=document.createElement("Button");
 var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
+
+var divUserBlog=document.createElement("DIV");
+var divCommentIcon=document.createElement("DIV");
+var divEmpty=document.createElement("DIV");
+
+
+
 var divBlogReg=document.createElement("DIV");
 var ulBlogReg=document.createElement("UL");
 var liBlogReg=document.createElement("LI");
@@ -38,23 +45,31 @@ var bbutton2=document.createElement("Button");
 
 function createSectionDivSpan(parent){
   bH5.setAttribute("class","text-left");
-  bH5.setAttribute("style","display:inline-block;margin:0 auto 20px 20px");
+
   bForm.setAttribute("action","post/getpost");
   bUserImg.setAttribute("WIDTH","50px")
-  bUserImg.setAttribute("style","border-radius:50%;")
+
+
+  divUserBlog.setAttribute("style","width:45%;display:inline-block;")
+  divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
+  divEmpty.setAttribute("style","width:20%;display:inline-block;")
+
+
   divFormChild.setAttribute("id","multiarea");
   //divFormChild.setAttribute("class","form-group");
   divBlogReg.setAttribute("id","d_blog_reg")
-  bIcon.setAttribute("src","{% static "blog_comment.png" %}");
+  bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
   bIcon.setAttribute("WIDTH","50px")
-  bIcon.setAttribute("style","border-radius:50%;")
+  bIcon.setAttribute("style","display:block;margin:0 auto;")
   bdiv.setAttribute("id","blog_title");
+  bdiv.setAttribute("style","width:100%");
   bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
+
+
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
   bbutton.setAttribute("type","button")
-  bbutton.setAttribute("class","btn btn-block btn-lg btn-outline-info")
   bbutton.textContent="Commenta"
   spanBlogReg.textContent="Blog in Costruzione"
   spanBlogEntra.textContent="..."
@@ -79,8 +94,10 @@ function createSectionDivSpan(parent){
     bSection.appendChild(divBlogReg)
   }
   bSection.appendChild(bdiv)
-  bdiv.appendChild(bSpan)
-  bSpan.appendChild(bIcon)
+  bdiv.appendChild(divUserBlog)
+  bdiv.appendChild(divCommentIcon)
+  divCommentIcon.appendChild(bIcon)
+  divUserBlog.appendChild(bSpan)
   bSpan.appendChild(bSpanChild)
   bSection.appendChild(bForm)
   bForm.appendChild(divFormChild)
@@ -219,11 +236,10 @@ class Post{
           post.msg=post.postarea.value
           $('#post_response').css("border", "3px solid blue")
           bH5.textContent=Post.title+" "+"di "+loginis
-          bH5.setAttribute("style","color:yellow;")
+          bH5.setAttribute("style","color:yellow;display:inline;font-size:1rem;")
+          divUserBlog.prepend(bH5)
+          divUserBlog.prepend(bUserImg)
 
-
-          $('#multiarea').prepend(bUserImg)
-            $('#multiarea').prepend(bH5)
           bbutton.textContent="Rispondi a ..."+loginis
           /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
           post.disable()

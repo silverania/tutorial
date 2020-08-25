@@ -71,7 +71,7 @@ position:fixed;
 width:100%;
 top:-8px;
 height:30px;;
-margin:0 auto;
+margin:0 auto 0 0;
 z-index:2;
 }
 
@@ -127,16 +127,16 @@ margin-right:5px;
 #d_aside_tutorial{
   box-sizing:content-box;
 }
-#d_tutorial_section,#d_inside_tutorial_section{
+#d_tutorial_section{
   box-sizing: content-box;
-  /*display:none;*/
   position:relative;
   width:auto;
   max-width:100%!important;
 }
 
 #d_inside_tutorial_section{
-  margin-left:-700px;
+  position:relative;
+  left:-700px;
   color:black;
   width:100%!important;
   z-index:2;
@@ -183,7 +183,7 @@ margin-top:1%;
 
 li[id^="a-"]:hover{
   cursor:pointer!important;
-  background-color: green!important;
+  background-color: black!important;
 }
 
 .blog_title,#blog_title{
@@ -296,11 +296,11 @@ font-weight:bold;
 }
 [id^="a_tutorial"]{
   width:auto!important;
-  background-color: orange;
+  background-color: black;
   color:white;
 }
 [id^="a_tutorial"]:hover{
-  background-color:black;
+  background-color:orange;
   color:orange;
 }
 #p_content{

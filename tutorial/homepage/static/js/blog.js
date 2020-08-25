@@ -1,21 +1,18 @@
 var borderPost="1px solid orange";
-var borderResponse="2px solid blue";
+var borderResponse="1px dotted grey";
 var id=id
 var el
 var padre
 var user
 var loginis
 var photo
+var lastUpdate
 var bbutton=document.createElement("Button");
 var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
-
 var divUserBlog=document.createElement("DIV");
 var divCommentIcon=document.createElement("DIV");
 var divEmpty=document.createElement("DIV");
-
-
-
 var divBlogReg=document.createElement("DIV");
 var ulBlogReg=document.createElement("UL");
 var liBlogReg=document.createElement("LI");
@@ -28,6 +25,7 @@ var liBlogEsci=document.createElement("LI");
 var aBlogEsci=document.createElement("A");
 var spanBlogEsci=document.createElement("SPAN");
 var bH5=document.createElement("h5")
+var spanUserName=document.createElement("SPAN");
 var post,post2=new Object();
 var empty;
 var bSection=document.createElement("SECTION");
@@ -42,22 +40,17 @@ var tutorial
 var bbutton2=document.createElement("Button");
 
 
-
 function createSectionDivSpan(parent){
-  bH5.setAttribute("class","text-left");
-
   bForm.setAttribute("action","post/getpost");
-  bUserImg.setAttribute("WIDTH","50px")
-
-
+  bUserImg.setAttribute("WIDTH","30px")
+  bUserImg.setAttribute("style","border-radius:50%")
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
   divEmpty.setAttribute("style","width:20%;display:inline-block;")
-
-
   divFormChild.setAttribute("id","multiarea");
   //divFormChild.setAttribute("class","form-group");
   divBlogReg.setAttribute("id","d_blog_reg")
+  divBlogReg.setAttribute("style","display:inline-block")
   bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
   bIcon.setAttribute("WIDTH","50px")
   bIcon.setAttribute("style","display:block;margin:0 auto;")
@@ -70,7 +63,7 @@ function createSectionDivSpan(parent){
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
   bbutton.setAttribute("type","button")
-  bbutton.setAttribute("class","btn btn-block btn-lg btn-outline-info")
+  bbutton.setAttribute("class","mybut mybut-outline-info ")
   bbutton.textContent="Commenta"
   spanBlogReg.textContent="Blog in Costruzione"
   spanBlogEntra.textContent="..."
@@ -94,6 +87,7 @@ function createSectionDivSpan(parent){
     divBlogReg.appendChild(ulBlogReg)
     bSection.appendChild(divBlogReg)
   }
+  bH5.appendChild(spanUserName)
   bSection.appendChild(bdiv)
   bdiv.appendChild(divUserBlog)
   bdiv.appendChild(divCommentIcon)
@@ -109,6 +103,7 @@ function createSectionDivSpan(parent){
 class Post{
   constructor(){
     this.sent=false
+    this.lastUpdate=lastUpdate
   }
   sendToServer(type,msg,postTitle,user){
     if(type=="post"){
@@ -131,6 +126,7 @@ class Post{
           success: function (data) {
             photo=data.photo
             bUserImg.setAttribute("src",photo)
+            lastUpdate=data.aggiornato
           }
           });
           console.log("ajax call finished");
@@ -200,7 +196,7 @@ class Post{
 
   function initBlogSGang(id,login,tut){
     if(login=="False"||login=="false"||login=="none"||login=="AnonymousUser"){
-      loginis="anonymousUser"
+      loginis="MisterX"
     }
     else{
       loginis=login
@@ -235,9 +231,12 @@ class Post{
         /* sotto , gestione evento di invio post */
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
-          $('#post_response').css("border", "3px solid blue")
-          bH5.textContent=Post.title+" "+"di "+loginis
-          bH5.setAttribute("style","color:yellow;display:inline;font-size:1rem;")
+          $('#post_response').css("border", "1px dotted grey")
+          spanUserName.textContent="| del "+Post.lastUpdate
+          bH5.textContent=loginis
+          spanUserName.setAttribute("style","color:black;display:inline;font-size:1rem;")
+          bH5.setAttribute("style","margin-left:3%;color:grey;display:inline;font-size:1rem;")
+          bH5.appendChild(spanUserName)
           divUserBlog.prepend(bH5)
           divUserBlog.prepend(bUserImg)
 
@@ -272,7 +271,9 @@ class Post{
   }
 );
 
-
+$(bbutton).click(function(){
+    $(bbutton).css("border","5px solid grey")
+})
 $(document).ready(function(){
   $("#post_response").change(function(){
   });

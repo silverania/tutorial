@@ -116,7 +116,8 @@ function getIndex(e) {
     optio.innerHTML = title;
     tag.appendChild(optio);
     $('#d_inside_tutorial_section').css("display","block")
-      $('#d_inside_tutorial_section').animate({'margin-left': table_tutorial_WIDTH },400)
+    let x=$('#d_tutorial_section').css('width');
+    $('#d_inside_tutorial_section').animate({'left': x.toString() },400)
   }
   {% endfor %}
   }
@@ -213,12 +214,12 @@ function getIndex(e) {
 
 </div>
 </div>
-</div>
+
 
 
 {% block footer %}
 <footer class="footer">
-<div class="row">
+<div class="row" style="margin:0!important;padding:0!important;">
   <div class="col-12 col-sm-8 col-md-4 col-lg-3" style="padding:2%;">
   <div>
     <img  class=" iconDetails" src='{% block photo_footer %}{%static "/images/mestesso.jpg"%}{% endblock photo_footer%}'
@@ -237,12 +238,12 @@ function getIndex(e) {
 
   </div>
 </div>
-  <div class="col-sm-4 col-md-8 col-lg-9">
+  <div class="col-sm-4 col-md-8 col-lg-9"style="margin:0!important;padding:0!important;">
 
   </div>
 </div>
-<div class="row">
-  <div class="col-12 col-md-12 col-lg-12 text-center">
+<div class="row" style="margin:0!important;padding:0!important;">
+  <div class="col-12 col-md-12 col-lg-12 text-center" >
      <small id="small_text_license">Tutti i contenuti sono prottetti dalla licenza creative commons</small>
   </div>
 </div>
