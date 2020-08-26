@@ -103,9 +103,8 @@ function createSectionDivSpan(parent){
 class Post{
   constructor(){
     this.sent=false
-    this.lastUpdate=lastUpdate
   }
-  sendToServer(type,msg,postTitle,user){
+  sendToServer(type,msg,tutorial,user){
     if(type=="post"){
       el=document.getElementById("post_response");
     }
@@ -120,16 +119,17 @@ class Post{
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': msg,'type':type,'title':postTitle,'username':user
+            'messaggio': msg,'type':type,'tutorial':tutorial,'username':user
           },
           dataType: 'json',
           success: function (data) {
-            photo=data.photo
-            bUserImg.setAttribute("src",photo)
-            lastUpdate=data.aggiornato
+            this.photo=data.photo
+            bUserImg.setAttribute("src",this.photo)
+            spanUserName.textContent="| del "+data.aggiornato
           }
           });
           console.log("ajax call finished");
+
         }
         return 0
       }
@@ -232,19 +232,18 @@ class Post{
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
           $('#post_response').css("border", "1px dotted grey")
-          spanUserName.textContent="| del "+Post.lastUpdate
-          bH5.textContent=loginis
-          spanUserName.setAttribute("style","color:black;display:inline;font-size:1rem;")
-          bH5.setAttribute("style","margin-left:3%;color:grey;display:inline;font-size:1rem;")
-          bH5.appendChild(spanUserName)
-          divUserBlog.prepend(bH5)
           divUserBlog.prepend(bUserImg)
-
           bbutton.textContent="Rispondi a ..."+loginis
           /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
           post.disable()
           if ((result=mess.sendToServer(post.type,post.msg,tutorial,loginis)==0)) {
             mess.sent=true
+
+            bH5.textContent=loginis
+            spanUserName.setAttribute("style","color:orange;display:inline;font-size:0.7rem;")
+            bH5.setAttribute("style","margin-left:3%;color:grey;display:inline;font-size:1rem;")
+            bH5.appendChild(spanUserName)
+            divUserBlog.appendChild(bH5)
           }
         }
         else {

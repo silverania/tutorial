@@ -15,4 +15,10 @@
 
 15 ago 2020
 
-- inserire la photo nella sezione blog 
+- inserire la photo nella sezione blog
+
+
+creare  nella views blog , la classe tutorial e author da associare alla classe Comment, per non ricevere errore : "author o tutorial non possono essere null"
+
+
+- RIORDINARE LE VARIABILI nella request ajax 

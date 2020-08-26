@@ -27,10 +27,10 @@ class Comment(models.Model):
     ('rigettato', 'Rigettato'),
     ('publicato', 'Publicato'),
     )
-    tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE)
+    tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish')
-    author = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts')
+    author = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
