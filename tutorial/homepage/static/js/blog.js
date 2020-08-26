@@ -1,5 +1,5 @@
 var borderPost="1px solid orange";
-var borderResponse="1px dotted grey";
+var borderResponse="1px solid grey";
 var id=id
 var el
 var padre
@@ -12,8 +12,9 @@ var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
 var divUserBlog=document.createElement("DIV");
 var divCommentIcon=document.createElement("DIV");
+var divExitLogin=document.createElement("DIV");
 var divEmpty=document.createElement("DIV");
-var divBlogReg=document.createElement("DIV");
+//var divBlogReg=document.createElement("DIV");
 var ulBlogReg=document.createElement("UL");
 var liBlogReg=document.createElement("LI");
 var aBlogReg=document.createElement("A");
@@ -42,15 +43,16 @@ var bbutton2=document.createElement("Button");
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
-  bUserImg.setAttribute("WIDTH","30px")
+  bUserImg.setAttribute("WIDTH","43px")
   bUserImg.setAttribute("style","border-radius:50%")
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
+  divExitLogin.setAttribute("style","width:45%;display:inline-block;")
   divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
   divEmpty.setAttribute("style","width:20%;display:inline-block;")
   divFormChild.setAttribute("id","multiarea");
   //divFormChild.setAttribute("class","form-group");
-  divBlogReg.setAttribute("id","d_blog_reg")
-  divBlogReg.setAttribute("style","display:inline-block")
+  divExitLogin.setAttribute("id","d_blog_reg")
+  divExitLogin.setAttribute("style","width:45%;display:inline-block")
   bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
   bIcon.setAttribute("WIDTH","50px")
   bIcon.setAttribute("style","display:block;margin:0 auto;")
@@ -70,27 +72,28 @@ function createSectionDivSpan(parent){
   spanBlogEsci.textContent="Blog in Costruzione ...Exit"
   ulBlogReg.setAttribute("id","ul_blog")
   document.getElementById(parent).appendChild(bSection);
-  if(loginis=="anonymousUser"){
+  if(loginis=="misterX"){
     aBlogReg.appendChild(spanBlogReg)
     liBlogReg.appendChild(aBlogReg)
     aBlogEntra.appendChild(spanBlogEntra)
     liBlogEntra.appendChild(aBlogEntra)
     ulBlogReg.appendChild(liBlogReg)
     ulBlogReg.appendChild(liBlogEntra)
-    divBlogReg.appendChild(ulBlogReg)
-    bSection.appendChild(divBlogReg)
+    divExitLogin.appendChild(ulBlogReg)
+    //bSection.appendChild(divBlogReg)
   }
   else {
     aBlogEsci.appendChild(spanBlogEsci)
     liBlogEsci.appendChild(aBlogEsci)
     ulBlogReg.appendChild(liBlogEsci)
-    divBlogReg.appendChild(ulBlogReg)
-    bSection.appendChild(divBlogReg)
+    divExitLogin.appendChild(ulBlogReg)
+    //bSection.appendChild(divBlogReg)
   }
   bH5.appendChild(spanUserName)
   bSection.appendChild(bdiv)
   bdiv.appendChild(divUserBlog)
   bdiv.appendChild(divCommentIcon)
+  bdiv.appendChild(divExitLogin)
   divCommentIcon.appendChild(bIcon)
   divUserBlog.appendChild(bSpan)
   bSpan.appendChild(bSpanChild)
@@ -140,26 +143,22 @@ class Post{
 
   class postArea {
     constructor(post){
-      function getPostTitleFromClient() {
-        if(post=="post"){
-          postTitle = prompt("Inserisci un titolo per il tuo post", "Post");
-          if (postTitle != null) {
-            parent.innerHTML =
-            "Ok hai inserito :" + postTitle + "Non dire cazzate!";
-            return postTitle
-          }
-        }
-        else if (post=="resp"){
-          let title=postTitle
-          return title
+      this.postarea=document.createElement("TEXTAREA");
+      if(post=="post"){
+        this.title = prompt("Inserisci un titolo per il tuo post", "Post");
+        if (postTitle != null) {
+          parent.innerHTML =
+          "Ok hai inserito :" + postTitle + "Non dire cazzate!";
+          return postTitle
         }
       }
+      else if (post=="resp"){
+      console.log("textarea di resposta")
+      }
       this.type=post
-      this.postarea=document.createElement("TEXTAREA");
       this.empty=true
       this.disabled=false
       this.msg=""
-      this.title=getPostTitleFromClient()
       Post.title=this.title
     }
     createButton(){
@@ -183,7 +182,7 @@ class Post{
       this.postarea.setAttribute("rows","2");
       this.postarea.setAttribute("name","messaggio")
       $(this.postarea).css("border", borderPost)
-      this.postarea.setAttribute("title","devi essere autenticato per usare la chat !")
+      this.postarea.setAttribute("title","NON Serve Autenticarsi !!...è un esperimento ! ")
       return this.postarea;
     }
     disable(){
@@ -231,7 +230,7 @@ class Post{
         /* sotto , gestione evento di invio post */
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
-          $('#post_response').css("border", "1px dotted grey")
+          $('#post_response').css("border", "1px solid grey")
           divUserBlog.prepend(bUserImg)
           bbutton.textContent="Rispondi a ..."+loginis
           /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */

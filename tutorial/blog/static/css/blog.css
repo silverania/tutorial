@@ -11,7 +11,9 @@ ul#ul_blog li{
 }
 
 .post_response{
-    margin-top:50px;
+margin:50px auto auto 50% !important;
+width:70%!important;
+/*margin:0 auto !important;*/
 }
 
 #s_blog_text{
@@ -25,7 +27,7 @@ ul#ul_blog li{
 
 .button_resp{
   width:70%!important;
-  margin:20px auto !important;
+  margin:0 auto !important;
 }
 
 #button_post{
