@@ -25,7 +25,7 @@ var spanBlogEntra=document.createElement("SPAN");
 var liBlogEsci=document.createElement("LI");
 var aBlogEsci=document.createElement("A");
 var spanBlogEsci=document.createElement("SPAN");
-var bH5=document.createElement("h5")
+var bH5=document.createElement("span")
 var spanUserName=document.createElement("SPAN");
 var post,post2=new Object();
 var empty;
@@ -48,7 +48,7 @@ function createSectionDivSpan(parent){
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   divExitLogin.setAttribute("style","width:45%;display:inline-block;")
   divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
-  divEmpty.setAttribute("style","width:20%;display:inline-block;")
+  //divEmpty.setAttribute("style","width:20%;display:inline-block;")
   divFormChild.setAttribute("id","multiarea");
   //divFormChild.setAttribute("class","form-group");
   divExitLogin.setAttribute("id","d_blog_reg")
@@ -60,19 +60,28 @@ function createSectionDivSpan(parent){
   bdiv.setAttribute("style","width:100%");
   bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
-
-
+  aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
+  aBlogReg.setAttribute("style","display:block;width:auto;text-align:right;")
+  aBlogReg.setAttribute("href","user/register")
+  aBlogEntra.setAttribute("href","user/login")
+  aBlogEsci.setAttribute("href","user/logout")
+  liBlogEntra.setAttribute("style","display:inline;width:auto;margin-right:0px;")
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
+  bH5.setAttribute("id","span_blog_entra")
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","mybut mybut-outline-info ")
+  spanBlogEntra.setAttribute("id","span_entra")
+  spanBlogReg.setAttribute("id","span_reg")
   bbutton.textContent="Commenta"
-  spanBlogReg.textContent="Blog in Costruzione"
-  spanBlogEntra.textContent="..."
-  spanBlogEsci.textContent="Blog in Costruzione ...Exit"
+  spanBlogReg.textContent="Registrati"
+  spanBlogEntra.textContent="Entra"
+
+  spanBlogEsci.textContent="Esci"
   ulBlogReg.setAttribute("id","ul_blog")
+  ulBlogReg.setAttribute("style","list-style: none;padding: 0;margin: 0;")
   document.getElementById(parent).appendChild(bSection);
-  if(loginis=="misterX"){
+  if(loginis=="MisterX"){
     aBlogReg.appendChild(spanBlogReg)
     liBlogReg.appendChild(aBlogReg)
     aBlogEntra.appendChild(spanBlogEntra)
@@ -124,11 +133,14 @@ class Post{
           data: {
             'messaggio': msg,'type':type,'tutorial':tutorial,'username':user
           },
+          onComplete:function(){
+              alert("oncomplete happen")
+          },
           dataType: 'json',
           success: function (data) {
             this.photo=data.photo
             bUserImg.setAttribute("src",this.photo)
-            spanUserName.textContent="| del "+data.aggiornato
+            spanUserName.textContent=" | "+data.aggiornato
           }
           });
           console.log("ajax call finished");
@@ -177,12 +189,12 @@ class Post{
       }
       else{
         this.postarea.setAttribute("class","post_response")
-        $(this.postarea).animate({'width':'80%'},1000);
+        $(this.postarea).animate({'width':'70%'},1000);
       }
       this.postarea.setAttribute("rows","2");
       this.postarea.setAttribute("name","messaggio")
       $(this.postarea).css("border", borderPost)
-      this.postarea.setAttribute("title","NON Serve Autenticarsi !!...è un esperimento ! ")
+      this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
       return this.postarea;
     }
     disable(){
@@ -239,8 +251,8 @@ class Post{
             mess.sent=true
 
             bH5.textContent=loginis
-            spanUserName.setAttribute("style","color:orange;display:inline;font-size:0.7rem;")
-            bH5.setAttribute("style","margin-left:3%;color:grey;display:inline;font-size:1rem;")
+            spanUserName.setAttribute("style","color:grey;display:inline;")
+            bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
             bH5.appendChild(spanUserName)
             divUserBlog.appendChild(bH5)
           }

@@ -7,7 +7,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import User
 from user.models import Profile
-
+from blog.models import Comment
 #custom modelmanager classe per visualizzare tutorial  in admin
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -54,6 +54,7 @@ class Tutorial(models.Model):
     STATUS_CHOICES = (
     ('bozza', 'Bozza'),
     ('pubblicato', 'Pubblicato'),)
+    post=models.ForeignKey(Comment,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=250)
     overview = models.TextField(default="tutorial")
     slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)
@@ -64,6 +65,7 @@ class Tutorial(models.Model):
     updated = models.DateTimeField(auto_now=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="tutorials")
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
+    #post=models.ForeignKey(Comment,on_delete=models.CASCADE,related_name="post")
         # decommentare una delle seguenti tre righe per selezionare un custom model manager
     #objects = models.Manager() # The default manager.
     #bozza=BozzaManager() # Our bozza solo manager

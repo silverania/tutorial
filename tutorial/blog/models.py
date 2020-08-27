@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 # from django.contrib.auth.models import User
-from homepage.models import Tutorial
+
 from django.urls import reverse
 from user.models import Profile
 # Create your models here.
@@ -27,7 +27,7 @@ class Comment(models.Model):
     ('rigettato', 'Rigettato'),
     ('publicato', 'Publicato'),
     )
-    tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
+    #tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish')
     author = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
