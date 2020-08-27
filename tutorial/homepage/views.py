@@ -31,8 +31,10 @@ def tutorial_detail(request, **kwargs):
         print("value="+str(key)+str(value))
         if "post" in str(key) :
             post=value
+            print("post="+post)
         elif 'year' in key :
             year=str(value)
+            print("post="+year)
         elif 'month' in key:
             month=str(value)
         elif 'day' in key:
