@@ -113,8 +113,9 @@ function createSectionDivSpan(parent){
 
 
 class Post{
-  constructor(){
+  constructor(type){
     this.sent=false
+    this.type=type
   }
   sendToServer(type,msg,tutorial,user){
     if(type=="post"){
@@ -220,15 +221,26 @@ class Post{
   /* EVENT SECTION */
   $(bbutton2).click(function(){
     if(post2 instanceof postArea){
+        post2.msg=post2.postarea.value
+        post2.disable()
+        mess=new Post("resp")
+        alert("post2,mess"+post2.msg)
+        if ((result=mess.sendToServer(post2.type,post2.msg,tutorial,loginis)==0)) {
+          alert("inviato messaggio rispost")
+        }
     }
   });
+
+
+
+
   $(bbutton).click(function(){
     let result
     // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
     if (!(post instanceof postArea ))
     {
       post=new postArea("post") // passo post come argomento
-      mess=new Post()
+      mess=new Post("post")
       $(divFormChild).prepend(post.create())
     }
     // caso click su textarea esistente
@@ -270,7 +282,7 @@ class Post{
           }
           function makeTextAreaResp(){
             post2=new postArea("resp")
-            postresp=new Post()
+            postresp=new Post("resp")
             bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
             post2.createButton()
             return 0

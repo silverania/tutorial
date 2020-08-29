@@ -20,7 +20,7 @@ class Resp(models.Model):
     class Meta:
         ordering = ('-publish',)
     def __str__(self):
-        return self.comment
+        return self.body
 
 class Comment(models.Model):
     STATUS_CHOICES = (
