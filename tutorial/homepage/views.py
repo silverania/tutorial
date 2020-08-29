@@ -8,7 +8,9 @@ from .models import Tutorial,Visite
 from django.urls import path
 from .models import Category
 from user.models import Profile
+from django.conf import settings
 #User
+from django.contrib.auth.models import User
 import datetime
 #from django.http import urllib
 
@@ -42,10 +44,18 @@ def tutorial_detail(request, **kwargs):
     try:
         tutorial = Tutorial.objects.get(slug=post,
         publish__year=year)
-        print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day))
+        user=tutorial.author
+        autore=str(user)
+        photo=settings.MEDIA_URL+str(user.photo)
+        #photo=user.photo
+        print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day)+"autor="+str(tutorial.author)+"photo="+str(photo))
+
     except UnboundLocalError :
         if '' in request.path:
             tutorial=Tutorial.objects.latest('publish')
+            user=tutorial.author
+            autore=str(user)
+            photo=settings.MEDIA_URL+str(user.photo)
     template=tutorial.title.replace(" ","_").lower()+".html"
     print("template="+template)
 
@@ -56,7 +66,7 @@ def tutorial_detail(request, **kwargs):
     except :
         vis.visite=1
     vis.save()
-    return render(request,template,{'tutorial': tutorial,'visitato':vis,'login':login,'tutorial_all':tutorial_all,'categorie':categorie,'users':users})
+    return render(request,template,{'tutorial': tutorial,'visitato':vis,'login':login,'tutorial_all':tutorial_all,'categorie':categorie,'photo':photo,'users':users,'autore':autore})
 
 
 

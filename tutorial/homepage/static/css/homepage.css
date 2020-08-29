@@ -775,7 +775,10 @@ li #s_center_menu{
   #span_title_2{
   font-size:2.2rem;
   }
-
+  #s_nome_autore{
+    font-size:0.5rem!important;
+    color:blue;
+  }
   #span_title_w{
   font-size:2.2rem;
 
@@ -797,12 +800,26 @@ li #s_center_menu{
   li #s_center_menu{
       font-size:1rem!important;
     }
- #s_title,#s_title_2{
-    font-size:1.8rem;
-  }
+
+  .s_title{
+    font-family:ShareTechMono-Regular;
+     font-size:0.7rem!important;
+     display:inline-block;
+     color:blue;
+     opacity:0.5;
+   }
+
+#h_title2{
+margin-left:10%!important;
+}
+span#s_nome_autore{
+  font-size:0.5rem;
+  color:white;
+}
  #asidebar{
    display:block;
  }
+
  code{
    font-size:0.8vw;
  }
