@@ -12,6 +12,7 @@ var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
 var divUserBlog=document.createElement("DIV");
 var divCommentIcon=document.createElement("DIV");
+var divRespTitle=document.createElement("DIV");
 var divExitLogin=document.createElement("DIV");
 var divEmpty=document.createElement("DIV");
 //var divBlogReg=document.createElement("DIV");
@@ -43,11 +44,13 @@ var bbutton2=document.createElement("Button");
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
-  bUserImg.setAttribute("WIDTH","43px")
+  //bUserImg.setAttribute("WIDTH","43px")
   bUserImg.setAttribute("style","border-radius:50%")
+  bUserImg.setAttribute("id","img_user")
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   divExitLogin.setAttribute("style","width:45%;display:inline-block;")
   divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
+  divRespTitle.setAttribute("class","div_resp")
   //divEmpty.setAttribute("style","width:20%;display:inline-block;")
   divFormChild.setAttribute("id","multiarea");
   //divFormChild.setAttribute("class","form-group");
@@ -285,6 +288,7 @@ class Post{
             postresp=new Post("resp")
             bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
             post2.createButton()
+            bbutton.prepend(bUserImg)
             return 0
           }
         }

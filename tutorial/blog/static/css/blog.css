@@ -26,6 +26,11 @@ margin:50px auto auto 15% !important;
  color:orange;
 }
 
+.div_resp{
+  width:70%!important;
+  margin:0 auto !important;
+}
+
 .button_resp{
   width:70%!important;
   margin:0 auto !important;
@@ -46,11 +51,21 @@ margin:50px auto auto 15% !important;
   .fa-comments,#s_blog{
     font-size:1.5rem;
   }
+  #img_user{
+    width:25px!important;
+    height:auto;
+  }
+
   #s_blog_icon + #span_blog_entra,#span_entra,#span_reg{
     font-size:0.4rem;
   }
 
+
+
 }
+
+
+
 textarea {
   font-size:0.5rem;
 }
