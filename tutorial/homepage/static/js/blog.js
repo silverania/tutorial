@@ -8,7 +8,7 @@ var loginis
 var photo
 var lastUpdate
 var bbutton=document.createElement("Button");
-var bUserImg=document.createElement("IMG");
+//var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
 var divUserBlog=document.createElement("DIV");
 var divCommentIcon=document.createElement("DIV");
@@ -45,8 +45,8 @@ var bbutton2=document.createElement("Button");
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
   //bUserImg.setAttribute("WIDTH","43px")
-  bUserImg.setAttribute("style","border-radius:50%")
-  bUserImg.setAttribute("id","img_user")
+  //bUserImg.setAttribute("style","border-radius:50%")
+  //bUserImg.setAttribute("id","img_user")
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   divExitLogin.setAttribute("style","width:45%;display:inline-block;")
   divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
@@ -120,14 +120,14 @@ class Post{
     this.sent=false
     this.type=type
   }
-  sendToServer(type,msg,tutorial,user){
-    if(type=="post"){
+  sendToServer(post="null",tutorial,user){
+    if(post.type=="post"){
       el=document.getElementById("post_response");
     }
-    else if (type=="resp"){
+    else if (post.type=="resp"){
       el=document.getElementsByClassName("post_response");
     }
-    if(!msg=="") {
+    if(!post.msg=="") {
 
       if(!tutorial=="") {
         let content=tutorial;
@@ -135,16 +135,27 @@ class Post{
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': msg,'type':type,'tutorial':tutorial,'username':user
+            'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user
           },
           onComplete:function(){
               alert("oncomplete happen")
           },
           dataType: 'json',
           success: function (data) {
+            var bUserImg=document.createElement("IMG");
+            bUserImg.setAttribute("WIDTH","43px")
+            bUserImg.setAttribute("style","border-radius:50%")
+            bUserImg.setAttribute("id","img_user")
             this.photo=data.photo
             bUserImg.setAttribute("src",this.photo)
             spanUserName.textContent=" | "+data.aggiornato
+            if(!(post.disabled==true)){
+              $('#post_response').css("border", "1px solid grey")
+              divUserBlog.prepend(bUserImg)
+              bbutton.textContent="Rispondi a ..."+loginis
+              /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
+              post.disable()
+            }
           }
           });
           console.log("ajax call finished");
@@ -225,15 +236,14 @@ class Post{
   $(bbutton2).click(function(){
     if(post2 instanceof postArea){
         post2.msg=post2.postarea.value
-        post2.disable()
+        //post2.disable()
         mess=new Post("resp")
         alert("post2,mess"+post2.msg)
-        if ((result=mess.sendToServer(post2.type,post2.msg,tutorial,loginis)==0)) {
+        if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
           alert("inviato messaggio rispost")
         }
     }
   });
-
 
 
 
@@ -258,11 +268,7 @@ class Post{
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
           $('#post_response').css("border", "1px solid grey")
-          divUserBlog.prepend(bUserImg)
-          bbutton.textContent="Rispondi a ..."+loginis
-          /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-          post.disable()
-          if ((result=mess.sendToServer(post.type,post.msg,tutorial,loginis)==0)) {
+          if ((result=mess.sendToServer(post,tutorial,loginis)==0)) {
             mess.sent=true
 
             bH5.textContent=loginis
@@ -288,7 +294,7 @@ class Post{
             postresp=new Post("resp")
             bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
             post2.createButton()
-            bbutton.prepend(bUserImg)
+            //bbutton.prepend(bUserImg)
             return 0
           }
         }
