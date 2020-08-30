@@ -10,6 +10,7 @@ var lastUpdate
 var bbutton=document.createElement("Button");
 //var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
+var bdiv=document.createElement("DIV");
 var divUserBlog=document.createElement("DIV");
 var divCommentIcon=document.createElement("DIV");
 var divRespTitle=document.createElement("DIV");
@@ -33,7 +34,7 @@ var empty;
 var bSection=document.createElement("SECTION");
 var bSpan=document.createElement("SPAN");
 var bSpanChild=document.createElement("SPAN");
-var bdiv=document.createElement("DIV");
+
 var bIcon=document.createElement("IMG");
 var bForm=document.createElement("FORM");
 var wait=true
@@ -59,8 +60,7 @@ function createSectionDivSpan(parent){
   bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
   bIcon.setAttribute("WIDTH","50px")
   bIcon.setAttribute("style","display:block;margin:0 auto;")
-  bdiv.setAttribute("id","blog_title");
-  bdiv.setAttribute("style","width:100%");
+
   bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
   aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
@@ -114,6 +114,25 @@ function createSectionDivSpan(parent){
   divFormChild.appendChild(bbutton)
 }
 
+function makeHeadBlog(tagUserImg,divAfterMainSection,userPhoto,post,datePostResp){
+
+  divAfterMainSection.setAttribute("id","blog_title");
+  divAfterMainSection.setAttribute("style","width:100%");
+
+  tagUserImg.setAttribute("WIDTH","43px")
+  tagUserImg.setAttribute("style","border-radius:50%")
+  tagUserImg.setAttribute("id","img_user")
+  this.photo=userPhoto
+  tagUserImg.setAttribute("src",this.photo)
+  spanUserName.textContent=" | "+datePostResp
+  if(!(post.disabled==true)){
+    $('#post_response').css("border", "1px solid grey")
+    divUserBlog.prepend(tagUserImg)
+    bbutton.textContent="Rispondi a ..."+loginis
+    /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
+    post.disable()
+  }
+}
 
 class Post{
   constructor(type){
@@ -142,20 +161,10 @@ class Post{
           },
           dataType: 'json',
           success: function (data) {
-            var bUserImg=document.createElement("IMG");
-            bUserImg.setAttribute("WIDTH","43px")
-            bUserImg.setAttribute("style","border-radius:50%")
-            bUserImg.setAttribute("id","img_user")
-            this.photo=data.photo
-            bUserImg.setAttribute("src",this.photo)
-            spanUserName.textContent=" | "+data.aggiornato
-            if(!(post.disabled==true)){
-              $('#post_response').css("border", "1px solid grey")
-              divUserBlog.prepend(bUserImg)
-              bbutton.textContent="Rispondi a ..."+loginis
-              /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-              post.disable()
-            }
+          var bUserImg=document.createElement("IMG");
+          var bdiv=document.createElement("DIV");
+          var userPhoto=data.photo
+          makeHeadBlog(bUserImg,bdiv,data.photo,post,userPhoto,data.aggiornato)
           }
           });
           console.log("ajax call finished");
