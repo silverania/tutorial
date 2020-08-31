@@ -96,6 +96,7 @@ function createSectionDivSpan(parent){
   }
   else {
     aBlogEsci.appendChild(spanBlogEsci)
+    aBlogEsci.setAttribute("style","display:block;width:auto;text-align:right")
     liBlogEsci.appendChild(aBlogEsci)
     ulBlogReg.appendChild(liBlogEsci)
     divExitLogin.appendChild(ulBlogReg)

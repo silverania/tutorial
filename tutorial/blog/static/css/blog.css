@@ -56,8 +56,8 @@ margin:50px auto auto 15% !important;
     height:auto;
   }
 
-  #s_blog_icon + #span_blog_entra,#span_entra,#span_reg{
-    font-size:0.4rem;
+  #s_blog_icon + #span_blog_entra,#span_entra,#span_reg,#span_esci{
+    font-size:0.8rem;
   }
 
 
@@ -138,11 +138,6 @@ button:focus{
 
 #p_text{
     overflow: hidden; /* Enable scroll if needed */
-}
-
-#but_confirm_title{
-  width:50%;
-  content:"leggim stu messagg i merd !"
 }
 
 #but_confirm_title:after{
