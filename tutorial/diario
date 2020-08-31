@@ -21,4 +21,7 @@
 creare  nella views blog , la classe tutorial e author da associare alla classe Comment, per non ricevere errore : "author o tutorial non possono essere null"
 
 
-- RIORDINARE LE VARIABILI nella request ajax 
+- RIORDINARE LE VARIABILI nella request ajax
+
+
+- riparare il link del login nel branch master

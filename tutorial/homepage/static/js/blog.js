@@ -181,7 +181,7 @@ class Post{
     constructor(post){
       this.postarea=document.createElement("TEXTAREA");
       if(post=="post"){
-        this.title = prompt("Inserisci un titolo per il tuo post", "Post");
+        this.title = makeModalWindow(this);
         if (postTitle != null) {
           parent.innerHTML =
           "Ok hai inserito :" + postTitle + "Non dire cazzate!";
@@ -311,11 +311,45 @@ class Post{
     }
   }
 );
+/* MODAL WINDOW */
+function makeModalWindow(post){
+  var divModalMain=document.createElement("DIV");
+  var divInMain=document.createElement("DIV");
+  var textAreaInDivInMain=document.createElement("TEXTAREA");
+  var modalConfirmButton=document.createElement("Button");
+  modalConfirmButton.setAttribute('id','but_confirm_title')
+  divModalMain.setAttribute('class','modal')
+  divModalMain.setAttribute('id','myModal')
+  divInMain.setAttribute('class','modal-content')
+//  .setAttribute("class","close")
 
+  textAreaInDivInMain.setAttribute("id","p_text")
+  textAreaInDivInMain.textContent="rim u titlo i chitabiv"
+  divInMain.appendChild(textAreaInDivInMain)
+  divInMain.appendChild(modalConfirmButton)
+  divModalMain.appendChild(divInMain)
+  body.appendChild(divModalMain)
+  var modal = document.getElementById("myModal");
+  modal.style.display = "block";
+
+// When the user clicks on <span> (x), close the modal
+$(but_confirm_title).click = function() {
+  modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = "none";
+  }
+}
+}
+/* END MODAL  */
 $(bbutton).click(function(){
     $(bbutton).css("border","5px solid grey")
 })
 $(document).ready(function(){
   $("#post_response").change(function(){
+    alert("textarea di risposta....evento change in corso .............")
   });
 });

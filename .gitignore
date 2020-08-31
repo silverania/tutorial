@@ -15,5 +15,5 @@ virt*/
 lib64
 /lib64/
 pyvenv.cfg
-/share/
+share/*
 admin
