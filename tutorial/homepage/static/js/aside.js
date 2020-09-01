@@ -156,7 +156,7 @@ $(document).click(function(event) {
 }
 });
 function animateTutorial()  {
-  $('#d_inside_tutorial_section').animate({'left':'-300px'},200);
+  $('#d_inside_tutorial_section').animate({'left':'-700px'},200);
   return 0
 }
 

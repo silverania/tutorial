@@ -139,12 +139,11 @@ margin-right:5px;
   position:relative;
   left:-700px;
   color:black;
-  width:auto!important;
   z-index:2;
 }
 
 .select_autori,#selectFormTutorials,#ul_in_selecFormAutori{
-  border:2px solid orange;
+  /*border:2px solid orange;*/
   width:100%!important;
   max-width:100%!important;
 }
@@ -431,12 +430,14 @@ tr{
 
  }
 
-#selecFormAutori{
-  width:33%;
+#selecFormAutori,#ul_in_selecFormAutori{
+  width:38%;
+  margin:0!important;;
 }
- [id^='option_autori']{
+
+ [id^='option_autori'],[id^='tutorial_id']{
    width:auto;
-    font-size:0.4rem;
+    font-size:10px;
  }
 
  .ul_wrap_1{

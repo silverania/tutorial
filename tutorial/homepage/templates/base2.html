@@ -116,8 +116,8 @@ function getIndex(e) {
     optio.innerHTML = title;
     tag.appendChild(optio);
     $('#d_inside_tutorial_section').css("display","block")
-    let x=$('#selecFormAutori').css('width');
-    $('#d_inside_tutorial_section').animate({'left': x.toString() },400)
+    let x=(parseInt($('#selecFormAutori').css('width')))/10;
+    $('#d_inside_tutorial_section').animate({'left': x },400)
   }
   {% endfor %}
   }
