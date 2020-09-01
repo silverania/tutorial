@@ -23,7 +23,7 @@ $(document).ready(function(){
   function showTutorial() {
     table_tutorial.css('display','block');
     table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
-    off=table_tutorial_width+18;
+    off=table_tutorial_width;
     $('#d_tutorial_section').animate({'margin-left': '-18px'},200);
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '0.9',},100);
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
@@ -156,7 +156,7 @@ $(document).click(function(event) {
 }
 });
 function animateTutorial()  {
-  $('#d_inside_tutorial_section').animate({'left':'-700px'},200);
+  $('#d_inside_tutorial_section').animate({'left':'-300px'},200);
   return 0
 }
 

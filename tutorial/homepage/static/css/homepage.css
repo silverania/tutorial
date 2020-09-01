@@ -127,6 +127,7 @@ margin-right:5px;
 #d_aside_tutorial{
   box-sizing:content-box;
 }
+
 #d_tutorial_section{
   box-sizing: content-box;
   position:relative;
@@ -138,14 +139,17 @@ margin-right:5px;
   position:relative;
   left:-700px;
   color:black;
-  width:100%!important;
+  width:auto!important;
   z-index:2;
 }
 
-#form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials,#ul_in_selecFormAutori{
+.select_autori,#selectFormTutorials,#ul_in_selecFormAutori{
   border:2px solid orange;
   width:100%!important;
   max-width:100%!important;
+}
+#selecFormAutori{
+  width:auto;
 }
 
 #d-approfondimenti{
@@ -401,9 +405,12 @@ margin:0 0 auto auto;
    margin-top:-3%;
   }
   #s_nome_autore{
-    display:block;
-    margin-top:-5%;
-    font-size:0.5rem;
+    position:relative!important;
+    /*width:inherit;*/
+    display:inline-block!important;
+    top:0%;
+    left:0%;
+    font-size:0.3rem!important;
     color:black;
   }
  }
@@ -423,6 +430,15 @@ tr{
    font-size:0.5rem;
 
  }
+
+#selecFormAutori{
+  width:33%;
+}
+ [id^='option_autori']{
+   width:auto;
+    font-size:0.4rem;
+ }
+
  .ul_wrap_1{
   display:none;
  }

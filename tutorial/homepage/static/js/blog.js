@@ -325,7 +325,8 @@ function makeModalWindow(post){
 //  .setAttribute("class","close")
 
   textAreaInDivInMain.setAttribute("id","p_text")
-  textAreaInDivInMain.textContent="rim u titlo i chitabiv"
+  textAreaInDivInMain.setAttribute("rows","1")
+  textAreaInDivInMain.textContent="Inserisci Un Titolo Per Il Tuo Post"
   divInMain.appendChild(textAreaInDivInMain)
   divInMain.appendChild(modalConfirmButton)
   divModalMain.appendChild(divInMain)
