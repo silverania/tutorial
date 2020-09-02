@@ -19,7 +19,6 @@ def newPost(request):
         if 'messaggio' in request.GET and request.GET['messaggio'] :
             message=request.GET.get('messaggio')
             post.body=message
-
             aggiornato=post.created
             post.save()
             print("message="+message)
@@ -38,8 +37,6 @@ def newPost(request):
             argomento=request.GET.get('argomento',None)
             print("argomento:"+argomento)
         if request.user.is_authenticated:
-
-
             print("id="+str(request.user.id))
             myuser=Profile.objects.get(user_id=request.user.id)
             myuser.post=post
