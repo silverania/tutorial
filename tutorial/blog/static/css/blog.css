@@ -59,7 +59,16 @@ margin:50px auto auto 15% !important;
   #s_blog_icon + #span_blog_entra,#span_entra,#span_reg,#span_esci{
     font-size:0.8rem;
   }
+  #p_text{
+      overflow: hidden; /* Enable scroll if needed */
+      color:orange;
+      background-color: grey;
+      font-size:1rem;
+  }
 
+[id^="bh5_span"]{
+  font-size:0.6rem!important;
+}
 
 
 }
@@ -140,7 +149,7 @@ button:focus{
     overflow: hidden; /* Enable scroll if needed */
     color:orange;
     background-color: grey;
-    
+    font-size:2rem;
 }
 
 #but_confirm_title:after{

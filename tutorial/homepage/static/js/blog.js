@@ -41,7 +41,7 @@ var wait=true
 var postTitle
 var tutorial
 var bbutton2=document.createElement("Button");
-
+var id=0
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
@@ -102,37 +102,72 @@ function createSectionDivSpan(parent){
     divExitLogin.appendChild(ulBlogReg)
     //bSection.appendChild(divBlogReg)
   }
-  bH5.appendChild(spanUserName)
-  bSection.appendChild(bdiv)
+//  bH5.appendChild(spanUserName)
+  //bSection.appendChild(bdiv)
   bdiv.appendChild(divUserBlog)
   bdiv.appendChild(divCommentIcon)
   bdiv.appendChild(divExitLogin)
   divCommentIcon.appendChild(bIcon)
-  divUserBlog.appendChild(bSpan)
-  bSpan.appendChild(bSpanChild)
+  //divUserBlog.appendChild(bSpan)
+  //bSpan.appendChild(bSpanChild)
   bSection.appendChild(bForm)
   bForm.appendChild(divFormChild)
   divFormChild.appendChild(bbutton)
 }
 
-function makeHeadBlog(tagUserImg,divAfterMainSection,userPhoto,post,datePostResp){
-  alert("from makeheadblog.....post type="+post.type)
-  console.log("entry in makeHeadBlog......")
-  divAfterMainSection.setAttribute("id","blog_title");
-  divAfterMainSection.setAttribute("style","width:100%");
+function makeHeadBlog(postType,userPhoto,post,datePostResp){
+  thispost=post
+  id=id+1
+  console.log("entry in makeHeadBlog......post="+thispost.msg)
+  //divAfterMainSection.setAttribute("id","blog_title");
+  //divAfterMainSection.setAttribute("style","width:100%");
+  var divUserBlog=document.createElement("DIV");
+  var spanUserName=document.createElement("SPAN");
+  var bH5=document.createElement("span")
+  var bSpan=document.createElement("SPAN");
+  var bSpanChild=document.createElement("SPAN");
+  var tagUserImg=document.createElement("IMG");
   tagUserImg.setAttribute("WIDTH","43px")
+  tagUserImg.setAttribute("src",userPhoto)
   tagUserImg.setAttribute("style","border-radius:50%")
-  tagUserImg.setAttribute("id","img_user")
   this.photo=userPhoto
   tagUserImg.setAttribute("src",this.photo)
   spanUserName.textContent=" | "+datePostResp
-  if(!(post.disabled==true)){
+
+  divUserBlog.appendChild(tagUserImg)
+  bH5.textContent=loginis
+  spanUserName.setAttribute("style","color:grey;display:inline;")
+  bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
+  bH5.setAttribute("id","bh5_span"+id.toString())
+  bH5.appendChild(spanUserName)
+  divUserBlog.appendChild(bH5)
+  divUserBlog.appendChild(bSpan)
+  bSpan.appendChild(bSpanChild)
+  divUserBlog.appendChild(bSpan)
+  bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
+  bSpan.setAttribute("id","s_blog_icon_"+id.toString())
+  tagUserImg.setAttribute("id","img_user_"+id.toString())
+  spanUserName.setAttribute("id","span_user_"+id.toString())
+  divUserBlog.setAttribute("style","width:45%;display:inline-block;position:relative")
+  divUserBlog.setAttribute("id","divuserblog_"+id.toString())
+  if(postType=="resp"){
+
+
+    console.log("is resp ")
+      post.postarea.insertAdjacentElement("beforebegin",divUserBlog)
+      divUserBlog.setAttribute("style","width:45%;display:inline-block;position:relative;top:100px;")
+      //$(post).insertBefore(mainElement,$(post).childNodes[0])
+  }
+  else {
+  if(!(thispost.disabled==true)){
+    console.log("thispost.disabled")
+    $(bSection).prepend(divUserBlog)
     $('#post_response').css("border", "1px solid grey")
-    divUserBlog.prepend(tagUserImg)
     bbutton.textContent="Rispondi a ..."+loginis
     /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-    post.disable()
+    thispost.disable()
   }
+}
 }
 
 class Post{
@@ -160,22 +195,19 @@ class Post{
 
           dataType: 'json',
           success: function (data) {
-            var bUserImg=document.createElement("IMG");
+
             var bdiv=document.createElement("DIV");
             var userPhoto=data.photo
-            if(data.type=="resp") {
-              alert("resp")
-              makeHeadBlog(bUserImg,bdiv,data.photo,post,userPhoto,data.aggiornato)
-            }
-            if(data.type=="post") {
-              alert("post")
-              makeHeadBlog(bUserImg,bdiv,data.photo,post,userPhoto,data.aggiornato)
-            }
+            if(post.type=="post"){
+              makeHeadBlog(data.type,data.photo,post,data.aggiornato)
           }
+          else if(post.type="resp"){
+              makeHeadBlog(data.type,data.photo,post,data.aggiornato)
+          }
+        }
         }
       );
       console.log("ajax call finished");
-
     }
     return 0
   }
@@ -187,6 +219,7 @@ class Post{
 class postArea {
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
+    this.postarea.setAttribute("id","resp_"+loginis)
     if(post=="post"){
       makeModalWindow(this);
       if (postTitle != null) {
@@ -202,16 +235,18 @@ class postArea {
     this.empty=true
     this.disabled=false
     this.msg=""
-
   }
-  createButton(){
+  createButton(button){
     if(this.type=="resp"){
-      bbutton2.setAttribute("type","button")
-      bbutton2.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
-      bbutton2.textContent="Rispondi"
+      button.setAttribute("type","button")
+      button.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
+      button.textContent="Rispondi"
       //bbutton2.animate({'width':'80%'},1000);
-      divFormChild.appendChild(bbutton2)
+      divFormChild.appendChild(button)
     }
+  }
+  disableButton(button){
+    button.setAttribute("disabled","true")
   }
   create(){
     if(this.type=="post"){
@@ -254,9 +289,10 @@ $(bbutton2).click(function(){
     post2.msg=post2.postarea.value
     //post2.disable()
     mess=new Post("resp")
-    alert("post2,mess"+post2.msg)
     if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
-      alert("inviato messaggio rispost")
+      mess.sent=true
+      post2.disableButton(this)
+      this.innerHTML="hai risposto !"
     }
   }
 });
@@ -287,29 +323,17 @@ $(bbutton).click(function(){
         if ((result=mess.sendToServer(post,tutorial,loginis)==0)) {
           mess.sent=true
 
-          bH5.textContent=loginis
-          spanUserName.setAttribute("style","color:grey;display:inline;")
-          bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
-          bH5.appendChild(spanUserName)
-          divUserBlog.appendChild(bH5)
         }
       }
       else {
         if (!(post.postarea.value=="") && mess.sent==true) {
-          //post.postarea.setAttribute('type','submit'); // cosicchè parta la request al server
-          //divFormChild.appendChild(new postArea().create())
-          if (wait==true){
-            callResult=makeTextAreaResp()
-            if(callResult==0){
-              this.setAttribute("disabled","true")
-            }
-          }
+          makeTextAreaResp()
         }
         function makeTextAreaResp(){
           post2=new postArea("resp")
           postresp=new Post("resp")
           bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
-          post2.createButton()
+          post2.createButton(bbutton2)
           //bbutton.prepend(bUserImg)
           return 0
         }
@@ -319,7 +343,6 @@ $(bbutton).click(function(){
 }
 );
 $('#but_confirm_title').click(function() {
-  alert("click title")
   modal.style.display = "none";
 });
 /* MODAL WINDOW */
@@ -345,7 +368,6 @@ function makeModalWindow(post){
   document.getElementById('but_confirm_title').onclick = function(event) {
     try{
       post.title=Post.title=textAreaInDivInMain.innerHTML
-      alert("impostato post.tile ="+post.title)
     }
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
