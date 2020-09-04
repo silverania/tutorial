@@ -51,18 +51,15 @@ margin:50px auto auto 15% !important;
   .fa-comments,#s_blog{
     font-size:1.5rem;
   }
-  #img_user{
-    width:25px!important;
+  [id^="img_user"]{
+    width:30px!important;
     height:auto;
   }
 
   #s_blog_icon + #span_blog_entra,#span_entra,#span_reg,#span_esci{
     font-size:0.8rem;
   }
-  #p_text{
-      overflow: hidden; /* Enable scroll if needed */
-      color:orange;
-      background-color: grey;
+  [id^="divuserblog"]{
       font-size:1rem;
   }
 
@@ -145,12 +142,11 @@ button:focus{
   cursor: pointer;
 }
 
-#p_text{
-    overflow: hidden; /* Enable scroll if needed */
+/*#p_text{
     color:orange;
     background-color: grey;
     font-size:2rem;
-}
+}*/
 
 #but_confirm_title:after{
   content:"Ok"

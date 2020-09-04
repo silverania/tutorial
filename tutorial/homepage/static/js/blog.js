@@ -40,7 +40,7 @@ var bForm=document.createElement("FORM");
 var wait=true
 var postTitle
 var tutorial
-var bbutton2=document.createElement("Button");
+  var bbutton2=new Object();
 var id=0
 
 function createSectionDivSpan(parent){
@@ -121,19 +121,18 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   console.log("entry in makeHeadBlog......post="+thispost.msg)
   //divAfterMainSection.setAttribute("id","blog_title");
   //divAfterMainSection.setAttribute("style","width:100%");
+  var divBlog=document.createElement("DIV");
   var divUserBlog=document.createElement("DIV");
   var spanUserName=document.createElement("SPAN");
   var bH5=document.createElement("span")
   var bSpan=document.createElement("SPAN");
   var bSpanChild=document.createElement("SPAN");
   var tagUserImg=document.createElement("IMG");
-  tagUserImg.setAttribute("WIDTH","43px")
-  tagUserImg.setAttribute("src",userPhoto)
+  //tagUserImg.setAttribute("src",userPhoto)
   tagUserImg.setAttribute("style","border-radius:50%")
-  this.photo=userPhoto
-  tagUserImg.setAttribute("src",this.photo)
+  tagUserImg.setAttribute("src",userPhoto)
   spanUserName.textContent=" | "+datePostResp
-
+  divBlog.setAttribute("id","divblog_"+id.toString())
   divUserBlog.appendChild(tagUserImg)
   bH5.textContent=loginis
   spanUserName.setAttribute("style","color:grey;display:inline;")
@@ -144,24 +143,25 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   divUserBlog.appendChild(bSpan)
   bSpan.appendChild(bSpanChild)
   divUserBlog.appendChild(bSpan)
+  divBlog.appendChild(divUserBlog)
   bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
   bSpan.setAttribute("id","s_blog_icon_"+id.toString())
   tagUserImg.setAttribute("id","img_user_"+id.toString())
   spanUserName.setAttribute("id","span_user_"+id.toString())
-  divUserBlog.setAttribute("style","width:45%;display:inline-block;position:relative")
   divUserBlog.setAttribute("id","divuserblog_"+id.toString())
   if(postType=="resp"){
-
-
+      divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
+    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%")
     console.log("is resp ")
-      post.postarea.insertAdjacentElement("beforebegin",divUserBlog)
-      divUserBlog.setAttribute("style","width:45%;display:inline-block;position:relative;top:100px;")
+      post.postarea.insertAdjacentElement("beforebegin",divBlog)
       //$(post).insertBefore(mainElement,$(post).childNodes[0])
   }
   else {
   if(!(thispost.disabled==true)){
+    divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
+    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%")
     console.log("thispost.disabled")
-    $(bSection).prepend(divUserBlog)
+    $(bSection).prepend(divBlog)
     $('#post_response').css("border", "1px solid grey")
     bbutton.textContent="Rispondi a ..."+loginis
     /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
@@ -182,9 +182,9 @@ class Post{
     else if (post.type=="resp"){
       el=document.getElementsByClassName("post_response");
     }
-    if(!post.msg=="") {
 
-      if(!tutorial=="") {
+
+      if(!tutorial=="" && (!post.msg=="")) {
         let content=tutorial;
         // AJAX .....il pulito a casa mia
         $.ajax({
@@ -195,8 +195,6 @@ class Post{
 
           dataType: 'json',
           success: function (data) {
-
-            var bdiv=document.createElement("DIV");
             var userPhoto=data.photo
             if(post.type=="post"){
               makeHeadBlog(data.type,data.photo,post,data.aggiornato)
@@ -212,7 +210,7 @@ class Post{
     return 0
   }
 }
-}
+
 
 
 
@@ -221,10 +219,8 @@ class postArea {
     this.postarea=document.createElement("TEXTAREA");
     this.postarea.setAttribute("id","resp_"+loginis)
     if(post=="post"){
-      makeModalWindow(this);
+    postTitle=makeModalWindow(this);
       if (postTitle != null) {
-        parent.innerHTML =
-        "Ok hai inserito :" + postTitle + "Non dire cazzate!";
         return postTitle
       }
     }
@@ -241,9 +237,30 @@ class postArea {
       button.setAttribute("type","button")
       button.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
       button.textContent="Rispondi"
+      bbutton2=button
       //bbutton2.animate({'width':'80%'},1000);
       divFormChild.appendChild(button)
     }
+    $(bbutton2).click(function(){
+      let result
+      if(post2 instanceof postArea){
+        post2.msg=post2.postarea.value
+        //post2.disable()
+        if(!(mess.type=="resp")){
+          mess=new Post("resp")
+          if(!mess.sent==true) {
+          alert("sent,:"+mess.sent)
+        if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
+          mess.sent=true
+          post2.disable()
+          bbutton2.innerHTML="rispondimi"
+        }
+      }
+        }
+      }
+    }
+  );
+
   }
   disableButton(button){
     button.setAttribute("disabled","true")
@@ -284,18 +301,6 @@ function initBlogSGang(id,login,tut){
 }
 
 /* EVENT SECTION */
-$(bbutton2).click(function(){
-  if(post2 instanceof postArea){
-    post2.msg=post2.postarea.value
-    //post2.disable()
-    mess=new Post("resp")
-    if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
-      mess.sent=true
-      post2.disableButton(this)
-      this.innerHTML="hai risposto !"
-    }
-  }
-});
 
 
 
@@ -316,7 +321,6 @@ $(bbutton).click(function(){
     // caso click su textarea esistente e con testo all interno
     else {
       /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
-      /* sotto , gestione evento di invio post */
       if(!(post.disabled==true)){
         post.msg=post.postarea.value
         $('#post_response').css("border", "1px solid grey")
@@ -330,6 +334,8 @@ $(bbutton).click(function(){
           makeTextAreaResp()
         }
         function makeTextAreaResp(){
+          var bbut2=document.createElement("Button");
+          bbutton2=bbut2
           post2=new postArea("resp")
           postresp=new Post("resp")
           bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
