@@ -35,13 +35,12 @@ var empty;
 var bSection=document.createElement("SECTION");
 var bSpan=document.createElement("SPAN");
 var bSpanChild=document.createElement("SPAN");
-
 var bIcon=document.createElement("IMG");
 var bForm=document.createElement("FORM");
 var wait=true
 var postTitle
 var tutorial
-  var bbutton2=new Object();
+var bbutton2=new Object();
 var id=0
 
 function createSectionDivSpan(parent){
@@ -61,7 +60,6 @@ function createSectionDivSpan(parent){
   bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
   bIcon.setAttribute("WIDTH","50px")
   bIcon.setAttribute("style","display:block;margin:0 auto;")
-
   bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
   aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
