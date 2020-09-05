@@ -23,8 +23,8 @@ $(document).ready(function(){
   function showTutorial() {
     table_tutorial.css('display','block');
     table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
-    off=table_tutorial_width+18;
-    $('#d_tutorial_section').animate({'margin-left': '-18px'},300);
+    off=table_tutorial_width;
+    $('#d_tutorial_section').animate({'margin-left': '-18px'},200);
     $('#asidebar').animate({ "margin-left" : '0px','opacity' : '0.9',},100);
     $('#asidebar').animate({ "margin-left" : '15px','opacity' : '0.1',},100);
     $('#asidebar').css('color','green');
@@ -54,7 +54,7 @@ $('#asidebar').click(function(event){
 
     // l 'elemento table_tutorial deve ritornare a 0px anche quando clicco sulla freecia , oltre che nell hover della freccia !'
       if ( table_tutorial.offset().left<0) {
-        $('#d_tutorial_section').animate({'margin-left': '-18px'},300);
+        $('#d_tutorial_section').animate({'margin-left': '-18px'},200);
       }
     // FINE COMMENTO
 
@@ -100,9 +100,9 @@ $("li[id^='a-']").click(function(){
   var topOffset=mydiv.offsetTop;
   var leftOffset=mydiv.offsetLeft;
   if(leftOffset>0){
-    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "-30%"},300);
-      $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "90%"},300);
-      $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : "0" },300);
+    $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "-30%"},200);
+      $('.d_divaside').animate({ "left" : -(horizontalHeaderMenuPosition),"margin-top" : "90%"},200);
+      $('.d_divaside').animate({ "left" : horizontalHeaderMenuPosition,"margin-top" : "0" },200);
     showHeader(text);
   }
   else{
@@ -134,10 +134,11 @@ $("li[id^='a-']").click(function(){
 
 /*nascondo tutto se clicco al di fuori del elemento*/
 $(document).click(function(event) {
+
   let x=$('#d_divaside').offset().left;
   $target = $(event.target);
-  if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length && !$target.closest('.fa-angle-right').length && !$target.closest('#d_tutorial_section').length && ($('#d_tutorial_section').css("margin-left")=="-18px" || x>0) && !$target.closest('#ul_in_selecFormAutori').length) {
-    if(x>0) {
+  if(!$target.closest('.d_divaside').length && !$target.closest('.fa-angle-right').length && !$target.closest('#header_menu').length && !$target.closest('.fa-angle-right').length && !$target.closest('#d_tutorial_section').length && ($('#d_tutorial_section').css("margin-left")=="-18px" || x>=0) && !$target.closest('#ul_in_selecFormAutori').length) {
+    if(x>=0) {
       $('#d_divaside').css( 'left' , '-700px');
     }
       hideTutorial();
@@ -145,7 +146,7 @@ $(document).click(function(event) {
   /* intercetto il click nell elemento li che contiene i nomi autore dei tutorial*/
   if($target.closest('#d_tutorial_section').length)
   {
-    shift=$('#d_inside_tutorial_section').css('margin-left')
+    shift=$('#d_inside_tutorial_section').css('left')
     shift=shift.replace("px","")
       if(shift>0){
     if (deleteTutorial()==0)  {
@@ -155,7 +156,7 @@ $(document).click(function(event) {
 }
 });
 function animateTutorial()  {
-  $('#d_inside_tutorial_section').animate({'margin-left':'-700px'},500);
+  $('#d_inside_tutorial_section').animate({'left':'-700px'},200);
   return 0
 }
 
@@ -175,6 +176,8 @@ function deleteTutorial() {
     console.log("l elemento element è nullo")
     exist=1
   }
+}
+else{
 }
   show(name)
   return exist

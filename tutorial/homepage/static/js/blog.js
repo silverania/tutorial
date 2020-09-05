@@ -50,7 +50,7 @@ function createSectionDivSpan(parent){
   //bUserImg.setAttribute("id","img_user")
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   divExitLogin.setAttribute("style","width:45%;display:inline-block;")
-  divCommentIcon.setAttribute("style","width:10%;display:inline-block;")
+  divCommentIcon.setAttribute("style","width:10%;display:inline;margin:0 auto;")
   divRespTitle.setAttribute("class","div_resp")
   //divEmpty.setAttribute("style","width:20%;display:inline-block;")
   divFormChild.setAttribute("id","multiarea");
@@ -112,6 +112,7 @@ function createSectionDivSpan(parent){
   //bSpan.appendChild(bSpanChild)
   bSection.appendChild(bForm)
   bForm.appendChild(divFormChild)
+  divFormChild.appendChild(divCommentIcon)
   divFormChild.appendChild(bbutton)
 }
 
@@ -144,6 +145,8 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   bSpan.appendChild(bSpanChild)
   divUserBlog.appendChild(bSpan)
   divBlog.appendChild(divUserBlog)
+  divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
+  divBlog.appendChild(divCommentIcon)
   bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
   bSpan.setAttribute("id","s_blog_icon_"+id.toString())
   tagUserImg.setAttribute("id","img_user_"+id.toString())
@@ -312,6 +315,7 @@ $(bbutton).click(function(){
     post=new postArea("post") // passo post come argomento
     mess=new Post("post")
     $(divFormChild).prepend(post.create())
+    $('#multiarea').prepend(divCommentIcon)
   }
   // caso click su textarea esistente
   else if (post instanceof postArea ) {

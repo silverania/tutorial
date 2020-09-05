@@ -71,7 +71,7 @@ position:fixed;
 width:100%;
 top:-8px;
 height:30px;;
-margin:0 auto;
+margin:0 auto 0 0;
 z-index:2;
 }
 
@@ -127,25 +127,28 @@ margin-right:5px;
 #d_aside_tutorial{
   box-sizing:content-box;
 }
-#d_tutorial_section,#d_inside_tutorial_section{
+
+#d_tutorial_section{
   box-sizing: content-box;
-  /*display:none;*/
   position:relative;
   width:auto;
   max-width:100%!important;
 }
 
 #d_inside_tutorial_section{
-  margin-left:-700px;
+  position:relative;
+  left:-700px;
   color:black;
-  width:100%!important;
   z-index:2;
 }
 
-#form .form-group , #selecFormAutori,.select_autori,#selectFormTutorials,#ul_in_selecFormAutori{
-  border:2px solid orange;
+.select_autori,#selectFormTutorials,#ul_in_selecFormAutori{
+  /*border:2px solid orange;*/
   width:100%!important;
   max-width:100%!important;
+}
+#selecFormAutori{
+  width:auto;
 }
 
 #d-approfondimenti{
@@ -183,7 +186,7 @@ margin-top:1%;
 
 li[id^="a-"]:hover{
   cursor:pointer!important;
-  background-color: green!important;
+  background-color: black!important;
 }
 
 .blog_title,#blog_title{
@@ -296,11 +299,11 @@ font-weight:bold;
 }
 [id^="a_tutorial"]{
   width:auto!important;
-  background-color: orange;
+  background-color: black;
   color:white;
 }
 [id^="a_tutorial"]:hover{
-  background-color:black;
+  background-color:orange;
   color:orange;
 }
 #p_content{
@@ -401,9 +404,12 @@ margin:0 0 auto auto;
    margin-top:-3%;
   }
   #s_nome_autore{
-    display:block;
-    margin-top:-5%;
-    font-size:0.5rem;
+    position:relative!important;
+    /*width:inherit;*/
+    display:inline-block!important;
+    top:0%;
+    left:0%;
+    font-size:0.3rem!important;
     color:black;
   }
  }
@@ -423,6 +429,17 @@ tr{
    font-size:0.5rem;
 
  }
+
+#selecFormAutori,#ul_in_selecFormAutori{
+  width:38%;
+  margin:0!important;;
+}
+
+ [id^='option_autori'],[id^='tutorial_id']{
+   width:auto;
+    font-size:10px;
+ }
+
  .ul_wrap_1{
   display:none;
  }
@@ -775,7 +792,10 @@ li #s_center_menu{
   #span_title_2{
   font-size:2.2rem;
   }
-
+  #s_nome_autore{
+    font-size:0.5rem!important;
+    color:blue;
+  }
   #span_title_w{
   font-size:2.2rem;
 
@@ -797,12 +817,26 @@ li #s_center_menu{
   li #s_center_menu{
       font-size:1rem!important;
     }
- #s_title,#s_title_2{
-    font-size:1.8rem;
-  }
+
+  .s_title{
+    font-family:ShareTechMono-Regular;
+     font-size:0.7rem!important;
+     display:inline-block;
+     color:blue;
+     opacity:0.5;
+   }
+
+#h_title2{
+margin-left:10%!important;
+}
+span#s_nome_autore{
+  font-size:0.5rem;
+  color:white;
+}
  #asidebar{
    display:block;
  }
+
  code{
    font-size:0.8vw;
  }
