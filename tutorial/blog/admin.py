@@ -4,7 +4,7 @@ from blog.models import Comment
 @admin.register(Comment)
 class PostAdmin(admin.ModelAdmin):
     search_fields = ('title','body')
-    list_display = ('title','status','slug', 'created', 'publish', 'author')
+    list_display = ('title','risposte','status','slug', 'created', 'publish', 'author')
     list_filter = ('status', 'created', 'publish', 'author')
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}

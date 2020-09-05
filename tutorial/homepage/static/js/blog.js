@@ -1,6 +1,7 @@
+const MAX_TEXTAREA_NUMBER=21
 var borderPost="1px solid orange";
 var borderResponse="1px solid grey";
-var id=id
+var id;
 var el
 var padre
 var user
@@ -118,7 +119,9 @@ function createSectionDivSpan(parent){
 
 function makeHeadBlog(postType,userPhoto,post,datePostResp){
   thispost=post
-  id=id+1
+  if(id<21){
+    id=id+1
+  }
   console.log("entry in makeHeadBlog......post="+thispost.msg)
   //divAfterMainSection.setAttribute("id","blog_title");
   //divAfterMainSection.setAttribute("style","width:100%");
@@ -145,8 +148,7 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   bSpan.appendChild(bSpanChild)
   divUserBlog.appendChild(bSpan)
   divBlog.appendChild(divUserBlog)
-  divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
-  divBlog.appendChild(divCommentIcon)
+
   bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
   bSpan.setAttribute("id","s_blog_icon_"+id.toString())
   tagUserImg.setAttribute("id","img_user_"+id.toString())
@@ -163,6 +165,8 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   if(!(thispost.disabled==true)){
     divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
     divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%")
+    divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
+    divBlog.appendChild(divCommentIcon)
     console.log("thispost.disabled")
     $(bSection).prepend(divBlog)
     $('#post_response').css("border", "1px solid grey")
@@ -174,9 +178,10 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
 }
 
 class Post{
-  constructor(type){
+  constructor(type,author){
     this.sent=false
     this.type=type
+    this.author=author
   }
   sendToServer(post="null",tutorial,user){
     if(post.type=="post"){
@@ -185,26 +190,19 @@ class Post{
     else if (post.type=="resp"){
       el=document.getElementsByClassName("post_response");
     }
-
-
       if(!tutorial=="" && (!post.msg=="")) {
         let content=tutorial;
         // AJAX .....il pulito a casa mia
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user
+            'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': post.title
           },
 
           dataType: 'json',
           success: function (data) {
             var userPhoto=data.photo
-            if(post.type=="post"){
               makeHeadBlog(data.type,data.photo,post,data.aggiornato)
-          }
-          else if(post.type="resp"){
-              makeHeadBlog(data.type,data.photo,post,data.aggiornato)
-          }
         }
         }
       );
@@ -220,7 +218,8 @@ class Post{
 class postArea {
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
-    this.postarea.setAttribute("id","resp_"+loginis)
+    alert(id)
+    this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
     if(post=="post"){
     postTitle=makeModalWindow(this);
       if (postTitle != null) {
@@ -250,12 +249,13 @@ class postArea {
         post2.msg=post2.postarea.value
         //post2.disable()
         if(!(mess.type=="resp")){
-          mess=new Post("resp")
+          mess=new Post("resp",loginis)
           if(!mess.sent==true) {
-          alert("sent,:"+mess.sent)
+          alert("sent,:"+mess.author)
         if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
           mess.sent=true
           post2.disable()
+          bbutton2.setAttribute("disabled","true")
           bbutton2.innerHTML="rispondimi"
         }
       }
@@ -328,7 +328,7 @@ $(bbutton).click(function(){
       if(!(post.disabled==true)){
         post.msg=post.postarea.value
         $('#post_response').css("border", "1px solid grey")
-        if ((result=mess.sendToServer(post,tutorial,loginis)==0)) {
+        if ((result=mess.sendToServer(post,tutorial,loginis,Post.title)==0)) {
           mess.sent=true
 
         }
@@ -338,12 +338,15 @@ $(bbutton).click(function(){
           makeTextAreaResp()
         }
         function makeTextAreaResp(){
-          var bbut2=document.createElement("Button");
-          bbutton2=bbut2
-          post2=new postArea("resp")
-          postresp=new Post("resp")
-          bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
-          post2.createButton(bbutton2)
+          if(id < MAX_TEXTAREA_NUMBER){
+            var bbut2=document.createElement("Button");
+            bbutton2=bbut2
+            id=id+1
+            post2=new postArea("resp")
+            postresp=new Post("resp")
+            bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
+            post2.createButton(bbutton2)
+          }
           //bbutton.prepend(bUserImg)
           return 0
         }
