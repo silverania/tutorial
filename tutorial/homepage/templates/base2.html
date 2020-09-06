@@ -118,10 +118,13 @@ function getIndex(e) {
     $('#d_inside_tutorial_section').css("display","block")
     let x=(parseInt($('#selecFormAutori').css('width')))/10;
     $('#d_inside_tutorial_section').animate({'left': x },400)
+    exist=1
+  }
+  else{
+    exist=0
   }
   {% endfor %}
   }
-  exist=1
 }
 </script>
           <div  id="d_divaside" class="d_divaside">
