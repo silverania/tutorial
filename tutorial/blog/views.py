@@ -19,35 +19,30 @@ def newPost(request):
             print("not type ")
             if 'tutorial' in request.GET and request.GET['tutorial'] :
                 tutorial=request.GET.get('tutorial',None)
-                tu=Tutorial.objects.get(title=tutorial)
+                tu=Tutorial.objects.order_by('publish').get(title__icontains=tutorial)
+                # PRENDI I POST DEL TUTORIAL :::::GLI UULTIMI 5 MGARI
+                print("tu="+str(tu.post.body))
                 showPost(tu)
         else :
-
             tutorial_all = Tutorial.objects.all
             formatted_datetime = formats.date_format(datetime.now(), "SHORT_DATETIME_FORMAT")
             post.created=formatted_datetime
         if 'title' in request.GET and request.GET['title'] :
             title=request.GET.get('title',None)
-
         if 'messaggio' in request.GET and request.GET['messaggio'] :
             message=request.GET.get('messaggio')
             post.body=message
             aggiornato=post.created
-
         if 'type' in request.GET and request.GET['type'] :
             type=request.GET.get('type',None)
             if "resp" in type:
                 r.body=message
                 post.risposte=r
                 print(str("è una risposta:"+str(post.risposte)))
-
         if 'tutorial' in request.GET and request.GET['tutorial'] :
             tutorial=request.GET.get('tutorial',None)
-
         thistutorial=Tutorial.objects.get(title__contains=tutorial)
-
         thistutorial.post=post
-
         myuser=Profile.objects.get(user_id=request.user.id)
         myuser.post=post
         user=request.GET.get('username',None)
@@ -67,4 +62,4 @@ def newPost(request):
 def showPost(tutorial):
     thistutorial=tutorial
     p=Tutorial.objects.filter(title__icontains="Inserire Un Commento Per ")
-    print("fffffff"+str(tutorial.post.body))
+    print("fffffff"+str(tutorial.post.body)+"/nautore:"+str(tutorial.author))
