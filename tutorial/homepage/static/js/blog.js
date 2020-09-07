@@ -115,6 +115,8 @@ function createSectionDivSpan(parent){
   divFormChild.appendChild(bbutton)
 }
 
+
+
 function makeHeadBlog(postType,userPhoto,post,datePostResp){
   thispost=post
   if(id<21){
@@ -180,8 +182,9 @@ class Post{
     this.sent=false
     this.type=type
     this.author=author
+    this.title=postTitle
   }
-  sendToServer(post="null",tutorial,user){
+  sendToServer(post="null",tutorial,user,postTitle){
     if(post.type=="post"){
       el=document.getElementById("post_response");
     }
@@ -194,12 +197,13 @@ class Post{
         $.ajax({
           url: '/post/getpost',
           data: {
-            'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': post.title
+            'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': postTitle,
           },
 
           dataType: 'json',
           success: function (data) {
             var userPhoto=data.photo
+            alert("data aggiornato from ajax"+data.aggiornato)
               makeHeadBlog(data.type,data.photo,post,data.aggiornato)
         }
         }
@@ -311,7 +315,7 @@ $(bbutton).click(function(){
   if (!(post instanceof postArea ))
   {
     post=new postArea("post") // passo post come argomento
-    mess=new Post("post")
+    mess=new Post("post",loginis,postTitle)
     $(divFormChild).prepend(post.create())
     $('#multiarea').prepend(divCommentIcon)
   }
@@ -326,7 +330,8 @@ $(bbutton).click(function(){
       if(!(post.disabled==true)){
         post.msg=post.postarea.value
         $('#post_response').css("border", "1px solid grey")
-        if ((result=mess.sendToServer(post,tutorial,loginis,Post.title)==0)) {
+        alert("Post.title="+postTitle)
+        if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
           mess.sent=true
 
         }
@@ -378,13 +383,14 @@ function makeModalWindow(post){
   modal.style.display = "block";
   document.getElementById('but_confirm_title').onclick = function(event) {
     try{
-      post.title=Post.title=textAreaInDivInMain.innerHTML
+      alert("text title="+textAreaInDivInMain.value)
+      postTitle=textAreaInDivInMain.value
     }
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
     modal.style.display = "none";
-    return Post.title
+    return postTitle
   }
   // When the user clicks anywhere outside of the modal, close it
   window.onclick = function(event) {
@@ -399,7 +405,22 @@ $(bbutton).click(function(){
   $(bbutton).css("border","5px solid grey")
 })
 $(document).ready(function(){
+  execui()
+  function execui(){
+    bForm.setAttribute("action","post/showposts");
+  $.ajax({
+    url: '/post/showposts',
+    data: {
+      'loginis': loginis,'tutorial':tutorial,
+    },
+
+    dataType: 'json',
+    success: function (data) {
+      alert("from ajax dat.post.msg,user,data"+data.user+data.creato)
+  }
+});
+}
+});
   $("#post_response").change(function(){
     alert("textarea di risposta....evento change in corso .............")
   });
-});
