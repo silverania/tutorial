@@ -156,7 +156,7 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   divUserBlog.setAttribute("id","divuserblog_"+id.toString())
   if(postType=="resp"){
       divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
-    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%")
+    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%;margin-bottom:20px;")
     console.log("is resp ")
       post.postarea.insertAdjacentElement("beforebegin",divBlog)
       //$(post).insertBefore(mainElement,$(post).childNodes[0])
@@ -164,13 +164,13 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   else {
   if(!(thispost.disabled==true)){
     divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
-    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%")
+    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
     divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
     divBlog.appendChild(divCommentIcon)
     console.log("thispost.disabled")
     $(bSection).prepend(divBlog)
     $('#post_response').css("border", "1px solid grey")
-    bbutton.textContent="Rispondi a ..."+loginis
+    bbutton.textContent="Rispondi"
     /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
     thispost.disable()
   }
@@ -253,12 +253,14 @@ class postArea {
         if(!(mess.type=="resp")){
           mess=new Post("resp",loginis)
           if(!mess.sent==true) {
-          alert("sent,:"+mess.author)
-        if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
+            alert("sent,:"+mess.author)
+            if(!post2.msg==''){
+              if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
           mess.sent=true
           post2.disable()
           bbutton2.setAttribute("disabled","true")
           bbutton2.innerHTML="rispondimi"
+        }
         }
       }
         }
@@ -321,8 +323,8 @@ $(bbutton).click(function(){
   }
   // caso click su textarea esistente
   else if (post instanceof postArea ) {
-    if (post.postarea.value==''){
-      alert("is empty")
+    if (post.postarea.value=='' || post.postarea.value.trim().length < 1){
+      alert("il silenzio in questi casi vuol dir poco !")
     }
     // caso click su textarea esistente e con testo all interno
     else {
@@ -333,12 +335,12 @@ $(bbutton).click(function(){
         alert("Post.title="+postTitle)
         if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
           mess.sent=true
-
         }
       }
       else {
         if (!(post.postarea.value=="") && mess.sent==true) {
           makeTextAreaResp()
+          this.setAttribute("disabled","true")
         }
         function makeTextAreaResp(){
           if(id < MAX_TEXTAREA_NUMBER){
@@ -405,21 +407,39 @@ $(bbutton).click(function(){
   $(bbutton).css("border","5px solid grey")
 })
 $(document).ready(function(){
-  execui()
-  function execui(){
     bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
     data: {
       'loginis': loginis,'tutorial':tutorial,
     },
-
     dataType: 'json',
-    success: function (data) {
-      alert("from ajax dat.post.msg,user,data"+data.user+data.creato)
+    success: function (data_l5) {
+
+      //data_l5=data_l5.replace("[","\'")
+      //data_l5=data_l5.replace("]","\'")
+      //alert(data_l5)
+      //data=data.replace("\'","\"")
+      //data=data.replace("[","\'")
+        //data=data.replace("]","\'")
+        s = data_l5.replace(/\\n/g, "\\n")
+               .replace(/\\'/g, "\\'")
+               .replace(/\\"/g, '\\"')
+               .replace(/\\&/g, "\\&")
+               .replace(/\\r/g, "\\r")
+               .replace(/\\t/g, "\\t")
+               .replace(/\\b/g, "\\b")
+               .replace(/\\f/g, "\\f");
+// remove non-printable and other non-valid JSON chars
+s = data_l5.replace(/[\u0000-\u0019]+/g,"");
+      const obj = JSON.parse(s);
+      alert("from ajax dat.post.msg,user,data"+s)
+//console.log(obj.count);
+// expected output: 42
+
   }
 });
-}
+
 });
   $("#post_response").change(function(){
     alert("textarea di risposta....evento change in corso .............")

@@ -27,3 +27,6 @@ creare  nella views blog , la classe tutorial e author da associare alla classe 
 - riparare il link del login nel branch master
 
 - ridefinisci il metodo makeHeadBlog astraendo gli ogetti html come si deve !
+
+- Per mostrare i messaggi di risposta , ad un user loggato , è necessario che l ' user
+  sia loggato , appunto , per recuperare i messaggi dal database per un determinato user'
