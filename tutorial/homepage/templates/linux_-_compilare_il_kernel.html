@@ -42,7 +42,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
 <br><br>
 <p class="text-center">
 <span style="color:orange;">0.a</span></p>
-<table id="image_0a" class="table  table-dark" border="2" style="width:50%!important;height:auto;margin:0 auto!important;">
+<!--table id="image_0a" class="table  table-dark" border="2" style="width:50%!important;height:auto;margin:0 auto!important;">
   <thead class="thead-dark">
     <tr>
       <th>Programma</th>
@@ -157,7 +157,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
       <td>sphinx-build –version</td>
     </tr>
   </tbody>
-</table>
+</table-->
 
 <p  id="p_content" style="margin-top:10%;font-weight:normal;" >
  Alcuni pensano ,  che in informatica , compilare significhi : selezionare un opzione piuttosto
@@ -298,15 +298,15 @@ che lo si è appreso diventa semplice.<br><br><br>
 
 
                 - creiamo il file mod contenente l' output del comando <code title="comando che visualizza i moduli del kernel attivi">lsmod</code>:<br>
-                <br><span class="badge badge-warning" style="text-align:center!important;color:blue;margin:0 auto!important;"><span style="color:yellow">$</span> sudo lsmod > mod</span><br><br>
+                <br><span id="badge_lsmod_1" class="badge badge-warning"><span style="color:yellow">$</span> sudo lsmod > mod</span><br><br>
                 il comando della riga precedente redirige , per mezzo del simbolo :<span class="badge badge-info" style="whitespace:nowrap!important;">></span> , il risultato  del comando :  <span class="badge badge-info">lsmod</span> appunto ,
                 che serve a visualizzare la lista dei moduli del kernel caricati dal sistema operativo , in un file che abbiamo chiamato <span class="badge badge-info">mod</span> , ma avremo potuto usare qualsiasi altro nome ovviamente .<br><br>
             <br>- Controlliamo che sia stato creato il file :<code title="comando che visualizza i moduli del kernel attivi"> mod</code>:<br>
-              <br><span class="badge badge-warning" style="color:blue;width:20%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> cat mod</span><br>
+              <br><span class="badge badge-warning"><span style="color:yellow">$</span><span style="color:blue"> cat mod</span></span><br>
 
               <br> - Se il file  non è vuoto si può procedere a scrivere la configurazione in <code>.config</code> così:<br><br>
                 <br>
-                     <span class="badge badge-warning" style="color:blue;width:50%;margin:0 auto!important;display:block;"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
+                     <span id="badge_lsmod_2"class="badge badge-warning"><span style="color:yellow">$</span> make LSMOD=mod localmodconfig</span><br>
                      <br><br><code>localmodoconfig</code> legge i moduli nel file <code>mod</code>
                      che abbiamo creato precedentemente , e configura il kernel allo stesso modo , attraverso la scrittura del file <code>.config</code>al cui
                      interno saranno attivati i stessi moduli del kernel attualmente in uso . Questa procedura riduce al minimo il rischio di ritrovarsi con una

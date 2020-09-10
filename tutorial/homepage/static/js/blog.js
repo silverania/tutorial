@@ -433,7 +433,7 @@ $(document).ready(function(){
 // remove non-printable and other non-valid JSON chars
 s = data_l5.replace(/[\u0000-\u0019]+/g,"");
       const obj = JSON.parse(s);
-      alert("from ajax dat.post.msg,user,data"+s)
+      alert("from ajax dat.post.msg,user,data"+s.body)
 //console.log(obj.count);
 // expected output: 42
 
