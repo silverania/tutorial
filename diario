@@ -1,0 +1,32 @@
+- il button "rispondi" deve essere disabilitato fino a che l 'user non inserisce del testo nella   textarea.
+
+- la textarea di risposta deve essere piu corta rispetto alla textarea di post
+
+- devo raccogliere i messaggi dal database .... i piu recenti, per visualizzarli sulla pagina web
+
+- aggiungo la classe Resp al model in blog
+
+
+12 ago 2020
+
+- per l app blog E' necessario creare un utente che definisca proprietà aggiuntive rispetto all user django , che ha pochi dati che lo descrivono ,
+    per l app blog è necessario creare proprietà aggiuntive , come i post creati dall user ecc... quindi la soluzione sta nel associare un profilo creato adhoc con le proprietà necessarie e usare i signals che creano un profilo nuovo con i daqti necessari , nel momento che viene creato l User.
+
+
+15 ago 2020
+
+- inserire la photo nella sezione blog
+
+
+creare  nella views blog , la classe tutorial e author da associare alla classe Comment, per non ricevere errore : "author o tutorial non possono essere null"
+
+
+- RIORDINARE LE VARIABILI nella request ajax
+
+
+- riparare il link del login nel branch master
+
+- ridefinisci il metodo makeHeadBlog astraendo gli ogetti html come si deve !
+
+- Per mostrare i messaggi di risposta , ad un user loggato , è necessario che l ' user
+  sia loggato , appunto , per recuperare i messaggi dal database per un determinato user'
