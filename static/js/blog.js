@@ -202,28 +202,23 @@ class Post{
 
           dataType: 'json',
           success: function (data) {
-<<<<<<< HEAD
             this.photo=data.photo
             alert(this.photo)
             bUserImg.setAttribute("src",this.photo)
             spanUserName.textContent=" | "+data.aggiornato
+            var userPhoto=data.photo
+            alert("data aggiornato from ajax"+data.aggiornato)
+            makeHeadBlog(data.type,data.photo,post,data.aggiornato)
           }
           });
           console.log("ajax call finished");
+          return 0
+        }
+        }
 
-=======
-            var userPhoto=data.photo
-            alert("data aggiornato from ajax"+data.aggiornato)
-              makeHeadBlog(data.type,data.photo,post,data.aggiornato)
->>>>>>> 593154f6e40044f0a862d0f7d4b4adb29e4f171a
-        }
-        }
-      );
-      console.log("ajax call finished");
     }
-    return 0
-  }
-}
+
+
 
 
 

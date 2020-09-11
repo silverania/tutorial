@@ -64,9 +64,9 @@ function createSectionDivSpan(parent){
   bSpan.setAttribute("id","s_blog_icon")
   aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
   aBlogReg.setAttribute("style","display:block;width:auto;text-align:right;")
-  aBlogReg.setAttribute("href","/user/register")
-  aBlogEntra.setAttribute("href","/user/login")
-  aBlogEsci.setAttribute("href","/user/logout")
+  aBlogReg.setAttribute("href","user/register")
+  aBlogEntra.setAttribute("href","user/login")
+  aBlogEsci.setAttribute("href","user/logout")
   liBlogEntra.setAttribute("style","display:inline;width:auto;margin-right:0px;")
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
@@ -202,13 +202,6 @@ class Post{
 
           dataType: 'json',
           success: function (data) {
-            this.photo=data.photo
-            alert(this.photo)
-            bUserImg.setAttribute("src",this.photo)
-            spanUserName.textContent=" | "+data.aggiornato
-          }
-          });
-          console.log("ajax call finished");
             var userPhoto=data.photo
             alert("data aggiornato from ajax"+data.aggiornato)
               makeHeadBlog(data.type,data.photo,post,data.aggiornato)
