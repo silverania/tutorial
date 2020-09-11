@@ -18,3 +18,4 @@ pyvenv.cfg
 share/*
 admin
 __pycache__/
+__init__.py
