@@ -31,17 +31,14 @@ src: url('../webfonts/Assistant-Regular.ttf') ;
 font-family: 'ShareTechMono-Regular';
 src: url('../webfonts/ShareTechMono-Regular.ttf') ;
 }
-html{
-  width:100%;
-  height:auto;
-  overflow:auto;
-}
+
 body {
   width:100%;
   height:auto;
  font-family:'WorkSans','Assistant-regular','WorkSans';
 background-color:#e6ffff;
 font-size:20px;
+/*box-sizing:content-box;*/
 }
 
 .badge.badge-info.badge-outlined-info{
@@ -68,11 +65,12 @@ li:hover{
 
 progress#progressbar{
 position:fixed;
-width:100%;
+width:auto;
 top:-8px;
 height:30px;;
 margin:0 auto 0 0;
 z-index:2;
+
 }
 
 header{
@@ -129,6 +127,7 @@ margin-right:5px;
 }
 
 #d_tutorial_section{
+  display:none;
   box-sizing: content-box;
   position:relative;
   width:auto;
@@ -449,7 +448,11 @@ tr{
    margin-left:0px!important;
    font-size:0.2rem!important;
  }
-
+#badge_lsmod_1,#badge_lsmod_2{
+  text-align:center!important;
+  color:blue;
+  margin:0 auto!important;"
+}
 
 #img_user{
   display:none;

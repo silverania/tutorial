@@ -42,10 +42,13 @@ def getPost(request):
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
         tu=Tutorial.objects.get(title=tutorial)#.get(title__icontains=tutorial)
+
         aggiornato=formatted_datetime
-        c=Comment.objects.filter(body=tu.post.body).first()
-        data_l=c.risposte.all()
-        data_l5 = serializers.serialize("json",data_l,cls=LazyEncoder)
+        c=Comment.objects.filter(tutorial=tu).first()
+        #c=Comment.objects.filter(body=tu.post.body)
+        #data_l=tu.comments_all()
+        print(c.tutorial.comments.all())
+        #data_l5 = serializers.serialize("json",data_l,cls=LazyEncoder)
         #data_l=data_l.replace("\'","\"")
 
         #data_l=data_l.replace("[","\'")
@@ -53,9 +56,10 @@ def getPost(request):
         #data_l=data_l.replace("<QuerySet","")
 
 
-        print("data"+str(data_l5))
+        #print("data"+str(data_l5))
         showPost(tu)
-    return JsonResponse(data_l5,safe=False)
+    return HttpResponse(tu.comments.all())
+    #return JsonResponse(data_l5,safe=False)
     #return JsonResponse({'post':tu.post.body,'creato': aggiornato,'user':str(tu.author)})
 
 def newPost(request):
@@ -72,25 +76,23 @@ def newPost(request):
             if "resp" in type:
                 r=Resp()
                 r.body=message
-                post.risposte=r
                 r.author=myuser
+                r.commento=post
                 r.save()
-                aggiornato=formatted_datetime
-                r.created=aggiornato
                 print(str("è una risposta:"+str(post.risposte)))
             else:
+                tu.post=post
                 post.body=message
                 post.author=myuser
                 print("creato,autore:"+str(post.created)+str(post.author))
                 aggiornato=formatted_datetime
-                post.created=aggiornato
         if 'title' in request.GET and request.GET['title'] :
                 post.title=request.GET.get('title',None)
                 print("titolo"+post.title)
                 post.save()
         if 'tutorial' in request.GET and request.GET['tutorial'] :
                 tu.post=post
-                print("tu.post="+str(tu.post)+"risposta:"+str(tu.post.risposte))
+                print("tu.post="+str(tu.post)+"risposta:"+str(tu.post.risposte.all()))
         try:
             if isinstance(r,Resp):
                 print("trovata instanza risposta")
@@ -101,4 +103,3 @@ def newPost(request):
         return  JsonResponse(data)
 def showPost(tutorial):
     thistutorial=tutorial
-    print("fffffff"+str(thistutorial.post.body)+"/nautore:"+str(thistutorial.post.author))

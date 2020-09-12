@@ -2,6 +2,9 @@
 #col_blog{
   width:0px!important;
 }
+[id^="divuserblog_"]{
+  opacity:0.9;
+}
 #d_blog_reg {
   width:100%;
   margin-bottom:50px!important;

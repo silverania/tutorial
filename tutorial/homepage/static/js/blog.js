@@ -178,11 +178,14 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
 }
 
 class Post{
-  constructor(type,author){
+  constructor(type,author,title){
     this.sent=false
     this.type=type
     this.author=author
-    this.title=postTitle
+    this.title=title
+  }
+  getTitle(){
+    return this.title
   }
   sendToServer(post="null",tutorial,user,postTitle){
     if(post.type=="post"){
@@ -222,13 +225,7 @@ class postArea {
     this.postarea=document.createElement("TEXTAREA");
     alert(id)
     this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
-    if(post=="post"){
-    postTitle=makeModalWindow(this);
-      if (postTitle != null) {
-        return postTitle
-      }
-    }
-    else if (post=="resp"){
+    if (post=="resp"){
       console.log("textarea di resposta")
     }
     this.type=post
@@ -310,14 +307,14 @@ function initBlogSGang(id,login,tut){
 /* EVENT SECTION */
 
 
-
+/* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
 $(bbutton).click(function(){
   let result
   // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
   if (!(post instanceof postArea ))
   {
     post=new postArea("post") // passo post come argomento
-    mess=new Post("post",loginis,postTitle)
+    mess=new Post("post",loginis,makeModalWindow())
     $(divFormChild).prepend(post.create())
     $('#multiarea').prepend(divCommentIcon)
   }
@@ -360,11 +357,10 @@ $(bbutton).click(function(){
   }
 }
 );
-$('#but_confirm_title').click(function() {
-  modal.style.display = "none";
-});
+
 /* MODAL WINDOW */
-function makeModalWindow(post){
+
+function makeModalWindow(){
   var divModalMain=document.createElement("DIV");
   var divInMain=document.createElement("DIV");
   var textAreaInDivInMain=document.createElement("TEXTAREA");
@@ -385,27 +381,26 @@ function makeModalWindow(post){
   modal.style.display = "block";
   document.getElementById('but_confirm_title').onclick = function(event) {
     try{
-      alert("text title="+textAreaInDivInMain.value)
-      postTitle=textAreaInDivInMain.value
+      //postTitle=textAreaInDivInMain.value
+      return textAreaInDivInMain.value ;
     }
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
-    modal.style.display = "none";
-    return postTitle
   }
-  // When the user clicks anywhere outside of the modal, close it
+  $('#but_confirm_title').click(function() {
+    modal.style.display = "none";
+  });
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
   }
+
 }
 
 /* END MODAL  */
-$(bbutton).click(function(){
-  $(bbutton).css("border","5px solid grey")
-})
+
 $(document).ready(function(){
     bForm.setAttribute("action","post/showposts");
   $.ajax({

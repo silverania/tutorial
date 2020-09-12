@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 # from django.contrib.auth.models import User
-
+from homepage.models import Tutorial
 from django.urls import reverse
 from user.models import Profile
 # Create your models here.
@@ -18,12 +18,13 @@ class Comment(models.Model):
     #tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish',blank=True,null=True)
-    author = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
+    author=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
+    tutorial=models.ForeignKey(Tutorial,related_name="comments",null=True,blank=True,on_delete=models.PROTECT)
     def get_absolute_url(self):
         return reverse('blog:newPost',args=[self.publish.year,self.publish.month,self.publish.day, self.slug])
     class Meta:
@@ -40,7 +41,7 @@ class Resp(models.Model):
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
-    post=models.CharField(max_length=250,default="post anonimo")
+    #post=models.CharField(max_length=250,default="post anonimo")
     commento=models.ForeignKey(Comment,related_name="risposte",on_delete=models.CASCADE,null=True,blank=True)
     class Meta:
         ordering = ('-publish',)
