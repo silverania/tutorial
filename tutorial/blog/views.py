@@ -3,11 +3,13 @@ from user.models import Profile
 from blog.models import Comment,Resp
 from homepage.models import Tutorial
 from django.http import HttpResponse,JsonResponse
+
 from django.conf import settings
 from django.utils import formats
 from datetime import datetime
 import json
 from django.core import serializers
+from django.forms.models import model_to_dict
 
 photo=""
 message=""
@@ -18,7 +20,7 @@ from django.core.serializers.json import DjangoJSONEncoder
 
 class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
-        if isinstance(obj, Resp):
+        if isinstance(obj, Resp) or isinstance(obj, Tutorial) :
             return str(obj)
         return super().default(obj)
 
@@ -36,30 +38,25 @@ def getLoginName(request):
     return myuser
 
 #Funzione per raccogliere i post da visualizzare al caricamento della homepage
+
 def getPost(request):
     global tu,formatted_datetime
     print ("entrypoint to getPost")
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
-        tu=Tutorial.objects.get(title=tutorial)#.get(title__icontains=tutorial)
-
+        tu=Tutorial.objects.filter(title=tutorial)#.get(title__icontains=tutorial)
+        tu_serialized=serializers.serialize("json",Tutorial.objects.filter(title=tutorial))
         aggiornato=formatted_datetime
-        c=Comment.objects.filter(tutorial=tu).first()
-        #c=Comment.objects.filter(body=tu.post.body)
-        #data_l=tu.comments_all()
+        c=Comment.objects.filter(tutorial=tu[0]).first()
+        #tujson=JsonResponse(tu1,safe=False)
+        data_l=c.tutorial.comments.all()
         print(c.tutorial.comments.all())
-        #data_l5 = serializers.serialize("json",data_l,cls=LazyEncoder)
-        #data_l=data_l.replace("\'","\"")
-
-        #data_l=data_l.replace("[","\'")
-        #data_l=data_l.replace("]","\'")
-        #data_l=data_l.replace("<QuerySet","")
-
-
-        #print("data"+str(data_l5))
+        data_l5 = serializers.serialize("json",data_l,cls=LazyEncoder)
+        data = json.dumps({'data_l5': data_l5, 'tu_serialized': tu_serialized})
+        print("data"+str(data_l5)+str(tu_serialized))
         showPost(tu)
-    return HttpResponse(tu.comments.all())
-    #return JsonResponse(data_l5,safe=False)
+        #data_l=({'data_l5':data_l5,'tu_serialized':tu_serialized,})
+        return JsonResponse(data,safe=False)
     #return JsonResponse({'post':tu.post.body,'creato': aggiornato,'user':str(tu.author)})
 
 def newPost(request):

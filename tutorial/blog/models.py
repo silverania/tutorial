@@ -24,7 +24,7 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
-    tutorial=models.ForeignKey(Tutorial,related_name="comments",null=True,blank=True,on_delete=models.PROTECT)
+    tutorial=models.ForeignKey(Tutorial,related_name="comments",null=True,blank=True,on_delete=models.CASCADE)
     def get_absolute_url(self):
         return reverse('blog:newPost',args=[self.publish.year,self.publish.month,self.publish.day, self.slug])
     class Meta:

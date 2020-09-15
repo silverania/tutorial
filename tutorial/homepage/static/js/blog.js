@@ -101,7 +101,7 @@ function createSectionDivSpan(parent){
     divExitLogin.appendChild(ulBlogReg)
     //bSection.appendChild(divBlogReg)
   }
-//  bH5.appendChild(spanUserName)
+  //  bH5.appendChild(spanUserName)
   //bSection.appendChild(bdiv)
   bdiv.appendChild(divUserBlog)
   bdiv.appendChild(divCommentIcon)
@@ -155,26 +155,26 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   spanUserName.setAttribute("id","span_user_"+id.toString())
   divUserBlog.setAttribute("id","divuserblog_"+id.toString())
   if(postType=="resp"){
-      divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
+    divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
     divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%;margin-bottom:20px;")
     console.log("is resp ")
-      post.postarea.insertAdjacentElement("beforebegin",divBlog)
-      //$(post).insertBefore(mainElement,$(post).childNodes[0])
+    post.postarea.insertAdjacentElement("beforebegin",divBlog)
+    //$(post).insertBefore(mainElement,$(post).childNodes[0])
   }
   else {
-  if(!(thispost.disabled==true)){
-    divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
-    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
-    divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
-    divBlog.appendChild(divCommentIcon)
-    console.log("thispost.disabled")
-    $(bSection).prepend(divBlog)
-    $('#post_response').css("border", "1px solid grey")
-    bbutton.textContent="Rispondi"
-    /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-    thispost.disable()
+    if(!(thispost.disabled==true)){
+      divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
+      divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
+      divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
+      divBlog.appendChild(divCommentIcon)
+      console.log("thispost.disabled")
+      $(bSection).prepend(divBlog)
+      $('#post_response').css("border", "1px solid grey")
+      bbutton.textContent="Rispondi"
+      /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
+      thispost.disable()
+    }
   }
-}
 }
 
 class Post{
@@ -187,6 +187,11 @@ class Post{
   getTitle(){
     return this.title
   }
+  hasTitle(){
+    if(getTitle()){
+      return true
+    }
+  }
   sendToServer(post="null",tutorial,user,postTitle){
     if(post.type=="post"){
       el=document.getElementById("post_response");
@@ -194,27 +199,27 @@ class Post{
     else if (post.type=="resp"){
       el=document.getElementsByClassName("post_response");
     }
-      if(!tutorial=="" && (!post.msg=="")) {
-        let content=tutorial;
-        // AJAX .....il pulito a casa mia
-        $.ajax({
-          url: '/post/getpost',
-          data: {
-            'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': postTitle,
-          },
+    if(!tutorial=="" && (!post.msg=="")) {
+      let content=tutorial;
+      // AJAX .....il pulito a casa mia
+      $.ajax({
+        url: '/post/getpost',
+        data: {
+          'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': postTitle,
+        },
 
-          dataType: 'json',
-          success: function (data) {
-            var userPhoto=data.photo
-            alert("data aggiornato from ajax"+data.aggiornato)
-              makeHeadBlog(data.type,data.photo,post,data.aggiornato)
+        dataType: 'json',
+        success: function (data) {
+          var userPhoto=data.photo
+          alert("data aggiornato from ajax"+data.aggiornato)
+          makeHeadBlog(data.type,data.photo,post,data.aggiornato)
         }
-        }
-      );
-      console.log("ajax call finished");
-    }
-    return 0
+      }
+    );
+    console.log("ajax call finished");
   }
+  return 0
+}
 }
 
 
@@ -223,7 +228,6 @@ class Post{
 class postArea {
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
-    alert(id)
     this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
     if (post=="resp"){
       console.log("textarea di resposta")
@@ -253,28 +257,29 @@ class postArea {
             alert("sent,:"+mess.author)
             if(!post2.msg==''){
               if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
-          mess.sent=true
-          post2.disable()
-          bbutton2.setAttribute("disabled","true")
-          bbutton2.innerHTML="rispondimi"
-        }
-        }
-      }
+                mess.sent=true
+                post2.disable()
+                bbutton2.setAttribute("disabled","true")
+                bbutton2.innerHTML="rispondimi"
+              }
+            }
+          }
         }
       }
     }
   );
 
-  }
-  disableButton(button){
-    button.setAttribute("disabled","true")
-  }
-  create(){
-    if(this.type=="post"){
+}
+disableButton(button){
+  button.setAttribute("disabled","true")
+}
+create(){
+  if (mess.getTitle()==true){
+    if(this.type=="post" ){
       this.postarea.setAttribute("id","post_response")
       $(this.postarea).animate({'width':'100%'},1000);
     }
-    else{
+    else {
       this.postarea.setAttribute("class","post_response")
       $(this.postarea).animate({'width':'70%'},1000);
     }
@@ -284,10 +289,11 @@ class postArea {
     this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
     return this.postarea;
   }
-  disable(){
-    this.disabled=true
-    this.postarea.setAttribute('disabled','true')
-  }
+}
+disable(){
+  this.disabled=true
+  this.postarea.setAttribute('disabled','true')
+}
 }
 
 
@@ -400,42 +406,46 @@ function makeModalWindow(){
 }
 
 /* END MODAL  */
+function cleanJson(json){
+  this.data=json.toString()
+  s = this.data.replace(/\\n/g, "\\n")
+  .replace(/\\'/g, "\\'")
+  .replace(/\\"/g, '\\"')
+  .replace(/\\&/g, "\\&")
+  .replace(/\\r/g, "\\r")
+  .replace(/\\t/g, "\\t")
+  .replace(/\\b/g, "\\b")
+  .replace(/\\f/g, "\\f")
+  // remove non-printable and other non-valid JSON chars
+  .replace(/[\u0000-\u0019]+/g,"");
+  return s
+}
 
 $(document).ready(function(){
-    bForm.setAttribute("action","post/showposts");
+  bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
     data: {
       'loginis': loginis,'tutorial':tutorial,
     },
     dataType: 'json',
-    success: function (data_l5) {
+    success: function (data) {
+      s = cleanJson(data)
+      var obj = JSON.parse(s);
+      //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
+       var obj2 = JSON.parse(obj.data_l5);
+       for (i=1;i<=obj2.length;i=i+1){
+      alert(obj.data_l5+"OOOOOOOOOO"+obj2[i].fields.title)
+      }
+      //const obj2 = JSON.parse(s);
+      //alert(s)
+      //console.log(obj.count);
+      // expected output: 42
 
-      //data_l5=data_l5.replace("[","\'")
-      //data_l5=data_l5.replace("]","\'")
-      //alert(data_l5)
-      //data=data.replace("\'","\"")
-      //data=data.replace("[","\'")
-        //data=data.replace("]","\'")
-        s = data_l5.replace(/\\n/g, "\\n")
-               .replace(/\\'/g, "\\'")
-               .replace(/\\"/g, '\\"')
-               .replace(/\\&/g, "\\&")
-               .replace(/\\r/g, "\\r")
-               .replace(/\\t/g, "\\t")
-               .replace(/\\b/g, "\\b")
-               .replace(/\\f/g, "\\f");
-// remove non-printable and other non-valid JSON chars
-s = data_l5.replace(/[\u0000-\u0019]+/g,"");
-      const obj = JSON.parse(s);
-      alert("from ajax dat.post.msg,user,data"+s.body)
-//console.log(obj.count);
-// expected output: 42
-
-  }
-});
-
-});
-  $("#post_response").change(function(){
-    alert("textarea di risposta....evento change in corso .............")
+    }
   });
+
+});
+$("#post_response").change(function(){
+  alert("textarea di risposta....evento change in corso .............")
+});
