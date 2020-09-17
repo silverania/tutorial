@@ -177,12 +177,22 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   }
 }
 
+class Resp{
+  constructor(author,body,post){
+    this.sent=false
+    this.author=author
+    this.post=post
+    this.body=body
+  }
+}
+
 class Post{
-  constructor(type,author,title){
+  constructor(type="none",author,title){
     this.sent=false
     this.type=type
     this.author=author
     this.title=title
+    this.risposte=[]
   }
   getTitle(){
     return this.title
@@ -422,6 +432,7 @@ function cleanJson(json){
 }
 
 $(document).ready(function(){
+  let mess=[],resp=[]
   bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
@@ -430,12 +441,28 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
+      let i=0,y=0
       s = cleanJson(data)
       var obj = JSON.parse(s);
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
-       var obj2 = JSON.parse(obj.data_l5);
-       for (i=1;i<=obj2.length;i=i+1){
-      alert(obj.data_l5+"OOOOOOOOOO"+obj2[i].fields.title)
+      var obj2 = JSON.parse(obj.data_l5);
+      var obj3 = JSON.parse(obj.data_l6);
+      console.log(obj.data_l5)
+      console.log(obj.data_l6)
+      //console.log(obj.data_l5)
+      for (i=0;i<=obj2.length-1;i=i+1){
+        mess.push(new Post("post",obj2[i].fields.author,obj2[i].fields.title))
+        mess[i].body=obj2[i].fields.body
+        mess[i].title=obj2[i].fields.title
+        for (y=0;y<=obj3.length-1;y=y+1){
+          if(obj2[i].pk.toString()==obj3[y].fields.commento.toString()){
+            resp.push(new Resp(obj3[y].fields.author,obj3[y].fields.body,mess[i]))
+            resp[y].body=obj3[y].fields.body
+            mess[i].body=obj2[i].fields.body
+            console.log(mess[i].body+"__"+resp[y].body)
+
+          }
+        }
       }
       //const obj2 = JSON.parse(s);
       //alert(s)

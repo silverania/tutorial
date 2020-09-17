@@ -19,6 +19,7 @@ class Comment(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish',blank=True,null=True)
     author=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
+    authorname=models.CharField(max_length=80)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
@@ -30,7 +31,8 @@ class Comment(models.Model):
     class Meta:
         ordering = ('publish',)
     def __str__(self):
-        return self.title
+        return 'di {} , \'{}\''.format(self.author.user.username,self.title)
+
 
 class Resp(models.Model):
     STATUS_CHOICES = (
@@ -41,9 +43,10 @@ class Resp(models.Model):
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
+    authorname = models.CharField(max_length=80)
     #post=models.CharField(max_length=250,default="post anonimo")
     commento=models.ForeignKey(Comment,related_name="risposte",on_delete=models.CASCADE,null=True,blank=True)
     class Meta:
         ordering = ('-publish',)
     def __str__(self):
-        return self.body
+        return "risposta di {} al commento : {} " .format(self.author.user.username,self.commento.title)

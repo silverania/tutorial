@@ -38,22 +38,32 @@ def getLoginName(request):
     return myuser
 
 #Funzione per raccogliere i post da visualizzare al caricamento della homepage
+def serializer(data):
+    datas=serializers.serialize("json",data,cls=LazyEncoder)
+    return datas
 
 def getPost(request):
     global tu,formatted_datetime
+    data_l=[]
+    data_r=[]
     print ("entrypoint to getPost")
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
         tu=Tutorial.objects.filter(title=tutorial)#.get(title__icontains=tutorial)
-        tu_serialized=serializers.serialize("json",Tutorial.objects.filter(title=tutorial))
+        tu_serialized=serializer(Tutorial.objects.filter(title=tutorial))
         aggiornato=formatted_datetime
-        c=Comment.objects.filter(tutorial=tu[0]).first()
-        #tujson=JsonResponse(tu1,safe=False)
-        data_l=c.tutorial.comments.all()
-        print(c.tutorial.comments.all())
-        data_l5 = serializers.serialize("json",data_l,cls=LazyEncoder)
-        data = json.dumps({'data_l5': data_l5, 'tu_serialized': tu_serialized})
-        print("data"+str(data_l5)+str(tu_serialized))
+        #cnum=Comment.objects.filter(tutorial=tu[0]).count()
+        cobj=Comment.objects.filter(tutorial=tu[0])
+        data_l=cobj#data_l+list(x.tutorial.comments.all())
+        for x in cobj:
+            data_r=data_r+list(x.risposte.all())
+        print("commento:"+str(x))
+        print("data_r:"+str(data_r))
+        data_l6 = serializer(data_r)
+        data_l5=serializer(data_l)
+        print("data_l:"+str(data_l6))
+        print("data_r:"+str(data_l5))
+        data = json.dumps({'data_l5': data_l5, 'tu_serialized': tu_serialized,'data_l6':data_l6})
         showPost(tu)
         #data_l=({'data_l5':data_l5,'tu_serialized':tu_serialized,})
         return JsonResponse(data,safe=False)
@@ -74,6 +84,7 @@ def newPost(request):
                 r=Resp()
                 r.body=message
                 r.author=myuser
+                r.authorname=myuser.username
                 r.commento=post
                 r.save()
                 print(str("è una risposta:"+str(post.risposte)))
@@ -81,6 +92,7 @@ def newPost(request):
                 tu.post=post
                 post.body=message
                 post.author=myuser
+                post.authorname=myuser.username
                 print("creato,autore:"+str(post.created)+str(post.author))
                 aggiornato=formatted_datetime
         if 'title' in request.GET and request.GET['title'] :
