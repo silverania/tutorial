@@ -187,12 +187,13 @@ class Resp{
 }
 
 class Post{
-  constructor(type="none",author,title){
+  constructor(type="none",author="anonimo",title){
     this.sent=false
     this.type=type
     this.author=author
     this.title=title
     this.risposte=[]
+    this.publish=""
   }
   getTitle(){
     return this.title
@@ -201,6 +202,9 @@ class Post{
     if(getTitle()){
       return true
     }
+  }
+  disable(){
+    this.disabled=true
   }
   sendToServer(post="null",tutorial,user,postTitle){
     if(post.type=="post"){
@@ -451,16 +455,16 @@ $(document).ready(function(){
       console.log(obj.data_l6)
       //console.log(obj.data_l5)
       for (i=0;i<=obj2.length-1;i=i+1){
-        mess.push(new Post("post",obj2[i].fields.author,obj2[i].fields.title))
+        mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
         mess[i].body=obj2[i].fields.body
-        mess[i].title=obj2[i].fields.title
+        mess[i].type="post"
+        mess[i].publish=obj2[i].fields.publish
+        makeHeadBlog(mess[i].type,"null",mess[i],mess[i].publish)
         for (y=0;y<=obj3.length-1;y=y+1){
           if(obj2[i].pk.toString()==obj3[y].fields.commento.toString()){
-            resp.push(new Resp(obj3[y].fields.author,obj3[y].fields.body,mess[i]))
+            resp.push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[i]))
             resp[y].body=obj3[y].fields.body
-            mess[i].body=obj2[i].fields.body
-            console.log(mess[i].body+"__"+resp[y].body)
-
+            console.log(mess[i].body+"|"+"|risposta:"+resp[y].body)
           }
         }
       }

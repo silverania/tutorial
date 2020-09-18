@@ -10,13 +10,13 @@ from datetime import datetime
 import json
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.core.serializers.json import DjangoJSONEncoder
 
 photo=""
 message=""
 tu=Tutorial()
 formatted_datetime = formats.date_format(datetime.now(), "SHORT_DATETIME_FORMAT")
 
-from django.core.serializers.json import DjangoJSONEncoder
 
 class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
@@ -46,6 +46,7 @@ def getPost(request):
     global tu,formatted_datetime
     data_l=[]
     data_r=[]
+    photos=[]
     print ("entrypoint to getPost")
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
@@ -57,12 +58,20 @@ def getPost(request):
         data_l=cobj#data_l+list(x.tutorial.comments.all())
         for x in cobj:
             data_r=data_r+list(x.risposte.all())
+            usr=Profile.objects.filter(username=x.author)
+            #x.author.photo=settings.MEDIA_URL+str(x.author.photo)
+            #print("usr="+str(usr))
+            photos=photos+list(usr)
+
         print("commento:"+str(x))
         print("data_r:"+str(data_r))
+        print("photos:"+str(photos))
         data_l6 = serializer(data_r)
+        data_l7 = serializer(photos)
         data_l5=serializer(data_l)
         print("data_l:"+str(data_l6))
         print("data_r:"+str(data_l5))
+        print("data_l7:"+str(data_l7))
         data = json.dumps({'data_l5': data_l5, 'tu_serialized': tu_serialized,'data_l6':data_l6})
         showPost(tu)
         #data_l=({'data_l5':data_l5,'tu_serialized':tu_serialized,})
