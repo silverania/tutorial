@@ -1,4 +1,5 @@
 const MAX_TEXTAREA_NUMBER=21
+const BASE_PHOTO_DIR="/media/"
 var borderPost="1px solid orange";
 var borderResponse="1px solid grey";
 var id;
@@ -135,10 +136,10 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   //tagUserImg.setAttribute("src",userPhoto)
   tagUserImg.setAttribute("style","border-radius:50%")
   tagUserImg.setAttribute("src",userPhoto)
-  spanUserName.textContent=" | "+datePostResp
+  spanUserName.textContent=" | "+post.publish
   divBlog.setAttribute("id","divblog_"+id.toString())
   divUserBlog.appendChild(tagUserImg)
-  bH5.textContent=loginis
+  bH5.textContent=datePostResp
   spanUserName.setAttribute("style","color:grey;display:inline;")
   bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
   bH5.setAttribute("id","bh5_span"+id.toString())
@@ -445,21 +446,30 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
-      let i=0,y=0
+      let i=0,y=0,z=0
       s = cleanJson(data)
       var obj = JSON.parse(s);
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
       var obj2 = JSON.parse(obj.data_l5);
       var obj3 = JSON.parse(obj.data_l6);
+      var obj4 = JSON.parse(obj.data_l7);
       console.log(obj.data_l5)
       console.log(obj.data_l6)
+      console.log(obj.data_l7)
       //console.log(obj.data_l5)
       for (i=0;i<=obj2.length-1;i=i+1){
         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
         mess[i].body=obj2[i].fields.body
         mess[i].type="post"
         mess[i].publish=obj2[i].fields.publish
-        makeHeadBlog(mess[i].type,"null",mess[i],mess[i].publish)
+        for (z=0;z<=obj4.length-1;z=z+1){
+          if(obj4[z].fields.user==obj2[i].fields.author){
+              mess[i].photo=BASE_PHOTO_DIR+obj4[z].fields.photo
+              alert(mess[i].photo+"|"+obj4[z].fields.photo+"|"+obj4[z].fields.user+"|"+obj2[i].fields.author)
+              makeHeadBlog(mess[i].type,mess[i].photo,mess[i],obj2[i].fields.authorname)
+          }
+        }
+        makeHeadBlog(mess[i].type,mess[i],mess[i])
         for (y=0;y<=obj3.length-1;y=y+1){
           if(obj2[i].pk.toString()==obj3[y].fields.commento.toString()){
             resp.push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[i]))

@@ -72,7 +72,7 @@ def getPost(request):
         print("data_l:"+str(data_l6))
         print("data_r:"+str(data_l5))
         print("data_l7:"+str(data_l7))
-        data = json.dumps({'data_l5': data_l5, 'tu_serialized': tu_serialized,'data_l6':data_l6})
+        data = json.dumps({'data_l5': data_l5,'data_l7':data_l7, 'tu_serialized': tu_serialized,'data_l6':data_l6})
         showPost(tu)
         #data_l=({'data_l5':data_l5,'tu_serialized':tu_serialized,})
         return JsonResponse(data,safe=False)
