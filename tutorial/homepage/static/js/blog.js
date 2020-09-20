@@ -18,7 +18,7 @@ var divCommentIcon=document.createElement("DIV");
 var divRespTitle=document.createElement("DIV");
 var divExitLogin=document.createElement("DIV");
 var divEmpty=document.createElement("DIV");
-//var divBlogReg=document.createElement("DIV");
+var divBlogReg=document.createElement("DIV");
 var ulBlogReg=document.createElement("UL");
 var liBlogReg=document.createElement("LI");
 var aBlogReg=document.createElement("A");
@@ -52,6 +52,7 @@ function createSectionDivSpan(parent){
   divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   divExitLogin.setAttribute("style","width:45%;display:inline-block;")
   divCommentIcon.setAttribute("style","width:10%;display:inline;margin:0 auto;")
+  divCommentIcon.setAttribute("id","div_comment_icon")
   divRespTitle.setAttribute("class","div_resp")
   //divEmpty.setAttribute("style","width:20%;display:inline-block;")
   divFormChild.setAttribute("id","multiarea");
@@ -61,6 +62,7 @@ function createSectionDivSpan(parent){
   bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
   bIcon.setAttribute("WIDTH","50px")
   bIcon.setAttribute("style","display:block;margin:0 auto;")
+  bIcon.setAttribute("id","blog_icon")
   bSection.setAttribute("id","blog");
   bSpan.setAttribute("id","s_blog_icon")
   aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
@@ -76,6 +78,7 @@ function createSectionDivSpan(parent){
   bbutton.setAttribute("class","mybut mybut-outline-info ")
   spanBlogEntra.setAttribute("id","span_entra")
   spanBlogReg.setAttribute("id","span_reg")
+  divBlogReg.setAttribute("id","div_blog_reg")
   bbutton.textContent="Commenta"
   spanBlogReg.textContent="Registrati"
   spanBlogEntra.textContent="Entra"
@@ -85,6 +88,7 @@ function createSectionDivSpan(parent){
   ulBlogReg.setAttribute("style","list-style: none;padding: 0;margin: 0;")
   document.getElementById(parent).appendChild(bSection);
   if(loginis=="MisterX"){
+    console.log(loginis)
     aBlogReg.appendChild(spanBlogReg)
     liBlogReg.appendChild(aBlogReg)
     aBlogEntra.appendChild(spanBlogEntra)
@@ -92,7 +96,7 @@ function createSectionDivSpan(parent){
     ulBlogReg.appendChild(liBlogReg)
     ulBlogReg.appendChild(liBlogEntra)
     divExitLogin.appendChild(ulBlogReg)
-    //bSection.appendChild(divBlogReg)
+    //bSection.appendChild(divExitLogin)
   }
   else {
     aBlogEsci.appendChild(spanBlogEsci)
@@ -100,10 +104,10 @@ function createSectionDivSpan(parent){
     liBlogEsci.appendChild(aBlogEsci)
     ulBlogReg.appendChild(liBlogEsci)
     divExitLogin.appendChild(ulBlogReg)
-    //bSection.appendChild(divBlogReg)
+    bSection.appendChild(divBlogReg)
   }
-  //  bH5.appendChild(spanUserName)
-  //bSection.appendChild(bdiv)
+  //bH5.appendChild(spanUserName)
+  bSection.appendChild(bdiv)
   bdiv.appendChild(divUserBlog)
   bdiv.appendChild(divCommentIcon)
   bdiv.appendChild(divExitLogin)
@@ -120,9 +124,7 @@ function createSectionDivSpan(parent){
 
 function makeHeadBlog(postType,userPhoto,post,datePostResp){
   thispost=post
-  if(id<21){
-    id=id+1
-  }
+  id=id+1
   console.log("entry in makeHeadBlog......post="+thispost.msg)
   //divAfterMainSection.setAttribute("id","blog_title");
   //divAfterMainSection.setAttribute("style","width:100%");
@@ -149,7 +151,6 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
   bSpan.appendChild(bSpanChild)
   divUserBlog.appendChild(bSpan)
   divBlog.appendChild(divUserBlog)
-
   bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
   bSpan.setAttribute("id","s_blog_icon_"+id.toString())
   tagUserImg.setAttribute("id","img_user_"+id.toString())
@@ -174,8 +175,11 @@ function makeHeadBlog(postType,userPhoto,post,datePostResp){
       bbutton.textContent="Rispondi"
       /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
       thispost.disable()
+      idWherePutElement=divBlog.id
+      console.log(idWherePutElement)
     }
   }
+  return idWherePutElement
 }
 
 class Resp{
@@ -198,11 +202,6 @@ class Post{
   }
   getTitle(){
     return this.title
-  }
-  hasTitle(){
-    if(getTitle()){
-      return true
-    }
   }
   disable(){
     this.disabled=true
@@ -241,16 +240,18 @@ class Post{
 
 
 class postArea {
-  constructor(post){
+  constructor(postType,bod){
     this.postarea=document.createElement("TEXTAREA");
-    this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
-    if (post=="resp"){
+    this.postarea.value=bod.body
+    if (postType=="resp"){
+      this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
       console.log("textarea di resposta")
     }
-    this.type=post
+    else { postType=="post" }
     this.empty=true
     this.disabled=false
     this.msg=""
+
   }
   createButton(button){
     if(this.type=="resp"){
@@ -289,22 +290,21 @@ disableButton(button){
   button.setAttribute("disabled","true")
 }
 create(){
-  if (mess.getTitle()==true){
-    if(this.type=="post" ){
-      this.postarea.setAttribute("id","post_response")
+//if (mess.getTitle()==false){
+  //  if(this.type=="post" ){
       $(this.postarea).animate({'width':'100%'},1000);
-    }
-    else {
-      this.postarea.setAttribute("class","post_response")
-      $(this.postarea).animate({'width':'70%'},1000);
-    }
+    //}
+    //else {
+      //this.postarea.setAttribute("class","post_response")
+      //$(this.postarea).animate({'width':'70%'},1000);
+    //}
     this.postarea.setAttribute("rows","2");
     this.postarea.setAttribute("name","messaggio")
     $(this.postarea).css("border", borderPost)
     this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
     return this.postarea;
   }
-}
+//}
 disable(){
   this.disabled=true
   this.postarea.setAttribute('disabled','true')
@@ -438,6 +438,7 @@ function cleanJson(json){
 
 $(document).ready(function(){
   let mess=[],resp=[]
+  let post = new Array()
   bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
@@ -465,15 +466,19 @@ $(document).ready(function(){
         for (z=0;z<=obj4.length-1;z=z+1){
           if(obj4[z].fields.user==obj2[i].fields.author){
               mess[i].photo=BASE_PHOTO_DIR+obj4[z].fields.photo
-              alert(mess[i].photo+"|"+obj4[z].fields.photo+"|"+obj4[z].fields.user+"|"+obj2[i].fields.author)
-              makeHeadBlog(mess[i].type,mess[i].photo,mess[i],obj2[i].fields.authorname)
+              if(!(mess[i].getTitle()==""&& !(mess[i].getTitle()))){
+              idParent=makeHeadBlog(mess[i].type,mess[i].photo,mess[i],obj2[i].fields.authorname)
+            }
           }
         }
-        makeHeadBlog(mess[i].type,mess[i],mess[i])
+        post[i,0]=new postArea("post",mess[i]) // passo post come argomento
+        alert(mess[i].body)
+        $('#'+idParent).prepend(post[i,0].create())
         for (y=0;y<=obj3.length-1;y=y+1){
           if(obj2[i].pk.toString()==obj3[y].fields.commento.toString()){
             resp.push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[i]))
             resp[y].body=obj3[y].fields.body
+            //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
             console.log(mess[i].body+"|"+"|risposta:"+resp[y].body)
           }
         }

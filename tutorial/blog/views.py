@@ -3,7 +3,6 @@ from user.models import Profile
 from blog.models import Comment,Resp
 from homepage.models import Tutorial
 from django.http import HttpResponse,JsonResponse
-
 from django.conf import settings
 from django.utils import formats
 from datetime import datetime
