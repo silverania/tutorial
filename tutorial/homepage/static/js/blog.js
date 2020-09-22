@@ -29,12 +29,12 @@ var spanBlogEntra=document.createElement("SPAN");
 var liBlogEsci=document.createElement("LI");
 var aBlogEsci=document.createElement("A");
 var spanBlogEsci=document.createElement("SPAN");
-var bH5=document.createElement("span")
-var spanUserName=document.createElement("SPAN");
+//var bH5=document.createElement("span")
+//var spanUserName=document.createElement("SPAN");
 var post,post2=new Object();
 var empty;
 var bSection=document.createElement("SECTION");
-var bSpan=document.createElement("SPAN");
+//var bSpan=document.createElement("SPAN");
 var bSpanChild=document.createElement("SPAN");
 var bIcon=document.createElement("IMG");
 var bForm=document.createElement("FORM");
@@ -64,7 +64,7 @@ function createSectionDivSpan(parent){
   bIcon.setAttribute("style","display:block;margin:0 auto;")
   bIcon.setAttribute("id","blog_icon")
   bSection.setAttribute("id","blog");
-  bSpan.setAttribute("id","s_blog_icon")
+  //bSpan.setAttribute("id","s_blog_icon")
   aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
   aBlogReg.setAttribute("style","display:block;width:auto;text-align:right;")
   aBlogReg.setAttribute("href","user/register")
@@ -73,7 +73,7 @@ function createSectionDivSpan(parent){
   liBlogEntra.setAttribute("style","display:inline;width:auto;margin-right:0px;")
   bSpanChild.setAttribute("id","s_blog_text")
   bbutton.setAttribute("id","button_post")
-  bH5.setAttribute("id","span_blog_entra")
+  //bH5.setAttribute("id","span_blog_entra")
   bbutton.setAttribute("type","button")
   bbutton.setAttribute("class","mybut mybut-outline-info ")
   spanBlogEntra.setAttribute("id","span_entra")
@@ -122,65 +122,6 @@ function createSectionDivSpan(parent){
 
 
 
-function makeHeadBlog(postType,userPhoto,post,datePostResp){
-  thispost=post
-  id=id+1
-  console.log("entry in makeHeadBlog......post="+thispost.msg)
-  //divAfterMainSection.setAttribute("id","blog_title");
-  //divAfterMainSection.setAttribute("style","width:100%");
-  var divBlog=document.createElement("DIV");
-  var divUserBlog=document.createElement("DIV");
-  var spanUserName=document.createElement("SPAN");
-  var bH5=document.createElement("span")
-  var bSpan=document.createElement("SPAN");
-  var bSpanChild=document.createElement("SPAN");
-  var tagUserImg=document.createElement("IMG");
-  //tagUserImg.setAttribute("src",userPhoto)
-  tagUserImg.setAttribute("style","border-radius:50%")
-  tagUserImg.setAttribute("src",userPhoto)
-  spanUserName.textContent=" | "+post.publish
-  divBlog.setAttribute("id","divblog_"+id.toString())
-  divUserBlog.appendChild(tagUserImg)
-  bH5.textContent=datePostResp
-  spanUserName.setAttribute("style","color:grey;display:inline;")
-  bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
-  bH5.setAttribute("id","bh5_span"+id.toString())
-  bH5.appendChild(spanUserName)
-  divUserBlog.appendChild(bH5)
-  divUserBlog.appendChild(bSpan)
-  bSpan.appendChild(bSpanChild)
-  divUserBlog.appendChild(bSpan)
-  divBlog.appendChild(divUserBlog)
-  bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
-  bSpan.setAttribute("id","s_blog_icon_"+id.toString())
-  tagUserImg.setAttribute("id","img_user_"+id.toString())
-  spanUserName.setAttribute("id","span_user_"+id.toString())
-  divUserBlog.setAttribute("id","divuserblog_"+id.toString())
-  if(postType=="resp"){
-    divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
-    divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%;margin-bottom:20px;")
-    console.log("is resp ")
-    post.postarea.insertAdjacentElement("beforebegin",divBlog)
-    //$(post).insertBefore(mainElement,$(post).childNodes[0])
-  }
-  else {
-    if(!(thispost.disabled==true)){
-      divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
-      divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
-      divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
-      divBlog.appendChild(divCommentIcon)
-      console.log("thispost.disabled")
-      $(bSection).prepend(divBlog)
-      $('#post_response').css("border", "1px solid grey")
-      bbutton.textContent="Rispondi"
-      /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-      thispost.disable()
-      idWherePutElement=divBlog.id
-      console.log(idWherePutElement)
-    }
-  }
-  return idWherePutElement
-}
 
 class Resp{
   constructor(author,body,post){
@@ -192,16 +133,17 @@ class Resp{
 }
 
 class Post{
-  constructor(type="none",author="anonimo",title){
+  constructor(type="none",author="anonimo",title1){
     this.sent=false
     this.type=type
     this.author=author
-    this.title=title
+    this.titled=title1
     this.risposte=[]
     this.publish=""
   }
   getTitle(){
-    return this.title
+    alert("gettile")
+    return this.titled
   }
   disable(){
     this.disabled=true
@@ -253,6 +195,65 @@ class postArea {
     this.msg=""
 
   }
+  makeHeadBlog(postType,userPhoto,post,datePostResp){
+
+    id=id+1
+    console.log("entry in makeHeadBlog......post="+thispost.msg)
+    //divAfterMainSection.setAttribute("id","blog_title");
+    //divAfterMainSection.setAttribute("style","width:100%");
+    var divBlog=document.createElement("DIV");
+    var divUserBlog=document.createElement("DIV");
+    var spanUserName=document.createElement("SPAN");
+    var bH5=document.createElement("span")
+    var bSpan=document.createElement("SPAN");
+    var bSpanChild=document.createElement("SPAN");
+    var tagUserImg=document.createElement("IMG");
+    tagUserImg.setAttribute("style","border-radius:50%")
+    tagUserImg.setAttribute("src",userPhoto)
+    spanUserName.textContent=" | "+post.publish
+    divBlog.setAttribute("id","divblog_"+id.toString())
+    divUserBlog.appendChild(tagUserImg)
+    bH5.textContent=datePostResp
+    spanUserName.setAttribute("style","color:grey;display:inline;")
+    bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
+    bH5.setAttribute("id","bh5_span"+id.toString())
+    bH5.appendChild(spanUserName)
+    divUserBlog.appendChild(bH5)
+    divUserBlog.appendChild(bSpan)
+    bSpan.appendChild(bSpanChild)
+    divUserBlog.appendChild(bSpan)
+    divBlog.appendChild(divUserBlog)
+    bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
+    bSpan.setAttribute("id","s_blog_icon_"+id.toString())
+    tagUserImg.setAttribute("id","img_user_"+id.toString())
+    spanUserName.setAttribute("id","span_user_"+id.toString())
+    divUserBlog.setAttribute("id","divuserblog_"+id.toString())
+    if(postType=="resp"){
+      divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
+      divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%;margin-bottom:20px;")
+      console.log("is resp ")
+      post.postarea.insertAdjacentElement("beforebegin",divBlog)
+      //$(post).insertBefore(mainElement,$(post).childNodes[0])
+    }
+    else {
+      if(!(thispost.disabled==true)){
+        divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
+        divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
+        divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
+        divBlog.appendChild(divCommentIcon)
+        console.log("thispost.disabled")
+        $(bSection).prepend(divBlog)
+        $('#post_response').css("border", "1px solid grey")
+        bbutton.textContent="Rispondi"
+        /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
+        //thispost.disable()
+        idWherePutElement="button_post"
+        console.log(idWherePutElement)
+      }
+    }
+    return 0
+  }
+
   createButton(button){
     if(this.type=="resp"){
       button.setAttribute("type","button")
@@ -437,7 +438,8 @@ function cleanJson(json){
 }
 
 $(document).ready(function(){
-  let mess=[],resp=[]
+  let mess=new Array(),resp=new Array()
+  let indexX=0,indexY=0
   let post = new Array()
   bForm.setAttribute("action","post/showposts");
   $.ajax({
@@ -447,7 +449,7 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
-      let i=0,y=0,z=0
+      let z=0
       s = cleanJson(data)
       var obj = JSON.parse(s);
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
@@ -455,33 +457,41 @@ $(document).ready(function(){
       var obj3 = JSON.parse(obj.data_l6);
       var obj4 = JSON.parse(obj.data_l7);
       console.log(obj.data_l5)
-      console.log(obj.data_l6)
+      console.log(obj3)
       console.log(obj.data_l7)
       //console.log(obj.data_l5)
-      for (i=0;i<=obj2.length-1;i=i+1){
+      var i=(parseInt(obj2.length))-1
+      let y=(parseInt(obj3.length))-1
+      for (i;i>=0;i=i-1){
         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
-        mess[i].body=obj2[i].fields.body
-        mess[i].type="post"
-        mess[i].publish=obj2[i].fields.publish
+        mess[indexX].body=obj2[i].fields.body
+        mess[indexX].type="post"
+        mess[indexX].publish=obj2[i].fields.publish
+        alert("title="+mess[indexX].getTitle())
         for (z=0;z<=obj4.length-1;z=z+1){
           if(obj4[z].fields.user==obj2[i].fields.author){
-              mess[i].photo=BASE_PHOTO_DIR+obj4[z].fields.photo
-              if(!(mess[i].getTitle()==""&& !(mess[i].getTitle()))){
-              idParent=makeHeadBlog(mess[i].type,mess[i].photo,mess[i],obj2[i].fields.authorname)
+              mess[indexX].photo=BASE_PHOTO_DIR+obj4[z].fields.photo
+              if(!(mess[indexX].getTitle())){
+              //idParent=postArea.makeHeadBlog(mess[indexX][indexY].type,mess[indexX][indexY].photo,mess[indexX][indexY],obj2[i].fields.authorname)
             }
+
           }
+
         }
-        post[i,0]=new postArea("post",mess[i]) // passo post come argomento
-        alert(mess[i].body)
-        $('#'+idParent).prepend(post[i,0].create())
-        for (y=0;y<=obj3.length-1;y=y+1){
-          if(obj2[i].pk.toString()==obj3[y].fields.commento.toString()){
-            resp.push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[i]))
-            resp[y].body=obj3[y].fields.body
+        //post.push([new postArea("post",mess[indexX][indexY]).makeHeadBlog(mess[indexX][indexY].type,mess[indexX][indexY].photo,mess[indexX][indexY],obj2[i].fields.authorname) // passo post come argomento
+        //$('#'+idParent).prepend(post[indexX].create())
+        for (y;y>=0;y=y-1){
+            alert("obj2="+obj2[i].pk+"| obj3="+obj3[y].fields.commento)
+          if(obj2[i].pk==obj3[y].fields.commento){
+            alert("risposta trovata")
+            resp[indexX][indexY].push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[indexX]))
             //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
-            console.log(mess[i].body+"|"+"|risposta:"+resp[y].body)
+            console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
           }
+          indexY=indexY+1
         }
+        y=(parseInt(obj3.length))-1
+        indexX=indexX+1
       }
       //const obj2 = JSON.parse(s);
       //alert(s)
