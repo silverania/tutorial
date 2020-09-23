@@ -138,7 +138,7 @@ class Post{
     this.type=type
     this.author=author
     this.titled=title1
-    this.risposte=[]
+    this.risposte=new Array()
     this.publish=""
   }
   getTitle(){
@@ -438,8 +438,11 @@ function cleanJson(json){
 }
 
 $(document).ready(function(){
-  let mess=new Array(),resp=new Array()
-  let indexX=0,indexY=0
+  let indexX=0
+  var initial_y
+  var y
+  let mess=new Array()
+  let resp=new Array()
   let post = new Array()
   bForm.setAttribute("action","post/showposts");
   $.ajax({
@@ -461,13 +464,13 @@ $(document).ready(function(){
       console.log(obj.data_l7)
       //console.log(obj.data_l5)
       var i=(parseInt(obj2.length))-1
-      let y=(parseInt(obj3.length))-1
+      initial_y=(parseInt(obj3.length))-1
+      y=initial_y
       for (i;i>=0;i=i-1){
         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
         mess[indexX].body=obj2[i].fields.body
         mess[indexX].type="post"
         mess[indexX].publish=obj2[i].fields.publish
-        alert("title="+mess[indexX].getTitle())
         for (z=0;z<=obj4.length-1;z=z+1){
           if(obj4[z].fields.user==obj2[i].fields.author){
               mess[indexX].photo=BASE_PHOTO_DIR+obj4[z].fields.photo
@@ -480,24 +483,20 @@ $(document).ready(function(){
         }
         //post.push([new postArea("post",mess[indexX][indexY]).makeHeadBlog(mess[indexX][indexY].type,mess[indexX][indexY].photo,mess[indexX][indexY],obj2[i].fields.authorname) // passo post come argomento
         //$('#'+idParent).prepend(post[indexX].create())
-        for (y;y>=0;y=y-1){
-            alert("obj2="+obj2[i].pk+"| obj3="+obj3[y].fields.commento)
-          if(obj2[i].pk==obj3[y].fields.commento){
-            alert("risposta trovata")
-            resp[indexX][indexY].push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[indexX]))
-            //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
-            console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
-          }
-          indexY=indexY+1
-        }
-        y=(parseInt(obj3.length))-1
-        indexX=indexX+1
-      }
-      //const obj2 = JSON.parse(s);
-      //alert(s)
-      //console.log(obj.count);
-      // expected output: 42
 
+        for (y;y>=0;y=y-1){
+          if(obj2[i].pk==obj3[y].fields.commento){
+            mess[indexX].risposte.push(new Resp(obj3[y].fields.authorname,obj3[y].fields.body,mess[indexX]))
+            //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
+            //console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
+
+          }
+        }
+        y=initial_y
+        indexX=indexX+1
+
+
+      }
     }
   });
 
