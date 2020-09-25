@@ -36,6 +36,10 @@ def getLoginName(request):
         myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
     return myuser
 
+def getLoginName():
+    photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
+    return photo
+
 #Funzione per raccogliere i post da visualizzare al caricamento della homepage
 def serializer(data):
     datas=serializers.serialize("json",data,cls=LazyEncoder)
@@ -46,6 +50,8 @@ def getPost(request):
     data_l=[]
     data_r=[]
     photos=[]
+    photo=getLoginName()
+    print(photo)
     print ("entrypoint to getPost")
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
@@ -61,7 +67,6 @@ def getPost(request):
             #x.author.photo=settings.MEDIA_URL+str(x.author.photo)
             #print("usr="+str(usr))
             photos=photos+list(usr)
-
         print("commento:"+str(x))
         print("data_r:"+str(data_r))
         print("photos:"+str(photos))
@@ -71,7 +76,7 @@ def getPost(request):
         print("data_l:"+str(data_l6))
         print("data_r:"+str(data_l5))
         print("data_l7:"+str(data_l7))
-        data = json.dumps({'data_l5': data_l5,'data_l7':data_l7, 'tu_serialized': tu_serialized,'data_l6':data_l6})
+        data = json.dumps({'data_l5': data_l5,'data_l7':data_l7, 'tu_serialized': tu_serialized,'data_l6':data_l6,'anonymousPhoto':photo})
         showPost(tu)
         #data_l=({'data_l5':data_l5,'tu_serialized':tu_serialized,})
         return JsonResponse(data,safe=False)
