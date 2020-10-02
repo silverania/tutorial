@@ -2,7 +2,7 @@ const MAX_TEXTAREA_NUMBER=21
 const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
-var id;
+var id=0
 var el
 var padre
 var user
@@ -14,6 +14,7 @@ var divFormChild=document.createElement("DIV");
 var bdiv=document.createElement("DIV");
 var divUserBlog=document.createElement("DIV");
 var divCommentIcon=document.createElement("DIV");
+var firstDivHead=document.createElement("DIV");
 var divRespTitle=document.createElement("DIV");
 var divExitLogin=document.createElement("DIV");
 var divEmpty=document.createElement("DIV");
@@ -41,16 +42,14 @@ var wait=true
 var postTitle
 var tutorial
 var bbutton2=new Object();
-var id=0
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
-  //bUserImg.setAttribute("WIDTH","43px")
-  //bUserImg.setAttribute("style","border-radius:50%")
-  //bUserImg.setAttribute("id","img_user")
-  divUserBlog.setAttribute("style","width:45%;display:inline-block;")
-  divExitLogin.setAttribute("style","width:45%;display:inline-block;")
-  divCommentIcon.setAttribute("style","width:10%;display:inline;margin:0 auto;")
+  //divUserBlog.setAttribute("style","width:45%;display:inline-block;")
+  firstDivHead.setAttribute("style","width:45%;display:inline;")
+  firstDivHead.setAttribute("id","firstDivHead")
+  divExitLogin.setAttribute("style","width:45%;display:inline;")
+  divCommentIcon.setAttribute("style","position:relative;width:10%;display:inline;left:45%;")
   divCommentIcon.setAttribute("id","div_comment_icon")
   divRespTitle.setAttribute("class","div_resp")
   //divEmpty.setAttribute("style","width:20%;display:inline-block;")
@@ -58,11 +57,13 @@ function createSectionDivSpan(parent){
   //divFormChild.setAttribute("class","form-group");
   divExitLogin.setAttribute("id","d_blog_reg")
   divExitLogin.setAttribute("style","width:45%;display:inline-block")
-  bIcon.setAttribute('src',"../../../static/images/blog_comment.png")
+  bdiv.setAttribute("id","bdiv")
+  bIcon.setAttribute('src',"../../../static/images/blog_comment.gif")
   bIcon.setAttribute("WIDTH","50px")
-  bIcon.setAttribute("style","display:block;margin:0 auto;")
+  //bIcon.setAttribute("style","display:block;margin:0 auto;")
   bIcon.setAttribute("id","blog_icon")
   bSection.setAttribute("id","blog");
+  bSection.setAttribute("style","width:100%");
   //bSpan.setAttribute("id","s_blog_icon")
   aBlogEntra.setAttribute("style","display:block;width:auto;text-align:right;")
   aBlogReg.setAttribute("style","display:block;width:auto;text-align:right;")
@@ -107,7 +108,7 @@ function createSectionDivSpan(parent){
   }
   //bH5.appendChild(spanUserName)
   bSection.appendChild(bdiv)
-  bdiv.appendChild(divUserBlog)
+  bdiv.appendChild(firstDivHead)
   bdiv.appendChild(divCommentIcon)
   bdiv.appendChild(divExitLogin)
   divCommentIcon.appendChild(bIcon)
@@ -115,7 +116,7 @@ function createSectionDivSpan(parent){
   //bSpan.appendChild(bSpanChild)
   bSection.appendChild(bForm)
   bForm.appendChild(divFormChild)
-  divFormChild.appendChild(divCommentIcon)
+  $(parent).prepend(divCommentIcon)
   divFormChild.appendChild(bbutton)
 }
 
@@ -180,66 +181,86 @@ class Post{
 
 
 class postArea {
-  constructor(postType,bod){
+  constructor(post=Object()){
     this.postarea=document.createElement("TEXTAREA");
-    this.postarea.value=bod
-    if (postType=="resp"){
+   if (post.type=="resp"){
       this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
+      this.id=id+1
       console.log("textarea di resposta")
+      this.postarea.value=post.body
     }
-    else { postType=="post" }
+    else if  (post.type=="post"){
+    this.postarea.setAttribute("id","post_"+loginis+"_"+id)
     this.empty=true
     this.disabled=false
-    this.msg=bod.body
+    this.postarea.value=post.body
+    if (this.postarea.value==""){
+      this.postarea.setAttribute("style","border:solid 2px orange;")
+    }
   }
+  else{
+    alert("else")
+    makeModalWindow(this)
+  }
+}
   makeHeadBlog(mess,userPhoto,post,datePostResp){
-    id=id+1
+    id=post.id
     //divAfterMainSection.setAttribute("id","blog_title");
     //divAfterMainSection.setAttribute("style","width:100%");
-    var divBlog=document.createElement("DIV");
+    //var divBlog=document.createElement("DIV");
+    var divPostTitle=document.createElement("DIV");
+    var spanInDivPostTitle=document.createElement("SPAN")
     var divUserBlog=document.createElement("DIV");
     var spanUserName=document.createElement("SPAN");
     var bH5=document.createElement("span")
-    var bSpan=document.createElement("SPAN");
-    var bSpanChild=document.createElement("SPAN");
+    //var bSpan=document.createElement("SPAN");
+    //var bSpanChild=document.createElement("SPAN");
     var tagUserImg=document.createElement("IMG");
     tagUserImg.setAttribute("style","border-radius:50%")
     tagUserImg.setAttribute("src",userPhoto)
     spanUserName.textContent=" | "+mess.publish
-    divBlog.setAttribute("id","divblog_"+id.toString())
+
+    //divBlog.setAttribute("id","divblog_"+id.toString())
     divUserBlog.appendChild(tagUserImg)
     bH5.textContent=datePostResp
     spanUserName.setAttribute("style","color:grey;display:inline;")
+    spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
+
+    divPostTitle.appendChild(spanInDivPostTitle)
     bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
     bH5.setAttribute("id","bh5_span"+id.toString())
     bH5.appendChild(spanUserName)
     divUserBlog.appendChild(bH5)
-    divUserBlog.appendChild(bSpan)
-    bSpan.appendChild(bSpanChild)
-    divUserBlog.appendChild(bSpan)
-    divBlog.appendChild(divUserBlog)
-    bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
-    bSpan.setAttribute("id","s_blog_icon_"+id.toString())
+    divUserBlog.appendChild(divPostTitle)
+    //divUserBlog.appendChild(bSpan)
+    //bSpan.appendChild(bSpanChild)
+    //divUserBlog.appendChild(bSpan)
+    bdiv.appendChild(divUserBlog)
+    //bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
+  //  bSpan.settextarea di respAttribute("id","s_blog_icon_"+id.toString())
     tagUserImg.setAttribute("id","img_user_"+id.toString())
     spanUserName.setAttribute("id","span_user_"+id.toString())
     divUserBlog.setAttribute("id","divuserblog_"+id.toString())
-    if(mess.type=="resp"){
-      divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
-      divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:0%;left:0%;margin-bottom:20px;")
+    if(mess instanceof Resp){
+      alert("resp")
+      spanInDivPostTitle.textContent=" | Risposta a :"+mess.post.titled
+      //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
+      divUserBlog.setAttribute("style","margin-left:20%")
       console.log("is resp ")
     //  post.postarea.insertAdjacentElement("beforebegin",divBlog)
       //$(post).insertBefore(mainElement,$(post).childNodes[0])
     }
     else {
       if(!(post.disabled==true)){
-        divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
-        divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
-        divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
-        divBlog.appendChild(divCommentIcon)
+        spanInDivPostTitle.textContent=" | "+mess.titled
+        //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
+        //divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
+      //  divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
+        //divBlog.appendChild(divCommentIcon)
         console.log("thispost.disabled")
-        $(bSection).prepend(divBlog)
+        //$(bSection).prepend(divBlog)
         $('#post_response').css("border", "1px solid grey")
-        bbutton.textContent="Rispondi"
+        bbutton.textContent="Nuovo Post"
         /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
         //thispost.disable()
         var idWherePutElement="button_post"
@@ -248,8 +269,8 @@ class postArea {
     }
     var objectToAppendChild="divuserblog_"+id.toString()
     var elementToAppendArea=document.getElementById(objectToAppendChild)
-    //post.postarea.body=mess.body
-    elementToAppendArea.insertAdjacentElement("beforebegin",post.create())
+    //elementToAppendArea.insertAdjacentElement("beforebegin",post.create())
+    elementToAppendArea.appendChild(post.create())
     return objectToAppendChild
   }
   //To append Postarea
@@ -330,14 +351,21 @@ function initBlogSGang(id,login,tut){
 
 /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
 $(bbutton).click(function(){
+  var mess,post;
   let result
   // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
+  function instancePost(){
+    mess= new Post("newpost",loginis,makeModalWindow(this.post=instancePostarea()))
+    this.mess=mess
+    return this.mess
+  }
+  function instancePostarea(){
+    post=new postArea() // passo post come argomento
+    return post
+  }
   if (!(post instanceof postArea ))
   {
-    post=new postArea("post") // passo post come argomento
-    mess=new Post("post",loginis,makeModalWindow())
-    $(divFormChild).prepend(post.create())
-    $('#multiarea').prepend(divCommentIcon)
+    post=instancePostarea()
   }
   // caso click su textarea esistente
   else if (post instanceof postArea ) {
@@ -381,11 +409,12 @@ $(bbutton).click(function(){
 
 /* MODAL WINDOW */
 
-function makeModalWindow(){
+function makeModalWindow(post){
   var divModalMain=document.createElement("DIV");
   var divInMain=document.createElement("DIV");
   var textAreaInDivInMain=document.createElement("TEXTAREA");
   var modalConfirmButton=document.createElement("Button");
+  var checkValidity=false
   modalConfirmButton.setAttribute('id','but_confirm_title')
   modalConfirmButton.setAttribute('type','button')
   divModalMain.setAttribute('class','modal')
@@ -393,7 +422,8 @@ function makeModalWindow(){
   divInMain.setAttribute('class','modal-content')
   textAreaInDivInMain.setAttribute("id","p_text")
   textAreaInDivInMain.setAttribute("rows","1")
-  textAreaInDivInMain.textContent="Inserisci Un Titolo Per Il Tuo Post"
+  textAreaInDivInMain.setAttribute("padding","0")
+  textAreaInDivInMain.textContent="Titolo Post ?"
   divInMain.appendChild(textAreaInDivInMain)
   divInMain.appendChild(modalConfirmButton)
   divModalMain.appendChild(divInMain)
@@ -402,22 +432,31 @@ function makeModalWindow(){
   modal.style.display = "block";
   document.getElementById('but_confirm_title').onclick = function(event) {
     try{
-      //postTitle=textAreaInDivInMain.value
-      return textAreaInDivInMain.value ;
+      if (!(textAreaInDivInMain.value=="Titolo Post ?")){
+        alert("it good")
+        validity=true
+        $(divFormChild).prepend(post.create())
+        return textAreaInDivInMain.value ;
+      }
+    else{
+    alert("Devi inserire un titolo Valido")
+    validity=false
     }
+      }
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
   }
   $('#but_confirm_title').click(function() {
+    if(validity){
     modal.style.display = "none";
+  }
   });
   window.onclick = function(event) {
     if (event.target == modal) {
       modal.style.display = "none";
     }
   }
-
 }
 
 /* END MODAL  */
@@ -453,7 +492,12 @@ $(document).ready(function(){
     success: function (data) {
       let z=0
       s = cleanJson(data)
+      try {
       var obj = JSON.parse(s);
+      }
+      catch(SyntaxError){
+        return console.log("error in json!")
+      }
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
       var obj2 = JSON.parse(obj.data_l5);
       var obj3 = JSON.parse(obj.data_l6);
@@ -464,15 +508,15 @@ $(document).ready(function(){
       console.log(obj3)
       console.log(obj.data_l7)
       //console.log(obj.data_l5)
-      var i=(parseInt(obj2.length))-1
+      var i=0
       //initial_y=(parseInt(obj3.length))-1
-      for (i;i>=0;i=i-1){
+      for (i;i<=parseInt(obj2.length)-1;i=i+1){
         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
         mess[indexX].body=obj2[i].fields.body
         mess[indexX].type="post"
         mess[indexX].publish=obj2[i].fields.publish
         for (z=0;z<=obj4.length-1;z=z+1){
-          if(obj4[z].fields.user==obj2[i].fields.author){
+          if(obj4[z].fields.username==obj2[i].fields.authorname){
             if (obj2[i].fields.authorname=="anonimo"){
               photoPost=obj5_photo
             }
@@ -480,18 +524,20 @@ $(document).ready(function(){
               photoPost=BASE_PHOTO_DIR+obj4[z].fields.photo
             }
           }
-
         }
+
         // creo la textarea per il post e con l head .
         if(mess[indexX].getTitle()){
-          var pa=new postArea("post",mess[indexX].body)
+          var pa=new postArea(mess[indexX])
+          pa.id=id+1
       }
+      idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,obj2[i].fields.authorname)
       // qui dovrei creare le risposte per il post specifico
         for (y;y<=obj3.length-1;y=y+1){
           if(obj2[i].pk==obj3[y].fields.commento){
             var resp=new Resp(obj3[y].fields.authorname,obj3[y].fields.body,obj3[y].fields.publish,mess[indexX])
             mess[indexX].risposte.push(resp.body)
-            var paResp=new postArea("resp",resp.body)
+            var paResp=new postArea(resp)
             //la textarea viene creata nella funzione makeheadblog
 
             // cerca autore in json user object
@@ -508,7 +554,7 @@ $(document).ready(function(){
             idtoPutResp=paResp.makeHeadBlog(resp,photoResp,paResp,obj3[y].fields.authorname)
           }
         }
-        idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,obj2[i].fields.authorname)
+
         y=0
         indexX=indexX+1
       }

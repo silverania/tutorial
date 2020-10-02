@@ -1,12 +1,31 @@
-
-#col_blog{
-  width:0px!important;
+#blog,#bdiv{
+  width:66%;
+  margin:20px;
+  margin:10% auto;
 }
+
+#myModal{
+
+}
+
+#multiarea{
+ width:80%;
+ margin:0 auto;
+}
+
 [id^="divuserblog_"]{
+  margin-top:5%;
+  margin-bottom:5%;
   opacity:0.9;
 }
+
+[id^="divblog_"]{
+  margin-top:5%;
+  margin-bottom:5%;
+}
+
 #d_blog_reg {
-  width:100%;
+  float:right;
   margin-bottom:50px!important;
 }
 
@@ -40,7 +59,8 @@ margin:50px auto auto 15% !important;
 }
 
 #button_post{
-  margin:20px auto;
+  margin:0 auto;
+
 }
 
   @media screen and (max-width: 780px) {
@@ -75,9 +95,12 @@ margin:50px auto auto 15% !important;
 
 
 
-textarea {
+textarea #p_text {
   font-size:0.5rem;
+  background-color: whitesmoke;
+  padding:1%;
 }
+
 .blog_title,#blog_title{
   width:auto!important;
   margin-top:5%!important;
@@ -158,5 +181,30 @@ button:focus{
 #but_confirm_title:hover{
   background-color:black;
   color:orange;
+}
+
+@media screen and (min-width: 1024px) {
+  #blog{
+    width:100%;
+  }
+  .fa-comments,#s_blog{
+    font-size:1.5rem;
+  }
+  [id^="img_user"]{
+    margin:5px;
+    width:30px!important;
+    height:auto;
+  }
+
+  #s_blog_icon + #span_blog_entra,#span_entra,#span_reg,#span_esci{
+    font-size:0.6rem;
+  }
+
+
+[id^="bh5_span"]{
+  font-size:0.6rem!important;
+}
+
+
 }
 /* END */

@@ -20,7 +20,7 @@ class Comment(models.Model):
     title = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish',blank=True,null=True)
     author=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
-    authorname=models.CharField(max_length=80)
+    authorname=models.CharField(max_length=80,null=True,blank=True)
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
