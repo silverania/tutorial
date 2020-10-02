@@ -64,9 +64,13 @@ def getPost(request):
         data_l=cobj#data_l+list(x.tutorial.comments.all())
         for x in cobj:
             data_r=data_r+list(x.risposte.all())
+            for i in x.risposte.all():
+                usrResp=Profile.objects.filter(user__username=i.author)
+                print("########"+str(usrResp))
+                photos=photos+list(usrResp)
             usr=Profile.objects.filter(user__username=x.author)
             #x.author.photo=settings.MEDIA_URL+str(x.author.photo)
-            #print("usr="+str(usr))
+            print("usr="+str(usr))
             photos=photos+list(usr)
             data_l6 = serializer(data_r)
             data_l7 = serializer(photos)

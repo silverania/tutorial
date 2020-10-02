@@ -17,8 +17,8 @@ class Comment(models.Model):
     )
 
     #tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
-    title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250,unique_for_date='publish',blank=True,null=True)
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(max_length=100,unique_for_date='publish',blank=True,null=True)
     author=models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
     authorname=models.CharField(max_length=80,null=True,blank=True)
     body = models.TextField()

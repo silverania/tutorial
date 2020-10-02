@@ -95,12 +95,15 @@ margin:50px auto auto 15% !important;
 
 
 
-textarea #p_text {
-  font-size:0.5rem;
+.modal-content > #p_text {
+  font-size:0.7rem;
   background-color: whitesmoke;
-  padding:1%;
+  padding:2%;
 }
-
+.modal-content{
+  width:50%;
+  max-width:50%;
+}
 .blog_title,#blog_title{
   width:auto!important;
   margin-top:5%!important;
@@ -109,7 +112,7 @@ textarea #p_text {
 
 .mybut{
   display: block;
-    width: 100%;
+    width: 80%;
     padding: .5rem 1rem;
     font-size: 1.25rem;
     line-height: 1.5;
@@ -190,6 +193,11 @@ button:focus{
   .fa-comments,#s_blog{
     font-size:1.5rem;
   }
+
+  [id^="post_title"]{
+    font-size:0.5rem;
+  }
+
   [id^="img_user"]{
     margin:5px;
     width:30px!important;

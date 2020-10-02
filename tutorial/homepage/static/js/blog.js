@@ -129,6 +129,7 @@ class Resp{
     this.author=author
     this.post=post
     this.body=body
+    this.type=post.type
     this.publish=publish
   }
 }
@@ -225,7 +226,7 @@ class postArea {
     bH5.textContent=datePostResp
     spanUserName.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
-
+    spanInDivPostTitle.setAttribute("id","post_title_"+id)
     divPostTitle.appendChild(spanInDivPostTitle)
     bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
     bH5.setAttribute("id","bh5_span"+id.toString())
@@ -447,6 +448,7 @@ function makeModalWindow(post){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
   }
+
   $('#but_confirm_title').click(function() {
     if(validity){
     modal.style.display = "none";
@@ -457,6 +459,10 @@ function makeModalWindow(post){
       modal.style.display = "none";
     }
   }
+  $('#p_text').bind('input propertychange', function() {
+      console.log("canche")
+    });
+
 }
 
 /* END MODAL  */
@@ -536,13 +542,14 @@ $(document).ready(function(){
         for (y;y<=obj3.length-1;y=y+1){
           if(obj2[i].pk==obj3[y].fields.commento){
             var resp=new Resp(obj3[y].fields.authorname,obj3[y].fields.body,obj3[y].fields.publish,mess[indexX])
+            resp.type="resp"
             mess[indexX].risposte.push(resp.body)
             var paResp=new postArea(resp)
             //la textarea viene creata nella funzione makeheadblog
 
             // cerca autore in json user object
             for (var z2=0;z2<=obj4.length-1;z2=z2+1){
-              if(obj4[z2].fields.user==obj3[y].fields.author){
+              if(obj4[z2].fields.username==obj3[y].fields.authorname){
                 if (obj3[y].fields.authorname=="anonimo"){
                   photoResp=obj5_photo
                 }
@@ -560,7 +567,6 @@ $(document).ready(function(){
       }
     }
   });
-});
-$("#post_response").change(function(){
-  alert("textarea di risposta....evento change in corso .............")
+
+
 });
