@@ -35,11 +35,9 @@ def getLoginName(request):
         myuser=Profile.objects.filter(user__username=user)
         myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
     return myuser
-"""
-def getLoginName():
-    photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
-    return photo
-    """
+
+
+
 #Funzione per raccogliere i post da visualizzare al caricamento della homepage
 def serializer(data):
     datas=serializers.serialize("json",data,cls=LazyEncoder)
@@ -63,22 +61,22 @@ def getPost(request):
         for i in cnum:
             print("cnum i "+str(i))
             for ii in i.risposte.all():
-                print("iiiiiii="+str(ii))
+                print("iiiiiii="+str(ii.author))
             #data_r=data_r+list(x.risposte.all())
             #print("#########"+data_r)
             #for i in x.risposte.all():
-        usrResp=Profile.objects.filter(user__username=i.author)
-        print("########"+str(usrResp))
-        photos=photos+list(usrResp)
-        usr=Profile.objects.filter(user__username=x.author)
+                usrResp=Profile.objects.get(user=(ii.author.id))
+                print("########"+str(usrResp.user)+str(ii.author))
+                photos=photos+list(usrResp)
+        #usr=Profile.objects.filter(user__username=x.author)
         #x.author.photo=settings.MEDIA_URL+str(x.author.photo)
-        print("usr="+str(usr))
-        photos=photos+list(usr)
+        #print("usr="+str(usr))
+        #photos=photos+list(usr)
         data_l6 = serializer(data_r)
         data_l7 = serializer(photos)
         photo=(photo)
         photo=serializer(list(photo))
-        print("dataL7,data_r="+str(data_l7)+str(data_r)+str(usr))
+        print("dataL7,data_r="+str(data_l7)+str(data_r)+str(usrResp))
         data_l5=serializer(data_l)
         data = json.dumps({'data_l5': data_l5,'data_l7':data_l7, 'tu_serialized': tu_serialized,'data_l6':data_l6,'anonymousPhoto':photo})
         showPost(tu)
