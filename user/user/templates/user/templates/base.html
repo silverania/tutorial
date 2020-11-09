@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="it" >
+<head>
+  <link rel="stylesheet" href="{% static "css/register.css" %}">
+  <link rel="stylesheet" href="{% static "css/bootstrap.min.css"%}">
+</head>
+<body style="background-color:white;">
+<div class="mymdb-masthead" style="background-color:white!important;">
+  <div class="container" style="margin:0 auto;background-color:white">
+    <nav class="nav">
+      <div class="navbar-brand"><span style="color:whitesmoke">VadoAlCinema</span></div>
+      <a
+        class="nav-link"
+        href="{% url 'homepage' %}"
+      >
+        Films
+      </a>
+      {% if request.user.is_authenticated %}
+        <a
+            class="nav-link"
+            href="{% url 'logout' %}"
+        >
+          <span style="color:whitesmoke">Esci</span>
+        </a>
+      {% else %}
+        <a
+            class="nav-link"
+            href="{% url 'user:login' %}"
+        >
+        <span style="color:whitesmoke">Entra {{request.user.is_authenticated}}</span>
+        </a>
+        <a
+            class="nav-link"
+            href="{% url 'register' %}"
+        >
+        <span style="color:orange">Registrati</span>
+        </a>
+
+      {% endif %}
+    </nav>
+     {% block content %}{% endblock %}
+  </div>
+</div>
+
+
+
+
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script  src="{% static 'js/jquery.min.js' %}"></script>
+</body>
+</html >
