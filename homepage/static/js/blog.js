@@ -540,7 +540,7 @@ $(document).ready(function(){
          console.log("error in json!")
       }
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
-      //var obj2 = JSON.parse(obj.data_l5);
+      var obj2 = JSON.parse(obj.data_comm);
       var obj3 = JSON.parse(obj.data_l6);
       //var obj4 = JSON.parse(obj.data_l7);
       var obj5_photo = obj.profile;

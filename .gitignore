@@ -1,3 +1,5 @@
 migrations/*
 settings.py
 wsgy.py
+__pycache__/*
+*.pyc
