@@ -48,8 +48,10 @@ def getPost(request):
     data_l=[]
     data_r=[]
     data_l7=[]
+    data_l6=[]
     photos=[]
-    data=[]
+    datac=[]
+    data_resp=[]
     photo=getLoginName(request)
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
@@ -57,21 +59,25 @@ def getPost(request):
         tu_serialized=serializer(Tutorial.objects.filter(title=tutorial))
         aggiornato=formatted_datetime
         cnum=Comment.objects.filter(tutorial=tu.title)
-        data=list(cnum)
-        data_comm=serializer(data)
-        print("data comment Json format="+str(data))
+        datac=list(cnum)
+        data_comm=serializer(datac)
+        print("data comment Json format="+str(datac))
         #resp=Resp.objects.filter(commento=cnum).first()
         for i in cnum:
             print("cnum i "+str(i))
-            data_r=serializer(i.risposte.all())
+            data_l6=data_l6+list(i.risposte.all())
             for ii in i.risposte.all():
-                print("iiiiiii.author="+str(ii.author)+"ii.author.photo="+str(ii.author.photo)+"data_r="+str(data_r))
                 usrResp=Profile.objects.filter(user=(ii.author.id))
                 data_l7=data_l7+list(usrResp)
-                print("######## usresp"+str(usrResp)+"author"+str(ii.author))
                 print("data_l7="+str(data_l7))
             photos=serializer(data_l7)
             print("photos="+serializer(data_l7))
+        try:
+            resp=serializer(data_l6)
+            print("data_l6"+str(resp))
+        except (TypeError):
+            print("commento senza risposte !")
+
         #usr=Profile.objects.filter(user__username=x.author)
         #x.author.photo=settings.MEDIA_URL+str(x.author.photo)
         #print("usr="+str(usr))
@@ -82,7 +88,7 @@ def getPost(request):
         #photo=serializer(list(photo))
         #print("dataL7,data_r="+str(data_l7)+str(data_r)+str(usrResp))
         data_l5=serializer(data_l)
-        data = json.dumps({'tu_serialized': tu_serialized,'data_comm':data_comm,'profile':photos})
+        data = json.dumps({'tu_serialized': tu_serialized,'data_comm':data_comm,'profile':photos,'resp':resp})
         showPost(tu)
     try:
         return JsonResponse(data,safe=False)

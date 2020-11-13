@@ -498,17 +498,17 @@ function makeModalWindow(mess=Object()){
 /* END MODAL  */
 function cleanJson(json){
   this.data=json.toString()
-  /*s = this.data.replace(/\\n/g, "\\n")
-  alert(s)
+  s = this.data.replace(/\\n/g, "\\n")
+
   .replace(/\\'/g, "\\'")
   .replace(/\\"/g, '\\"')
   .replace(/\\&/g, "\\&")
   .replace(/\\r/g, "\\r")
   .replace(/\\t/g, "\\t")
   .replace(/\\b/g, "\\b")
-  .replace(/\\f/g, "\\f")*/
+  .replace(/\\f/g, "\\f")
   // remove non-printable and other non-valid JSON chars
-  s=this.data.replace(/[\u0000-\u0019]+/g,"");
+  //s=this.data.replace(/[\u0000-\u0019]+/g,"");
   alert("s="+s);
   return s
 }
@@ -517,7 +517,7 @@ $(document).ready(function(){
   var obj
   let indexX=0
   var initial_y
-  var y=0
+  var y=0,s
   let mess=new Array()
   let resp=new Array()
   let post = new Array()
@@ -529,9 +529,9 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
-      alert(data)
+
       let z=0
-      var s = cleanJson(data)
+      s = cleanJson(data)
       try {
       obj = JSON.parse(s);
       alert(obj)
@@ -541,7 +541,8 @@ $(document).ready(function(){
       }
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
       var obj2 = JSON.parse(obj.data_comm);
-      var obj3 = JSON.parse(obj.data_l6);
+      var obj3 = JSON.parse(obj.resp);
+      alert(obj3);
       //var obj4 = JSON.parse(obj.data_l7);
       var obj5_photo = obj.profile;
       var photoPost , photoResp
