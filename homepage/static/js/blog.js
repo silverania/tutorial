@@ -543,7 +543,7 @@ $(document).ready(function(){
       var obj2 = JSON.parse(obj.data_comm);
       var obj3 = JSON.parse(obj.resp);
       alert(obj3);
-      //var obj4 = JSON.parse(obj.data_l7);
+      var obj4 = obj.photos
       var obj5_photo = obj.profile;
       var photoPost , photoResp
       //console.log(obj.data_l5)
@@ -553,21 +553,21 @@ $(document).ready(function(){
       var i=0
       //initial_y=(parseInt(obj3.length))-1
       for (i;i<=parseInt(obj2.length)-1;i=i+1){
-        mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
-        mess[indexX].body=obj2[i].fields.body
-        mess[indexX].type="post"
-        mess[indexX].titled=obj2[i].fields.title
-        mess[indexX].publish=obj2[i].fields.publish
-        for (z=0;z<=obj4.length-1;z=z+1){
-          if(obj4[z].fields.username==obj2[i].fields.authorname){
-            if (obj2[i].fields.authorname=="anonimo"){
-              photoPost=obj5_photo
-            }
-            else{
-              photoPost=BASE_PHOTO_DIR+obj4[z].fields.photo
-            }
-          }
-        }
+         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
+         mess[indexX].body=obj2[i].fields.body
+         mess[indexX].type="post"
+         mess[indexX].titled=obj2[i].fields.title
+         mess[indexX].publish=obj2[i].fields.publish
+         for (z=0;z<=obj5_photo.length-1;z=z+1){
+           if(obj5_photo[z].fields.user.username==obj2[i].fields.authorname){
+             if (obj2[i].fields.authorname=="anonimo"){
+               photoPost=obj5_photo
+             }
+             else{
+               photoPost=BASE_PHOTO_DIR+obj5_photo[z].fields.photo
+             }
+           }
+         }
 
         // creo la textarea per il post e con l head .
         if(mess[indexX].getTitle()){

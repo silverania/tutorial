@@ -144,6 +144,7 @@ class Post{
     this.titled=title1
     this.risposte=new Array()
     this.publish=""
+    this.tutorial=""
   }
   getTitle(){
     return this.titled
@@ -498,6 +499,7 @@ function makeModalWindow(mess=Object()){
 function cleanJson(json){
   this.data=json.toString()
   s = this.data.replace(/\\n/g, "\\n")
+
   .replace(/\\'/g, "\\'")
   .replace(/\\"/g, '\\"')
   .replace(/\\&/g, "\\&")
@@ -506,14 +508,16 @@ function cleanJson(json){
   .replace(/\\b/g, "\\b")
   .replace(/\\f/g, "\\f")
   // remove non-printable and other non-valid JSON chars
-  .replace(/[\u0000-\u0019]+/g,"");
+  //s=this.data.replace(/[\u0000-\u0019]+/g,"");
+  alert("s="+s);
   return s
 }
 
 $(document).ready(function(){
+  var obj
   let indexX=0
   var initial_y
-  var y=0
+  var y=0,s
   let mess=new Array()
   let resp=new Array()
   let post = new Array()
@@ -525,23 +529,26 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
+
       let z=0
       s = cleanJson(data)
       try {
-      var obj = JSON.parse(s);
+      obj = JSON.parse(s);
+      alert(obj)
       }
       catch(SyntaxError){
-        return console.log("error in json!")
+         console.log("error in json!")
       }
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
-      var obj2 = JSON.parse(obj.data_l5);
-      var obj3 = JSON.parse(obj.data_l6);
-      var obj4 = JSON.parse(obj.data_l7);
-      var obj5_photo = obj.anonymousPhoto;
+      var obj2 = JSON.parse(obj.data_comm);
+      var obj3 = JSON.parse(obj.resp);
+      alert(obj3);
+      //var obj4 = JSON.parse(obj.data_l7);
+      var obj5_photo = obj.profile;
       var photoPost , photoResp
-      console.log(obj.data_l5)
+      //console.log(obj.data_l5)
       console.log(obj3)
-      console.log(obj.data_l7)
+      //console.log(obj.data_l7)
       //console.log(obj.data_l5)
       var i=0
       //initial_y=(parseInt(obj3.length))-1
