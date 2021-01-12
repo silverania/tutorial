@@ -509,7 +509,7 @@ function cleanJson(json){
   .replace(/\\f/g, "\\f")
   // remove non-printable and other non-valid JSON chars
   //s=this.data.replace(/[\u0000-\u0019]+/g,"");
-  alert("s="+s);
+  //alert("s="+s);
   return s
 }
 
@@ -534,7 +534,7 @@ $(document).ready(function(){
       s = cleanJson(data)
       try {
       obj = JSON.parse(s);
-      alert(obj)
+      //alert(obj)
       }
       catch(SyntaxError){
          console.log("error in json!")
@@ -542,7 +542,7 @@ $(document).ready(function(){
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
       var obj2 = JSON.parse(obj.data_comm);
       var obj3 = JSON.parse(obj.resp);
-      alert(obj3);
+      //alert(obj3);
       var obj4 = obj.photos
       var obj5_photo = obj.profile;
       var photoPost , photoResp
