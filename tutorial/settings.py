@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'homepage',
     'social_django',
-    'blog.apps.BlogConfig',
+    #'blog.apps.BlogConfig',
 ]
 
 MIDDLEWARE = [
