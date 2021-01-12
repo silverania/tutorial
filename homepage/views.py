@@ -22,6 +22,7 @@ def getLink(title):
 
 
 def tutorial_detail(request, **kwargs):
+    print("entry in tutorial_detail view")
     if request.user.is_authenticated:
         login=True
     else:
@@ -36,11 +37,13 @@ def tutorial_detail(request, **kwargs):
             print("post="+post)
         elif 'year' in key :
             year=str(value)
-            print("post="+year)
+            print("year="+year)
         elif 'month' in key:
             month=str(value)
+            print("moth="+month)
         elif 'day' in key:
             day=str(value)
+            print("day="+day)
     try:
         tutorial = Tutorial.objects.get(slug=post,
         publish__year=year)
