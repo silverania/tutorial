@@ -1,0 +1,2 @@
+sto editando  /homepage/views.py   riga 49
+costruzione del meta keywords in file html : installare_djagno_su_linux in corso  

@@ -2,12 +2,12 @@ from django.db import models
 from django.utils import timezone
 from django.core.validators import MinValueValidator, MaxValueValidator
 from datetime import datetime
-# Create your models here.
 from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import User
 from user.models import Profile
-from blog.models import Comment
+#from blog.models import Comment
+
 #custom modelmanager classe per visualizzare tutorial  in admin
 class PublishedManager(models.Manager):
     def get_queryset(self):
@@ -54,8 +54,7 @@ class Tutorial(models.Model):
     STATUS_CHOICES = (
     ('bozza', 'Bozza'),
     ('pubblicato', 'Pubblicato'),)
-    #post=models.ForeignKey(Comment,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
-    post=models.ForeignKey(Comment,related_name='comments',on_delete=models.CASCADE,null=True,blank=True)
+    #post=models.ForeignKey(Comment,related_name='comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=250)
     overview = models.TextField(default="tutorial")
     slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)

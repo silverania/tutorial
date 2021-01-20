@@ -22,7 +22,7 @@ def getLink(title):
 
 
 def tutorial_detail(request, **kwargs):
-    print("entry in tutorial_detail view")
+    print("entry in tutorial_detail view Kwargs="+str(kwargs.items()))
     if request.user.is_authenticated:
         login=True
     else:
@@ -32,10 +32,10 @@ def tutorial_detail(request, **kwargs):
     users=Profile.objects.all()
     for key,value in kwargs.items():
         print("value="+str(key)+str(value))
-        if "post" in str(key) :
-            post=value
-            print("post="+post)
-        elif 'year' in key :
+        #if "post" in str(key) :
+        #    post=value
+        #    print("post="+post)
+        if 'year' in str(key) :
             year=str(value)
             print("year="+year)
         elif 'month' in key:
@@ -44,9 +44,12 @@ def tutorial_detail(request, **kwargs):
         elif 'day' in key:
             day=str(value)
             print("day="+day)
+        elif 'post' in key:
+            slug=str(value)
+            print("slug="+slug)
     try:
-        tutorial = Tutorial.objects.get(slug=post,
-        publish__year=year)
+        tutorial = Tutorial.objects.get(
+        publish__year=year,slug=slug)
         user=tutorial.author
         autore=str(user)
         photo=settings.MEDIA_URL+str(user.photo)
@@ -59,7 +62,7 @@ def tutorial_detail(request, **kwargs):
             user=tutorial.author
             autore=str(user)
             photo=settings.MEDIA_URL+str(user.photo)
-    template=tutorial.title.replace(" ","_").lower()+".html"
+    template=tutorial.slug.replace(" ","_").lower()+".html"
     print("template="+template)
 
     vis=Visite()

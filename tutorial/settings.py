@@ -81,7 +81,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
 ######################################################### ATTENZIONE AL DATABASE DIVERSO IN DEV
-	 'NAME': 'tutorial_dev',
+	 'NAME': 'tutorial_dev_without_blog',
         'USER': 'silverania',
         'PASSWORD': 'sol-7373',
         'HOST': 'localhost',
