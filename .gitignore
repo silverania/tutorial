@@ -3,5 +3,6 @@ blog/migrations
 user/migrations
 wsgy.py
 manage.py
+tutorial/settings.py
 __pycache__/*
 *.pyc
