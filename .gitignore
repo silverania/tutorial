@@ -1,4 +1,7 @@
-migrations/*
+homepage/migrations
+blog/migrations
+user/migrations
 wsgy.py
+manage.py
 __pycache__/*
 *.pyc
