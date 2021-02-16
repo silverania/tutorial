@@ -521,7 +521,7 @@ $(document).ready(function(){
   let mess=new Array()
   let resp=new Array()
   let post = new Array()
-  bForm.setAttribute("action","post/showposts");
+  //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
     data: {

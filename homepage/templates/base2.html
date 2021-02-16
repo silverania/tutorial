@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="{% static "css/all.css" %}">
   <link rel="stylesheet" href="{% static "css/homepage.css" %}">
   <link rel="stylesheet" href="{% static "css/footer.css" %}">
-  <!--link rel="stylesheet" href="{% static "css/blog.css" %}"-->
+  <link rel="stylesheet" href="{% static "css/blog.css" %}">
   <script src="{% static "js/all.min.js"%}"></script>
   <script  src="{% static 'js/popper.min.js'%}"></script>
   <!--script  src="{% static 'js/jquery.min.js' %}"></script-->
@@ -22,7 +22,7 @@
 
   <script  src="{% static 'js/aside.js' %}"></script>
   <script  src="{% static 'js/style.js' %}"></script>
-  <!--script  src="{% static 'js/blog.js' %}"></script-->
+  <script  src="{% static 'js/blog.js' %}"></script>
   <script  src="{% static 'js/bootstrap.min.js' %}"></script>
 </head>
 {% endblock head %}
@@ -201,7 +201,7 @@ function getIndex(e) {
 <button type="button" id="button_blog" class="btn btn-block btn-outline-info" onclick="writeMsg(this.id,'{{login}}')">Commenta
 </button-->
 
-<!--script>initBlogSGang("col_blog","{{request.user}}","{{tutorial.title}}");</script-->
+<script>initBlogSGang("col_blog","{{request.user}}","{{tutorial.slug}}");</script>
 </div>
 
   <!--textarea onclick="writeMsg(this.id,'{{login}}');" id="t_textarea" class="form-control" rows="4" placeholder="Cosa Ti Affligge ?" maxlength="140"></textarea-->

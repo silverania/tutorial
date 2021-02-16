@@ -1,2 +1,5 @@
 sto editando  /homepage/views.py   riga 49
-costruzione del meta keywords in file html : installare_djagno_su_linux in corso  
+costruzione del meta keywords in file html : installare_djagno_su_linux in corso
+
+16 febbraio 2021
+in blog.js se la variabile loginis ricevuta dal file html è vuota gestire tale evento

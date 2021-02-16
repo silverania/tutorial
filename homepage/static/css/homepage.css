@@ -472,7 +472,7 @@ tr{
   font-size:0.4rem;
 }
 #s_title_2{
-  font-size:0.4rem;
+  font-size:0.6rem;
 }
 
 #d_head > h4 {
@@ -490,7 +490,7 @@ tr{
 }
 
 #p_content{
-  font-size:0.4rem;
+  font-size:0.5rem;
   margin-top:0px;
 }
 
@@ -526,6 +526,16 @@ li #s_center_menu{
 }
 .fa-comments,#s_blog{
   font-size:0.5rem;
+}
+#code_ubuntu_e_derivate, #code_fedora_e_derivate,#yum_group_install{
+  font-size:0.6rem;
+}
+code#apt_install_build{
+  font-size:0.5rem;
+}
+.terminal{
+  margin-bottom:20px!important;
+  font-size:0.4rem;
 }
 }
 
@@ -583,6 +593,7 @@ li #s_center_menu{
  }
  #d_head > h4{
    font-size:0.6rem!important;
+   margin-bottom:1rem!important;
  }
  #s_footer{
    font-size:2vw;
