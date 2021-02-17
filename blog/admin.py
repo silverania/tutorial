@@ -10,11 +10,11 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     ordering = ('status', 'publish')
 class RespAdmin(admin.ModelAdmin):
-    search_fields = ('post','body')
-    list_display = ('post', 'body','created', 'publish', 'author')
-    list_filter = ( 'post','created','commento','publish', 'author')
+    search_fields = ('commento','body')
+    list_display = ( 'commento','body','created', 'publish', 'author')
+    list_filter = ('created','commento','publish', 'author')
     raw_id_fields = ('author',)
     date_hierarchy = 'publish'
-    ordering = ('post', 'publish')
+    ordering = ('commento', 'publish')
 admin.site.register(Resp,RespAdmin)
 admin.site.register(Comment,PostAdmin)

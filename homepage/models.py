@@ -6,7 +6,6 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 from .models import User
 from user.models import Profile
-#from blog.models import Comment
 
 #custom modelmanager classe per visualizzare tutorial  in admin
 class PublishedManager(models.Manager):
@@ -65,7 +64,7 @@ class Tutorial(models.Model):
     updated = models.DateTimeField(auto_now=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE,related_name="tutorials")
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
-    #post=models.ForeignKey(Comment,on_delete=models.CASCADE,related_name="post")
+    #post=models.ForeignKey(Comment,on_delete=models.CASCADE,related_name="comments",null=True,blank=True)
         # decommentare una delle seguenti tre righe per selezionare un custom model manager
     #objects = models.Manager() # The default manager.
     #bozza=BozzaManager() # Our bozza solo manager

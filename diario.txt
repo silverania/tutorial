@@ -3,3 +3,10 @@ costruzione del meta keywords in file html : installare_djagno_su_linux in corso
 
 16 febbraio 2021
 in blog.js se la variabile loginis ricevuta dal file html è vuota gestire tale evento
+
+errore quando migro il databes : duplicate post_id
+
+
+ 17 febbraio 2021
+la variabile slug nel model Comment viene autocreata male
+bisogna assegnare un valore coerente alla variabile post della classe Resp

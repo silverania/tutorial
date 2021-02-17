@@ -9,6 +9,7 @@ from django.urls import path
 from .models import Category
 from user.models import Profile
 from django.conf import settings
+from blog.models import Comment
 #User
 from django.contrib.auth.models import User
 import datetime
@@ -22,6 +23,7 @@ def getLink(title):
 
 
 def tutorial_detail(request, **kwargs):
+    arguments=False
     print("entry in tutorial_detail view Kwargs="+str(kwargs.items()))
     if request.user.is_authenticated:
         login=True
@@ -30,8 +32,10 @@ def tutorial_detail(request, **kwargs):
     tutorial_all = Tutorial.objects.all()
     categorie=Category.objects.all()
     users=Profile.objects.all()
-    for key,value in kwargs.items():
-        print("value="+str(key)+str(value))
+    comments=Comment.objects.all()
+    try:
+     for key,value in kwargs.items():
+        arguments=True
         #if "post" in str(key) :
         #    post=value
         #    print("post="+post)
@@ -47,21 +51,29 @@ def tutorial_detail(request, **kwargs):
         elif 'post' in key:
             slug=str(value)
             print("slug="+slug)
-    try:
-        tutorial = Tutorial.objects.get(
-        publish__year=year,slug=slug)
+        else :
+            print ("No KEY OR VALUE IN KWARGS !")
+    except: "Eccezione NEL RECUPERO  di KEY E VALUE"
+    if arguments is True:
+        try:
+            print("TRY per prendere tutorial ok ! arguments="+str(arguments))
+            tutorial = Tutorial.objects.get(
+            publish__year=year,slug=slug)
+        except UnboundLocalError :
+            print("ECCEZIONE : prendo l' ultimo tutorial scritto! ")
+    tutorial=Tutorial.objects.latest('publish')
+    user=tutorial.author
+    autore=str(user)
+    photo=settings.MEDIA_URL+str(user.photo)
+    #photo=user.photo
+    print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day)+"autor="+str(tutorial.author)+"photo="+str(photo))
+    print("COMMENTI="+str(tutorial.all_comments.all()))
+
+    if '' in request.path:
+        tutorial=Tutorial.objects.latest('publish')
         user=tutorial.author
         autore=str(user)
         photo=settings.MEDIA_URL+str(user.photo)
-        #photo=user.photo
-        print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day)+"autor="+str(tutorial.author)+"photo="+str(photo))
-
-    except UnboundLocalError :
-        if '' in request.path:
-            tutorial=Tutorial.objects.latest('publish')
-            user=tutorial.author
-            autore=str(user)
-            photo=settings.MEDIA_URL+str(user.photo)
     template=tutorial.slug.replace(" ","_").lower()+".html"
     print("template="+template)
 

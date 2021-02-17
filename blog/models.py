@@ -6,7 +6,7 @@ from django.urls import reverse
 from user.models import Profile
 # Create your models here.
 
-
+from homepage.models import Tutorial
 
 
 
@@ -15,9 +15,9 @@ class Comment(models.Model):
     ('rigettato', 'Rigettato'),
     ('publicato', 'Publicato'),
     )
-    #tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
+    tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=250)
-    tutorial = models.CharField(max_length=250)
+    #tutorial = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish',blank=True,null=True)
     author = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
     body = models.TextField()
@@ -41,7 +41,7 @@ class Resp(models.Model):
     body = models.TextField()
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
-    post=models.CharField(max_length=250,default="post anonimo")
+    #post=models.CharField(max_length=250,default="post anonimo")
     commento=models.ForeignKey(Comment,related_name="risposte",on_delete=models.CASCADE,null=True,blank=True)
     class Meta:
         ordering = ('-publish',)
