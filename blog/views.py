@@ -59,7 +59,7 @@ def getPost(request):
         tu=Tutorial.objects.get(slug=tutorial)
         tu_serialized=serializer(Tutorial.objects.filter(slug=tutorial))
         aggiornato=formatted_datetime
-        cnum=Comment.objects.filter(tutorial=tu.title)
+        cnum=Comment.objects.filter(tutorial=tu)
         datac=list(cnum)
         data_comm=serializer(datac)
         print("data comment Json format="+str(datac))
