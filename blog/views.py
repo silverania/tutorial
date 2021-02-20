@@ -54,6 +54,7 @@ def getPost(request):
     datac=[]
     data_resp=[]
     comments=Comment()
+    risposte=[]
     comments_in_database=Comment.objects.all()
     photo=getLoginName(request)
 
@@ -62,19 +63,21 @@ def getPost(request):
         tu=Tutorial.objects.get(slug=tutorial)
         #tu_serialized=serializer(Tutorial.objects.filter(slug=tutorial))
         aggiornato=formatted_datetime
-        cnum=Comment.objects.filter(tutorial=tu) # tutti i commenti sul tutorial
-        datac=list(cnum)
+        all_comments_for_page=Comment.objects.filter(tutorial=tu) # tutti i commenti sul tutorial
+        datac=list(all_comments_for_page)
 
         data_comm=serializer(datac)
-        comment_model_serialized=serializer(cnum)
+        comment_model_serialized=serializer(all_comments_for_page)
         print("data comment Json format="+str(datac))
         print("comment_model_serialized="+str(comment_model_serialized))
 
-        for comments in cnum:
-            print("body Comment"+str(comments.body))
+        for comment in all_comments_for_page:
+            print("body Comment"+str(comment.body))
             print()
-            print("Comm="+str(comments))
-            print(str(comments.risposte.all()))
+            print("Comm="+str(comment))
+            print(str(comment.risposte.all()))
+            risposte.append(serializer(list(comment.risposte.all())))
+        print("RISPOSTE JSON SERIALIZED :"+str(risposte))
 
 
         #data_l6=data_l6+list(comments.risposte.all())

@@ -21,7 +21,6 @@ def getLink(title):
     template=tutorial.title.replace(" ","_").lower()+".html"
     return template
 
-
 def tutorial_detail(request, **kwargs):
     arguments=False
     print("entry in tutorial_detail view Kwargs="+str(kwargs.items()))
@@ -32,13 +31,9 @@ def tutorial_detail(request, **kwargs):
     tutorial_all = Tutorial.objects.all()
     categorie=Category.objects.all()
     users=Profile.objects.all()
-    comments=Comment.objects.all()
     try:
      for key,value in kwargs.items():
         arguments=True
-        #if "post" in str(key) :
-        #    post=value
-        #    print("post="+post)
         if 'year' in str(key) :
             year=str(value)
             print("year="+year)
@@ -66,8 +61,8 @@ def tutorial_detail(request, **kwargs):
     autore=str(user)
     photo=settings.MEDIA_URL+str(user.photo)
     #photo=user.photo
-    print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day)+"autor="+str(tutorial.author)+"photo="+str(photo))
-    print("COMMENTI="+str(tutorial.all_comments.all()))
+    #print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day)+"autor="+str(tutorial.author)+"photo="+str(photo))
+    #print("COMMENTI="+str(tutorial.all_comments.all()))
 
     if '' in request.path:
         tutorial=Tutorial.objects.latest('publish')
@@ -85,12 +80,6 @@ def tutorial_detail(request, **kwargs):
         vis.visite=1
     vis.save()
     return render(request,template,{'tutorial': tutorial,'visitato':vis,'login':login,'tutorial_all':tutorial_all,'categorie':categorie,'photo':photo,'users':users,'autore':autore})
-
-
-
-
-
-
 
 def readInfoClient(request):
     req=request.META['HTTP_USER_AGENT']
