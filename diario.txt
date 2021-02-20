@@ -7,6 +7,9 @@ in blog.js se la variabile loginis ricevuta dal file html è vuota gestire tale 
 errore quando migro il databes : duplicate post_id
 
 
+
  17 febbraio 2021
 la variabile slug nel model Comment viene autocreata male
 bisogna assegnare un valore coerente alla variabile post della classe Resp
+
+A riga 80 blog.views.py è cos i pazz chell che agg gfatt SO NU MOSTR 

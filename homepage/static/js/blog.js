@@ -529,7 +529,6 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
-
       let z=0
       s = cleanJson(data)
       try {

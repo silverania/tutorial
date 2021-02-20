@@ -75,11 +75,17 @@ def getPost(request):
             print("body Comment"+str(comment.body))
             print()
             print("Comm="+str(comment))
-            print(str(comment.risposte.all()))
-            risposte.append(serializer(list(comment.risposte.all())))
-        print("RISPOSTE JSON SERIALIZED :"+str(risposte))
+            t=list(comment.risposte.all())
+            print("T:"+str(t))
+            try:
+                t2=t2+t
+            except UnboundLocalError :
+                t2=t
 
 
+
+        print("RISPOSTE JSON SERIALIZED :"+str(t2))
+        risposte3=serializer(t2)
         #data_l6=data_l6+list(comments.risposte.all())
 
         #    for ii in i.risposte.all():
@@ -94,7 +100,7 @@ def getPost(request):
         photos=serializer(data_l7)
         print("photos="+serializer(data_l7))
         data_l5=serializer(data_l)
-        data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':resp})
+        data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':risposte3})
         showPost(tu)
     try:
         return JsonResponse(data,safe=False)
