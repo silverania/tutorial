@@ -42,7 +42,7 @@ class Resp(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     #post=models.CharField(max_length=250,default="post anonimo")
-    commento=models.ForeignKey(Comment,related_name="risposte",on_delete=models.CASCADE,null=True,blank=True)
+    commento=models.ForeignKey(Comment,related_name='risposte',on_delete=models.CASCADE,null=True,blank=True)
     class Meta:
         ordering = ('-publish',)
     def __str__(self):

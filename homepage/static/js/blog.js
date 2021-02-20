@@ -540,11 +540,13 @@ $(document).ready(function(){
          console.log("error in json!")
       }
       //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
-      var obj2 = JSON.parse(obj.data_comm);
+      var obj2 = JSON.parse(obj.data_comm);// blog.comment
       var obj3 = JSON.parse(obj.resp);
       //alert(obj3);
       var obj4 = obj.photos
       var obj5_photo = obj.profile;
+      var user_post_parsed=JSON.parse(obj5_photo);
+      var user_pk=user_post_parsed.pk
       var photoPost , photoResp
       //console.log(obj.data_l5)
       console.log(obj3)
@@ -558,8 +560,10 @@ $(document).ready(function(){
          mess[indexX].type="post"
          mess[indexX].titled=obj2[i].fields.title
          mess[indexX].publish=obj2[i].fields.publish
+         i=obj5_photo.length
          for (z=0;z<=obj5_photo.length-1;z=z+1){
-           if(obj5_photo[z].fields.user.username==obj2[i].fields.authorname){
+          // if(obj5_photo[z].fields.user==obj2[i].fields.author){
+            if(obj5_photo[z]==obj2[i].fields.author){
              if (obj2[i].fields.authorname=="anonimo"){
                photoPost=obj5_photo
              }
