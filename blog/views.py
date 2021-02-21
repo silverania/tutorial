@@ -97,10 +97,11 @@ def getPost(request):
         #            print("data_l6"+str(resp))
         #        except (TypeError):
         #            print(commento senza risposte !')
-        photos=serializer(data_l7)
-        print("photos="+serializer(data_l7))
+        #photos=serializer(data_l7)
+        #print("photos="+serializer(data_l7))
         data_l5=serializer(data_l)
-        data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':risposte3})
+        #data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':risposte3})
+        data = json.dumps({'data_comm':data_comm,'resp':risposte3})
         showPost(tu)
     try:
         return JsonResponse(data,safe=False)

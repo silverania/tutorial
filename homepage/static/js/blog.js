@@ -542,10 +542,10 @@ $(document).ready(function(){
       var obj2 = JSON.parse(obj.data_comm);// blog.comment
       var obj3 = JSON.parse(obj.resp);
       //alert(obj3);
-      var obj4 = obj.photos
-      var obj5_photo = obj.profile;
-      var user_post_parsed=JSON.parse(obj5_photo);
-      var user_pk=user_post_parsed.pk
+      //var obj4 = obj.photos
+      //var obj5_photo = obj.profile;
+      //var user_post_parsed=JSON.parse(obj5_photo);
+      //var user_pk=user_post_parsed.pk
       var photoPost , photoResp
       //console.log(obj.data_l5)
       console.log(obj3)
@@ -553,13 +553,13 @@ $(document).ready(function(){
       //console.log(obj.data_l5)
       var i=0
       //initial_y=(parseInt(obj3.length))-1
-      for (i;i<=parseInt(obj2.length)-1;i=i+1){
-         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
+      for (i;i<=parseInt(obj2.length);i=i+1){
+         mess.push(new Post("post",obj2[i].fields.author.authorname,obj2[i].fields.title))
          mess[indexX].body=obj2[i].fields.body
          mess[indexX].type="post"
          mess[indexX].titled=obj2[i].fields.title
          mess[indexX].publish=obj2[i].fields.publish
-         i=obj5_photo.length
+         //i=obj5_photo.length
          for (z=0;z<=obj5_photo.length-1;z=z+1){
           // if(obj5_photo[z].fields.user==obj2[i].fields.author){
             if(obj5_photo[z]==obj2[i].fields.author){
