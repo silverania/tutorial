@@ -6,14 +6,13 @@ class PostAdmin(admin.ModelAdmin):
     list_filter = ('title','status','created', 'publish', 'author')
     search_fields = ('title', 'body')
     prepopulated_fields = {'slug': ('title',)}
-    raw_id_fields = ('author',)
+    list_display = ('author',)
     date_hierarchy = 'publish'
     ordering = ('status', 'publish')
 class RespAdmin(admin.ModelAdmin):
     search_fields = ('commento','body')
     list_display = ( 'commento','body','created', 'publish', 'author')
     list_filter = ('created','commento','publish', 'author')
-    raw_id_fields = ('author',)
     date_hierarchy = 'publish'
     ordering = ('commento', 'publish')
 admin.site.register(Resp,RespAdmin)

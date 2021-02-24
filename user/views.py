@@ -59,14 +59,18 @@ def user_register(request):
     if request.method == 'POST':
         user_form = UserRegistrationForm(request.POST)
         if user_form.is_valid():
+            print("FORM VALIDO")
             # Create a new user object but avoid saving it yet
             new_user = user_form.save(commit=False)
             # Set the chosen password
             new_user.set_password(
             user_form.cleaned_data['password'])
             # Save the User object
-            #new_user.save()
-            Profile.objects.create(user=new_user)
+            new_user.save()
+            profile=Profile.objects.get(user=new_user)
+            print("PROFILE USERNAME "+profile.first_name)
+            profile.first_name=new_user.username
+            profile.save()
             return render(request,'user/register_done.html',{'new_user': new_user})
     else:
         user_form = UserRegistrationForm()

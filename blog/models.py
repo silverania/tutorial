@@ -8,7 +8,9 @@ from user.models import Profile
 
 from homepage.models import Tutorial
 
-
+class PersonManager(models.Manager):
+    def get_by_natural_key(self, first_name, last_name):
+        return self.get(first_name=author)
 
 class Comment(models.Model):
     STATUS_CHOICES = (
@@ -27,8 +29,9 @@ class Comment(models.Model):
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
     def get_absolute_url(self):
         return reverse('blog:newPost',args=[self.publish.year,self.publish.month,self.publish.day, self.slug])
+    objects = PersonManager()
     class Meta:
-        ordering = ('publish',)
+        unique_together = [['author', 'created']]
     def __str__(self):
         return self.title
 

@@ -40,7 +40,7 @@ def getLoginName(request):
 
 #Funzione per raccogliere i post da visualizzare al caricamento della homepage
 def serializer(data):
-    datas=serializers.serialize("json",data,cls=LazyEncoder)
+    datas=serializers.serialize("json",data,cls=LazyEncoder,use_natural_primary_keys=True,use_natural_foreign_keys=True)
     return datas
 
 def getPost(request):
@@ -49,7 +49,7 @@ def getPost(request):
     data_l=[]
     data_r=[]
     data_l7=[]
-    data_l6=[]
+    profile_list=[]
     photos=[]
     datac=[]
     data_resp=[]
@@ -70,22 +70,19 @@ def getPost(request):
         comment_model_serialized=serializer(all_comments_for_page)
         print("data comment Json format="+str(datac))
         print("comment_model_serialized="+str(comment_model_serialized))
-
         for comment in all_comments_for_page:
             print("body Comment"+str(comment.body))
             print()
             print("Comm="+str(comment))
             t=list(comment.risposte.all())
-            print("T:"+str(t))
             try:
                 t2=t2+t
             except UnboundLocalError :
                 t2=t
-
-
-
-        print("RISPOSTE JSON SERIALIZED :"+str(t2))
-        risposte3=serializer(t2)
+        print("RISPOSTE JSON SERIALIZED :"+str(t2)+"PROFILKE_LIST="+str(profile_list))
+        risposte_serialized=serializer(t2)
+        profile=list(Profile.objects.all())
+        profile_list=serializer(profile)
         #data_l6=data_l6+list(comments.risposte.all())
 
         #    for ii in i.risposte.all():
@@ -101,7 +98,7 @@ def getPost(request):
         #print("photos="+serializer(data_l7))
         data_l5=serializer(data_l)
         #data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':risposte3})
-        data = json.dumps({'data_comm':data_comm,'resp':risposte3})
+        data = json.dumps({'data_comm':data_comm,'resp':risposte_serialized,'profile':profile_list})
         showPost(tu)
     try:
         return JsonResponse(data,safe=False)
