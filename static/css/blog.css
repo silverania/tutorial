@@ -4,6 +4,16 @@
     margin:0 auto!important;
 }
 
+textarea {
+  font-size:0.5em!important;
+  color:black;
+}
+
+#d_post_title>span[id^="post_title"]{
+font-size:.5em!important;
+line-height:10px!important;
+}
+
 #col_blog{
   width:0px!important;
 }
@@ -90,9 +100,14 @@ margin:50px auto auto 15% !important;
 }
 }
 
-textarea {
-  font-size:0.5rem;
+@media screen and (max-width: 500px) {
+#blog{
+    width:100%!important;
+    max-width:100%!important;
+    margin:0 auto!important;
 }
+}
+
 .blog_title,#blog_title{
   width:auto!important;
   margin-top:5%!important;

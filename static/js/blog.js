@@ -239,6 +239,7 @@ class postArea {
     spanUserName.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("id","post_title_"+id)
+    divPostTitle.setAttribute("id","d_post_title")
     divPostTitle.appendChild(spanInDivPostTitle)
     bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
     bH5.setAttribute("id","bh5_span"+id.toString())
