@@ -81,8 +81,8 @@ def getPost(request):
                 t2=t
         print("RISPOSTE JSON SERIALIZED :"+str(t2)+"PROFILKE_LIST="+str(profile_list))
         risposte_serialized=serializer(t2)
-        profile=list(Profile.objects.all())
-        profile_list=serializer(profile)
+        profiles=list(Profile.objects.all())
+        profiles_list=serializer(profiles)
         #data_l6=data_l6+list(comments.risposte.all())
 
         #    for ii in i.risposte.all():
@@ -98,7 +98,7 @@ def getPost(request):
         #print("photos="+serializer(data_l7))
         data_l5=serializer(data_l)
         #data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':risposte3})
-        data = json.dumps({'data_comm':data_comm,'resp':risposte_serialized,'profile':profile_list})
+        data = json.dumps({'data_comm':data_comm,'resps':risposte_serialized,'profiles':profiles_list})
         showPost(tu)
     try:
         return JsonResponse(data,safe=False)
