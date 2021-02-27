@@ -1,3 +1,8 @@
+#blog{
+    width:43%!important;
+    max-width:43%!important;
+    margin:0 auto!important;
+}
 
 #col_blog{
   width:0px!important;

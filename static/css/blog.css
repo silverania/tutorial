@@ -1,3 +1,8 @@
+#blog{
+    width:43%!important;
+    max-width:43%!important;
+    margin:0 auto!important;
+}
 
 #col_blog{
   width:0px!important;
@@ -76,7 +81,13 @@ margin:50px auto auto 15% !important;
     width:30px!important;
     height:auto;
   }
+}
 
+@media screen and (min-width: 414px) {
+[id^="img_user"]{
+  width:30px!important;
+  height:auto;
+}
 }
 
 textarea {
