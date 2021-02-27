@@ -69,11 +69,15 @@ margin:50px auto auto 15% !important;
 [id^="bh5_span"]{
   font-size:0.6rem!important;
 }
-
-
 }
 
+@media screen and (min-width: 1280px) {
+  [id^="img_user"]{
+    width:30px!important;
+    height:auto;
+  }
 
+}
 
 textarea {
   font-size:0.5rem;

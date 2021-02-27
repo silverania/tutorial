@@ -135,6 +135,12 @@ class Resp{
   }
 }
 
+class Profile{
+  constructor(author="anonimo",photo=""){
+    this.photo=photo
+  }
+}
+
 class Post{
   constructor(type="none",author="anonimo",title1){
     this.sent=false
@@ -519,8 +525,11 @@ $(document).ready(function(){
   var initial_y
   var y=0,s
   let mess=new Array()
-  let resp=new Array()
+  let resps=new Array()
   let post = new Array()
+  let profiles=new Array()
+  let z=0
+  let comments_json;
   //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
@@ -529,82 +538,85 @@ $(document).ready(function(){
     },
     dataType: 'json',
     success: function (data) {
-
-      let z=0
       s = cleanJson(data)
       try {
-      obj = JSON.parse(s);
-      //alert(obj)
-      }
-      catch(SyntaxError){
-         console.log("error in json!")
-      }
-      //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
-      var obj2 = JSON.parse(obj.data_comm);
-      var obj3 = JSON.parse(obj.resp);
-      //alert(obj3);
-      var obj4 = obj.photos
-      var obj5_photo = obj.profile;
-      var photoPost , photoResp
-      //console.log(obj.data_l5)
-      console.log(obj3)
-      //console.log(obj.data_l7)
-      //console.log(obj.data_l5)
-      var i=0
-      //initial_y=(parseInt(obj3.length))-1
-      for (i;i<=parseInt(obj2.length)-1;i=i+1){
-         mess.push(new Post("post",obj2[i].fields.authorname,obj2[i].fields.title))
-         mess[indexX].body=obj2[i].fields.body
-         mess[indexX].type="post"
-         mess[indexX].titled=obj2[i].fields.title
-         mess[indexX].publish=obj2[i].fields.publish
-         for (z=0;z<=obj5_photo.length-1;z=z+1){
-           if(obj5_photo[z].fields.user.username==obj2[i].fields.authorname){
-             if (obj2[i].fields.authorname=="anonimo"){
-               photoPost=obj5_photo
+        obj = JSON.parse(s);
+        comments_json = JSON.parse(obj.data_comm);// blog.comment
+        resps_json = JSON.parse(obj.resps);
+        profiles_json = JSON.parse(obj.profiles);
+        }
+        catch(SyntaxError){
+          console.log("error in json!")
+        }
+          //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
+
+          //alert(obj3);
+          //var obj4 = obj.photos
+          //var obj5_photo = obj.profile;
+          //var user_post_parsed=JSON.parse(obj5_photo);
+          //var user_pk=user_post_parsed.pk
+          var photoPost , photoResp
+          //console.log(obj.data_l5)
+
+          //console.log(obj.data_l7)
+          //console.log(obj.data_l5)
+          var i=0
+          //initial_y=(parseInt(obj3.length))-1
+          for (i;i<=comments_json.length-1;i=i+1){
+            for (z=0;z<=profiles_json.length-1;z=z+1){
+             // if(obj5_photo[z].fields.user==obj2[i].fields.author){
+               if(profiles_json[z].pk==comments_json[i].fields.author){
+                 profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
+                 mess.push(new Post("post",comments_json[i].fields.first_name,comments_json[i].fields.title))
+                 mess[indexX].body=comments_json[i].fields.body
+                 mess[indexX].type="post"
+                 mess[indexX].titled=comments_json[i].fields.title
+                 mess[indexX].publish=comments_json[i].fields.publish
+               }
+
              }
-             else{
-               photoPost=BASE_PHOTO_DIR+obj5_photo[z].fields.photo
+             // creo la textarea per il post e con l head .
+             if(mess[indexX].getTitle()){
+               var pa=new postArea(mess[indexX])
+               pa.id=id+1
+               idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
+           }
+           // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
+           for (y;y<=resps_json.length-1;y=y+1){
+             if(comments_json[i].pk==resps_json[y].fields.commento){
+               var resp=new Resp(resps_json[y].fields.authorname,resps_json[y].fields.body,resps_json[y].fields.publish,mess[indexX])
+               resp.type="resp"
+               mess[indexX].risposte.push(resp.body)
+               resp.titled="risposta a "+mess[indexX].titled
+               var paResp=new postArea(resp)
+               //la textarea viene creata nella funzione makeheadblog
+
+               // cerca autore in json user object
+               for (var z2=0;z2<=profiles_json.length-1;z2=z2+1){
+                 if(profiles_json[z2].fields.username==resps_json[y].fields.authorname){
+                   if (resps_json[y].fields.authorname=="anonimo"){
+                     photoResp=obj5_photo
+                   }
+                   else{
+                     photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
+                   }
+                 }
+               }
+               idtoPutResp=paResp.makeHeadBlog(resp,photoResp,paResp,resps_json[y].fields.authorname)
              }
            }
-         }
 
-        // creo la textarea per il post e con l head .
-        if(mess[indexX].getTitle()){
-          var pa=new postArea(mess[indexX])
-          pa.id=id+1
-      }
-      idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,obj2[i].fields.authorname)
-      // qui dovrei creare le risposte per il post specifico
-        for (y;y<=obj3.length-1;y=y+1){
-          if(obj2[i].pk==obj3[y].fields.commento){
-            var resp=new Resp(obj3[y].fields.authorname,obj3[y].fields.body,obj3[y].fields.publish,mess[indexX])
-            resp.type="resp"
-            mess[indexX].risposte.push(resp.body)
-            resp.titled="risposta a "+mess[indexX].titled
-            var paResp=new postArea(resp)
-            //la textarea viene creata nella funzione makeheadblog
-
-            // cerca autore in json user object
-            for (var z2=0;z2<=obj4.length-1;z2=z2+1){
-              if(obj4[z2].fields.username==obj3[y].fields.authorname){
-                if (obj3[y].fields.authorname=="anonimo"){
-                  photoResp=obj5_photo
-                }
-                else{
-                  photoResp=BASE_PHOTO_DIR+obj4[z2].fields.photo
-                }
-              }
-            }
-            idtoPutResp=paResp.makeHeadBlog(resp,photoResp,paResp,obj3[y].fields.authorname)
-          }
-        }
-
-        y=0
-        indexX=indexX+1
-      }
+           y=0
+           indexX=indexX+1
+           }
     }
-  });
+  }
+);
+
+         //i=obj5_photo.length
 
 
-});
+
+      // qui dovrei creare le risposte per il post specifico
+
+      });
