@@ -4,6 +4,19 @@
     margin:0 auto!important;
 }
 
+a{
+  text-decoration:none!important;
+  width:auto!important;
+}
+
+[id^=span_]:hover{
+    color:green;
+}
+
+#d_blog_reg{
+  float:right;
+}
+
 textarea {
   font-size:0.5em!important;
   color:black;

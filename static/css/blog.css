@@ -4,14 +4,22 @@
     margin:0 auto!important;
 }
 
+ul{
+  text-decoration:none;
+}
+
+#d_blog_reg{
+  float:right;
+}
+
 textarea {
   font-size:0.5em!important;
   color:black;
 }
 
-#d_post_title>span[id^="post_title"]{
+#d_post_title , span[id^="post_title"]{
 font-size:.5em!important;
-line-height:10px!important;
+line-height:1.5em!important;
 }
 
 #col_blog{
