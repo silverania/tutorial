@@ -151,6 +151,7 @@ class Post{
     this.risposte=new Array()
     this.publish=""
     this.tutorial=""
+    this.userPhoto=""
   }
   getTitle(){
     return this.titled
@@ -329,7 +330,7 @@ disableButton(button){
 create(){
   if(this.mess instanceof Post){
 if (this.mess.titled){
-  alert('titled')
+  alert('is Post')
   //  if(this.type=="post" ){
       $(this.postarea).animate({'width':'100%'},1000);
     }}
@@ -593,20 +594,22 @@ $(document).ready(function(){
              // if(obj5_photo[z].fields.user==obj2[i].fields.author){
                if(profiles_json[z].pk==comments_json[i].fields.author){
                  profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
-                 mess.push(new Post("post",comments_json[i].fields.first_name,comments_json[i].fields.title))
+                 mess.push(new Post("post",profiles_json[z].fields.user_name,comments_json[i].fields.title))
                  mess[indexX].body=comments_json[i].fields.body
                  mess[indexX].type="post"
                  mess[indexX].titled=comments_json[i].fields.title
                  mess[indexX].publish=getDateFromDjangoDate(comments_json[i].fields.publish)
+                 photoPost=BASE_PHOTO_DIR+profiles_json[z].fields.photo
+                 if(mess[indexX].getTitle()){
+                   var pa=new postArea(mess[indexX])
+                   pa.id=id+1
+                   idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
+               }
                }
 
              }
              // creo la textarea per il post e con l head .
-             if(mess[indexX].getTitle()){
-               var pa=new postArea(mess[indexX])
-               pa.id=id+1
-               idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
-           }
+
            // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
            for (y;y<=resps_json.length-1;y=y+1){
              if(comments_json[i].pk==resps_json[y].fields.commento){
