@@ -499,8 +499,33 @@ function makeModalWindow(mess=Object()){
       textAreaInDivInMain.value=""
     }
     });
-
 }
+
+function getDateFromDjangoDate(data){
+  let day=data.slice("8","10")
+  let month=data.slice("5","7")
+  month=getMonthFromData(month)
+  let year=data.slice("0","4")
+  let hour=data.slice("11","15")
+  alert (month);
+  //data=data.replace("T"," ore ")
+  data=day+"-"+month+"-"+year+" alle "+hour
+  return data
+}
+
+function getMonthFromData(mese){
+  switch(mese){
+
+    case "01": mese="Gennaio"
+    case "03": mese="Marzo"
+    case "02": mese="febbraio"
+
+    alert(mese)
+    return mese;
+  }
+}
+
+
 
 /* END MODAL  */
 function cleanJson(json){
@@ -572,7 +597,7 @@ $(document).ready(function(){
                  mess[indexX].body=comments_json[i].fields.body
                  mess[indexX].type="post"
                  mess[indexX].titled=comments_json[i].fields.title
-                 mess[indexX].publish=comments_json[i].fields.publish
+                 mess[indexX].publish=getDateFromDjangoDate(comments_json[i].fields.publish)
                }
 
              }

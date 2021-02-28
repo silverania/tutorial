@@ -63,11 +63,14 @@ def getPost(request):
         tu=Tutorial.objects.get(slug=tutorial)
         #tu_serialized=serializer(Tutorial.objects.filter(slug=tutorial))
         aggiornato=formatted_datetime
-        all_comments_for_page=Comment.objects.filter(tutorial=tu) # tutti i commenti sul tutorial
-        datac=list(all_comments_for_page)
 
-        data_comm=serializer(datac)
+
+        all_comments_for_page=Comment.objects.filter(tutorial=tu) # tutti i commenti sul tutorial
+        #for comment in all_comments_for_page:
+        #    comment.publish = formats.date_format(comment.publish, "SHORT_DATETIME_FORMAT")
+        datac=list(all_comments_for_page)
         comment_model_serialized=serializer(all_comments_for_page)
+        data_comm=serializer(datac)
         print("data comment Json format="+str(datac))
         print("comment_model_serialized="+str(comment_model_serialized))
         for comment in all_comments_for_page:
