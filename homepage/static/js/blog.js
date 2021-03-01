@@ -213,7 +213,6 @@ class postArea {
     }
   }
   else{
-    alert("else")
     makeModalWindow(this)
   }
 }
@@ -258,7 +257,6 @@ class postArea {
     divUserBlog.setAttribute("id","divuserblog_"+id.toString())
     this.mess=mess
     if(mess instanceof Resp){
-      alert("resp")
       spanInDivPostTitle.textContent=" | Risposta a :"+mess.post.titled
       //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
       divUserBlog.setAttribute("style","margin-left:20%")
@@ -330,7 +328,6 @@ disableButton(button){
 create(){
   if(this.mess instanceof Post){
 if (this.mess.titled){
-  alert('is Post')
   //  if(this.type=="post" ){
       $(this.postarea).animate({'width':'100%'},1000);
     }}
@@ -411,7 +408,6 @@ $(bbutton).click(function(){
       if(!(post.disabled==true)){
         post.msg=post.postarea.value
         $('#post_response').css("border", "1px solid grey")
-        alert("Post.title="+postTitle)
         if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
           mess.sent=true
         }
@@ -467,7 +463,6 @@ function makeModalWindow(mess=Object()){
   document.getElementById('but_confirm_title').onclick = function(event) {
     try{
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
-        alert("it good")
         validity=true
         mess.titled=textAreaInDivInMain.value
         instancePostarea(mess)
@@ -508,7 +503,6 @@ function getDateFromDjangoDate(data){
   month=getMonthFromData(month)
   let year=data.slice("0","4")
   let hour=data.slice("11","15")
-  alert (month);
   //data=data.replace("T"," ore ")
   data=day+"-"+month+"-"+year+" alle "+hour
   return data
@@ -516,12 +510,9 @@ function getDateFromDjangoDate(data){
 
 function getMonthFromData(mese){
   switch(mese){
-
     case "01": mese="Gennaio"
     case "03": mese="Marzo"
     case "02": mese="febbraio"
-
-    alert(mese)
     return mese;
   }
 }
@@ -593,6 +584,7 @@ $(document).ready(function(){
             for (z=0;z<=profiles_json.length-1;z=z+1){
              // if(obj5_photo[z].fields.user==obj2[i].fields.author){
                if(profiles_json[z].pk==comments_json[i].fields.author){
+                 alert(profiles_json[z].pk+"-"+comments_json[i].fields.author)
                  profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
                  mess.push(new Post("post",profiles_json[z].fields.user_name,comments_json[i].fields.title))
                  mess[indexX].body=comments_json[i].fields.body
@@ -609,7 +601,7 @@ $(document).ready(function(){
 
              }
              // creo la textarea per il post e con l head .
-
+             z=0
            // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
            for (y;y<=resps_json.length-1;y=y+1){
              if(comments_json[i].pk==resps_json[y].fields.commento){
