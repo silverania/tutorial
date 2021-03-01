@@ -26,6 +26,8 @@ def getLink(title):
 def tutorial_detail(request, **kwargs):
     users=[]
     arguments=False
+    user_string=''
+    author_tutorial=''
     print("entry in tutorial_detail view Kwargs="+str(kwargs.items()))
     if request.user.is_authenticated:
         login=True
@@ -36,9 +38,13 @@ def tutorial_detail(request, **kwargs):
     #prendo user di cui esiste almeno un tutorial, per creare il leftmenu
     for tutorial in tutorial_all:
         print("Tutorial author"+str(tutorial.author))
-        autore=str(tutorial.author)
+        author_tutorial=str(tutorial.author).replace(" ","")
         for profile in Profile.objects.all():
-            if (profile.id==tutorial.id):
+            print ("PROFILE FIRST NAME:"+str(profile.first_name))
+            user_string=str(profile.first_name)
+            user_string=user_string.replace(" ","")
+            print(user_string+" è uguale a "+author_tutorial)
+            if user_string==author_tutorial:
                 print("USER del Tutorial"+"mario")
                 if not profile in users:
                     try:
@@ -48,7 +54,7 @@ def tutorial_detail(request, **kwargs):
                         print ("error add profile in user's list")
         tutorials_user=users
         print("Users CON ALMENO U NN TUTORIAL:"+str(tutorials_user))
-    users=Profile.objects.all()
+    #users=Profile.objects.all()
     try:
      for key,value in kwargs.items():
         arguments=True
