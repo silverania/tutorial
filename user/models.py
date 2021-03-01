@@ -11,8 +11,6 @@ class Profile(models.Model):
     photo = models.ImageField(default="settings.MEDIA_URL+str('images/user-secret-solid.svg')",upload_to='users/%Y/%m/%d/',blank=True,null=True)
     first_name = models.CharField(max_length=100,default="anonimo")
     last_name = models.CharField(max_length=100,blank=True,null=True)
-
-
     class Meta:
         unique_together = [['first_name', 'last_name']]
     def __str__(self):

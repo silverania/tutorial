@@ -55,6 +55,8 @@ def getPost(request):
     data_resp=[]
     comments=Comment()
     risposte=[]
+    risposte_serialized=[]
+    profiles_list=[]
     comments_in_database=Comment.objects.all()
     photo=getLoginName(request)
 
@@ -69,8 +71,8 @@ def getPost(request):
         #for comment in all_comments_for_page:
         #    comment.publish = formats.date_format(comment.publish, "SHORT_DATETIME_FORMAT")
         datac=list(all_comments_for_page)
-        comment_model_serialized=serializer(all_comments_for_page)
         data_comm=serializer(datac)
+        comment_model_serialized=serializer(all_comments_for_page)
         print("data comment Json format="+str(datac))
         print("comment_model_serialized="+str(comment_model_serialized))
         for comment in all_comments_for_page:
@@ -82,10 +84,14 @@ def getPost(request):
                 t2=t2+t
             except UnboundLocalError :
                 t2=t
-        print("RISPOSTE JSON SERIALIZED :"+str(t2)+"PROFILKE_LIST="+str(profile_list))
-        risposte_serialized=serializer(t2)
-        profiles=list(Profile.objects.all())
-        profiles_list=serializer(profiles)
+                break
+        try:
+            print("RISPOSTE JSON SERIALIZED :"+str(t2)+"PROFILKE_LIST="+str(profile_list))
+            risposte_serialized=serializer(t2)
+            profiles=list(Profile.objects.all())
+            profiles_list=serializer(profiles)
+        except UnboundLocalError:
+            print("Nessun commento per la pagina !")
         #data_l6=data_l6+list(comments.risposte.all())
 
         #    for ii in i.risposte.all():

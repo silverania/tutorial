@@ -17,11 +17,14 @@ import datetime
 
 import os
 
+
+
 def getLink(title):
     template=tutorial.title.replace(" ","_").lower()+".html"
     return template
 
 def tutorial_detail(request, **kwargs):
+    users=[]
     arguments=False
     print("entry in tutorial_detail view Kwargs="+str(kwargs.items()))
     if request.user.is_authenticated:
@@ -30,6 +33,21 @@ def tutorial_detail(request, **kwargs):
         login=False
     tutorial_all = Tutorial.objects.all()
     categorie=Category.objects.all()
+    #prendo user di cui esiste almeno un tutorial, per creare il leftmenu
+    for tutorial in tutorial_all:
+        print("Tutorial author"+str(tutorial.author))
+        autore=str(tutorial.author)
+        for profile in Profile.objects.all():
+            if (profile.id==tutorial.id):
+                print("USER del Tutorial"+"mario")
+                if not profile in users:
+                    try:
+                        users.append(profile)
+                        print("APPESO PROFILE IN USERS="+str(users))
+                    except UnboundLocalError:
+                        print ("error add profile in user's list")
+        tutorials_user=users
+        print("Users CON ALMENO U NN TUTORIAL:"+str(tutorials_user))
     users=Profile.objects.all()
     try:
      for key,value in kwargs.items():

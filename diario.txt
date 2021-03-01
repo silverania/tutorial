@@ -12,4 +12,9 @@ errore quando migro il databes : duplicate post_id
 la variabile slug nel model Comment viene autocreata male
 bisogna assegnare un valore coerente alla variabile post della classe Resp
 
-A riga 80 blog.views.py è cos i pazz chell che agg gfatt SO NU MOSTR 
+A riga 80 blog.views.py è cos i pazz chell che agg gfatt SO NU MOSTR
+
+
+1 marzo 2021
+
+nella homepage , il left menu deve visualizzare users di cui esiste almeno un tutorial
