@@ -40,10 +40,8 @@ def tutorial_detail(request, **kwargs):
         print("Tutorial author"+str(tutorial.author))
         author_tutorial=str(tutorial.author).replace(" ","")
         for profile in Profile.objects.all():
-            print ("PROFILE FIRST NAME:"+str(profile.first_name))
             user_string=str(profile.first_name)
             user_string=user_string.replace(" ","")
-            print(user_string+" è uguale a "+author_tutorial)
             if user_string==author_tutorial:
                 print("USER del Tutorial"+"mario")
                 if not profile in users:
