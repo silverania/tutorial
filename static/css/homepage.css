@@ -124,7 +124,10 @@ margin-right:5px;
 }
 #d_aside_tutorial{
   box-sizing:content-box;
+  width:200%!important;
+  height:auto;
 }
+
 
 #d_tutorial_section{
   display:none;

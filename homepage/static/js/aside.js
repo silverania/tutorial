@@ -16,8 +16,8 @@ $(document).ready(function(){
   var toHCenter=$(document).innerWidth()/2;
   var toBegin="0px";
   var divaside=document.getElementById('d_divaside');
-  table_tutorial_WIDTH=table_tutorial.css('width');
-  table_tutorial_WIDTH_initial_position=(parseInt(table_tutorial_WIDTH))+15;
+  var table_tutorial_WIDTH=table_tutorial.css('width');
+  var table_tutorial_WIDTH_initial_position=(parseInt(table_tutorial_WIDTH))+15;
   table_tutorial.css('margin-left', -table_tutorial_WIDTH_initial_position );
 
   function showTutorial() {
@@ -41,11 +41,14 @@ $(document).ready(function(){
 );
   // END
 
+/* Imposto la base del menu in base alla base dello schermo */
 
 /*Se la table tutorial è in posizione left=0 vuol dire che è visibile , quindi l 'evento click su angle , la nascondera
 di nuovo ponendola in posizione margin-left= -510px' .......e viceversa
 */
 $('#asidebar').click(function(event){
+  $("li[id^='option_autori']").style.fontSize("2rem")
+  //$("li[id^='tutorial_id_']").style.minWidth="1000px!important"
   table_tutorial.css('display','block');
   table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
   off=table_tutorial_width+18;
@@ -177,9 +180,6 @@ function deleteTutorial() {
     exist=1
   }
 }
-else{
-}
-  show(name)
   return exist
 }
 

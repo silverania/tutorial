@@ -58,11 +58,11 @@
 
 
          <div id="d_tutorial_section">
-    <ul  class="list-group select_tutorial" id="selecFormAutori">
+    <ul  class="w-100 list-group select_tutorial" id="selecFormAutori">
 
 {% for t in users %}
-      <li  onclick="show(this.innerHTML);" id="option_autori_{{t.user.username}}" value="{{t.user.username}}" class="list-group-item option_autori">
-      {{t.user.username}}</li>
+      <li  onclick="show(this.innerHTML)" id="option_autori_{{t.user.username}}" value="{{t.user.username}}" class="list-group-item option_autori " >{{t.user.username}}
+    </li>
       {% endfor %}
     </ul>
   </div>
@@ -96,6 +96,7 @@ function show(e){
 }
 function getIndex(e) {
   name=e
+  var width=window.innerWidth;
   var autore=e.replace(/\s/g,'');
   var tag=document.getElementById('ul_in_selecFormAutori');
   if (exist==0){
@@ -109,9 +110,13 @@ function getIndex(e) {
     optio.setAttribute("id","tutorial_id_{{tut.id}}")
     //$('#ul_in_selecFormAutori').css("display","block")
     title="{{tut.title}}";
-    url="{{tut.get_absolute_url}}";
+    base=width/2;
+    base=base.toString()+"px";
+    var url="{{tut.get_absolute_url}}"
     optio.setAttribute("class","list-group-item li_tutorials");
-    optio.setAttribute("onclick","window.open(url);")
+    optio.setAttribute("onclick","window.open("+"\""+url+"\""+")");
+    optio.setAttribute('style','font-size:1rem');
+    optio.setAttribute('style','width:'+base.toString());
     //optio.value=url;
     optio.innerHTML = title;
     tag.appendChild(optio);

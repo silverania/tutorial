@@ -94,7 +94,6 @@ def tutorial_detail(request, **kwargs):
         photo=settings.MEDIA_URL+str(user.photo)
     template=tutorial.slug.replace(" ","_").lower()+".html"
     print("Requestpath & template="+str(request.path+template))
-
     vis=Visite()
     try:
         lastobj=Visite.objects.latest('visite')

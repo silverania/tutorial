@@ -430,7 +430,7 @@ tr{
  }
 
 #selecFormAutori,#ul_in_selecFormAutori{
-  width:38%;
+  width:80%!important;
   margin:0!important;;
 }
 
