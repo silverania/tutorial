@@ -27,6 +27,14 @@ font-size:.5em!important;
 line-height:1.5em!important;
 }
 
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%!important; /* Could be more or less, depending on screen size */
+}
+
 #col_blog{
   width:0px!important;
 }
@@ -97,15 +105,15 @@ margin:50px auto auto 15% !important;
 [id^="bh5_span"]{
   font-size:0.6rem!important;
 }
+.modal-content {
+  width: 33%!important; /* Could be more or less, depending on screen size */
+}
 }
 
 @media screen and (min-width: 1280px) {
   [id^="img_user"]{
     width:30px!important;
     height:auto;
-  }
-  .modal-content{
-    width:25%!important;
   }
   #p_text{
     width:auto%!important;
@@ -119,12 +127,21 @@ margin:50px auto auto 15% !important;
 }
 }
 
-@media screen and (max-width: 500px) {
+@media screen and (max-width: 780px) {
 #blog{
     width:100%!important;
     max-width:100%!important;
     margin:0 auto!important;
 }
+.modal-content {
+  width: 55%!important; /* Could be more or less, depending on screen size */
+}
+}
+
+@media screen and (max-width: 414px) {
+  .modal-content {
+    width: 100%!important; /* Could be more or less, depending on screen size */
+  }
 }
 
 .blog_title,#blog_title{
@@ -171,13 +188,7 @@ button:focus{
 }
 
 /* Modal Content/Box */
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto; /* 15% from the top and centered */
-  padding: 20px;
-  border: 1px solid #888;
-  width: 50%; /* Could be more or less, depending on screen size */
-}
+
 
 /* The Close Button */
 .close {

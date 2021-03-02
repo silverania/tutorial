@@ -151,6 +151,7 @@ class Post{
     this.risposte=new Array()
     this.publish=""
     this.tutorial=""
+    this.userPhoto=""
   }
   getTitle(){
     return this.titled
@@ -212,7 +213,6 @@ class postArea {
     }
   }
   else{
-    alert("else")
     makeModalWindow(this)
   }
 }
@@ -257,7 +257,6 @@ class postArea {
     divUserBlog.setAttribute("id","divuserblog_"+id.toString())
     this.mess=mess
     if(mess instanceof Resp){
-      alert("resp")
       spanInDivPostTitle.textContent=" | Risposta a :"+mess.post.titled
       //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
       divUserBlog.setAttribute("style","margin-left:20%")
@@ -329,7 +328,6 @@ disableButton(button){
 create(){
   if(this.mess instanceof Post){
 if (this.mess.titled){
-  alert('titled')
   //  if(this.type=="post" ){
       $(this.postarea).animate({'width':'100%'},1000);
     }}
@@ -410,7 +408,6 @@ $(bbutton).click(function(){
       if(!(post.disabled==true)){
         post.msg=post.postarea.value
         $('#post_response').css("border", "1px solid grey")
-        alert("Post.title="+postTitle)
         if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
           mess.sent=true
         }
@@ -466,7 +463,6 @@ function makeModalWindow(mess=Object()){
   document.getElementById('but_confirm_title').onclick = function(event) {
     try{
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
-        alert("it good")
         validity=true
         mess.titled=textAreaInDivInMain.value
         instancePostarea(mess)
@@ -499,8 +495,29 @@ function makeModalWindow(mess=Object()){
       textAreaInDivInMain.value=""
     }
     });
-
 }
+
+function getDateFromDjangoDate(data){
+  let day=data.slice("8","10")
+  let month=data.slice("5","7")
+  month=getMonthFromData(month)
+  let year=data.slice("0","4")
+  let hour=data.slice("11","15")
+  //data=data.replace("T"," ore ")
+  data=day+"-"+month+"-"+year+" alle "+hour
+  return data
+}
+
+function getMonthFromData(mese){
+  switch(mese){
+    case "01": mese="Gennaio"
+    case "03": mese="Marzo"
+    case "02": mese="febbraio"
+    return mese;
+  }
+}
+
+
 
 /* END MODAL  */
 function cleanJson(json){
@@ -567,21 +584,24 @@ $(document).ready(function(){
             for (z=0;z<=profiles_json.length-1;z=z+1){
              // if(obj5_photo[z].fields.user==obj2[i].fields.author){
                if(profiles_json[z].pk==comments_json[i].fields.author){
+                 alert(profiles_json[z].pk+"-"+comments_json[i].fields.author)
                  profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
-                 mess.push(new Post("post",comments_json[i].fields.first_name,comments_json[i].fields.title))
+                 mess.push(new Post("post",profiles_json[z].fields.user_name,comments_json[i].fields.title))
                  mess[indexX].body=comments_json[i].fields.body
                  mess[indexX].type="post"
                  mess[indexX].titled=comments_json[i].fields.title
-                 mess[indexX].publish=comments_json[i].fields.publish
+                 mess[indexX].publish=getDateFromDjangoDate(comments_json[i].fields.publish)
+                 photoPost=BASE_PHOTO_DIR+profiles_json[z].fields.photo
+                 if(mess[indexX].getTitle()){
+                   var pa=new postArea(mess[indexX])
+                   pa.id=id+1
+                   idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
+               }
                }
 
              }
              // creo la textarea per il post e con l head .
-             if(mess[indexX].getTitle()){
-               var pa=new postArea(mess[indexX])
-               pa.id=id+1
-               idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
-           }
+             z=0
            // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
            for (y;y<=resps_json.length-1;y=y+1){
              if(comments_json[i].pk==resps_json[y].fields.commento){
