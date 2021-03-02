@@ -78,7 +78,7 @@ def tutorial_detail(request, **kwargs):
             publish__year=year,slug=slug)
         except UnboundLocalError :
             print("ECCEZIONE : prendo l' ultimo tutorial scritto! ")
-    tutorial=Tutorial.objects.latest('publish')
+            tutorial=Tutorial.objects.latest('publish')
     user=tutorial.author
     autore=str(user)
     photo=settings.MEDIA_URL+str(user.photo)
@@ -86,13 +86,14 @@ def tutorial_detail(request, **kwargs):
     #print("anno?="+str(tutorial.publish.year)+str(tutorial.publish.day)+"autor="+str(tutorial.author)+"photo="+str(photo))
     #print("COMMENTI="+str(tutorial.all_comments.all()))
 
-    if '' in request.path:
+    if not request.path:
+        print("request PATH VUOTA")
         tutorial=Tutorial.objects.latest('publish')
         user=tutorial.author
         autore=str(user)
         photo=settings.MEDIA_URL+str(user.photo)
     template=tutorial.slug.replace(" ","_").lower()+".html"
-    print("template="+template)
+    print("Requestpath & template="+str(request.path+template))
 
     vis=Visite()
     try:
