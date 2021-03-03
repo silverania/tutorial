@@ -47,6 +47,7 @@ $(document).ready(function(){
 di nuovo ponendola in posizione margin-left= -510px' .......e viceversa
 */
 $('#asidebar').click(function(event){
+  $("li[id^='option_autori']").style.fontSize("2rem")
   //$("li[id^='tutorial_id_']").style.minWidth="1000px!important"
   table_tutorial.css('display','block');
   table_tutorial_width=(parseInt(table_tutorial.css('width'),10));
@@ -179,9 +180,6 @@ function deleteTutorial() {
     exist=1
   }
 }
-else{
-}
-  show(name)
   return exist
 }
 

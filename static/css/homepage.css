@@ -124,10 +124,7 @@ margin-right:5px;
 }
 #d_aside_tutorial{
   box-sizing:content-box;
-  width:200%!important;
-  height:auto;
 }
-
 
 #d_tutorial_section{
   display:none;
@@ -433,7 +430,7 @@ tr{
  }
 
 #selecFormAutori,#ul_in_selecFormAutori{
-  width:38%;
+  width:80%!important;
   margin:0!important;;
 }
 
@@ -472,10 +469,10 @@ tr{
   display:none;
 }
 #s_title{
-  font-size:0.4rem;
+  font-size:1rem;
 }
 #s_title_2{
-  font-size:0.6rem;
+  font-size:2rem;
 }
 
 #d_head > h4 {
