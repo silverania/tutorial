@@ -243,10 +243,9 @@ li #s_center_menu{
   font-size:6vw;
 }
 [id^=s_leftmenu]{
-  font-size:1rem;
+  font-size:0.7rem;
   color:white;
 }
-
 #topnav{
   display:none;
 }
@@ -824,6 +823,10 @@ code#apt_install_build{
  }
  .fa-comments,#s_blog{
    font-size:1.6rem;
+ }
+ [id^=s_leftmenu]{
+   font-size:1rem;
+   color:white;
  }
 }
 
