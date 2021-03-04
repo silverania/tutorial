@@ -120,11 +120,8 @@ function createSectionDivSpan(parent){
   divFormChild.appendChild(bbutton)
 }
 
-
-
-
 class Resp{
-  constructor(author,body,publish,post){
+  constructor(author,body,publish,post,photo){
     this.sent=false
     this.author=author
     this.post=post
@@ -132,6 +129,7 @@ class Resp{
     this.titled=""
     this.type=post.type
     this.publish=publish
+    this.photo=photo
   }
 }
 
@@ -142,16 +140,17 @@ class Profile{
 }
 
 class Post{
-  constructor(type="none",author="anonimo",title1){
+  constructor(type="none",author="anonimo",title1,comment,date,photo){
     this.sent=false
     this.type=type
     this.author=author  //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
             //console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
     this.titled=title1
     this.risposte=new Array()
-    this.publish=""
-    this.tutorial=""
-    this.userPhoto=""
+    this.body=comment
+    this.titled=title1
+    this.publish=getDateFromDjangoDate(date)
+    this.photo=photo
   }
   getTitle(){
     return this.titled
@@ -190,9 +189,6 @@ class Post{
 }
 }
 
-
-
-
 class postArea {
   constructor(post=Object()){
     this.postarea=document.createElement("TEXTAREA");
@@ -216,7 +212,7 @@ class postArea {
     makeModalWindow(this)
   }
 }
-  makeHeadBlog(mess="",userPhoto,post,datePostResp){
+  makeHeadBlog(mess,post){
     id=post.id
     //divAfterMainSection.setAttribute("id","blog_title");
     //divAfterMainSection.setAttribute("style","width:100%");
@@ -230,12 +226,12 @@ class postArea {
     //var bSpanChild=document.createElement("SPAN");
     var tagUserImg=document.createElement("IMG");
     tagUserImg.setAttribute("style","border-radius:50%")
-    tagUserImg.setAttribute("src",userPhoto)
-    spanUserName.textContent=" | "+mess.publish
+    tagUserImg.setAttribute("src",mess.photo)
+    spanUserName.textContent=" | "+mess.author
 
     //divBlog.setAttribute("id","divblog_"+id.toString())
     divUserBlog.appendChild(tagUserImg)
-    bH5.textContent=datePostResp
+    bH5.textContent=mess.publish
     spanUserName.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("id","post_title_"+id)
@@ -586,16 +582,12 @@ $(document).ready(function(){
                if(profiles_json[z].pk==comments_json[i].fields.author){
                  alert(profiles_json[z].pk+"-"+comments_json[i].fields.author)
                  profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
-                 mess.push(new Post("post",profiles_json[z].fields.user_name,comments_json[i].fields.title))
-                 mess[indexX].body=comments_json[i].fields.body
-                 mess[indexX].type="post"
-                 mess[indexX].titled=comments_json[i].fields.title
-                 mess[indexX].publish=getDateFromDjangoDate(comments_json[i].fields.publish)
-                 photoPost=BASE_PHOTO_DIR+profiles_json[z].fields.photo
+                 mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,comments_json[i].fields.publish,BASE_PHOTO_DIR+profiles_json[z].fields.photo))
+
                  if(mess[indexX].getTitle()){
                    var pa=new postArea(mess[indexX])
                    pa.id=id+1
-                   idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
+                   idtoPut=pa.makeHeadBlog(mess[indexX],pa)
                }
                }
 
@@ -605,31 +597,28 @@ $(document).ready(function(){
            // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
            for (y;y<=resps_json.length-1;y=y+1){
              if(comments_json[i].pk==resps_json[y].fields.commento){
-               var resp=new Resp(resps_json[y].fields.authorname,resps_json[y].fields.body,resps_json[y].fields.publish,mess[indexX])
-               resp.type="resp"
-               mess[indexX].risposte.push(resp.body)
-               resp.titled="risposta a "+mess[indexX].titled
-               var paResp=new postArea(resp)
-               //la textarea viene creata nella funzione makeheadblog
-
-               // cerca autore in json user object
                for (var z2=0;z2<=profiles_json.length-1;z2=z2+1){
-                 if(profiles_json[z2].fields.username==resps_json[y].fields.authorname){
-                   if (resps_json[y].fields.authorname=="anonimo"){
+                 if(profiles_json[z2].pk==resps_json[y].fields.author){
+                   if (resps_json[y].fields.author=="anonimo"){
                      photoResp=obj5_photo
                    }
                    else{
                      photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                    }
+                   var resp=new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,resps_json[y].fields.publish,mess[indexX],photoResp)
+                   resp.type="resp"
+                   mess[indexX].risposte.push(resp.body)
+                   resp.titled="risposta a "+mess[indexX].titled
+                   var paResp=new postArea(resp)
+                   idtoPutResp=paResp.makeHeadBlog(resp,paResp)
                  }
                }
-               idtoPutResp=paResp.makeHeadBlog(resp,photoResp,paResp,resps_json[y].fields.authorname)
              }
            }
+         }
+         y=0
+         indexX=indexX+1
 
-           y=0
-           indexX=indexX+1
-           }
     }
   }
 );

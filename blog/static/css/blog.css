@@ -17,6 +17,11 @@ a{
   float:right;
 }
 
+[id^="img_user"]{
+  width:30px!important;
+  height:30px!important;
+}
+
 textarea {
   font-size:0.5em!important;
   color:black;
@@ -90,10 +95,6 @@ margin:50px auto auto 15% !important;
   .fa-comments,#s_blog{
     font-size:1.5rem;
   }
-  [id^="img_user"]{
-    width:30px!important;
-    height:auto;
-  }
 
   #s_blog_icon + #span_blog_entra,#span_entra,#span_reg,#span_esci{
     font-size:0.8rem;
@@ -111,20 +112,14 @@ margin:50px auto auto 15% !important;
 }
 
 @media screen and (min-width: 1280px) {
-  [id^="img_user"]{
-    width:30px!important;
-    height:auto;
-  }
+
   #p_text{
     width:auto%!important;
   }
 }
 
 @media screen and (min-width: 414px) {
-[id^="img_user"]{
-  width:30px!important;
-  height:auto;
-}
+
 }
 
 @media screen and (max-width: 780px) {

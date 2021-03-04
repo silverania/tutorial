@@ -67,7 +67,7 @@ def getPost(request):
         aggiornato=formatted_datetime
 
 
-        all_comments_for_page=Comment.objects.filter(tutorial=tu) # tutti i commenti sul tutorial
+        all_comments_for_page=Comment.objects.filter(tutorial=tu)[:4] # tutti i commenti sul tutorial
         #for comment in all_comments_for_page:
         #    comment.publish = formats.date_format(comment.publish, "SHORT_DATETIME_FORMAT")
         datac=list(all_comments_for_page)
