@@ -104,6 +104,8 @@ margin:50px auto auto 15% !important;
   }
 
 [id^="bh5_span"]{
+  width:100%;
+  height:auto;
   font-size:0.6rem!important;
 }
 .modal-content {

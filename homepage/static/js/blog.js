@@ -222,15 +222,20 @@ class postArea {
     var divUserBlog=document.createElement("DIV");
     var spanUserName=document.createElement("SPAN");
     var bH5=document.createElement("span")
+    var divContainerHead=document.createElement("DIV")
     //var bSpan=document.createElement("SPAN");
     //var bSpanChild=document.createElement("SPAN");
     var tagUserImg=document.createElement("IMG");
+    divContainerHead.setAttribute("id","d_head_blog")
+    divContainerHead.setAttribute("style","width:100%")
+    divContainerHead.setAttribute("style","height:auto")
     tagUserImg.setAttribute("style","border-radius:50%")
     tagUserImg.setAttribute("src",mess.photo)
     spanUserName.textContent=" | "+mess.author
 
     //divBlog.setAttribute("id","divblog_"+id.toString())
-    divUserBlog.appendChild(tagUserImg)
+    divUserBlog.appendChild(divContainerHead)
+    divContainerHead.appendChild(tagUserImg)
     bH5.textContent=mess.publish
     spanUserName.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
@@ -240,7 +245,7 @@ class postArea {
     bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
     bH5.setAttribute("id","bh5_span"+id.toString())
     bH5.appendChild(spanUserName)
-    divUserBlog.appendChild(bH5)
+    divContainerHead.appendChild(bH5)
     divUserBlog.appendChild(divPostTitle)
     //divUserBlog.appendChild(bSpan)
     //bSpan.appendChild(bSpanChild)
@@ -589,6 +594,7 @@ $(document).ready(function(){
                    pa.id=id+1
                    idtoPut=pa.makeHeadBlog(mess[indexX],pa)
                }
+               break;
                }
 
              }
@@ -615,9 +621,10 @@ $(document).ready(function(){
                }
              }
            }
+           y=0
+           indexX=indexX+1
          }
-         y=0
-         indexX=indexX+1
+
 
     }
   }
