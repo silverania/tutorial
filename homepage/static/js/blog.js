@@ -595,7 +595,7 @@ $(document).ready(function(){
              // creo la textarea per il post e con l head .
              z=0
            // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
-           for (y;y<=resps_json.length-1;y=y+1){
+           for (y=resps_json.length-1;y>=0;y=y-1){
              if(comments_json[i].pk==resps_json[y].fields.commento){
                for (var z2=0;z2<=profiles_json.length-1;z2=z2+1){
                  if(profiles_json[z2].pk==resps_json[y].fields.author){
