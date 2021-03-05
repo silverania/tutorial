@@ -2,6 +2,8 @@ const MAX_TEXTAREA_NUMBER=21
 const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
+var paResp=new Array()
+var paPost=new Array()
 var id=0
 var el
 var padre
@@ -121,15 +123,15 @@ function createSectionDivSpan(parent){
 }
 
 class Resp{
-  constructor(author,body,publish,post,photo){
+  constructor(author,body,publish,post,photo,titolo){
     this.sent=false
     this.author=author
     this.post=post
     this.body=body
-    this.titled=""
-    this.type=post.type
+    this.type=post
     this.publish=getDateFromDjangoDate(publish)
     this.photo=photo
+    this.titled=titolo
   }
 }
 
@@ -190,20 +192,22 @@ class Post{
 }
 
 class postArea {
-  constructor(post=Object()){
+  constructor(post){
     this.postarea=document.createElement("TEXTAREA");
+    this.id=id+1
     var mess=""
    if (post.type=="resp"){
       this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
-      this.id=id+1
       console.log("textarea di resposta")
       this.postarea.value=post.body
     }
     else if  (post.type=="post"){
-    this.postarea.setAttribute("id","post_"+loginis+"_"+id)
-    this.empty=true
-    this.disabled=false
-    this.postarea.value=post.body
+      let x;
+      x = this.postarea.setAttribute("id","post_"+loginis+"_"+id)
+      var thisid=this.postarea.id
+      this.empty=true
+      this.enable()
+      this.postarea.value=post.body
     if (this.postarea.value==""){
       this.postarea.setAttribute("style","border:solid 2px orange;")
     }
@@ -211,7 +215,19 @@ class postArea {
   else{
     makeModalWindow(this)
   }
+
 }
+
+
+
+//  $(this.postarea.id).addEventListener('keydown', function (e){
+//  if(this.hasScrollBar()){
+//    alert("yes scroll")
+//  }
+//  else{
+//    alert("no scrolling !")
+//  }
+//  }, false);
   makeHeadBlog(mess,post){
     id=post.id
     //divAfterMainSection.setAttribute("id","blog_title");
@@ -359,6 +375,14 @@ disable(){
   this.disabled=true
   this.postarea.setAttribute('disabled','true')
 }
+enable(){
+  this.disabled=false
+  this.postarea.setAttribute('disabled','false')
+}
+/* ogni volta che si verifica keydown controllo l' altezza per adattarla */
+resizeArea(){
+
+  }
 }
 
 
@@ -548,6 +572,7 @@ $(document).ready(function(){
   let indexX=0
   var initial_y
   var y=0,s
+  let q=0
   let mess=new Array()
   let resps=new Array()
   let post = new Array()
@@ -595,9 +620,8 @@ $(document).ready(function(){
                  mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,comments_json[i].fields.publish,BASE_PHOTO_DIR+profiles_json[z].fields.photo))
 
                  if(mess[indexX].getTitle()){
-                   var pa=new postArea(mess[indexX])
-                   pa.id=id+1
-                   idtoPut=pa.makeHeadBlog(mess[indexX],pa)
+                   paPost.push(new postArea(mess[indexX]))
+                   paPost[indexX].makeHeadBlog(mess[indexX],paPost[indexX])
                }
                break;
                }
@@ -616,18 +640,27 @@ $(document).ready(function(){
                    else{
                      photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                    }
-                   var resp=new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,resps_json[y].fields.publish,mess[indexX],photoResp)
-                   resp.type="resp"
-                   mess[indexX].risposte.push(resp.body)
-                   resp.titled="risposta a "+mess[indexX].titled
-                   var paResp=new postArea(resp)
-                   idtoPutResp=paResp.makeHeadBlog(resp,paResp)
+                   resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,resps_json[y].fields.publish,"resp",photoResp,"risposta a "+mess[indexX].titled))
+                   mess[indexX].risposte.push(resps[q].body)
+                   paResp.push(new postArea(resps[q]))
+                   idtoPutResp=paResp[q].makeHeadBlog(resps[q],paResp[q])
+                   $('\'#'+paResp[q].postarea.id+'\'').addEventListener('keydown', function (e){
+                     if(this.hasScrollBar()){
+                       alert("yes scroll")
+                     }
+                     else{
+                       alert("no scrolling !")
+                     }
+                     },false)
+
                  }
                }
              }
+             q=q+1
            }
            y=0
            indexX=indexX+1
+           q=0
          }
 
 
