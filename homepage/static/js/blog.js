@@ -128,7 +128,7 @@ class Resp{
     this.body=body
     this.titled=""
     this.type=post.type
-    this.publish=publish
+    this.publish=getDateFromDjangoDate(publish)
     this.photo=photo
   }
 }
@@ -256,6 +256,11 @@ class postArea {
     tagUserImg.setAttribute("id","img_user_"+id.toString())
     spanUserName.setAttribute("id","span_user_"+id.toString())
     divUserBlog.setAttribute("id","divuserblog_"+id.toString())
+    if(divUserBlog.id=="divuserblog_1"){
+      divUserBlog.setAttribute("style","margin-top:10%")
+    }
+    else {
+      divUserBlog.setAttribute("style","margin-top:5%")}
     this.mess=mess
     if(mess instanceof Resp){
       spanInDivPostTitle.textContent=" | Risposta a :"+mess.post.titled
