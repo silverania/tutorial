@@ -63,6 +63,10 @@ li:hover{
   cursor:pointer;
 }
 
+#col-header{
+    margin-top:3%;
+}
+
 progress#progressbar{
 position:fixed;
 width:100%;
