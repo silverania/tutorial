@@ -633,11 +633,11 @@ $(document).ready(function(){
                 paResp.push(new postArea(resps[q]))
                 idtoPutResp=paResp[q].makeHeadBlog(resps[q],paResp[q])
                 $('#'+paResp[q].postarea.id).keydown(function(e){
-                  if(e.target.scrollHeight > e.target.offsetHeight) {
-                    alert(e.target.offsetHeight+"-"+e.target.scrollHeight)
-                  }
-                  else{
-                      alert(e.target.scrollHeight+"-2"+e.target.offsetHeight)
+                  alert('sdf')
+                  var newHeight='height:'+e.target.scrollHeight+'px'
+                  while(e.target.scrollHeight > e.target.offsetHeight) {
+                    elementID=e.target.id
+                      e.target.setAttribute('style', '500px;')
                   }
                 })
               }
