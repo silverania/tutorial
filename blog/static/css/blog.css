@@ -19,13 +19,17 @@ a{
 }
 
 #d_head_blog{
- margin-top:2%;  
+ margin-top:2%;
+}
+
+[id^=bh5_span]{
+    font-size:.7rem;
 }
 
 [id^=button_risposta_post]{
     width:100%;
     height:auto;
-    border:2px solid orange;
+    border:2px solid blue;
     margin:0 auto;
 }
 
@@ -40,6 +44,7 @@ textarea {
 }
 
 #d_post_title , span[id^="post_title"]{
+margin-bottom:10px;
 font-size:.5em!important;
 line-height:1.5em!important;
 }

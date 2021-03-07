@@ -229,8 +229,8 @@ class postArea {
   //    alert("no scrolling !")
   //  }
   //  }, false);
-  makeHeadBlog(mess,post){
-    id=post.id
+  makeHeadBlog(mess,postarea,post){
+    id=postarea.id
     //divAfterMainSection.setAttribute("id","blog_title");
     //divAfterMainSection.setAttribute("style","width:100%");
     //var divBlog=document.createElement("DIV");
@@ -248,7 +248,7 @@ class postArea {
     divContainerHead.setAttribute("style","height:auto")
     tagUserImg.setAttribute("style","border-radius:50%")
     tagUserImg.setAttribute("src",mess.photo)
-    spanUserName.textContent=" | "+mess.author
+    spanUserName.textContent=" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" scrive :"
 
     //divBlog.setAttribute("id","divblog_"+id.toString())
     divUserBlog.appendChild(divContainerHead)
@@ -280,7 +280,7 @@ class postArea {
       divUserBlog.setAttribute("style","margin-top:5%")}
       this.mess=mess
       if(mess instanceof Resp){
-        spanInDivPostTitle.textContent=" | Risposta a :"+mess.post.titled
+        spanInDivPostTitle.textContent=" | In risposta a " +post.author[0].toUpperCase()+post.author.slice("1")
         //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
         divUserBlog.setAttribute("style","margin-left:20%")
         console.log("is resp ")
@@ -288,7 +288,7 @@ class postArea {
         //$(post).insertBefore(mainElement,$(post).childNodes[0])
       }
       else {
-        if(!(post.disabled==true)){
+        if(!(postarea.disabled==true)){
           spanInDivPostTitle.textContent=" | "+mess.titled
           //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
           //divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
@@ -308,19 +308,19 @@ class postArea {
       var elementToAppendArea=document.getElementById(objectToAppendChild)
       //elementToAppendArea.insertAdjacentElement("beforebegin",post.create())
 
-      elementToAppendArea.appendChild(post.create())
+      elementToAppendArea.appendChild(postarea.create())
       return objectToAppendChild
     }
     //To append Postarea
 
-    createButtonRispostaPost(mess,post){
+    createButtonRispostaPost(mess,postarea){
       if(mess.type=="post"){
         let button_risposta_post=document.createElement("BUTTON")
         button_risposta_post.setAttribute("type","button")
         button_risposta_post.setAttribute("id","button_risposta_post_"+id)
         button_risposta_post.setAttribute("class","button_resp")
         button_risposta_post.textContent="Rispondi"
-        var objectToAppendChild="divuserblog_"+(post.id).toString()
+        var objectToAppendChild="divuserblog_"+(postarea.id).toString()
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(button_risposta_post)
       }
@@ -632,7 +632,7 @@ $(document).ready(function(){
                 resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,resps_json[y].fields.publish,"resp",photoResp,"risposta a "+mess[indexX].titled))
                 mess[indexX].risposte.push(resps[q].body)
                 paResp.push(new postArea(resps[q]))
-                idtoPutResp=paResp[q].makeHeadBlog(resps[q],paResp[q])
+                idtoPutResp=paResp[q].makeHeadBlog(resps[q],paResp[q],mess[indexX])
               }
             }
           }
