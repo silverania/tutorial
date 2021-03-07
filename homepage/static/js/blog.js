@@ -195,7 +195,6 @@ class postArea {
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
     this.id=id+1
-    this.postarea.setAttribute("style","overflow-y:scroll")
     var mess=""
     if (post.type=="resp"){
       this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
@@ -314,16 +313,20 @@ class postArea {
     }
     //To append Postarea
 
-    createButton(button){
-      if(this.type=="resp"){
-        button.setAttribute("type","button")
-        button.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
-        button.textContent="Rispondi"
-        bbutton2=button
-        //bbutton2.animate({'width':'80%'},1000);
-        divFormChild.appendChild(button)
+    createButtonRispostaPost(mess,post){
+      if(mess.type=="post"){
+        let button_risposta_post=document.createElement("BUTTON")
+        button_risposta_post.setAttribute("type","button")
+        button_risposta_post.setAttribute("id","button_risposta_post_"+id)
+        button_risposta_post.setAttribute("class","button_resp")
+        button_risposta_post.textContent="Rispondi"
+        var objectToAppendChild="divuserblog_"+(post.id).toString()
+        var elementToAppendButton=document.getElementById(objectToAppendChild)
+        elementToAppendButton.appendChild(button_risposta_post)
       }
-      $(bbutton2).click(function(){
+    }
+
+    /*  $(bbutton2).click(function(){
         let result
         if(post2 instanceof postArea){
           post2.msg=post2.postarea.value
@@ -343,9 +346,9 @@ class postArea {
           }
         }
       }
-    );
+    );*/
 
-  }
+
   disableButton(button){
     button.setAttribute("disabled","true")
   }
@@ -368,9 +371,6 @@ class postArea {
     }
 
     /* ogni volta che si verifica keydown controllo l' altezza per adattarla */
-    resizeArea(){
-
-    }
   }
 
 
@@ -610,6 +610,7 @@ $(document).ready(function(){
             if(mess[indexX].getTitle()){
               paPost.push(new postArea(mess[indexX]))
               paPost[indexX].makeHeadBlog(mess[indexX],paPost[indexX])
+              paPost[indexX].createButtonRispostaPost(mess[indexX],paPost[indexX])
             }
             break;
           }
@@ -632,15 +633,6 @@ $(document).ready(function(){
                 mess[indexX].risposte.push(resps[q].body)
                 paResp.push(new postArea(resps[q]))
                 idtoPutResp=paResp[q].makeHeadBlog(resps[q],paResp[q])
-                $('#'+paResp[q].postarea.id).keydown(function(e){
-                  height="height:"+(e.target.scrollHeight+10).toString()+"px"
-                  alert('sdf')
-                  while(e.target.scrollHeight > e.target.offsetHeight) {
-                    elementID=e.target.id
-                    var newHeight='height:'+(e.target.scrollHeight+10).toString()+'px'
-                    e.target.setAttribute('style', newHeight)
-                  }
-                })
               }
             }
           }

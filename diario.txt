@@ -18,3 +18,18 @@ A riga 80 blog.views.py è cos i pazz chell che agg gfatt SO NU MOSTR
 1 marzo 2021
 
 nella homepage , il left menu deve visualizzare users di cui esiste almeno un tutorial
+
+3 marzo 2021
+in blog.js un nuovo post usa la funzione
+
+7 marzo 2021 resize textarea in seguito a evento keydown
+
+this.postarea.setAttribute("style","overflow-y:scroll")
+$('#'+paResp[q].postarea.id).keydown(function(e){
+  height="height:"+(e.target.scrollHeight+10).toString()+"px"
+  while(e.target.scrollHeight > e.target.offsetHeight) {
+    elementID=e.target.id
+    var newHeight='height:'+(e.target.scrollHeight+10).toString()+'px'
+    e.target.setAttribute('style', newHeight+";width:100%;")
+  }
+})

@@ -18,6 +18,17 @@ a{
   float:right;
 }
 
+#d_head_blog{
+ margin-top:2%;  
+}
+
+[id^=button_risposta_post]{
+    width:100%;
+    height:auto;
+    border:2px solid orange;
+    margin:0 auto;
+}
+
 [id^="img_user"]{
   width:30px!important;
   height:30px!important;
@@ -76,11 +87,6 @@ margin:50px auto auto 15% !important;
   margin:0 auto !important;
 }
 
-.button_resp{
-  width:70%!important;
-  margin:0 auto !important;
-}
-
 #button_post{
   margin:20px auto;
 }
@@ -101,6 +107,7 @@ margin:50px auto auto 15% !important;
     font-size:0.8rem;
   }
   [id^="divuserblog"]{
+    width:auto;
       font-size:1rem;
   }
 
