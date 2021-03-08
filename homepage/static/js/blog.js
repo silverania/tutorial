@@ -169,12 +169,6 @@ class Post{
     else if (post.type=="resp"){
       el=document.getElementsByClassName("post_response");
     }
-    else if (post.type=="newpost"){
-      el=document.getElementsByClassName("post_new_today");
-      var today = new Date();
-      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-      this.publish=getDateFromDjangoDate(date)
-    }
     if(!tutorial=="" && (!post.msg=="")) {
       let content=tutorial;
       // AJAX .....il pulito a casa mia
@@ -295,7 +289,7 @@ class postArea {
     }
 
     createButtonRispostaPost(mess,postarea){
-      if(mess.type=="post"){
+      if(mess.type=="post"||mess.type=="newpost"){
         let button_risposta_post=document.createElement("BUTTON")
         button_risposta_post.setAttribute("type","button")
         button_risposta_post.setAttribute("id","button_risposta_post_"+id)
@@ -440,6 +434,8 @@ function makeModalWindow(mess=Object()){
         validity=true
         newMess.titled=textAreaInDivInMain.value
         newMess.type="newpost"
+        newMess.publish=getDateFromDjangoDate("")
+        newMess.author=loginis
         //createPostArea(newMess)
         return newMess.titled ;
       }
@@ -471,16 +467,28 @@ function makeModalWindow(mess=Object()){
     }
   });
 }
-
+// se la variabile data non viene passata come parametro si presuppone che il client abbia creato un nuovo post , quindi //la data è now
 function getDateFromDjangoDate(data){
-  let day=data.slice("8","10")
-  let month=data.slice("5","7")
-  month=getMonthFromData(month)
-  let year=data.slice("0","4")
-  let hour=data.slice("11","15")
+  var newDate
+  if (  data==""){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy + '/' + mm + '/' + dd;
+    newDate=getDateFromDjangoDate(today)
+  }
+  else {
+    let day=data.slice("8","10")
+    let month=data.slice("5","7")
+    month=getMonthFromData(month)
+    let year=data.slice("0","4")
+    let hour=data.slice("11","15")
   //data=data.replace("T"," ore ")
-  data=day+"-"+month+"-"+year+" alle "+hour
-  return data
+    data=day+"-"+month+"-"+year+" alle "+hour
+    newDate=data
+}
+return newDate
 }
 
 function getMonthFromData(mese){
@@ -594,7 +602,6 @@ $(document).ready(function(){
     }
   }
 );
-
 });
 
 // Metodo chiamato da post , resp e nuovo Post//
