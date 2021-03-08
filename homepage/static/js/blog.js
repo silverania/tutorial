@@ -128,7 +128,7 @@ class Resp{
     this.post=post
     this.body=body
     this.type=post
-    this.publish=getDateFromDjangoDate(publish)
+    this.publish=publish
     this.photo=photo
     this.titled=titolo
   }
@@ -151,13 +151,17 @@ class Post{
     this.body=comment
     this.titled=title1
     this.photo=photo
+    this.publish=date
   }
+
   getTitle(){
     return this.titled
   }
+
   disable(){
     this.disabled=true
   }
+
   sendToServer(post="null",tutorial,user,postTitle){
     if(post.type=="post"){
       el=document.getElementById("post_response");
@@ -223,7 +227,7 @@ class postArea {
 
   appendPostArea(mess,postarea){
     if(mess.type=="newpost"){
-      bdiv.insertBefore(postarea)
+      $(postarea).insertAfter(divExitLogin)
     }
     else{
       bdiv.appendChild(postarea)
@@ -262,11 +266,11 @@ class postArea {
     tagUserImg.setAttribute("id","img_user_"+id.toString())
     spanUserName.setAttribute("id","span_user_"+id.toString())
     divUserBlog.setAttribute("id","divuserblog_"+id.toString())
-    if(divUserBlog.id=="divuserblog_1"){
-      divUserBlog.setAttribute("style","margin-top:10%")
-    }
-    else {
-      divUserBlog.setAttribute("style","margin-top:5%")}
+    //if(divUserBlog.id=="divuserblog_1"){
+    //  divUserBlog.setAttribute("style","margin-top:15%")
+    //}
+    //else {
+      //divUserBlog.setAttribute("style","margin-top:5%")}
       this.mess=mess
       if(mess instanceof Resp){
         spanInDivPostTitle.textContent=" | In risposta a " +post.author[0].toUpperCase()+post.author.slice("1")
@@ -435,8 +439,8 @@ function makeModalWindow(mess=Object()){
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
         validity=true
         newMess.titled=textAreaInDivInMain.value
-        createPostArea(newMess)
-        //$(divFormChild).prepend(post.create())
+        newMess.type="newpost"
+        //createPostArea(newMess)
         return newMess.titled ;
       }
       else{
@@ -451,7 +455,7 @@ function makeModalWindow(mess=Object()){
 
   $('#but_confirm_title').click(function() {
     if(validity){
-      newMess.titled=textAreaInDivInMain.textContent
+      createPostArea(newMess)
       modal.style.display = "none";
     }
   });
@@ -557,7 +561,7 @@ $(document).ready(function(){
           // if(obj5_photo[z].fields.user==obj2[i].fields.author){
           if(profiles_json[z].pk==comments_json[i].fields.author){
             profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
-            mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,comments_json[i].fields.publish,BASE_PHOTO_DIR+profiles_json[z].fields.photo))
+            mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,getDateFromDjangoDate(comments_json[i].fields.publish),BASE_PHOTO_DIR+profiles_json[z].fields.photo))
             createPostArea(mess[indexX])
             break;
           }
@@ -575,7 +579,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,resps_json[y].fields.publish,"resp",photoResp,"risposta a "+mess[indexX].titled))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled))
                 mess[indexX].risposte.push(resps[q].body)
                 createPostArea(resps[q],mess[indexX])
               }

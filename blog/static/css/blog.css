@@ -96,6 +96,10 @@ margin:50px auto auto 15% !important;
   margin:20px auto;
 }
 
+[id^=divuserblog]{
+  margin-top:15%;
+}
+
   @media screen and (max-width: 780px) {
   .fa-comments,#s_blog
   {
