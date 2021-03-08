@@ -2,8 +2,7 @@ const MAX_TEXTAREA_NUMBER=21
 const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
-var paResp=new Array()
-var paPost=new Array()
+var paPostOrResp;
 var id=0
 var el
 var padre
@@ -151,7 +150,6 @@ class Post{
     this.risposte=new Array()
     this.body=comment
     this.titled=title1
-    this.publish=getDateFromDjangoDate(date)
     this.photo=photo
   }
   getTitle(){
@@ -168,7 +166,10 @@ class Post{
       el=document.getElementsByClassName("post_response");
     }
     else if (post.type=="newpost"){
-      el=document.getElementsByClassName("post_response");
+      el=document.getElementsByClassName("post_new_today");
+      var today = new Date();
+      var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+      this.publish=getDateFromDjangoDate(date)
     }
     if(!tutorial=="" && (!post.msg=="")) {
       let content=tutorial;
@@ -191,7 +192,9 @@ class Post{
 }
 }
 
+
 class postArea {
+
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
     this.id=id+1
@@ -216,32 +219,25 @@ class postArea {
     else{
       makeModalWindow(this)
     }
-
   }
 
+  appendPostArea(mess,postarea){
+    if(mess.type=="newpost"){
+      bdiv.insertBefore(postarea)
+    }
+    else{
+      bdiv.appendChild(postarea)
+    }
+  }
 
-
-  //  $(this.postarea.id).addEventListener('keydown', function (e){
-  //  if(this.hasScrollBar()){
-  //    alert("yes scroll")
-  //  }
-  //  else{
-  //    alert("no scrolling !")
-  //  }
-  //  }, false);
   makeHeadBlog(mess,postarea,post){
     id=postarea.id
-    //divAfterMainSection.setAttribute("id","blog_title");
-    //divAfterMainSection.setAttribute("style","width:100%");
-    //var divBlog=document.createElement("DIV");
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
     var divUserBlog=document.createElement("DIV");
     var spanUserName=document.createElement("SPAN");
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
-    //var bSpan=document.createElement("SPAN");
-    //var bSpanChild=document.createElement("SPAN");
     var tagUserImg=document.createElement("IMG");
     divContainerHead.setAttribute("id","d_head_blog")
     divContainerHead.setAttribute("style","width:100%")
@@ -249,8 +245,6 @@ class postArea {
     tagUserImg.setAttribute("style","border-radius:50%")
     tagUserImg.setAttribute("src",mess.photo)
     spanUserName.textContent=" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" scrive :"
-
-    //divBlog.setAttribute("id","divblog_"+id.toString())
     divUserBlog.appendChild(divContainerHead)
     divContainerHead.appendChild(tagUserImg)
     bH5.textContent=mess.publish
@@ -264,12 +258,7 @@ class postArea {
     bH5.appendChild(spanUserName)
     divContainerHead.appendChild(bH5)
     divUserBlog.appendChild(divPostTitle)
-    //divUserBlog.appendChild(bSpan)
-    //bSpan.appendChild(bSpanChild)
-    //divUserBlog.appendChild(bSpan)
-    bdiv.appendChild(divUserBlog)
-    //bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
-    //  bSpan.settextarea di respAttribute("id","s_blog_icon_"+id.toString())
+    this.appendPostArea(mess,divUserBlog)
     tagUserImg.setAttribute("id","img_user_"+id.toString())
     spanUserName.setAttribute("id","span_user_"+id.toString())
     divUserBlog.setAttribute("id","divuserblog_"+id.toString())
@@ -284,34 +273,22 @@ class postArea {
         //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
         divUserBlog.setAttribute("style","margin-left:20%")
         console.log("is resp ")
-        //  post.postarea.insertAdjacentElement("beforebegin",divBlog)
-        //$(post).insertBefore(mainElement,$(post).childNodes[0])
       }
       else {
         if(!(postarea.disabled==true)){
           spanInDivPostTitle.textContent=" | "+mess.titled
-          //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
-          //divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
-          //  divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
-          //divBlog.appendChild(divCommentIcon)
           console.log("thispost.disabled")
-          //$(bSection).prepend(divBlog)
           $('#post_response').css("border", "1px solid grey")
           bbutton.textContent="Nuovo Post"
-          /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-          //thispost.disable()
           var idWherePutElement="button_post"
           console.log(idWherePutElement)
         }
       }
       var objectToAppendChild="divuserblog_"+id.toString()
       var elementToAppendArea=document.getElementById(objectToAppendChild)
-      //elementToAppendArea.insertAdjacentElement("beforebegin",post.create())
-
       elementToAppendArea.appendChild(postarea.create())
       return objectToAppendChild
     }
-    //To append Postarea
 
     createButtonRispostaPost(mess,postarea){
       if(mess.type=="post"){
@@ -326,32 +303,10 @@ class postArea {
       }
     }
 
-    /*  $(bbutton2).click(function(){
-        let result
-        if(post2 instanceof postArea){
-          post2.msg=post2.postarea.value
-          //post2.disable()
-          if(!(mess.type=="resp")){
-            mess=new Post("resp",loginis)
-            if(!mess.sent==true) {
-              if(!post2.msg==''){
-                if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
-                  mess.sent=true
-                  post2.disable()
-                  bbutton2.setAttribute("disabled","true")
-                  bbutton2.innerHTML="rispondimi"
-                }
-              }
-            }
-          }
-        }
-      }
-    );*/
-
-
   disableButton(button){
     button.setAttribute("disabled","true")
   }
+
   create(){
     if(this.mess instanceof Post){
       if (this.mess.titled){
@@ -369,10 +324,7 @@ class postArea {
       this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
       return this.postarea;
     }
-
-    /* ogni volta che si verifica keydown controllo l' altezza per adattarla */
   }
-
 
 
   function initBlogSGang(id,login,tut){
@@ -387,7 +339,6 @@ class postArea {
     createSectionDivSpan(idis);
   }
 
-  /* EVENT SECTION */
 
   function instancePostarea(mess){
     if(mess.titled){
@@ -397,16 +348,17 @@ class postArea {
       return post
     }
   }
+
+
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
   $(bbutton).click(function(){
-    var mess=Post,post;
+    let mess=new Post();
     let result
     // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
     function instancePost(){
       //var titleNewPost=makeModalWindow(this.post=instancePostarea())
-      mess= new Post("newpost",loginis)
-      mess.titled=makeModalWindow(mess)
-      this.mess=mess
+      this.mess= new Post("newpost",loginis)
+      this.mess.titled=makeModalWindow(mess)
       return this.mess
     }
 
@@ -457,7 +409,7 @@ class postArea {
 /* MODAL WINDOW */
 
 function makeModalWindow(mess=Object()){
-  this.mess=mess
+  let newMess=mess
   var divModalMain=document.createElement("DIV");
   var divInMain=document.createElement("DIV");
   var textAreaInDivInMain=document.createElement("TEXTAREA");
@@ -482,10 +434,10 @@ function makeModalWindow(mess=Object()){
     try{
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
         validity=true
-        mess.titled=textAreaInDivInMain.value
-        instancePostarea(mess)
+        newMess.titled=textAreaInDivInMain.value
+        createPostArea(newMess)
         //$(divFormChild).prepend(post.create())
-        return mess.titled ;
+        return newMess.titled ;
       }
       else{
         alert("Devi inserire un titolo Valido")
@@ -499,6 +451,7 @@ function makeModalWindow(mess=Object()){
 
   $('#but_confirm_title').click(function() {
     if(validity){
+      newMess.titled=textAreaInDivInMain.textContent
       modal.style.display = "none";
     }
   });
@@ -603,18 +556,11 @@ $(document).ready(function(){
         for (z=0;z<=profiles_json.length-1;z=z+1){
           // if(obj5_photo[z].fields.user==obj2[i].fields.author){
           if(profiles_json[z].pk==comments_json[i].fields.author){
-            alert(profiles_json[z].pk+"-"+comments_json[i].fields.author)
             profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
             mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,comments_json[i].fields.publish,BASE_PHOTO_DIR+profiles_json[z].fields.photo))
-
-            if(mess[indexX].getTitle()){
-              paPost.push(new postArea(mess[indexX]))
-              paPost[indexX].makeHeadBlog(mess[indexX],paPost[indexX])
-              paPost[indexX].createButtonRispostaPost(mess[indexX],paPost[indexX])
-            }
+            createPostArea(mess[indexX])
             break;
           }
-
         }
         // creo la textarea per il post e con l head .
         z=0
@@ -631,8 +577,7 @@ $(document).ready(function(){
                 }
                 resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,resps_json[y].fields.publish,"resp",photoResp,"risposta a "+mess[indexX].titled))
                 mess[indexX].risposte.push(resps[q].body)
-                paResp.push(new postArea(resps[q]))
-                idtoPutResp=paResp[q].makeHeadBlog(resps[q],paResp[q],mess[indexX])
+                createPostArea(resps[q],mess[indexX])
               }
             }
           }
@@ -646,10 +591,11 @@ $(document).ready(function(){
   }
 );
 
-//i=obj5_photo.length
-
-
-
-// qui dovrei creare le risposte per il post specifico
-
 });
+
+// Metodo chiamato da post , resp e nuovo Post//
+function createPostArea(messOrResp,post){
+    paPostOrResp=new postArea(messOrResp)
+    idtoPutResp=paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
+    paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
+}
