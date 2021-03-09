@@ -9,6 +9,7 @@ var padre
 var user
 var loginis
 var lastUpdate
+var userLoggedPhoto
 var bbutton=document.createElement("Button");
 //var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
@@ -192,7 +193,6 @@ class Post{
 
 
 class postArea {
-
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
     this.id=id+1
@@ -214,9 +214,9 @@ class postArea {
         this.postarea.setAttribute("style","border:solid 2px orange;")
       }
     }
-    else{
-      makeModalWindow(this)
-    }
+  //  else{
+    //  makeModalWindow(this)
+    //}
   }
 
   appendPostArea(mess,postarea){
@@ -436,8 +436,9 @@ function makeModalWindow(mess=Object()){
         newMess.type="newpost"
         newMess.publish=getDateFromDjangoDate("")
         newMess.author=loginis
+        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
         //createPostArea(newMess)
-        return newMess.titled ;
+        return newMess ;
       }
       else{
         alert("Devi inserire un titolo Valido")
@@ -546,6 +547,7 @@ $(document).ready(function(){
         comments_json = JSON.parse(obj.data_comm);// blog.comment
         resps_json = JSON.parse(obj.resps);
         profiles_json = JSON.parse(obj.profiles);
+        userLogged=JSON.parse(obj.userLogged);
       }
       catch(SyntaxError){
         console.log("error in json!")
@@ -566,6 +568,7 @@ $(document).ready(function(){
       //initial_y=(parseInt(obj3.length))-1
       for (i;i<=comments_json.length-1;i=i+1){
         for (z=0;z<=profiles_json.length-1;z=z+1){
+
           // if(obj5_photo[z].fields.user==obj2[i].fields.author){
           if(profiles_json[z].pk==comments_json[i].fields.author){
             profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))

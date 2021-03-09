@@ -27,13 +27,14 @@ def getLoginName(request):
     if request.user.is_authenticated:
         try:
             print("id"+str(request.user.id))
-            myuser=Profile.objects.get(user_id=request.user.id)
+            myuser=Profile.objects.filter(user_id=request.user.id)
         except:
             print("error"+str(myuser))
     else:
-        user=request.GET.get('username',None)
-        myuser=Profile.objects.filter(user__username=user)
+        user=request.GET.get('username')
+        myuser=Profile.objects.filter(first_name="anonimo")
         myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
+        print("USER NON AUTENT "+ str(myuser))
     return myuser
 
 
@@ -58,8 +59,8 @@ def getPost(request):
     risposte_serialized=[]
     profiles_list=[]
     comments_in_database=Comment.objects.all()
-    photo=getLoginName(request)
-
+    userLogged=getLoginName(request)
+    print("USERLOGGED="+str(userLogged))
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
         tu=Tutorial.objects.get(slug=tutorial)
@@ -71,6 +72,8 @@ def getPost(request):
         #for comment in all_comments_for_page:
         #    comment.publish = formats.date_format(comment.publish, "SHORT_DATETIME_FORMAT")
         datac=list(all_comments_for_page)
+        userLogged=list(userLogged)
+        userLogged=serializer(userLogged)
         data_comm=serializer(datac)
         comment_model_serialized=serializer(all_comments_for_page)
         print("data comment Json format="+str(datac))
@@ -107,7 +110,7 @@ def getPost(request):
         #print("photos="+serializer(data_l7))
         data_l5=serializer(data_l)
         #data = json.dumps({'data_comm':data_comm,'profile':photos,'resp':risposte3})
-        data = json.dumps({'data_comm':data_comm,'resps':risposte_serialized,'profiles':profiles_list})
+        data = json.dumps({'userLogged':userLogged,'data_comm':data_comm,'resps':risposte_serialized,'profiles':profiles_list})
         showPost(tu)
     try:
         return JsonResponse(data,safe=False)
