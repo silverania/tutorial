@@ -242,16 +242,14 @@ class postArea {
     divContainerHead.setAttribute("style","height:auto")
     tagUserImg.setAttribute("style","border-radius:50%")
     tagUserImg.setAttribute("src",mess.photo)
-    spanUserName.textContent=" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" scrive :"
     divUserBlog.appendChild(divContainerHead)
     divContainerHead.appendChild(tagUserImg)
-    bH5.textContent=mess.publish
+    //bH5.textContent="il "+mess.publish
     spanUserName.setAttribute("style","color:grey;display:inline;")
-    spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("id","post_title_"+id)
     divPostTitle.setAttribute("id","d_post_title_"+id)
     divPostTitle.appendChild(spanInDivPostTitle)
-    bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
+    bH5.setAttribute("style","margin-left:3%;color:blue;")
     bH5.setAttribute("id","bh5_span_"+id.toString())
     bH5.appendChild(spanUserName)
     divContainerHead.appendChild(bH5)
@@ -260,21 +258,20 @@ class postArea {
     tagUserImg.setAttribute("id","img_user_"+id.toString())
     spanUserName.setAttribute("id","span_user_"+id.toString())
     divUserBlog.setAttribute("id","divuserblog_"+id)
-    //if(divUserBlog.id=="divuserblog_1"){
-    //  divUserBlog.setAttribute("style","margin-top:15%")
-    //}
-    //else {
-      //divUserBlog.setAttribute("style","margin-top:5%")}
+
       this.mess=mess
       if(mess instanceof Resp){
-        spanInDivPostTitle.textContent=" | In risposta a " +post.author[0].toUpperCase()+post.author.slice("1")
+        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Risponde"
+        //+post.author[0].toUpperCase()+post.author.slice("1")
+        //spanInDivPostTitle.textContent=
         //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
         divUserBlog.setAttribute("style","margin-left:20%")
         console.log("is resp ")
       }
       else {
         if(!(postarea.disabled==true)){
-          spanInDivPostTitle.textContent=" | "+mess.titled
+          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta :"
+          spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
           console.log("thispost.disabled")
           $('#post_response').css("border", "1px solid grey")
           bbutton.textContent="Nuovo Post"
@@ -289,7 +286,6 @@ class postArea {
     }
 
     createButtonRispostaPost(mess,postarea){
-      if(mess.type=="post"||mess.type=="newpost"){
         let button_risposta_post=document.createElement("BUTTON")
         button_risposta_post.setAttribute("type","button")
         button_risposta_post.setAttribute("id","button_risposta_post_"+postarea.id)
@@ -299,7 +295,6 @@ class postArea {
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(button_risposta_post)
       }
-    }
 
   disableButton(button){
     button.setAttribute("disabled","true")
@@ -481,7 +476,6 @@ function getDateFromDjangoDate(data){
   else {
     let day=data.slice("8","10")
     let month=data.slice("5","7")
-    month=getMonthFromData(month)
     let year=data.slice("0","4")
     let hour=data.slice("11","15")
   //data=data.replace("T"," ore ")
@@ -491,18 +485,6 @@ function getDateFromDjangoDate(data){
 return newDate
 }
 
-function getMonthFromData(mese){
-  switch(mese){
-    case "01": mese="Gennaio"
-    case "03": mese="Marzo"
-    case "02": mese="febbraio"
-    return mese;
-  }
-}
-
-
-
-/* END MODAL  */
 function cleanJson(json){
   this.data=json.toString()
   s = this.data.replace(/\\n/g, "\\n")

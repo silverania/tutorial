@@ -44,9 +44,13 @@ textarea {
 }
 
 #d_post_title , span[id^="post_title"]{
-margin-bottom:10px;
-font-size:.5em!important;
-line-height:1.5em!important;
+  display:block!important;
+  width:auto;
+  text-align: center;
+  margin:20px auto!important;
+  font-size:1rem!important;
+  color:black!important;
+  line-height:1.5em!important;
 }
 
 .modal-content {
@@ -96,9 +100,14 @@ margin:50px auto auto 15% !important;
   margin:20px auto;
 }
 
-[id^=divuserblog]{
-  margin-top:15%;
+[id^="divuserblog_"]{
+  margin-top:20%!important;
 }
+
+#divuserblog_1{
+  margin-top:30%!important;
+}
+
 
   @media screen and (max-width: 780px) {
   .fa-comments,#s_blog
