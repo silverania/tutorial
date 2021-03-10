@@ -3,7 +3,6 @@ const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
 var paPostOrResp;
-var id=0
 var el
 var padre
 var user
@@ -123,7 +122,7 @@ function createSectionDivSpan(parent){
 }
 
 class Resp{
-  constructor(author,body,publish,post,photo,titolo){
+  constructor(author,body,publish,post,photo,titolo,pk){
     this.sent=false
     this.author=author
     this.post=post
@@ -132,6 +131,7 @@ class Resp{
     this.publish=publish
     this.photo=photo
     this.titled=titolo
+    this.pk=pk
   }
 }
 
@@ -142,7 +142,7 @@ class Profile{
 }
 
 class Post{
-  constructor(type="none",author="anonimo",title1,comment,date,photo){
+  constructor(type="none",author="anonimo",title1,comment,date,photo,pk){
     this.sent=false
     this.type=type
     this.author=author  //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
@@ -153,6 +153,7 @@ class Post{
     this.titled=title1
     this.photo=photo
     this.publish=date
+    this.pk=pk
   }
 
   getTitle(){
@@ -195,18 +196,17 @@ class Post{
 class postArea {
   constructor(post){
     this.postarea=document.createElement("TEXTAREA");
-    this.id=id+1
+    this.id=post.pk
     var mess=""
     if (post.type=="resp"){
-      this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
+      this.postarea.setAttribute("id","resp_"+loginis+"_"+this.id)
       console.log("post di risposta")
       this.postarea.value=post.body
       this.postarea.disabled=false
     }
     else if  (post.type=="post"){
       let x;
-      x = this.postarea.setAttribute("id","post_"+loginis+"_"+id)
-      var thisid=this.postarea.id
+      x = this.postarea.setAttribute("id","post_"+loginis+"_"+this.id)
       this.empty=true
       this.postarea.disabled=false
       this.postarea.value=post.body
@@ -229,7 +229,7 @@ class postArea {
   }
 
   makeHeadBlog(mess,postarea,post){
-    id=postarea.id
+    var id=postarea.id
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
     var divUserBlog=document.createElement("DIV");
@@ -237,7 +237,7 @@ class postArea {
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
     var tagUserImg=document.createElement("IMG");
-    divContainerHead.setAttribute("id","d_head_blog")
+    divContainerHead.setAttribute("id","d_head_blog_"+id)
     divContainerHead.setAttribute("style","width:100%")
     divContainerHead.setAttribute("style","height:auto")
     tagUserImg.setAttribute("style","border-radius:50%")
@@ -249,17 +249,17 @@ class postArea {
     spanUserName.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("id","post_title_"+id)
-    divPostTitle.setAttribute("id","d_post_title")
+    divPostTitle.setAttribute("id","d_post_title_"+id)
     divPostTitle.appendChild(spanInDivPostTitle)
     bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
-    bH5.setAttribute("id","bh5_span"+id.toString())
+    bH5.setAttribute("id","bh5_span_"+id.toString())
     bH5.appendChild(spanUserName)
     divContainerHead.appendChild(bH5)
     divUserBlog.appendChild(divPostTitle)
     this.appendPostArea(mess,divUserBlog)
     tagUserImg.setAttribute("id","img_user_"+id.toString())
     spanUserName.setAttribute("id","span_user_"+id.toString())
-    divUserBlog.setAttribute("id","divuserblog_"+id.toString())
+    divUserBlog.setAttribute("id","divuserblog_"+id)
     //if(divUserBlog.id=="divuserblog_1"){
     //  divUserBlog.setAttribute("style","margin-top:15%")
     //}
@@ -282,20 +282,20 @@ class postArea {
           console.log(idWherePutElement)
         }
       }
-      var objectToAppendChild="divuserblog_"+id.toString()
-      var elementToAppendArea=document.getElementById(objectToAppendChild)
-      elementToAppendArea.appendChild(postarea.create())
-      return objectToAppendChild
+      //var objectToAppendChild   =  "divuserblog_"  +   id.toString()
+      //var elementToAppendArea=document.getElementById(objectToAppendChild)
+        divUserBlog.appendChild(postarea.create())
+      return $(divUserBlog)
     }
 
     createButtonRispostaPost(mess,postarea){
       if(mess.type=="post"||mess.type=="newpost"){
         let button_risposta_post=document.createElement("BUTTON")
         button_risposta_post.setAttribute("type","button")
-        button_risposta_post.setAttribute("id","button_risposta_post_"+id)
+        button_risposta_post.setAttribute("id","button_risposta_post_"+postarea.id)
         button_risposta_post.setAttribute("class","button_resp")
         button_risposta_post.textContent="Rispondi"
-        var objectToAppendChild="divuserblog_"+(postarea.id).toString()
+        var objectToAppendChild="divuserblog_"+postarea.id
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(button_risposta_post)
       }
@@ -341,7 +341,6 @@ class postArea {
   function instancePostarea(mess){
     if(mess.titled){
       post=new postArea() // passo post come argomento
-      post.id=id+1
       value=post.makeHeadBlog(mess,data.photo,post,data.username)
       return post
     }
@@ -416,7 +415,7 @@ function makeModalWindow(mess=Object()){
   modalConfirmButton.setAttribute('id','but_confirm_title')
   modalConfirmButton.setAttribute('type','button')
   divModalMain.setAttribute('class','modal')
-  divModalMain.setAttribute('id','myModal')
+  divModalMain.setAttridivUserBlogbute('id','myModal')
   divInMain.setAttribute('class','modal-content')
   textAreaInDivInMain.setAttribute("id","p_text")
   textAreaInDivInMain.setAttribute("rows","1")
@@ -572,7 +571,7 @@ $(document).ready(function(){
           // if(obj5_photo[z].fields.user==obj2[i].fields.author){
           if(profiles_json[z].pk==comments_json[i].fields.author){
             profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
-            mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,getDateFromDjangoDate(comments_json[i].fields.publish),BASE_PHOTO_DIR+profiles_json[z].fields.photo))
+            mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,getDateFromDjangoDate(comments_json[i].fields.publish),BASE_PHOTO_DIR+profiles_json[z].fields.photo,comments_json[i].pk))
             createPostArea(mess[indexX])
             break;
           }
@@ -590,7 +589,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled,(comments_json[i].pk).toString()+resps_json[z2].pk.toString()))
                 mess[indexX].risposte.push(resps[q].body)
                 createPostArea(resps[q],mess[indexX])
               }
@@ -610,6 +609,6 @@ $(document).ready(function(){
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,post){
     paPostOrResp=new postArea(messOrResp)
-    idtoPutResp=paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
+    paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
 }
