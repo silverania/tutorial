@@ -231,7 +231,7 @@ class postArea {
   }
 
   makeHeadBlog(mess,postarea,post){
-    var id=postarea.id
+    var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
     var divUserBlog=document.createElement("DIV");
@@ -252,13 +252,13 @@ class postArea {
     divPostTitle.setAttribute("id","d_post_title_"+id)
     divPostTitle.appendChild(spanInDivPostTitle)
     bH5.setAttribute("style","margin-left:3%;color:blue;")
-    bH5.setAttribute("id","bh5_span_"+id.toString())
+    bH5.setAttribute("id","bh5_span_"+id)
     bH5.appendChild(spanUserName)
     divContainerHead.appendChild(bH5)
     divUserBlog.appendChild(divPostTitle)
     this.appendPostArea(mess,divUserBlog)
-    tagUserImg.setAttribute("id","img_user_"+id.toString())
-    spanUserName.setAttribute("id","span_user_"+id.toString())
+    tagUserImg.setAttribute("id","img_user_"+id)
+    spanUserName.setAttribute("id","span_user_"+id)
     divUserBlog.setAttribute("id","divuserblog_"+id)
 
       this.mess=mess
@@ -412,7 +412,7 @@ function makeModalWindow(mess=Object()){
   modalConfirmButton.setAttribute('id','but_confirm_title')
   modalConfirmButton.setAttribute('type','button')
   divModalMain.setAttribute('class','modal')
-  divModalMain.setAttridivUserBlogbute('id','myModal')
+  divModalMain.setAttribute('id','myModal')
   divInMain.setAttribute('class','modal-content')
   textAreaInDivInMain.setAttribute("id","p_text")
   textAreaInDivInMain.setAttribute("rows","1")
