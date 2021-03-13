@@ -46,6 +46,7 @@ var bbutton2=new Object();
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
+  bForm.setAttribute("class","form_comment")
   //divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   firstDivHead.setAttribute("style","width:45%;display:inline;")
   firstDivHead.setAttribute("id","firstDivHead")
@@ -119,6 +120,7 @@ function createSectionDivSpan(parent){
   bForm.appendChild(divFormChild)
   $(parent).prepend(divCommentIcon)
   divFormChild.appendChild(bbutton)
+
 }
 
 class Resp{
@@ -501,7 +503,12 @@ function cleanJson(json){
   //alert("s="+s);
   return s
 }
+$(document).on("load" ,function(){
+  var itm = document.getElementsByClassName("form_comment")[0];
+  var cln = itm.cloneNode(true);
+  bdiv.appendChild(cln)[2];
 
+})
 $(document).ready(function(){
   var obj
   let indexX=0
@@ -514,6 +521,11 @@ $(document).ready(function(){
   let profiles=new Array()
   let z=0
   let comments_json;
+  var itm = document.getElementsByClassName("form_comment")[0];
+  var cln = itm.cloneNode(true);
+  cln.setAttribute("id","clone_form")
+  cln.getElementsByClassName('mybut')[0].setAttribute("id","clone_button")
+  bdiv.appendChild(cln)[2];
   //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
