@@ -346,14 +346,16 @@ class postArea {
 
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
   $(bbutton).click(function(){
-    let mess=new Post();
+
     let result
     // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
     function instancePost(){
+      let mess=Object()
       //var titleNewPost=makeModalWindow(this.post=instancePostarea())
-      this.mess= new Post("newpost",loginis)
-      this.mess.titled=makeModalWindow(mess)
-      return this.mess
+      if(!(mess instanceof Post)){
+        mess= new Post("newpost",loginis)
+        mess.titled=makeModalWindow(mess)
+    }
     }
 
     if (!(post instanceof postArea ))
@@ -362,13 +364,13 @@ class postArea {
       post=instancePost()
     }
     // caso click su textarea esistente
-    else if (post instanceof postArea ) {
+  /*  else if (post instanceof postArea ) {
       if (post.postarea.value=='' || post.postarea.value.trim().length < 1){
         alert("il silenzio in questi casi vuol dir poco !")
       }
       // caso click su textarea esistente e con testo all interno
       else {
-        /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
+        // la modifica della textarea e l' animazione non deve partire se la textarea e disabled !
         if(!(post.disabled==true)){
           post.msg=post.postarea.value
           $('#post_response').css("border", "1px solid grey")
@@ -396,7 +398,7 @@ class postArea {
           }
         }
       }
-    }
+    }*/
   }
 );
 
@@ -404,27 +406,31 @@ class postArea {
 
 function makeModalWindow(mess=Object()){
   let newMess=mess
-  var divModalMain=document.createElement("DIV");
-  var divInMain=document.createElement("DIV");
-  var textAreaInDivInMain=document.createElement("TEXTAREA");
-  var modalConfirmButton=document.createElement("Button");
-  var checkValidity=false
-  modalConfirmButton.setAttribute('id','but_confirm_title')
-  modalConfirmButton.setAttribute('type','button')
-  divModalMain.setAttribute('class','modal')
-  divModalMain.setAttribute('id','myModal')
-  divInMain.setAttribute('class','modal-content')
-  textAreaInDivInMain.setAttribute("id","p_text")
-  textAreaInDivInMain.setAttribute("rows","1")
-  textAreaInDivInMain.setAttribute("padding","0")
-  textAreaInDivInMain.textContent="Titolo Post ?"
-  divInMain.appendChild(textAreaInDivInMain)
-  divInMain.appendChild(modalConfirmButton)
-  divModalMain.appendChild(divInMain)
-  body.appendChild(divModalMain)
-  var modal = document.getElementById("myModal");
-  modal.style.display = "block";
-  document.getElementById('but_confirm_title').onclick = function(event) {
+  let exist=false;
+  if(exist==document.getElementById('myModal')==false){
+    exist=true
+    var divModalMain=document.createElement("DIV");
+    var divInMain=document.createElement("DIV");
+    var textAreaInDivInMain=document.createElement("TEXTAREA");
+    var modalConfirmButton=document.createElement("Button");
+    //var checkValidity=false
+    modalConfirmButton.setAttribute('id','but_confirm_title')
+    modalConfirmButton.setAttribute('type','button')
+    divModalMain.setAttribute('class','modal')
+    divModalMain.setAttribute('id','myModal')
+    divInMain.setAttribute('class','modal-content')
+    textAreaInDivInMain.setAttribute("id","p_text")
+    textAreaInDivInMain.setAttribute("rows","1")
+    textAreaInDivInMain.setAttribute("padding","0")
+    textAreaInDivInMain.textContent="Titolo Post ?"
+    divInMain.appendChild(textAreaInDivInMain)
+    divInMain.appendChild(modalConfirmButton)
+    divModalMain.appendChild(divInMain)
+    body.appendChild(divModalMain)
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+  /*document.getElementById('but_confirm_title').onclick = function(event) {
     try{
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
         validity=true
@@ -433,8 +439,7 @@ function makeModalWindow(mess=Object()){
         newMess.publish=getDateFromDjangoDate("")
         newMess.author=loginis
         newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
-        //createPostArea(newMess)
-        return newMess ;
+        //return newMess ;
       }
       else{
         alert("Devi inserire un titolo Valido")
@@ -444,13 +449,30 @@ function makeModalWindow(mess=Object()){
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
-  }
+  }*/
 
   $('#but_confirm_title').click(function() {
-    if(validity){
+    try{
+      if (!(textAreaInDivInMain.value=="Titolo Post ?")){
+        newMess.titled=textAreaInDivInMain.value
+        newMess.type="newpost"
+        newMess.publish=getDateFromDjangoDate("")
+        newMess.author=loginis
+        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        if(mess.titled){
+          $('#myModal').remove()
+        }
+        //return newMess ;
+      }
+      else{
+        alert("Devi inserire un titolo Valido")
+      }
+    }
+    catch(Error){
+      console.log("qualcosa è andato storto nel recupero del titolo")
+    }
       createPostArea(newMess)
       modal.style.display = "none";
-    }
   });
   window.onclick = function(event) {
     if (event.target == modal) {
@@ -603,6 +625,6 @@ $(document).ready(function(){
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,post){
     paPostOrResp=new postArea(messOrResp)
-    paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
+      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
 }
