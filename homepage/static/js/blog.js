@@ -223,7 +223,8 @@ class postArea {
 
   appendPostArea(mess,postarea){
     if(mess.type=="newpost"){
-      $(postarea).insertAfter(divExitLogin)
+      var elToAppend=document.getElementById('clone_button')
+      $ ( postarea ).insertAfter(elToAppend)
     }
     else{
       bdiv.appendChild(postarea)
