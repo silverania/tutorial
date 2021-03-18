@@ -182,11 +182,11 @@ function deleteTutorial() {
 }
   return exist
 }
-
 });
-/* Funzione che prende l' altezza della pagina per costruire una progress bar indicante la posizione, espressa in percentuale dello scroll sulla pagina*/
+
+/* CREO LA PROGRESSBAR IN SEGUITO A EVENTO SCROLL IN HTML*/
 function getPosition() {
-    $(document).ready(function(){
+
       docBodyScrollHeight=document.body.scrollHeight;
       docDocElementScrollHeight=document.documentElement.scrollHeight;
       docBodyOffsetHeight=document.body.offsetHeight;
@@ -206,7 +206,8 @@ function getPosition() {
   let rapport=parseInt((actualHeight/val)*100);
 
   createProgressBar(rapport);
-});}
+}
+
 function createProgressBar(actualValue){
   var object=document.getElementById('progressbar');
   object.value=parseInt(actualValue,10);

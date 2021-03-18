@@ -2,12 +2,13 @@ const MAX_TEXTAREA_NUMBER=21
 const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
-var id=0
+var paPostOrResp;
 var el
 var padre
 var user
 var loginis
 var lastUpdate
+var userLoggedPhoto
 var bbutton=document.createElement("Button");
 //var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
@@ -45,6 +46,7 @@ var bbutton2=new Object();
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
+  bForm.setAttribute("class","form_comment")
   //divUserBlog.setAttribute("style","width:45%;display:inline-block;")
   firstDivHead.setAttribute("style","width:45%;display:inline;")
   firstDivHead.setAttribute("id","firstDivHead")
@@ -118,20 +120,20 @@ function createSectionDivSpan(parent){
   bForm.appendChild(divFormChild)
   $(parent).prepend(divCommentIcon)
   divFormChild.appendChild(bbutton)
+
 }
 
-
-
-
 class Resp{
-  constructor(author,body,publish,post){
+  constructor(author,body,publish,post,photo,titolo,pk){
     this.sent=false
     this.author=author
     this.post=post
     this.body=body
-    this.titled=""
-    this.type=post.type
+    this.type=post
     this.publish=publish
+    this.photo=photo
+    this.titled=titolo
+    this.pk=pk
   }
 }
 
@@ -142,31 +144,33 @@ class Profile{
 }
 
 class Post{
-  constructor(type="none",author="anonimo",title1){
+  constructor(type="none",author="anonimo",title1,comment,date,photo,pk){
     this.sent=false
     this.type=type
     this.author=author  //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
-            //console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
+    //console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
     this.titled=title1
     this.risposte=new Array()
-    this.publish=""
-    this.tutorial=""
-    this.userPhoto=""
+    this.body=comment
+    this.titled=title1
+    this.photo=photo
+    this.publish=date
+    this.pk=pk
   }
+
   getTitle(){
     return this.titled
   }
+
   disable(){
     this.disabled=true
   }
+
   sendToServer(post="null",tutorial,user,postTitle){
     if(post.type=="post"){
       el=document.getElementById("post_response");
     }
     else if (post.type=="resp"){
-      el=document.getElementsByClassName("post_response");
-    }
-    else if (post.type=="newpost"){
       el=document.getElementsByClassName("post_response");
     }
     if(!tutorial=="" && (!post.msg=="")) {
@@ -191,298 +195,301 @@ class Post{
 }
 
 
-
-
 class postArea {
-  constructor(post=Object()){
+  constructor(post){
     this.postarea=document.createElement("TEXTAREA");
+    this.id=post.pk
     var mess=""
-   if (post.type=="resp"){
-      this.postarea.setAttribute("id","resp_"+loginis+"_"+id)
-      this.id=id+1
-      console.log("textarea di resposta")
+    if (post.type=="resp"){
+      this.postarea.setAttribute("id","resp_"+loginis+"_"+this.id)
+      console.log("post di risposta")
       this.postarea.value=post.body
     }
     else if  (post.type=="post"){
-    this.postarea.setAttribute("id","post_"+loginis+"_"+id)
-    this.empty=true
-    this.disabled=false
-    this.postarea.value=post.body
-    if (this.postarea.value==""){
-      this.postarea.setAttribute("style","border:solid 2px orange;")
+      let x;
+      x = this.postarea.setAttribute("id","post_"+loginis+"_"+this.id)
+      this.empty=true
+      this.postarea.value=post.body
+      if (this.postarea.value==""){
+        this.postarea.setAttribute("style","border:solid 2px orange;")
+      }
+    }
+  //  else{
+    //  makeModalWindow(this)
+    //}
+  }
+
+  appendPostArea(mess,postarea){
+    if(mess.type=="newpost"){
+      var elToAppend=document.getElementById('clone_button')
+      $ ( postarea ).insertAfter(elToAppend)
+    }
+    else{
+      bdiv.appendChild(postarea)
+      postarea.disabled="true"
     }
   }
-  else{
-    makeModalWindow(this)
-  }
-}
-  makeHeadBlog(mess="",userPhoto,post,datePostResp){
-    id=post.id
-    //divAfterMainSection.setAttribute("id","blog_title");
-    //divAfterMainSection.setAttribute("style","width:100%");
-    //var divBlog=document.createElement("DIV");
+
+  makeHeadBlog(mess,postarea,post){
+    var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
     var divUserBlog=document.createElement("DIV");
     var spanUserName=document.createElement("SPAN");
     var bH5=document.createElement("span")
-    //var bSpan=document.createElement("SPAN");
-    //var bSpanChild=document.createElement("SPAN");
+    var divContainerHead=document.createElement("DIV")
     var tagUserImg=document.createElement("IMG");
+    divContainerHead.setAttribute("id","d_head_blog_"+id)
+    divContainerHead.setAttribute("style","width:100%")
+    divContainerHead.setAttribute("style","height:auto")
     tagUserImg.setAttribute("style","border-radius:50%")
-    tagUserImg.setAttribute("src",userPhoto)
-    spanUserName.textContent=" | "+mess.publish
-
-    //divBlog.setAttribute("id","divblog_"+id.toString())
-    divUserBlog.appendChild(tagUserImg)
-    bH5.textContent=datePostResp
+    tagUserImg.setAttribute("src",mess.photo)
+    divUserBlog.appendChild(divContainerHead)
+    divContainerHead.appendChild(tagUserImg)
+    //bH5.textContent="il "+mess.publish
     spanUserName.setAttribute("style","color:grey;display:inline;")
-    spanInDivPostTitle.setAttribute("style","color:grey;display:inline;")
     spanInDivPostTitle.setAttribute("id","post_title_"+id)
-    divPostTitle.setAttribute("id","d_post_title")
+    divPostTitle.setAttribute("id","d_post_title_"+id)
     divPostTitle.appendChild(spanInDivPostTitle)
-    bH5.setAttribute("style","margin-left:3%;color:blue;display:inline;")
-    bH5.setAttribute("id","bh5_span"+id.toString())
+    bH5.setAttribute("style","margin-left:3%;color:blue;")
+    bH5.setAttribute("id","bh5_span_"+id)
     bH5.appendChild(spanUserName)
-    divUserBlog.appendChild(bH5)
+    divContainerHead.appendChild(bH5)
     divUserBlog.appendChild(divPostTitle)
-    //divUserBlog.appendChild(bSpan)
-    //bSpan.appendChild(bSpanChild)
-    //divUserBlog.appendChild(bSpan)
-    bdiv.appendChild(divUserBlog)
-    //bSpanChild.setAttribute("id","s_blog_text_"+id.toString())
-  //  bSpan.settextarea di respAttribute("id","s_blog_icon_"+id.toString())
-    tagUserImg.setAttribute("id","img_user_"+id.toString())
-    spanUserName.setAttribute("id","span_user_"+id.toString())
-    divUserBlog.setAttribute("id","divuserblog_"+id.toString())
-    this.mess=mess
-    if(mess instanceof Resp){
-      spanInDivPostTitle.textContent=" | Risposta a :"+mess.post.titled
-      //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
-      divUserBlog.setAttribute("style","margin-left:20%")
-      console.log("is resp ")
-    //  post.postarea.insertAdjacentElement("beforebegin",divBlog)
-      //$(post).insertBefore(mainElement,$(post).childNodes[0])
-    }
-    else {
-      if(!(post.disabled==true)){
-        spanInDivPostTitle.textContent=" | "+mess.titled
-        //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-20px;left:0")
-        //divUserBlog.setAttribute("style","width:45%;height:auto;display:inline-block;position:absolute;top:-20px;left:0%;")
-      //  divCommentIcon.setAttribute("style","position:absolute;width:10%;left:45%;display:inline;margin:-40px auto;")
-        //divBlog.appendChild(divCommentIcon)
-        console.log("thispost.disabled")
-        //$(bSection).prepend(divBlog)
-        $('#post_response').css("border", "1px solid grey")
-        bbutton.textContent="Nuovo Post"
-        /* mando xml asincrono al server . congelo la textarea in quanto è stata usata */
-        //thispost.disable()
-        var idWherePutElement="button_post"
-        console.log(idWherePutElement)
-      }
-    }
-    var objectToAppendChild="divuserblog_"+id.toString()
-    var elementToAppendArea=document.getElementById(objectToAppendChild)
-    //elementToAppendArea.insertAdjacentElement("beforebegin",post.create())
+    this.appendPostArea(mess,divUserBlog)
+    tagUserImg.setAttribute("id","img_user_"+id)
+    spanUserName.setAttribute("id","span_user_"+id)
+    divUserBlog.setAttribute("id","divuserblog_"+id)
 
-    elementToAppendArea.appendChild(post.create())
-    return objectToAppendChild
-  }
-  //To append Postarea
-
-  createButton(button){
-    if(this.type=="resp"){
-      button.setAttribute("type","button")
-      button.setAttribute("class","button_resp btn btn-block btn-sm btn-outline-info")
-      button.textContent="Rispondi"
-      bbutton2=button
-      //bbutton2.animate({'width':'80%'},1000);
-      divFormChild.appendChild(button)
-    }
-    $(bbutton2).click(function(){
-      let result
-      if(post2 instanceof postArea){
-        post2.msg=post2.postarea.value
-        //post2.disable()
-        if(!(mess.type=="resp")){
-          mess=new Post("resp",loginis)
-          if(!mess.sent==true) {
-            if(!post2.msg==''){
-              if ((result=mess.sendToServer(post2,tutorial,loginis)==0)) {
-                mess.sent=true
-                post2.disable()
-                bbutton2.setAttribute("disabled","true")
-                bbutton2.innerHTML="rispondimi"
-              }
-            }
-          }
-        }
-      }
-    }
-  );
-
-}
-disableButton(button){
-  button.setAttribute("disabled","true")
-}
-create(){
-  if(this.mess instanceof Post){
-if (this.mess.titled){
-  //  if(this.type=="post" ){
-      $(this.postarea).animate({'width':'100%'},1000);
-    }}
-  else if(this.mess instanceof Resp){
-    if (this.mess.titled){
-      $(this.postarea).animate({'width':'100%'},1000);
-  }
-}
-    //}
-    //else {
-      //this.postarea.setAttribute("class","post_response")
-      //$(this.postarea).animate({'width':'70%'},1000);
-    //}
-    this.postarea.setAttribute("rows","2");
-    this.postarea.setAttribute("name","messaggio")
-    $(this.postarea).css("border", borderPost)
-    this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
-
-    return this.postarea;
-  }
-//}
-disable(){
-  this.disabled=true
-  this.postarea.setAttribute('disabled','true')
-}
-}
-
-
-
-function initBlogSGang(id,login,tut){
-  if(login=="False"||login=="false"||login=="none"||login=="AnonymousUser"){
-    loginis="MisterX"
-  }
-  else{
-    loginis=login
-  }
-  idis=id;
-  tutorial=tut
-  createSectionDivSpan(idis);
-}
-
-/* EVENT SECTION */
-
-function instancePostarea(mess){
-  if(mess.titled){
-  post=new postArea() // passo post come argomento
-  post.id=id+1
-  value=post.makeHeadBlog(mess,data.photo,post,data.username)
-  return post
-}
-}
-/* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
-$(bbutton).click(function(){
-  var mess=Post,post;
-  let result
-  // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
-  function instancePost(){
-    //var titleNewPost=makeModalWindow(this.post=instancePostarea())
-    mess= new Post("newpost",loginis)
-    mess.titled=makeModalWindow(mess)
-    this.mess=mess
-    return this.mess
-  }
-
-  if (!(post instanceof postArea ))
-  {
-    //post=instancePostarea()
-    post=instancePost()
-  }
-  // caso click su textarea esistente
-  else if (post instanceof postArea ) {
-    if (post.postarea.value=='' || post.postarea.value.trim().length < 1){
-      alert("il silenzio in questi casi vuol dir poco !")
-    }
-    // caso click su textarea esistente e con testo all interno
-    else {
-      /* la modifica della textarea e l' animazione non deve partire se la textarea e disabled ! */
-      if(!(post.disabled==true)){
-        post.msg=post.postarea.value
-        $('#post_response').css("border", "1px solid grey")
-        if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
-          mess.sent=true
-        }
+      this.mess=mess
+      if(mess instanceof Resp){
+        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Risponde"
+        //+post.author[0].toUpperCase()+post.author.slice("1")
+        //spanInDivPostTitle.textContent=
+        //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
+        divUserBlog.setAttribute("style","margin-left:20%")
+        console.log("is resp ")
       }
       else {
-        if (!(post.postarea.value=="") && mess.sent==true) {
-          makeTextAreaResp()
-          this.setAttribute("disabled","true")
-        }
-        function makeTextAreaResp(){
-          if(id < MAX_TEXTAREA_NUMBER){
-            var bbut2=document.createElement("Button");
-            bbutton2=bbut2
-            id=id+1
-            post2=new postArea("resp")
-            postresp=new Post("resp")
-            bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
-            post2.createButton(bbutton2)
-          }
-          //bbutton.prepend(bUserImg)
-          return 0
+        if(!(postarea.disabled==true)){
+          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta :"
+          spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
+          console.log("thispost.disabled")
+          $('#post_response').css("border", "1px solid grey")
+          bbutton.textContent="Nuovo Post"
+          var idWherePutElement="button_post"
+          console.log(idWherePutElement)
         }
       }
+      //var objectToAppendChild   =  "divuserblog_"  +   id.toString()
+      //var elementToAppendArea=document.getElementById(objectToAppendChild)
+        divUserBlog.appendChild(postarea.create())
+      return $(divUserBlog)
+    }
+
+    createButtonRispostaPost(mess,postarea){
+      var button_risposta_post=document.createElement("BUTTON")
+      let id
+      switch (mess.type){
+        case "newpost":
+          button_risposta_post.textContent="Crea Post"
+          id="but_crea_post"
+          break
+        case "post":
+          button_risposta_post.textContent="Rispondi"
+          id="but_resp"
+          break
+        case "resp":
+          button_risposta_post.textContent="Rispondi"
+          id="but_post"
+          break
+      }
+        setButton(id)
+        function setButton(type){
+          button_risposta_post.setAttribute("type","button")
+          button_risposta_post.setAttribute("id",type+"_"+postarea.id)
+          button_risposta_post.setAttribute("class",type+"_"+postarea.id)
+        }
+        var objectToAppendChild="divuserblog_"+postarea.id
+        var elementToAppendButton=document.getElementById(objectToAppendChild)
+        elementToAppendButton.appendChild(button_risposta_post)
+      }
+
+  disableButton(button){
+    button.setAttribute("disabled","true")
+  }
+
+  create(){
+    if(this.mess instanceof Post){
+      if (this.mess.titled){
+        //  if(this.type=="post" ){
+        $(this.postarea).animate({'width':'100%'},1000);
+      }}
+      else if(this.mess instanceof Resp){
+        if (this.mess.titled){
+          $(this.postarea).animate({'width':'100%'},1000);
+        }
+      }
+      this.postarea.setAttribute("rows","2");
+      this.postarea.setAttribute("name","messaggio")
+      $(this.postarea).css("border", borderPost)
+      this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
+      return this.postarea;
     }
   }
-}
+
+
+  function initBlogSGang(id,login,tut){
+    if(login=="False"||login=="false"||login=="none"||login=="AnonymousUser"){
+      loginis="MisterX"
+    }
+    else{
+      loginis=login
+    }
+    idis=id;
+    tutorial=tut
+    createSectionDivSpan(idis);
+  }
+
+
+  function instancePostarea(mess){
+    if(mess.titled){
+      post=new postArea() // passo post come argomento
+      value=post.makeHeadBlog(mess,data.photo,post,data.username)
+      return post
+    }
+  }
+
+
+  /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
+  $(bbutton).click(function(){
+
+    let result
+    // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
+    function instancePost(){
+      let mess=Object()
+      //var titleNewPost=makeModalWindow(this.post=instancePostarea())
+      if(!(mess instanceof Post)){
+        mess= new Post("newpost",loginis)
+        mess.titled=makeModalWindow(mess)
+    }
+    }
+
+    if (!(post instanceof postArea ))
+    {
+      //post=instancePostarea()
+      post=instancePost()
+    }
+    // caso click su textarea esistente
+  /*  else if (post instanceof postArea ) {
+      if (post.postarea.value=='' || post.postarea.value.trim().length < 1){
+        alert("il silenzio in questi casi vuol dir poco !")
+      }
+      // caso click su textarea esistente e con testo all interno
+      else {
+        // la modifica della textarea e l' animazione non deve partire se la textarea e disabled !
+        if(!(post.disabled==true)){
+          post.msg=post.postarea.value
+          $('#post_response').css("border", "1px solid grey")
+          if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
+            mess.sent=true
+          }
+        }
+        else {
+          if (!(post.postarea.value=="") && mess.sent==true) {
+            makeTextAreaResp()
+            this.setAttribute("disabled","true")
+          }
+          function makeTextAreaResp(){
+            if(id < MAX_TEXTAREA_NUMBER){
+              var bbut2=document.createElement("Button");
+              bbutton2=bbut2
+              id=id+1
+              post2=new postArea("resp")
+              postresp=new Post("resp")
+              bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
+              post2.createButton(bbutton2)
+            }
+            //bbutton.prepend(bUserImg)
+            return 0
+          }
+        }
+      }
+    }*/
+  }
 );
 
 /* MODAL WINDOW */
 
 function makeModalWindow(mess=Object()){
-  this.mess=mess
-  var divModalMain=document.createElement("DIV");
-  var divInMain=document.createElement("DIV");
-  var textAreaInDivInMain=document.createElement("TEXTAREA");
-  var modalConfirmButton=document.createElement("Button");
-  var checkValidity=false
-  modalConfirmButton.setAttribute('id','but_confirm_title')
-  modalConfirmButton.setAttribute('type','button')
-  divModalMain.setAttribute('class','modal')
-  divModalMain.setAttribute('id','myModal')
-  divInMain.setAttribute('class','modal-content')
-  textAreaInDivInMain.setAttribute("id","p_text")
-  textAreaInDivInMain.setAttribute("rows","1")
-  textAreaInDivInMain.setAttribute("padding","0")
-  textAreaInDivInMain.textContent="Titolo Post ?"
-  divInMain.appendChild(textAreaInDivInMain)
-  divInMain.appendChild(modalConfirmButton)
-  divModalMain.appendChild(divInMain)
-  body.appendChild(divModalMain)
-  var modal = document.getElementById("myModal");
-  modal.style.display = "block";
-  document.getElementById('but_confirm_title').onclick = function(event) {
+  let newMess=mess
+  let exist=false;
+  if(exist==document.getElementById('myModal')==false){
+    exist=true
+    var divModalMain=document.createElement("DIV");
+    var divInMain=document.createElement("DIV");
+    var textAreaInDivInMain=document.createElement("TEXTAREA");
+    var modalConfirmButton=document.createElement("Button");
+    //var checkValidity=false
+    modalConfirmButton.setAttribute('id','but_confirm_title')
+    modalConfirmButton.setAttribute('type','button')
+    divModalMain.setAttribute('class','modal')
+    divModalMain.setAttribute('id','myModal')
+    divInMain.setAttribute('class','modal-content')
+    textAreaInDivInMain.setAttribute("id","p_text")
+    textAreaInDivInMain.setAttribute("rows","1")
+    textAreaInDivInMain.setAttribute("padding","0")
+    textAreaInDivInMain.textContent="Titolo Post ?"
+    divInMain.appendChild(textAreaInDivInMain)
+    divInMain.appendChild(modalConfirmButton)
+    divModalMain.appendChild(divInMain)
+    body.appendChild(divModalMain)
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+  }
+  /*document.getElementById('but_confirm_title').onclick = function(event) {
     try{
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
         validity=true
-        mess.titled=textAreaInDivInMain.value
-        instancePostarea(mess)
-        //$(divFormChild).prepend(post.create())
-        return mess.titled ;
+        newMess.titled=textAreaInDivInMain.value
+        newMess.type="newpost"
+        newMess.publish=getDateFromDjangoDate("")
+        newMess.author=loginis
+        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        //return newMess ;
       }
-    else{
-    alert("Devi inserire un titolo Valido")
-    validity=false
+      else{
+        alert("Devi inserire un titolo Valido")
+        validity=false
+      }
     }
-      }
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
-  }
+  }*/
 
   $('#but_confirm_title').click(function() {
-    if(validity){
-    modal.style.display = "none";
-  }
+    try{
+      if (!(textAreaInDivInMain.value=="Titolo Post ?")){
+        newMess.titled=textAreaInDivInMain.value
+        newMess.type="newpost"
+        newMess.publish=getDateFromDjangoDate("")
+        newMess.author=loginis
+        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        if(mess.titled){
+          $('#myModal').remove()
+        }
+        //return newMess ;
+      }
+      else{
+        alert("Devi inserire un titolo Valido")
+      }
+    }
+    catch(Error){
+      console.log("qualcosa è andato storto nel recupero del titolo")
+    }
+      createPostArea(newMess)
+      modal.style.display = "none";
   });
   window.onclick = function(event) {
     if (event.target == modal) {
@@ -494,32 +501,31 @@ function makeModalWindow(mess=Object()){
       console.log("canche")
       textAreaInDivInMain.value=""
     }
-    });
+  });
 }
-
+// se la variabile data non viene passata come parametro si presuppone che il client abbia creato un nuovo post , quindi //la data è now
 function getDateFromDjangoDate(data){
-  let day=data.slice("8","10")
-  let month=data.slice("5","7")
-  month=getMonthFromData(month)
-  let year=data.slice("0","4")
-  let hour=data.slice("11","15")
-  //data=data.replace("T"," ore ")
-  data=day+"-"+month+"-"+year+" alle "+hour
-  return data
-}
-
-function getMonthFromData(mese){
-  switch(mese){
-    case "01": mese="Gennaio"
-    case "03": mese="Marzo"
-    case "02": mese="febbraio"
-    return mese;
+  var newDate
+  if (  data==""){
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+    today = yyyy + '/' + mm + '/' + dd;
+    newDate=getDateFromDjangoDate(today)
   }
+  else {
+    let day=data.slice("8","10")
+    let month=data.slice("5","7")
+    let year=data.slice("0","4")
+    let hour=data.slice("11","15")
+  //data=data.replace("T"," ore ")
+    data=day+"-"+month+"-"+year+" alle "+hour
+    newDate=data
+}
+return newDate
 }
 
-
-
-/* END MODAL  */
 function cleanJson(json){
   this.data=json.toString()
   s = this.data.replace(/\\n/g, "\\n")
@@ -536,18 +542,29 @@ function cleanJson(json){
   //alert("s="+s);
   return s
 }
+$(document).on("load" ,function(){
+  var itm = document.getElementsByClassName("form_comment")[0];
+  var cln = itm.cloneNode(true);
+  bdiv.appendChild(cln)[2];
 
+})
 $(document).ready(function(){
   var obj
   let indexX=0
   var initial_y
   var y=0,s
+  let q=0
   let mess=new Array()
   let resps=new Array()
   let post = new Array()
   let profiles=new Array()
   let z=0
   let comments_json;
+  var itm = document.getElementsByClassName("form_comment")[0];
+  var cln = itm.cloneNode(true);
+  cln.setAttribute("id","clone_form")
+  cln.getElementsByClassName('mybut')[0].setAttribute("id","clone_button")
+  bdiv.appendChild(cln)[2];
   //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
@@ -562,82 +579,69 @@ $(document).ready(function(){
         comments_json = JSON.parse(obj.data_comm);// blog.comment
         resps_json = JSON.parse(obj.resps);
         profiles_json = JSON.parse(obj.profiles);
+        userLogged=JSON.parse(obj.userLogged);
+      }
+      catch(SyntaxError){
+        console.log("error in json!")
+      }
+      //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
+
+      //alert(obj3);
+      //var obj4 = obj.photos
+      //var obj5_photo = obj.profile;
+      //var user_post_parsed=JSON.parse(obj5_photo);
+      //var user_pk=user_post_parsed.pk
+      var photoPost , photoResp
+      //console.log(obj.data_l5)
+
+      //console.log(obj.data_l7)
+      //console.log(obj.data_l5)
+      var i=0
+      //initial_y=(parseInt(obj3.length))-1
+      for (i;i<=comments_json.length-1;i=i+1){
+        for (z=0;z<=profiles_json.length-1;z=z+1){
+
+          // if(obj5_photo[z].fields.user==obj2[i].fields.author){
+          if(profiles_json[z].pk==comments_json[i].fields.author){
+            profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
+            mess.push(new Post("post",profiles_json[z].fields.first_name,comments_json[i].fields.title,comments_json[i].fields.body,getDateFromDjangoDate(comments_json[i].fields.publish),BASE_PHOTO_DIR+profiles_json[z].fields.photo,comments_json[i].pk))
+            createPostArea(mess[indexX])
+            break;
+          }
         }
-        catch(SyntaxError){
-          console.log("error in json!")
+        // creo la textarea per il post e con l head .
+        z=0
+        // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
+        for (y=resps_json.length-1,q=0;y>0,q<=resps_json.length-1;y=y-1,q=q+1){
+          if(comments_json[i].pk==resps_json[y].fields.commento){
+            for (var z2=0;z2<=profiles_json.length-1;z2=z2+1){
+              if(profiles_json[z2].pk==resps_json[y].fields.author){
+                if (resps_json[y].fields.author=="anonimo"){
+                  photoResp=obj5_photo
+                }
+                else{
+                  photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
+                }
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled,(comments_json[i].pk).toString()+resps_json[z2].pk.toString()))
+                mess[indexX].risposte.push(resps[q].body)
+                createPostArea(resps[q],mess[indexX])
+              }
+            }
+          }
         }
-          //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
+        y=0
+        indexX=indexX+1
+      }
 
-          //alert(obj3);
-          //var obj4 = obj.photos
-          //var obj5_photo = obj.profile;
-          //var user_post_parsed=JSON.parse(obj5_photo);
-          //var user_pk=user_post_parsed.pk
-          var photoPost , photoResp
-          //console.log(obj.data_l5)
 
-          //console.log(obj.data_l7)
-          //console.log(obj.data_l5)
-          var i=0
-          //initial_y=(parseInt(obj3.length))-1
-          for (i;i<=comments_json.length-1;i=i+1){
-            for (z=0;z<=profiles_json.length-1;z=z+1){
-             // if(obj5_photo[z].fields.user==obj2[i].fields.author){
-               if(profiles_json[z].pk==comments_json[i].fields.author){
-                 alert(profiles_json[z].pk+"-"+comments_json[i].fields.author)
-                 profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
-                 mess.push(new Post("post",profiles_json[z].fields.user_name,comments_json[i].fields.title))
-                 mess[indexX].body=comments_json[i].fields.body
-                 mess[indexX].type="post"
-                 mess[indexX].titled=comments_json[i].fields.title
-                 mess[indexX].publish=getDateFromDjangoDate(comments_json[i].fields.publish)
-                 photoPost=BASE_PHOTO_DIR+profiles_json[z].fields.photo
-                 if(mess[indexX].getTitle()){
-                   var pa=new postArea(mess[indexX])
-                   pa.id=id+1
-                   idtoPut=pa.makeHeadBlog(mess[indexX],photoPost,pa,comments_json[i].fields.authorname)
-               }
-               }
-
-             }
-             // creo la textarea per il post e con l head .
-             z=0
-           // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
-           for (y;y<=resps_json.length-1;y=y+1){
-             if(comments_json[i].pk==resps_json[y].fields.commento){
-               var resp=new Resp(resps_json[y].fields.authorname,resps_json[y].fields.body,resps_json[y].fields.publish,mess[indexX])
-               resp.type="resp"
-               mess[indexX].risposte.push(resp.body)
-               resp.titled="risposta a "+mess[indexX].titled
-               var paResp=new postArea(resp)
-               //la textarea viene creata nella funzione makeheadblog
-
-               // cerca autore in json user object
-               for (var z2=0;z2<=profiles_json.length-1;z2=z2+1){
-                 if(profiles_json[z2].fields.username==resps_json[y].fields.authorname){
-                   if (resps_json[y].fields.authorname=="anonimo"){
-                     photoResp=obj5_photo
-                   }
-                   else{
-                     photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
-                   }
-                 }
-               }
-               idtoPutResp=paResp.makeHeadBlog(resp,photoResp,paResp,resps_json[y].fields.authorname)
-             }
-           }
-
-           y=0
-           indexX=indexX+1
-           }
     }
   }
 );
+});
 
-         //i=obj5_photo.length
-
-
-
-      // qui dovrei creare le risposte per il post specifico
-
-      });
+// Metodo chiamato da post , resp e nuovo Post//
+function createPostArea(messOrResp,post){
+    paPostOrResp=new postArea(messOrResp)
+      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
+    paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
+}

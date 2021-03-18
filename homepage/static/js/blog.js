@@ -204,13 +204,11 @@ class postArea {
       this.postarea.setAttribute("id","resp_"+loginis+"_"+this.id)
       console.log("post di risposta")
       this.postarea.value=post.body
-      this.postarea.disabled=false
     }
     else if  (post.type=="post"){
       let x;
       x = this.postarea.setAttribute("id","post_"+loginis+"_"+this.id)
       this.empty=true
-      this.postarea.disabled=false
       this.postarea.value=post.body
       if (this.postarea.value==""){
         this.postarea.setAttribute("style","border:solid 2px orange;")
@@ -228,6 +226,7 @@ class postArea {
     }
     else{
       bdiv.appendChild(postarea)
+      postarea.disabled="true"
     }
   }
 
@@ -289,11 +288,28 @@ class postArea {
     }
 
     createButtonRispostaPost(mess,postarea){
-        let button_risposta_post=document.createElement("BUTTON")
-        button_risposta_post.setAttribute("type","button")
-        button_risposta_post.setAttribute("id","button_risposta_post_"+postarea.id)
-        button_risposta_post.setAttribute("class","button_resp")
-        button_risposta_post.textContent="Rispondi"
+      var button_risposta_post=document.createElement("BUTTON")
+      let id
+      switch (mess.type){
+        case "newpost":
+          button_risposta_post.textContent="Rispondi"
+          id="but_crea_post"
+          break
+        case "post":
+          button_risposta_post.textContent="Rispondi"
+          id="but_resp"
+          break
+        case "resp":
+          button_risposta_post.textContent="Rispondi"
+          id="but_post"
+          break
+      }
+        setButton(id)
+        function setButton(type){
+          button_risposta_post.setAttribute("type","button")
+          button_risposta_post.setAttribute("id",type+"_"+postarea.id)
+          button_risposta_post.setAttribute("class",type+"_"+postarea.id)
+        }
         var objectToAppendChild="divuserblog_"+postarea.id
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(button_risposta_post)
@@ -355,7 +371,8 @@ class postArea {
       //var titleNewPost=makeModalWindow(this.post=instancePostarea())
       if(!(mess instanceof Post)){
         mess= new Post("newpost",loginis)
-        mess.titled=makeModalWindow(mess)
+        mess=makeModalWindow(mess)
+        location.href="#blog"
     }
     }
 
@@ -457,7 +474,7 @@ function makeModalWindow(mess=Object()){
       if (!(textAreaInDivInMain.value=="Titolo Post ?")){
         newMess.titled=textAreaInDivInMain.value
         newMess.type="newpost"
-        newMess.publish=getDateFromDjangoDate("")
+        newMess.publish=getDateFromDjangoDate()
         newMess.author=loginis
         newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
         if(mess.titled){
@@ -486,28 +503,28 @@ function makeModalWindow(mess=Object()){
       textAreaInDivInMain.value=""
     }
   });
+  return newMess
 }
 // se la variabile data non viene passata come parametro si presuppone che il client abbia creato un nuovo post , quindi //la data è now
-function getDateFromDjangoDate(data){
+function getDateFromDjangoDate(data=""){
   var newDate
+  var day,month,year,hour
   if (  data==""){
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-    today = yyyy + '/' + mm + '/' + dd;
-    newDate=getDateFromDjangoDate(today)
+    day = String(today.getDate()).padStart(2, '0');
+    month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    year = today.getFullYear();
+    hour=today.getHours().toString()+":"+today.getMinutes().toString()
   }
   else {
-    let day=data.slice("8","10")
-    let month=data.slice("5","7")
-    let year=data.slice("0","4")
-    let hour=data.slice("11","15")
-  //data=data.replace("T"," ore ")
-    data=day+"-"+month+"-"+year+" alle "+hour
-    newDate=data
-}
-return newDate
+    day=data.slice("8","10")
+    month=data.slice("5","7")
+    year=data.slice("0","4")
+    hour=data.slice("11","15")
+  }
+  data=day+"-"+month+"-"+year+" alle "+hour
+  newDate=data
+  return newDate
 }
 
 function cleanJson(json){

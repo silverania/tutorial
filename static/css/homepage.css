@@ -63,13 +63,17 @@ li:hover{
   cursor:pointer;
 }
 
+#col-header{
+    margin-top:3%;
+}
+
 progress#progressbar{
 position:fixed;
-width:auto;
+width:100%;
 top:-8px;
 height:30px;;
 margin:0 auto 0 0;
-z-index:2;
+z-index:1000;
 
 }
 
@@ -243,7 +247,7 @@ li #s_center_menu{
   font-size:6vw;
 }
 [id^=s_leftmenu]{
-  font-size:0.6rem;
+  font-size:0.7rem;
   color:white;
 }
 #topnav{
