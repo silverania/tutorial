@@ -495,7 +495,6 @@ function makeModalWindow(mess=Object()){
       }
       else{
         alert("Devi inserire un titolo Valido")
-        =textAreaInDivInMain.text
       }
     }
     catch(Error){
@@ -509,8 +508,8 @@ function makeModalWindow(mess=Object()){
     }
   }
   $('#p_text').focus( function() {
-    if (textAreaInDivInMain.textContent.search("Titolo Post ?")>=0){
-      console.log("canche")
+    if ($('#p_text').val().search("Titolo Post ?")>=0){
+      $('#p_text').val("")
     }
   });
   return newMess
