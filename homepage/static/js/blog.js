@@ -43,6 +43,7 @@ var wait=true
 var postTitle
 var tutorial
 var bbutton2=new Object();
+var exist=false
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
@@ -363,8 +364,12 @@ class postArea {
 
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
   $(bbutton).click(function(){
-
+    let modal
+    let textAreaInDivInMain
     let result
+    var divModalMain
+    var divInMain
+    var modalConfirmButton
     // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
     function instancePost(){
       let mess=Object()
@@ -424,13 +429,11 @@ class postArea {
 
 function makeModalWindow(mess=Object()){
   let newMess=mess
-  let exist=false;
-  if(exist==document.getElementById('myModal')==false){
-    exist=true
-    var divModalMain=document.createElement("DIV");
-    var divInMain=document.createElement("DIV");
-    var textAreaInDivInMain=document.createElement("TEXTAREA");
-    var modalConfirmButton=document.createElement("Button");
+  if(exist==false){
+    divModalMain=document.createElement("DIV");
+    divInMain=document.createElement("DIV");
+    textAreaInDivInMain=document.createElement("TEXTAREA");
+    modalConfirmButton=document.createElement("Button");
     //var checkValidity=false
     modalConfirmButton.setAttribute('id','but_confirm_title')
     modalConfirmButton.setAttribute('type','button')
@@ -440,12 +443,16 @@ function makeModalWindow(mess=Object()){
     textAreaInDivInMain.setAttribute("id","p_text")
     textAreaInDivInMain.setAttribute("rows","1")
     textAreaInDivInMain.setAttribute("padding","0")
-    textAreaInDivInMain.textContent="Titolo Post ?"
+    textAreaInDivInMain.value="Titolo Post ?"
     divInMain.appendChild(textAreaInDivInMain)
     divInMain.appendChild(modalConfirmButton)
     divModalMain.appendChild(divInMain)
     body.appendChild(divModalMain)
-    var modal = document.getElementById("myModal");
+     modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    exist=true
+  }
+  else{
     modal.style.display = "block";
   }
   /*document.getElementById('but_confirm_title').onclick = function(event) {
@@ -471,26 +478,30 @@ function makeModalWindow(mess=Object()){
 
   $('#but_confirm_title').click(function() {
     try{
-      if (!(textAreaInDivInMain.value=="Titolo Post ?")){
-        newMess.titled=textAreaInDivInMain.value
+      let txt=$("#p_text").val()
+      if (!(txt=="Titolo Post ?")){
+        newMess.titled=txt
         newMess.type="newpost"
         newMess.publish=getDateFromDjangoDate()
         newMess.author=loginis
         newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
         if(mess.titled){
           $('#myModal').remove()
+          createPostArea(newMess)
+          exist=false
+          //modal.style.display = "none";
         }
         //return newMess ;
       }
       else{
         alert("Devi inserire un titolo Valido")
+        =textAreaInDivInMain.text
       }
     }
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
-      createPostArea(newMess)
-      modal.style.display = "none";
+
   });
   window.onclick = function(event) {
     if (event.target == modal) {
@@ -498,9 +509,8 @@ function makeModalWindow(mess=Object()){
     }
   }
   $('#p_text').focus( function() {
-    if (textAreaInDivInMain.value.search("Titolo Post ?")>=0){
+    if (textAreaInDivInMain.textContent.search("Titolo Post ?")>=0){
       console.log("canche")
-      textAreaInDivInMain.value=""
     }
   });
   return newMess
@@ -544,7 +554,7 @@ function cleanJson(json){
   return s
 }
 $(document).on("load" ,function(){
-  var itm = document.getElementsByClassName("form_comment")[0];
+  var itm = document.getEleme=ntsByClassName("form_comment")[0];
   var cln = itm.cloneNode(true);
   bdiv.appendChild(cln)[2];
 
