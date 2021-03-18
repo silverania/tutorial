@@ -136,6 +136,7 @@ class Resp{
     this.titled=titolo
     this.pk=pk
   }
+
 }
 
 class Profile{
@@ -298,11 +299,11 @@ class postArea {
           break
         case "post":
           button_risposta_post.textContent="Rispondi"
-          id="but_resp"
+          id="but_post"
           break
         case "resp":
           button_risposta_post.textContent="Rispondi"
-          id="but_post"
+          id="but_resp"
           break
       }
         setButton(id)
@@ -311,6 +312,10 @@ class postArea {
           button_risposta_post.setAttribute("id",type+"_"+postarea.id)
           button_risposta_post.setAttribute("class",type+"_"+postarea.id)
         }
+        $('#but_resp_12').click(function() {
+          alert('clicked')
+          console.log( "clccll")
+        })
         var objectToAppendChild="divuserblog_"+postarea.id
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(button_risposta_post)
@@ -647,7 +652,9 @@ $(document).ready(function(){
     }
   }
 );
-});
+}
+
+);
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,post){
