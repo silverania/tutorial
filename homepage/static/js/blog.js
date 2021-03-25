@@ -44,6 +44,7 @@ var postTitle
 var tutorial
 var bbutton2=new Object();
 var exist=false
+var newPostId=0
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
@@ -199,21 +200,17 @@ class Post{
 
 class postArea {
   constructor(post){
+    this.post=post
     this.postarea=document.createElement("TEXTAREA");
     this.id=post.pk
-    var mess=""
-    if (post.type=="resp"){
-      this.postarea.setAttribute("id","resp_"+loginis+"_"+this.id)
-      console.log("post di risposta")
-      this.postarea.value=post.body
+    //var mess=""
+    if (post.type=="newpost"){
+      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
     }
-    else if  (post.type=="post"){
-      let x;
-      x = this.postarea.setAttribute("id","post_"+loginis+"_"+this.id)
-      this.empty=true
+    else{
       this.postarea.value=post.body
-      if (this.postarea.value==""){
-        this.postarea.setAttribute("style","border:solid 2px orange;")
+      if  (post.type=="post"){
+        this.empty=true
       }
     }
   //  else{
@@ -232,7 +229,7 @@ class postArea {
     }
   }
 
-  makeHeadBlog(mess,postarea,post){
+  makeHeadBlog(mess,postarea){
     var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
@@ -294,7 +291,7 @@ class postArea {
       let id
       switch (mess.type){
         case "newpost":
-          button_risposta_post.textContent="Rispondi"
+          button_risposta_post.textContent="Crea Post"
           id="but_crea_post"
           break
         case "post":
@@ -307,11 +304,13 @@ class postArea {
           break
       }
         setButton(id)
+
         function setButton(type){
           button_risposta_post.setAttribute("type","button")
           button_risposta_post.setAttribute("id",type+"_"+postarea.id)
           button_risposta_post.setAttribute("class",type+"_"+postarea.id)
         }
+
         $('#but_resp_12').click(function() {
           alert('clicked')
           console.log( "clccll")
@@ -319,6 +318,13 @@ class postArea {
         var objectToAppendChild="divuserblog_"+postarea.id
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(button_risposta_post)
+
+        $(button_risposta_post).click(function(){
+          //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
+          let ids='#'+postarea.postarea.id
+          let txts=$(ids).val()
+          console.log(txts)
+        });
       }
 
   disableButton(button){
@@ -342,7 +348,7 @@ class postArea {
       this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
       return this.postarea;
     }
-  }
+}
 
 
   function initBlogSGang(id,login,tut){
@@ -393,7 +399,7 @@ class postArea {
     }
     // caso click su textarea esistente
   /*  else if (post instanceof postArea ) {
-      if (post.postarea.value=='' || post.postarea.value.trim().length < 1){
+      if (post.postarea.value=='' ||body post.postarea.value.trim().length < 1){
         alert("il silenzio in questi casi vuol dir poco !")
       }
       // caso click su textarea esistente e con testo all interno
@@ -432,8 +438,8 @@ class postArea {
 
 /* MODAL WINDOW */
 
-function makeModalWindow(mess=Object()){
-  let newMess=mess
+function makeModalWindow(mess){
+  newPostId=newPostId+1
   if(exist==false){
     divModalMain=document.createElement("DIV");
     divInMain=document.createElement("DIV");
@@ -477,7 +483,7 @@ function makeModalWindow(mess=Object()){
       }
     }
     catch(Error){
-      console.log("qualcosa è andato storto nel recupero del titolo")
+      console.log("qualcosa è andatobody storto nel recupero del titolo")
     }
   }*/
 
@@ -485,14 +491,15 @@ function makeModalWindow(mess=Object()){
     try{
       let txt=$("#p_text").val()
       if (!(txt=="Titolo Post ?")){
-        newMess.titled=txt
-        newMess.type="newpost"
-        newMess.publish=getDateFromDjangoDate()
-        newMess.author=loginis
-        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        mess.titled=txt
+        mess.type="newpost"
+        mess.publish=getDateFromDjangoDate()
+        mess.author=loginis
+        mess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        mess.pk=newPostId
         if(mess.titled){
           $('#myModal').remove()
-          createPostArea(newMess)
+          createPostArea(mess)
           exist=false
           //modal.style.display = "none";
         }
@@ -505,7 +512,6 @@ function makeModalWindow(mess=Object()){
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
-
   });
   window.onclick = function(event) {
     if (event.target == modal) {
@@ -517,7 +523,7 @@ function makeModalWindow(mess=Object()){
       $('#p_text').val("")
     }
   });
-  return newMess
+  return mess
 }
 // se la variabile data non viene passata come parametro si presuppone che il client abbia creato un nuovo post , quindi //la data è now
 function getDateFromDjangoDate(data=""){
@@ -544,7 +550,6 @@ function getDateFromDjangoDate(data=""){
 function cleanJson(json){
   this.data=json.toString()
   s = this.data.replace(/\\n/g, "\\n")
-
   .replace(/\\'/g, "\\'")
   .replace(/\\"/g, '\\"')
   .replace(/\\&/g, "\\&")
@@ -552,17 +557,16 @@ function cleanJson(json){
   .replace(/\\t/g, "\\t")
   .replace(/\\b/g, "\\b")
   .replace(/\\f/g, "\\f")
-  // remove non-printable and other non-valid JSON chars
-  //s=this.data.replace(/[\u0000-\u0019]+/g,"");
-  //alert("s="+s);
   return s
 }
+
 $(document).on("load" ,function(){
   var itm = document.getEleme=ntsByClassName("form_comment")[0];
   var cln = itm.cloneNode(true);
   bdiv.appendChild(cln)[2];
 
 })
+
 $(document).ready(function(){
   var obj
   let indexX=0
@@ -659,6 +663,6 @@ $(document).ready(function(){
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,post){
     paPostOrResp=new postArea(messOrResp)
-      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
+      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
 }
