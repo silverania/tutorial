@@ -1,3 +1,5 @@
+BASE_URL="http://127.0.0.1:8000"
+URL_NEW_POST="/post/sendpost"
 const MAX_TEXTAREA_NUMBER=21
 const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
@@ -150,15 +152,14 @@ class Post{
   constructor(type="none",author="anonimo",title1,comment,date,photo,pk){
     this.sent=false
     this.type=type
-    this.author=author  //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
-    //console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
-    this.titled=title1
+    this.author=author
     this.risposte=new Array()
     this.body=comment
     this.titled=title1
     this.photo=photo
     this.publish=date
     this.pk=pk
+    this.thisTutorialTitle=tutorial
   }
 
   getTitle(){
@@ -169,18 +170,11 @@ class Post{
     this.disabled=true
   }
 
-  sendToServer(post="null",tutorial,user,postTitle){
-    if(post.type=="post"){
-      el=document.getElementById("post_response");
-    }
-    else if (post.type=="resp"){
-      el=document.getElementsByClassName("post_response");
-    }
-    if(!tutorial=="" && (!post.msg=="")) {
+  sendToServer(post=Object(),url){
+    if(post.type=="newpost"){
       let content=tutorial;
-      // AJAX .....il pulito a casa mia
       $.ajax({
-        url: '/post/getpost',
+        url: url,
         data: {
           'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': postTitle,
         },
@@ -192,9 +186,10 @@ class Post{
       }
     );
     console.log("ajax call finished");
-  }
   return 0
+  }
 }
+
 }
 
 
@@ -288,11 +283,26 @@ class postArea {
 
     createButtonRispostaPost(mess,postarea){
       var button_risposta_post=document.createElement("BUTTON")
+      var form_risposta_post=document.createElement("FORM")
+      form_risposta_post.appendChild(button_risposta_post)
       let id
+      var url;
       switch (mess.type){
         case "newpost":
+          form_risposta_post.setAttribute("method","get")
           button_risposta_post.textContent="Crea Post"
           id="but_crea_post"
+          $(button_risposta_post).click(function(){
+            //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
+            let ids='#'+postarea.postarea.id
+            let txts=$(ids).val()
+            if (!(txts===""))
+            console.log("comparazione del tipo e valore = vera in:"+txts)
+            form_risposta_post.setAttribute("action",url)
+            mess.body=txts
+            url=BASE_URL+URL_NEW_POST+"?type="+mess.type+"&title="+mess.titled+"&body="+mess.body
+            mess.sendToServer(mess,url)
+            });
           break
         case "post":
           button_risposta_post.textContent="Rispondi"
@@ -317,14 +327,7 @@ class postArea {
         })
         var objectToAppendChild="divuserblog_"+postarea.id
         var elementToAppendButton=document.getElementById(objectToAppendChild)
-        elementToAppendButton.appendChild(button_risposta_post)
-
-        $(button_risposta_post).click(function(){
-          //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
-          let ids='#'+postarea.postarea.id
-          let txts=$(ids).val()
-          console.log(txts)
-        });
+        elementToAppendButton.appendChild(form_risposta_post)
       }
 
   disableButton(button){
