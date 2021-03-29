@@ -10,6 +10,7 @@ import json
 from django.core import serializers
 from django.forms.models import model_to_dict
 from django.core.serializers.json import DjangoJSONEncoder
+from django.urls import reverse
 
 photo=""
 message=""
@@ -62,7 +63,7 @@ def getPost(request):
         tutorial=request.GET.get('tutorial')
         tu=Tutorial.objects.get(slug=tutorial)
         aggiornato=formatted_datetime
-        all_comments_for_page=Comment.objects.filter(tutorial=tu)[:4] # tutti i commenti sul tutorial
+        all_comments_for_page=Comment.objects.filter(tutorial=tu)[:5] # tutti i commenti sul tutorial
         datac=list(all_comments_for_page)
         userLogged=list(userLogged)
         userLogged=serializer(userLogged)
@@ -95,6 +96,7 @@ def getPost(request):
     except UnboundLocalError:
         print("cahe sfcaccim")
 
+
 def newPost(request):
         #global formatted_datetime
         print ("entrypoint to newPost")
@@ -102,54 +104,53 @@ def newPost(request):
         post=Comment()
         myuser=Profile()
         myuser.firstname=getLoginName(request)
+        post.tutorial=tu
+        post.slug=retReverse("newPost").replace("/","_")
+        post.publish=datetime.now()
+        post.created=post.publish
+        print("SLUG="+str(post.slug))
         if 'type' in request.GET and request.GET['type'] :
-            post.type=request.GET.get('type')
-        if 'user' in request.GET and request.GET['user'] :
-            author=request.GET.get('user')
-            myuser.author=Profile.objects.filter(first_name=author)
-            print("user MYUSER="+str(myuser.author))
+            post.postType=request.GET.get('type')
+        if 'username' in request.GET and request.GET['username'] :
+            author=request.GET.get('username')
+            myuser=Profile.objects.get(first_name=author)
+            print("user MYUSER="+str(myuser))
+            post.author=myuser
         if 'title' in request.GET and request.GET['title'] :
             title=request.GET.get('title')
             post.title=title
         if 'body' in request.GET and request.GET['body'] :
             body=request.GET.get('body')
             post.body=body
-        if 'messaggio' in request.GET and request.GET['messaggio'] :
-            message=request.GET.get('messaggio')
-            if "resp" in type:
-                r=Resp()
-                r.body=message
-                r.author=myuser
-                r.authorname=myuser.username
-                r.commento=post
-                r.save()
-                print(str("è una risposta:"+str(post.risposte)))
-            else:
-                tu.post=post
-                post.body=message
-                post.author=myuser
-                post.authorname=myuser.username
-                print("creato,autore:"+str(post.created)+str(post.author))
-                aggiornato=formatted_datetime
-        if 'title' in request.GET and request.GET['title'] :
-                post.title=request.GET.get('title',None)
-                print("titolo"+post.title)
-                post.save()
+        tu.save()
+        post.save()
+        return HttpResponse("OK !")
+        """
+        if "resp" in type:
+            r=Resp()
+            r.body=message
+            r.author=myuser
+            r.authorname=myuser.username
+            r.commento=post
+            r.save()
+            print(str("è una risposta:"+str(post.risposte)))
+        else:
+            tu.post=post
+            post.body=message
+            post.author=myuser
+            post.authorname=myuser.username
+            print("creato,autore:"+str(post.created)+str(post.author))
+            aggiornato=formatted_datetime
         if 'tutorial' in request.GET and request.GET['tutorial'] :
                 tu.post=post
                 print("tu.post="+str(tu.post)+"risposta:"+str(tu.post.risposte.all()))
-        #try:
-        #    if isinstance(r,Resp):
-        #        print("trovata instanza risposta")
-        #        post.risposte=r
-        #except UnboundLocalError:
-        #        print("il messaggio non è una risposta !"+post.title)
-        #data={'username':myuser.u,'message':message,'type':type,'photo':str(myuser.photo),'aggiornato':aggiornato}
-        #return  JsonResponse(data)
-        return HttpResponse("OK !")
+
+        """
 """
 def showPost(tutorial):
     print("entry in view showPost")
     thistutorial=tutorial.slug
     print("thistutorial="+tutorial.slug)
 """
+def retReverse(name):
+    return reverse("blog:"+name)
