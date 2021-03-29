@@ -1,3 +1,5 @@
+BASE_URL="http://127.0.0.1:8000"
+URL_NEW_POST="/post/sendpost"
 const MAX_TEXTAREA_NUMBER=21
 const BASE_PHOTO_DIR="/media/"
 var borderPost="none";
@@ -43,6 +45,8 @@ var wait=true
 var postTitle
 var tutorial
 var bbutton2=new Object();
+var exist=false
+var newPostId=0
 
 function createSectionDivSpan(parent){
   bForm.setAttribute("action","post/getpost");
@@ -135,6 +139,7 @@ class Resp{
     this.titled=titolo
     this.pk=pk
   }
+
 }
 
 class Profile{
@@ -147,15 +152,14 @@ class Post{
   constructor(type="none",author="anonimo",title1,comment,date,photo,pk){
     this.sent=false
     this.type=type
-    this.author=author  //post[i,y]=new postArea("resp",resp[y]).create() // passo post come argomento
-    //console.log(mess[indexX].body+"|"+"|risposta:"+resp[indexX][indexY].body)
-    this.titled=title1
+    this.author=author
     this.risposte=new Array()
     this.body=comment
     this.titled=title1
     this.photo=photo
     this.publish=date
     this.pk=pk
+    this.thisTutorialTitle=tutorial
   }
 
   getTitle(){
@@ -166,18 +170,11 @@ class Post{
     this.disabled=true
   }
 
-  sendToServer(post="null",tutorial,user,postTitle){
-    if(post.type=="post"){
-      el=document.getElementById("post_response");
-    }
-    else if (post.type=="resp"){
-      el=document.getElementsByClassName("post_response");
-    }
-    if(!tutorial=="" && (!post.msg=="")) {
+  sendToServer(post=Object(),url){
+    if(post.type=="newpost"){
       let content=tutorial;
-      // AJAX .....il pulito a casa mia
       $.ajax({
-        url: '/post/getpost',
+        url: url,
         data: {
           'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': postTitle,
         },
@@ -189,29 +186,26 @@ class Post{
       }
     );
     console.log("ajax call finished");
-  }
   return 0
+  }
 }
+
 }
 
 
 class postArea {
   constructor(post){
+    this.post=post
     this.postarea=document.createElement("TEXTAREA");
     this.id=post.pk
-    var mess=""
-    if (post.type=="resp"){
-      this.postarea.setAttribute("id","resp_"+loginis+"_"+this.id)
-      console.log("post di risposta")
-      this.postarea.value=post.body
+    //var mess=""
+    if (post.type=="newpost"){
+      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
     }
-    else if  (post.type=="post"){
-      let x;
-      x = this.postarea.setAttribute("id","post_"+loginis+"_"+this.id)
-      this.empty=true
+    else{
       this.postarea.value=post.body
-      if (this.postarea.value==""){
-        this.postarea.setAttribute("style","border:solid 2px orange;")
+      if  (post.type=="post"){
+        this.empty=true
       }
     }
   //  else{
@@ -230,7 +224,7 @@ class postArea {
     }
   }
 
-  makeHeadBlog(mess,postarea,post){
+  makeHeadBlog(mess,postarea){
     var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
@@ -289,30 +283,51 @@ class postArea {
 
     createButtonRispostaPost(mess,postarea){
       var button_risposta_post=document.createElement("BUTTON")
+      var form_risposta_post=document.createElement("FORM")
+      form_risposta_post.appendChild(button_risposta_post)
       let id
+      var url;
       switch (mess.type){
         case "newpost":
+          form_risposta_post.setAttribute("method","get")
           button_risposta_post.textContent="Crea Post"
           id="but_crea_post"
+          $(button_risposta_post).click(function(){
+            //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
+            let ids='#'+postarea.postarea.id
+            let txts=$(ids).val()
+            if (!(txts===""))
+            console.log("comparazione del tipo e valore = vera in:"+txts)
+            form_risposta_post.setAttribute("action",url)
+            mess.body=txts
+            url=BASE_URL+URL_NEW_POST+"?user="+loginis+"&type="+mess.type+"&title="+mess.titled+"&body="+mess.body
+            mess.sendToServer(mess,url)
+            });
           break
         case "post":
           button_risposta_post.textContent="Rispondi"
-          id="but_resp"
+          id="but_post"
           break
         case "resp":
           button_risposta_post.textContent="Rispondi"
-          id="but_post"
+          id="but_resp"
           break
       }
         setButton(id)
+
         function setButton(type){
           button_risposta_post.setAttribute("type","button")
           button_risposta_post.setAttribute("id",type+"_"+postarea.id)
           button_risposta_post.setAttribute("class",type+"_"+postarea.id)
         }
+
+        $('#but_resp_12').click(function() {
+          alert('clicked')
+          console.log( "clccll")
+        })
         var objectToAppendChild="divuserblog_"+postarea.id
         var elementToAppendButton=document.getElementById(objectToAppendChild)
-        elementToAppendButton.appendChild(button_risposta_post)
+        elementToAppendButton.appendChild(form_risposta_post)
       }
 
   disableButton(button){
@@ -336,7 +351,7 @@ class postArea {
       this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
       return this.postarea;
     }
-  }
+}
 
 
   function initBlogSGang(id,login,tut){
@@ -363,15 +378,20 @@ class postArea {
 
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
   $(bbutton).click(function(){
-
+    let modal
+    let textAreaInDivInMain
     let result
+    var divModalMain
+    var divInMain
+    var modalConfirmButton
     // caso del primo click su comment , in cui la textarea non è visibile e quindi anche = empty
     function instancePost(){
       let mess=Object()
       //var titleNewPost=makeModalWindow(this.post=instancePostarea())
       if(!(mess instanceof Post)){
         mess= new Post("newpost",loginis)
-        mess.titled=makeModalWindow(mess)
+        mess=makeModalWindow(mess)
+        location.href="#blog"
     }
     }
 
@@ -382,7 +402,7 @@ class postArea {
     }
     // caso click su textarea esistente
   /*  else if (post instanceof postArea ) {
-      if (post.postarea.value=='' || post.postarea.value.trim().length < 1){
+      if (post.postarea.value=='' ||body post.postarea.value.trim().length < 1){
         alert("il silenzio in questi casi vuol dir poco !")
       }
       // caso click su textarea esistente e con testo all interno
@@ -421,15 +441,13 @@ class postArea {
 
 /* MODAL WINDOW */
 
-function makeModalWindow(mess=Object()){
-  let newMess=mess
-  let exist=false;
-  if(exist==document.getElementById('myModal')==false){
-    exist=true
-    var divModalMain=document.createElement("DIV");
-    var divInMain=document.createElement("DIV");
-    var textAreaInDivInMain=document.createElement("TEXTAREA");
-    var modalConfirmButton=document.createElement("Button");
+function makeModalWindow(mess){
+  newPostId=newPostId+1
+  if(exist==false){
+    divModalMain=document.createElement("DIV");
+    divInMain=document.createElement("DIV");
+    textAreaInDivInMain=document.createElement("TEXTAREA");
+    modalConfirmButton=document.createElement("Button");
     //var checkValidity=false
     modalConfirmButton.setAttribute('id','but_confirm_title')
     modalConfirmButton.setAttribute('type','button')
@@ -439,12 +457,16 @@ function makeModalWindow(mess=Object()){
     textAreaInDivInMain.setAttribute("id","p_text")
     textAreaInDivInMain.setAttribute("rows","1")
     textAreaInDivInMain.setAttribute("padding","0")
-    textAreaInDivInMain.textContent="Titolo Post ?"
+    textAreaInDivInMain.value="Titolo Post ?"
     divInMain.appendChild(textAreaInDivInMain)
     divInMain.appendChild(modalConfirmButton)
     divModalMain.appendChild(divInMain)
     body.appendChild(divModalMain)
-    var modal = document.getElementById("myModal");
+     modal = document.getElementById("myModal");
+    modal.style.display = "block";
+    exist=true
+  }
+  else{
     modal.style.display = "block";
   }
   /*document.getElementById('but_confirm_title').onclick = function(event) {
@@ -464,20 +486,25 @@ function makeModalWindow(mess=Object()){
       }
     }
     catch(Error){
-      console.log("qualcosa è andato storto nel recupero del titolo")
+      console.log("qualcosa è andatobody storto nel recupero del titolo")
     }
   }*/
 
   $('#but_confirm_title').click(function() {
     try{
-      if (!(textAreaInDivInMain.value=="Titolo Post ?")){
-        newMess.titled=textAreaInDivInMain.value
-        newMess.type="newpost"
-        newMess.publish=getDateFromDjangoDate("")
-        newMess.author=loginis
-        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+      let txt=$("#p_text").val()
+      if (!(txt=="Titolo Post ?")){
+        mess.titled=txt
+        mess.type="newpost"
+        mess.publish=getDateFromDjangoDate()
+        mess.author=loginis
+        mess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        mess.pk=newPostId
         if(mess.titled){
           $('#myModal').remove()
+          createPostArea(mess)
+          exist=false
+          //modal.style.display = "none";
         }
         //return newMess ;
       }
@@ -488,8 +515,6 @@ function makeModalWindow(mess=Object()){
     catch(Error){
       console.log("qualcosa è andato storto nel recupero del titolo")
     }
-      createPostArea(newMess)
-      modal.style.display = "none";
   });
   window.onclick = function(event) {
     if (event.target == modal) {
@@ -497,39 +522,37 @@ function makeModalWindow(mess=Object()){
     }
   }
   $('#p_text').focus( function() {
-    if (textAreaInDivInMain.value.search("Titolo Post ?")>=0){
-      console.log("canche")
-      textAreaInDivInMain.value=""
+    if ($('#p_text').val().search("Titolo Post ?")>=0){
+      $('#p_text').val("")
     }
   });
+  return mess
 }
 // se la variabile data non viene passata come parametro si presuppone che il client abbia creato un nuovo post , quindi //la data è now
-function getDateFromDjangoDate(data){
+function getDateFromDjangoDate(data=""){
   var newDate
+  var day,month,year,hour
   if (  data==""){
     var today = new Date();
-    var dd = String(today.getDate()).padStart(2, '0');
-    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var yyyy = today.getFullYear();
-    today = yyyy + '/' + mm + '/' + dd;
-    newDate=getDateFromDjangoDate(today)
+    day = String(today.getDate()).padStart(2, '0');
+    month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    year = today.getFullYear();
+    hour=today.getHours().toString()+":"+today.getMinutes().toString()
   }
   else {
-    let day=data.slice("8","10")
-    let month=data.slice("5","7")
-    let year=data.slice("0","4")
-    let hour=data.slice("11","15")
-  //data=data.replace("T"," ore ")
-    data=day+"-"+month+"-"+year+" alle "+hour
-    newDate=data
-}
-return newDate
+    day=data.slice("8","10")
+    month=data.slice("5","7")
+    year=data.slice("0","4")
+    hour=data.slice("11","15")
+  }
+  data=day+"-"+month+"-"+year+" alle "+hour
+  newDate=data
+  return newDate
 }
 
 function cleanJson(json){
   this.data=json.toString()
   s = this.data.replace(/\\n/g, "\\n")
-
   .replace(/\\'/g, "\\'")
   .replace(/\\"/g, '\\"')
   .replace(/\\&/g, "\\&")
@@ -537,17 +560,16 @@ function cleanJson(json){
   .replace(/\\t/g, "\\t")
   .replace(/\\b/g, "\\b")
   .replace(/\\f/g, "\\f")
-  // remove non-printable and other non-valid JSON chars
-  //s=this.data.replace(/[\u0000-\u0019]+/g,"");
-  //alert("s="+s);
   return s
 }
+
 $(document).on("load" ,function(){
-  var itm = document.getElementsByClassName("form_comment")[0];
+  var itm = document.getEleme=ntsByClassName("form_comment")[0];
   var cln = itm.cloneNode(true);
   bdiv.appendChild(cln)[2];
 
 })
+
 $(document).ready(function(){
   var obj
   let indexX=0
@@ -637,11 +659,13 @@ $(document).ready(function(){
     }
   }
 );
-});
+}
+
+);
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,post){
     paPostOrResp=new postArea(messOrResp)
-      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,post)
+      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
 }

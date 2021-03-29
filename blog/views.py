@@ -100,10 +100,20 @@ def newPost(request):
         print ("entrypoint to newPost")
         #thistutorial=Tutorial()
         post=Comment()
-        myuser=getLoginName(request)
-        print("tu globale="+str(tu))
-        if 'post' in request.GET and request.GET['type'] :
-            type=request.GET.get('type',None)
+        myuser=Profile()
+        myuser.firstname=getLoginName(request)
+        if 'type' in request.GET and request.GET['type'] :
+            post.type=request.GET.get('type')
+        if 'user' in request.GET and request.GET['user'] :
+            author=request.GET.get('user')
+            myuser.author=Profile.objects.filter(first_name=author)
+            print("user MYUSER="+str(myuser.author))
+        if 'title' in request.GET and request.GET['title'] :
+            title=request.GET.get('title')
+            post.title=title
+        if 'body' in request.GET and request.GET['body'] :
+            body=request.GET.get('body')
+            post.body=body
         if 'messaggio' in request.GET and request.GET['messaggio'] :
             message=request.GET.get('messaggio')
             if "resp" in type:
@@ -128,15 +138,15 @@ def newPost(request):
         if 'tutorial' in request.GET and request.GET['tutorial'] :
                 tu.post=post
                 print("tu.post="+str(tu.post)+"risposta:"+str(tu.post.risposte.all()))
-        try:
-            if isinstance(r,Resp):
-                print("trovata instanza risposta")
-                post.risposte=r
-        except UnboundLocalError:
-                print("il messaggio non è una risposta !"+post.title)
-        data={'username':myuser.username,'message':message,'type':type,'photo':str(myuser.photo),'aggiornato':aggiornato}
-        return  JsonResponse(data)
-
+        #try:
+        #    if isinstance(r,Resp):
+        #        print("trovata instanza risposta")
+        #        post.risposte=r
+        #except UnboundLocalError:
+        #        print("il messaggio non è una risposta !"+post.title)
+        #data={'username':myuser.u,'message':message,'type':type,'photo':str(myuser.photo),'aggiornato':aggiornato}
+        #return  JsonResponse(data)
+        return HttpResponse("OK !")
 """
 def showPost(tutorial):
     print("entry in view showPost")

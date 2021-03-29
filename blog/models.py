@@ -17,6 +17,11 @@ class Comment(models.Model):
     ('rigettato', 'Rigettato'),
     ('publicato', 'Publicato'),
     )
+    COMMENT_TYPE = (
+    ('post', 'post'),
+    ('newpost', 'newpost'),
+    ('response', 'response'),
+    )
     tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=40)
     #tutorial = models.CharField(max_length=250)
@@ -26,6 +31,7 @@ class Comment(models.Model):
     publish = models.DateTimeField(default=timezone.now)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    postType=models.CharField(max_length=30,choices=COMMENT_TYPE,default='newpost')
     status = models.CharField(max_length=10,choices=STATUS_CHOICES,default='bozza')
     def get_absolute_url(self):
         return reverse('blog:newPost',args=[self.publish.year,self.publish.month,self.publish.day, self.slug])

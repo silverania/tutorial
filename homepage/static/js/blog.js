@@ -176,12 +176,12 @@ class Post{
       $.ajax({
         url: url,
         data: {
-          'messaggio': post.msg,'type':post.type,'tutorial':tutorial,'username':user,'title': postTitle,
+          'type':post.type,'tutorial':post.thisTutorialTitle,'username':loginis,'title': post.titled,'body':post.body,
         },
         dataType: 'json',
         success: function (data) {
           var userPhoto=data.photo
-          makeHeadBlog(data.type,data.photo,post,data.aggiornato)
+          makeHeadBlog(data.type,data.photo,this,data.aggiornato)
         }
       }
     );
@@ -253,8 +253,13 @@ class postArea {
     this.appendPostArea(mess,divUserBlog)
     tagUserImg.setAttribute("id","img_user_"+id)
     spanUserName.setAttribute("id","span_user_"+id)
-    divUserBlog.setAttribute("id","divuserblog_"+id)
-
+    switch (mess.type){
+      case "newpost":
+        divUserBlog.setAttribute("id","new_divuserblog_"+id)
+        break
+      default:
+        divUserBlog.setAttribute("id","divuserblog_"+id)
+      }
       this.mess=mess
       if(mess instanceof Resp){
         spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Risponde"
@@ -289,26 +294,37 @@ class postArea {
       var url;
       switch (mess.type){
         case "newpost":
-          form_risposta_post.setAttribute("method","get")
+          divUserBlog.setAttribute("id","new_divuserblog_"+id)
+          //button_risposta_post.setAttribute("method","get")
           button_risposta_post.textContent="Crea Post"
           id="but_crea_post"
+          var objectToAppendChild="new_divuserblog_"+postarea.id
+          var elementToAppendButton=document.getElementById(objectToAppendChild)
+          elementToAppendButton.appendChild(button_risposta_post)
           $(button_risposta_post).click(function(){
             //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
             let ids='#'+postarea.postarea.id
             let txts=$(ids).val()
             if (!(txts===""))
             console.log("comparazione del tipo e valore = vera in:"+txts)
-            form_risposta_post.setAttribute("action",url)
+            //form_risposta_post.setAttribute("action",url)
             mess.body=txts
-            url=BASE_URL+URL_NEW_POST+"?type="+mess.type+"&title="+mess.titled+"&body="+mess.body
+            url=BASE_URL+URL_NEW_POST
+            //button_risposta_post.setAttribute('action','url')
             mess.sendToServer(mess,url)
             });
           break
         case "post":
+          var objectToAppendChild="divuserblog_"+postarea.id
+          var elementToAppendButton=document.getElementById(objectToAppendChild)
+          elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
           id="but_post"
           break
         case "resp":
+          var objectToAppendChild="divuserblog_"+postarea.id
+          var elementToAppendButton=document.getElementById(objectToAppendChild)
+          elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
           id="but_resp"
           break
@@ -325,9 +341,6 @@ class postArea {
           alert('clicked')
           console.log( "clccll")
         })
-        var objectToAppendChild="divuserblog_"+postarea.id
-        var elementToAppendButton=document.getElementById(objectToAppendChild)
-        elementToAppendButton.appendChild(form_risposta_post)
       }
 
   disableButton(button){
@@ -564,7 +577,7 @@ function cleanJson(json){
 }
 
 $(document).on("load" ,function(){
-  var itm = document.getEleme=ntsByClassName("form_comment")[0];
+  var itm = document.getElementsByClassName("form_comment")[0];
   var cln = itm.cloneNode(true);
   bdiv.appendChild(cln)[2];
 
