@@ -256,6 +256,7 @@ class postArea {
     switch (mess.type){
       case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
+        divUserBlog.setAttribute("style","width:700px")
         break
       default:
         divUserBlog.setAttribute("id","divuserblog_"+id)
@@ -289,19 +290,30 @@ class postArea {
     createButtonRispostaPost(mess,postarea){
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
+      button_risposta_post.setAttribute('style','display:block')
       form_risposta_post.appendChild(button_risposta_post)
       let id
       var url;
       switch (mess.type){
         case "newpost":
-          divUserBlog.setAttribute("id","new_divuserblog_"+id)
+          divUserBlog.setAttribute('style','width:700px')
+          divUserBlog.setAttribute('style','max-width:700px')
           //button_risposta_post.setAttribute("method","get")
           button_risposta_post.textContent="Crea Post"
           id="but_crea_post"
           var objectToAppendChild="new_divuserblog_"+postarea.id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(button_risposta_post)
+          $(button_risposta_post).hover(function(){
+
+            $(button_risposta_post).animate({'width':'33%'},1000);
+            $(button_risposta_post).animate({'left':'33%'},1000);
+          },function(){
+            $(button_risposta_post).animate({'width':'100%'},1000);
+          }
+        )
           $(button_risposta_post).click(function(){
+
             //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
             let ids='#'+postarea.postarea.id
             let txts=$(ids).val()
