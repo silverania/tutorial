@@ -26,3 +26,6 @@ in blog.js un nuovo post usa la funzione
 
 9 marzo 2021
 la foto dell' user autenticato viene presa in document.ready nel ciclo for che prende gli ultimi commenti dal server
+
+
+per facilitare l' installazione del blog a un utente devo  prendere il valore nel tag "HTML title" così che non deve preoccuparsi l' user di inserirlo  

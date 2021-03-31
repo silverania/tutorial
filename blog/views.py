@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from user.models import Profile
-from blog.models import Comment,Resp
+from blog.models import Comment,Resp,Site
 from django.http import HttpResponse,JsonResponse
 from django.conf import settings
 from django.utils import formats
