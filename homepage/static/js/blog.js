@@ -256,7 +256,6 @@ class postArea {
     switch (mess.type){
       case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
-        divUserBlog.setAttribute("style","width:700px")
         break
       default:
         divUserBlog.setAttribute("id","divuserblog_"+id)
@@ -306,10 +305,11 @@ class postArea {
           elementToAppendButton.appendChild(button_risposta_post)
           $(button_risposta_post).hover(function(){
 
-            $(button_risposta_post).animate({'width':'33%'},1000);
-            $(button_risposta_post).animate({'left':'33%'},1000);
+            $(button_risposta_post).animate({'width':'33%'},200);
+            $(button_risposta_post).animate({'left':'33%'},200);
+            button_risposta_post.style.boxShadow="0 0 10px #719ECE"
           },function(){
-            $(button_risposta_post).animate({'width':'100%'},1000);
+            $(button_risposta_post).animate({'width':'100%'},200);
           }
         )
           $(button_risposta_post).click(function(){

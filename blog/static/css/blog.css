@@ -43,6 +43,16 @@ textarea {
   color:black;
 }
 
+[id^=new_divuserblog]{
+    margin:20% auto;
+}
+
+[id^=new_divuserblog]> [id^=d_head] + [id^=d_post] + textarea{
+  outline: none !important;
+  border:1px solid red;
+  box-shadow: 0 0 10px #719ECE;
+}
+
 #d_post_title , span[id^="post_title"]{
   display:block!important;
   width:auto;
