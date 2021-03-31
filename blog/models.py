@@ -6,11 +6,16 @@ from django.urls import reverse
 from user.models import Profile
 # Create your models here.
 
-from homepage.models import Tutorial
 
 class PersonManager(models.Manager):
     def get_by_natural_key(self, first_name, last_name):
         return self.get(first_name=author)
+
+class Site(models.Model):
+    title = models.CharField(max_length=250)
+    slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)
+    def __str__(self):
+        return self.title
 
 class Comment(models.Model):
     STATUS_CHOICES = (
@@ -22,9 +27,8 @@ class Comment(models.Model):
     ('newpost', 'newpost'),
     ('response', 'response'),
     )
-    tutorial=models.ForeignKey(Tutorial,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
+    site=models.ForeignKey(Site,related_name='all_comments',on_delete=models.CASCADE,null=True,blank=True)
     title = models.CharField(max_length=40)
-    #tutorial = models.CharField(max_length=250)
     slug = models.SlugField(max_length=250,unique_for_date='publish',blank=True,null=True)
     author = models.ForeignKey(Profile,on_delete=models.CASCADE,related_name='blog_posts',null=True,blank=True)
     body = models.TextField()

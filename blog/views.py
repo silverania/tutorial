@@ -1,7 +1,6 @@
 from django.shortcuts import render,redirect
 from user.models import Profile
 from blog.models import Comment,Resp
-from homepage.models import Tutorial
 from django.http import HttpResponse,JsonResponse
 from django.conf import settings
 from django.utils import formats
@@ -14,13 +13,13 @@ from django.urls import reverse
 
 photo=""
 message=""
-tu=Tutorial()
+tu=Site()
 formatted_datetime = formats.date_format(datetime.now(), "SHORT_DATETIME_FORMAT")
 
 
 class LazyEncoder(DjangoJSONEncoder):
     def default(self, obj):
-        if isinstance(obj, Resp) or isinstance(obj, Tutorial) :
+        if isinstance(obj, Resp) or isinstance(obj, Site) :
             return str(obj)
         return super().default(obj)
 
@@ -45,13 +44,8 @@ def serializer(data):
 def getPost(request):
     print("entry in view getpost")
     global tu,formatted_datetime
-    data_l=[]
-    data_r=[]
-    data_l7=[]
     profile_list=[]
-    photos=[]
     datac=[]
-    data_resp=[]
     comments=Comment()
     risposte=[]
     risposte_serialized=[]
@@ -61,7 +55,7 @@ def getPost(request):
     print("USERLOGGED="+str(userLogged))
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
-        tu=Tutorial.objects.get(slug=tutorial)
+        tu=Site.objects.get(title=tutorial)
         aggiornato=formatted_datetime
         all_comments_for_page=Comment.objects.filter(tutorial=tu)[:5] # tutti i commenti sul tutorial
         datac=list(all_comments_for_page)
@@ -88,7 +82,6 @@ def getPost(request):
             profiles_list=serializer(profiles)
         except UnboundLocalError:
             print("Nessun commento per la pagina !")
-        data_l5=serializer(data_l)
         data = json.dumps({'userLogged':userLogged,'data_comm':data_comm,'resps':risposte_serialized,'profiles':profiles_list})
         #showPost(tu)
     try:

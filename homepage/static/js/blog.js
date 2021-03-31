@@ -48,7 +48,7 @@ var bbutton2=new Object();
 var exist=false
 var newPostId=0
 
-function createSectionDivSpan(parent){
+function createSectionDivSpan(){
   bForm.setAttribute("action","post/getpost");
   bForm.setAttribute("class","form_comment")
   //divUserBlog.setAttribute("style","width:45%;display:inline-block;")
@@ -92,7 +92,7 @@ function createSectionDivSpan(parent){
   spanBlogEsci.textContent="Esci"
   ulBlogReg.setAttribute("id","ul_blog")
   ulBlogReg.setAttribute("style","list-style: none;padding: 0;margin: 0;")
-  document.getElementById(parent).appendChild(bSection);
+  parent=document.body.insertBefore(bSection,document.getElementsByTagName("footer")[0]);
   if(loginis=="MisterX"){
     console.log(loginis)
     aBlogReg.appendChild(spanBlogReg)
@@ -379,7 +379,7 @@ class postArea {
 }
 
 
-  function initBlogSGang(id,login,tut){
+  function initBlogSGang(login,tut,id="footer"){
     if(login=="False"||login=="false"||login=="none"||login=="AnonymousUser"){
       loginis="MisterX"
     }
