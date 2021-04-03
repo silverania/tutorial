@@ -1,9 +1,10 @@
 from django.db import models
 from django.utils import timezone
 # from django.contrib.auth.models import User
-
+from datetime import date
 from django.urls import reverse
 from user.models import Profile
+from django.utils.timezone import now
 # Create your models here.
 
 
@@ -13,7 +14,11 @@ class PersonManager(models.Manager):
 
 class Site(models.Model):
     title = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=250,unique_for_date='publish',null=True,blank=True)
+    slug = models.SlugField(max_length=250,null=True,blank=True)
+    def save(self,*args,**kwargs):
+        today = date.today()
+        self.slug=self.title+"_"+str(today)
+        super(Site, self).save(*args, **kwargs)
     def __str__(self):
         return self.title
 

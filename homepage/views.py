@@ -23,6 +23,15 @@ def getLink(title):
     template=tutorial.title.replace(" ","_").lower()+".html"
     return template
 
+#funzione per vedere se la request del client esiste gia, in questo caso non eseguo niente visto
+#che il client possiede tutto ciò che gli serve ....la lista dei post.
+def latest_entry(request):
+    print(str(Comment.objects.latest("publish")))
+    return Comment.objects.latest("publish").publish
+
+from django.views.decorators.http import condition
+@condition(last_modified_func=latest_entry)
+
 def tutorial_detail(request, **kwargs):
     users=[]
     arguments=False
