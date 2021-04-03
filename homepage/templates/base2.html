@@ -206,7 +206,9 @@ function getIndex(e) {
 <button type="button" id="button_blog" class="btn btn-block btn-outline-info" onclick="writeMsg(this.id,'{{login}}')">Commenta
 </button-->
 
-<script>initBlogSGang("{{request.user}}",let title=document.getElementsByTagName('title')innerText());
+<script>
+let title=document.getElementsByTagName('title')[0].innerText
+initBlogSGang("{{request.user}}",title);
 </script>
 </div>
 

@@ -4,5 +4,6 @@ user/migrations
 wsgy.py
 manage.py
 tutorial/settings.py
-__pycache__/*
+__pycache__
 *.pyc
+__init.py__

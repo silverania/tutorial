@@ -55,6 +55,7 @@ def getPost(request):
     print("USERLOGGED="+str(userLogged))
     if 'tutorial' in request.GET and request.GET['tutorial'] :
         tutorial=request.GET.get('tutorial')
+        print("tut="+str(tutorial))
         tu=Site.objects.get(title=tutorial)
         aggiornato=formatted_datetime
         all_comments_for_page=Comment.objects.filter(site=tu)[:5] # tutti i commenti sul tutorial

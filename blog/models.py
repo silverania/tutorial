@@ -20,7 +20,7 @@ class Site(models.Model):
         self.slug=self.title+"_"+str(today)
         super(Site, self).save(*args, **kwargs)
     def __str__(self):
-        return self.title
+        return self.slug
 
 class Comment(models.Model):
     STATUS_CHOICES = (
