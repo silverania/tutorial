@@ -24,17 +24,17 @@ class LazyEncoder(DjangoJSONEncoder):
         return super().default(obj)
 
 def getLoginName(request):
-    if request.user.is_authenticated:
-        try:
+    try:
+        if request.user.is_authenticated:
             print("id"+str(request.user.id))
             myuser=Profile.objects.filter(user_id=request.user.id)
-        except:
-            print("error"+str(myuser))
-    else:
-        user=request.GET.get('username')
-        myuser=Profile.objects.filter(first_name="anonimo")
-        myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.svg"
-        print("USER NON AUTENT "+ str(myuser))
+        else:
+            user=request.GET.get('username')
+            myuser=Profile.objects.filter(first_name="anonimo")
+            myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.gif"
+            print("USER NON AUTENT "+ str(myuser))
+    except:
+        print("error in get users info ! contact the admin . myuser = "+str(myuser))
     return myuser
 
 def serializer(data):
@@ -140,11 +140,11 @@ def newPost(request):
                 print("tu.post="+str(tu.post)+"risposta:"+str(tu.post.risposte.all()))
 
         """
-"""
+
 def showPost(tutorial):
     print("entry in view showPost")
     thistutorial=tutorial.slug
     print("thistutorial="+tutorial.slug)
-"""
+
 def retReverse(name):
     return reverse("blog:"+name)

@@ -8,7 +8,7 @@ class Profile(models.Model):
     user = models.OneToOneField(User,on_delete=models.CASCADE)
     #post=models.ForeignKey('blog.Comment',related_name="commenti",blank=True,null=True,on_delete=models.CASCADE)
     date_of_birth = models.DateField(blank=True, null=True)
-    photo = models.ImageField(default="settings.MEDIA_URL+str('images/user-secret-solid.svg')",upload_to='users/%Y/%m/%d/',blank=True,null=True)
+    photo = models.ImageField(default="media/images/user-secret-solid.svg')",upload_to='users/%Y/%m/%d/',blank=True,null=True)
     first_name = models.CharField(max_length=100,default="anonimo")
     last_name = models.CharField(max_length=100,blank=True,null=True)
     class Meta:
