@@ -11,6 +11,7 @@ var user
 var loginis
 var lastUpdate
 var userLoggedPhoto
+var butcloned
 var bbutton=document.createElement("Button");
 //var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
@@ -403,6 +404,9 @@ class postArea {
 
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
   $(bbutton).click(function(){
+    buttonCommentClick()
+  })
+    function buttonCommentClick(){
     let modal
     let textAreaInDivInMain
     let result
@@ -425,44 +429,8 @@ class postArea {
       //post=instancePostarea()
       post=instancePost()
     }
-    // caso click su textarea esistente
-  /*  else if (post instanceof postArea ) {
-      if (post.postarea.value=='' ||body post.postarea.value.trim().length < 1){
-        alert("il silenzio in questi casi vuol dir poco !")
-      }
-      // caso click su textarea esistente e con testo all interno
-      else {
-        // la modifica della textarea e l' animazione non deve partire se la textarea e disabled !
-        if(!(post.disabled==true)){
-          post.msg=post.postarea.value
-          $('#post_response').css("border", "1px solid grey")
-          if ((result=mess.sendToServer(post,tutorial,loginis,postTitle)==0)) {
-            mess.sent=true
-          }
-        }
-        else {
-          if (!(post.postarea.value=="") && mess.sent==true) {
-            makeTextAreaResp()
-            this.setAttribute("disabled","true")
-          }
-          function makeTextAreaResp(){
-            if(id < MAX_TEXTAREA_NUMBER){
-              var bbut2=document.createElement("Button");
-              bbutton2=bbut2
-              id=id+1
-              post2=new postArea("resp")
-              postresp=new Post("resp")
-              bbutton.parentNode.insertBefore(post2.create(),bbutton.nextSibiling);
-              post2.createButton(bbutton2)
-            }
-            //bbutton.prepend(bUserImg)
-            return 0
-          }
-        }
-      }
-    }*/
   }
-);
+
 
 /* MODAL WINDOW */
 
@@ -592,7 +560,6 @@ $(document).on("load" ,function(){
   var itm = document.getElementsByClassName("form_comment")[0];
   var cln = itm.cloneNode(true);
   bdiv.appendChild(cln)[2];
-
 })
 
 $(document).ready(function(){
@@ -612,6 +579,11 @@ $(document).ready(function(){
   cln.setAttribute("id","clone_form")
   cln.getElementsByClassName('mybut')[0].setAttribute("id","clone_button")
   bdiv.appendChild(cln)[2];
+  butcloned = document.getElementById('clone_button')
+  $(butcloned).click(function(){
+      alert()
+      buttonCommentClick()
+    })
   //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
@@ -647,7 +619,6 @@ $(document).ready(function(){
       //initial_y=(parseInt(obj3.length))-1
       for (i;i<=comments_json.length-1;i=i+1){
         for (z=0;z<=profiles_json.length-1;z=z+1){
-
           // if(obj5_photo[z].fields.user==obj2[i].fields.author){
           if(profiles_json[z].pk==comments_json[i].fields.author){
             profiles.push(new Profile(profiles_json[z].fields.first_name,profiles_json[z].fields.photo))
