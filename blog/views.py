@@ -32,7 +32,7 @@ def getLoginName(request):
             user=request.GET.get('username')
             myuser=Profile.objects.filter(first_name="anonimo")
             myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.gif"
-            print("USER NON AUTENT "+ str(myuser))
+            print("SER NON AUTENT "+ str(myuser))
     except:
         print("error in get users info ! contact the admin . myuser = "+str(myuser))
     return myuser
