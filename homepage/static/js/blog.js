@@ -200,18 +200,21 @@ class postArea {
     this.postarea=document.createElement("TEXTAREA");
     this.id=post.pk
     //var mess=""
-    if (post.type=="newpost"){
+    switch (post.type){
+      case "newpost":
       this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
-    }
-    else{
+      break
+      case "post":
+      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
       this.postarea.value=post.body
-      if  (post.type=="post"){
-        this.empty=true
-      }
+      this.empty=true
+      break
+      case "resp":
+      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
+      this.postarea.value=post.body
+      this.empty=true
+      break
     }
-  //  else{
-    //  makeModalWindow(this)
-    //}
   }
 
   appendPostArea(mess,postarea){
@@ -446,7 +449,6 @@ function makeModalWindow(mess){
     divInMain.setAttribute('class','modal-content')
     textAreaInDivInMain.setAttribute("id","p_text")
     textAreaInDivInMain.setAttribute("rows","1")
-    textAreaInDivInMain.setAttribute("padding","0")
     textAreaInDivInMain.value="Titolo Post ?"
     divInMain.appendChild(textAreaInDivInMain)
     divInMain.appendChild(modalConfirmButton)
