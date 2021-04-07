@@ -25,7 +25,7 @@ def getLink(title):
 
 #funzione per vedere se la request del client esiste gia, in questo caso non eseguo niente visto
 #che il client possiede tutto ciò che gli serve ....la lista dei post.
-def latest_entry(request):
+def latest_entry(request,**kwargs):
     print(str(Comment.objects.latest("publish")))
     return Comment.objects.latest("publish").publish
 

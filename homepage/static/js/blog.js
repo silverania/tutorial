@@ -257,20 +257,27 @@ class postArea {
     switch (mess.type){
       case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
+        divUserBlog.setAttribute("class","new_post_"+id)
+        areaNotResp()
         break
+      case "resp":
+          //divUserBlog.setAttribute("class","resp_"+id)
+          divUserBlog.setAttribute("id","divuserblog_"+id)
+          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Risponde"
+          divUserBlog.setAttribute("style","margin-left:20%")
+          console.log("is resp ")
+          break
+        case "post":
+            spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta"
+          divUserBlog.setAttribute("id","divuserblog_"+id)
+          divUserBlog.setAttribute("class","post_"+id)
+          break
       default:
-        divUserBlog.setAttribute("id","divuserblog_"+id)
+        console.log("def")
+        areaNotResp()
       }
       this.mess=mess
-      if(mess instanceof Resp){
-        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Risponde"
-        //+post.author[0].toUpperCase()+post.author.slice("1")
-        //spanInDivPostTitle.textContent=
-        //divBlog.setAttribute("style","width:100%;height:auto;display:inline-block;position:relative;top:-0%;left:20%")
-        divUserBlog.setAttribute("style","margin-left:20%")
-        console.log("is resp ")
-      }
-      else {
+      function areaNotResp(){
         if(!(postarea.disabled==true)){
           spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta :"
           spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
@@ -281,12 +288,10 @@ class postArea {
           console.log(idWherePutElement)
         }
       }
-      //var objectToAppendChild   =  "divuserblog_"  +   id.toString()
-      //var elementToAppendArea=document.getElementById(objectToAppendChild)
         divUserBlog.appendChild(postarea.create())
-      return $(divUserBlog)
-    }
+        return $(divUserBlog)
 
+    }
     createButtonRispostaPost(mess,postarea){
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
@@ -361,22 +366,14 @@ class postArea {
   }
 
   create(){
-    if(this.mess instanceof Post){
-      if (this.mess.titled){
-        //  if(this.type=="post" ){
-        $(this.postarea).animate({'width':'100%'},1000);
-      }}
-      else if(this.mess instanceof Resp){
-        if (this.mess.titled){
-          $(this.postarea).animate({'width':'100%'},1000);
-        }
-      }
+      $(this.postarea).animate({'width':'100%'},1200);// nu second e dui 1,2sec
       this.postarea.setAttribute("rows","2");
       this.postarea.setAttribute("name","messaggio")
       $(this.postarea).css("border", borderPost)
       this.postarea.setAttribute("title","Autenticarsi NON è Obbligatorio !")
       return this.postarea;
     }
+
 }
 
 
