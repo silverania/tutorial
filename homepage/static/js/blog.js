@@ -271,9 +271,9 @@ class postArea {
           console.log("is resp ")
           break
         case "post":
-            spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta"
           divUserBlog.setAttribute("id","divuserblog_"+id)
           divUserBlog.setAttribute("class","post_"+id)
+          areaNotResp()
           break
       default:
         console.log("def")
