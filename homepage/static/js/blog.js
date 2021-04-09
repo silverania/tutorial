@@ -232,7 +232,7 @@ class postArea {
     var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
-    var divUserBlog=document.createElement("DIV");
+    divUserBlog=document.createElement("DIV");
     var spanUserName=document.createElement("SPAN");
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
@@ -293,8 +293,9 @@ class postArea {
       }
         divUserBlog.appendChild(postarea.create())
         return $(divUserBlog)
-
     }
+
+
     createButtonRispostaPost(mess,postarea){
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
@@ -336,10 +337,11 @@ class postArea {
             });
           break
         case "post":
-          var objectToAppendChild="divuserblog_"+postarea.id
+          var objectToAppendChild=divUserBlog.id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
+          button_risposta_post.setAttribute("disabled","true")
           id="but_post"
           break
         case "resp":

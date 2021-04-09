@@ -24,12 +24,14 @@ class LazyEncoder(DjangoJSONEncoder):
         return super().default(obj)
 
 def getLoginName(request):
+    breakpoint()
     try:
         if request.user.is_authenticated:
             print("id"+str(request.user.id))
             myuser=Profile.objects.filter(user_id=request.user.id)
         else:
-            user=request.GET.get('username')
+            user=request.GET.get('loginis')
+            breakpoint()
             myuser=Profile.objects.filter(first_name="anonimo")
             myuser.photo=settings.MEDIA_URL+"images/user-secret-solid.gif"
             print("SER NON AUTENT "+ str(myuser))
@@ -99,10 +101,13 @@ def newPost(request):
         myuser=Profile()
         myuser.firstname=getLoginName(request)
         post.site=tu
+        breakpoint()
         post.slug=retReverse("newPost").replace("/","_")
+        breakpoint()
         post.publish=datetime.now()
         post.created=post.publish
         print("SLUG="+str(post.slug))
+        breakpoint()
         if 'type' in request.GET and request.GET['type'] :
             post.postType=request.GET.get('type')
         if 'username' in request.GET and request.GET['username'] :
@@ -110,14 +115,17 @@ def newPost(request):
             myuser=Profile.objects.get(first_name=author)
             print("user MYUSER="+str(myuser))
             post.author=myuser
+            breakpoint()
         if 'title' in request.GET and request.GET['title'] :
             title=request.GET.get('title')
             post.title=title
         if 'body' in request.GET and request.GET['body'] :
             body=request.GET.get('body')
             post.body=body
+        breakpoint()
         tu.save()
         post.save()
+        breakpoint()
         return HttpResponse("OK !")
         """
         if "resp" in type:
