@@ -303,6 +303,16 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       let id
       var url;
+      $(button_risposta_post).hover(function(){
+
+        $(button_risposta_post).animate({'width':'33%'},200);
+        $(button_risposta_post).animate({'left':'33%'},200);
+        button_risposta_post.style.boxShadow="0 0 10px #719ECE"
+      },
+      function(){
+        $(button_risposta_post).animate({'width':'100%'},200);
+        }
+      )
       switch (mess.type){
         case "newpost":
           divUserBlog.setAttribute('style','width:700px')
@@ -313,17 +323,7 @@ class postArea {
           var objectToAppendChild="new_divuserblog_"+postarea.id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(button_risposta_post)
-          $(button_risposta_post).hover(function(){
-
-            $(button_risposta_post).animate({'width':'33%'},200);
-            $(button_risposta_post).animate({'left':'33%'},200);
-            button_risposta_post.style.boxShadow="0 0 10px #719ECE"
-          },function(){
-            $(button_risposta_post).animate({'width':'100%'},200);
-          }
-        )
           $(button_risposta_post).click(function(){
-
             //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
             let ids='#'+postarea.postarea.id
             let txts=$(ids).val()
@@ -341,7 +341,6 @@ class postArea {
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
-          button_risposta_post.setAttribute("disabled","true")
           id="but_post"
           break
         case "resp":
@@ -359,15 +358,10 @@ class postArea {
           button_risposta_post.setAttribute("id",type+"_"+postarea.id)
           button_risposta_post.setAttribute("class",type+"_"+postarea.id)
         }
-
-        $('#but_resp_12').click(function() {
-          alert('clicked')
-          console.log( "clccll")
-        })
       }
 
   disableButton(button){
-    button.setAttribute("disabled","true")
+    button.setAttribute("disabled","")
   }
 
   create(){

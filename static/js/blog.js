@@ -200,18 +200,21 @@ class postArea {
     this.postarea=document.createElement("TEXTAREA");
     this.id=post.pk
     //var mess=""
-    if (post.type=="newpost"){
+    switch (post.type){
+      case "newpost":
       this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
-    }
-    else{
+      break
+      case "post":
+      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
       this.postarea.value=post.body
-      if  (post.type=="post"){
-        this.empty=true
-      }
+      this.empty=true
+      break
+      case "resp":
+      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
+      this.postarea.value=post.body
+      this.empty=true
+      break
     }
-  //  else{
-    //  makeModalWindow(this)
-    //}
   }
 
   appendPostArea(mess,postarea){
@@ -229,7 +232,7 @@ class postArea {
     var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
-    var divUserBlog=document.createElement("DIV");
+    divUserBlog=document.createElement("DIV");
     var spanUserName=document.createElement("SPAN");
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
@@ -268,9 +271,9 @@ class postArea {
           console.log("is resp ")
           break
         case "post":
-            spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta"
           divUserBlog.setAttribute("id","divuserblog_"+id)
           divUserBlog.setAttribute("class","post_"+id)
+          areaNotResp()
           break
       default:
         console.log("def")
@@ -290,8 +293,9 @@ class postArea {
       }
         divUserBlog.appendChild(postarea.create())
         return $(divUserBlog)
-
     }
+
+
     createButtonRispostaPost(mess,postarea){
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
@@ -333,10 +337,11 @@ class postArea {
             });
           break
         case "post":
-          var objectToAppendChild="divuserblog_"+postarea.id
+          var objectToAppendChild=divUserBlog.id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
+          button_risposta_post.setAttribute("disabled","true")
           id="but_post"
           break
         case "resp":
@@ -446,7 +451,6 @@ function makeModalWindow(mess){
     divInMain.setAttribute('class','modal-content')
     textAreaInDivInMain.setAttribute("id","p_text")
     textAreaInDivInMain.setAttribute("rows","1")
-    textAreaInDivInMain.setAttribute("padding","0")
     textAreaInDivInMain.value="Titolo Post ?"
     divInMain.appendChild(textAreaInDivInMain)
     divInMain.appendChild(modalConfirmButton)

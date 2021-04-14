@@ -58,7 +58,7 @@ def getPost(request):
         print("tut="+str(tutorial))
         tu=Site.objects.get(title=tutorial)
         aggiornato=formatted_datetime
-        all_comments_for_page=Comment.objects.filter(site=tu)[:5] # tutti i commenti sul tutorial
+        all_comments_for_page=Comment.objects.filter(site=tu).order_by('-publish')[:5] # tutti i commenti sul tutorial
         datac=list(all_comments_for_page)
         userLogged=list(userLogged)
         userLogged=serializer(userLogged)
@@ -99,10 +99,8 @@ def newPost(request):
         myuser=Profile()
         myuser.firstname=getLoginName(request)
         post.site=tu
-        post.slug=retReverse("newPost").replace("/","_")
         post.publish=datetime.now()
         post.created=post.publish
-        print("SLUG="+str(post.slug))
         if 'type' in request.GET and request.GET['type'] :
             post.postType=request.GET.get('type')
         if 'username' in request.GET and request.GET['username'] :
@@ -113,6 +111,7 @@ def newPost(request):
         if 'title' in request.GET and request.GET['title'] :
             title=request.GET.get('title')
             post.title=title
+            post.slug=post.title.replace(" ","_")
         if 'body' in request.GET and request.GET['body'] :
             body=request.GET.get('body')
             post.body=body

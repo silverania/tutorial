@@ -38,8 +38,10 @@ a{
 [id^=but_]{
   width:100%;
   height:auto;
-  border:2px solid blue;
-  margin:0 auto;
+  border:2px solid orange;
+  margin:15px auto;
+  padding:2%;
+
 }
 
 [id^="img_user"]{
@@ -154,7 +156,7 @@ ul#ul_blog li{
 @media screen and (max-width: 780px) {
   .fa-comments,#s_blog
   {
-    size:2rem!important;
+    font-size:2rem!important;
   }
 }
 
