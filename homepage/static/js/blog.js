@@ -6,6 +6,7 @@ var borderPost="none";
 var borderResponse="1px solid grey";
 var paPostOrResp;
 var el
+var mess;
 var padre
 var user
 var loginis
@@ -129,7 +130,7 @@ function createSectionDivSpan(){
 }
 
 class Resp{
-  constructor(author,body,publish,post,photo,titolo,pk){
+  constructor(author,body="",publish,post,photo,titolo,pk){
     this.sent=false
     this.author=author
     this.post=post
@@ -303,6 +304,10 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       let id
       var url;
+      $(button_risposta_post).click(function(e){
+        alert('clicked'+e.target.id)
+        createPostArea(r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,mess.pk.toString()+resps_json[z2].pk.toString()))))
+      })
       $(button_risposta_post).hover(function(){
 
         $(button_risposta_post).animate({'width':'33%'},200);
@@ -400,8 +405,8 @@ class postArea {
 
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
   $(bbutton).click(function(){
-    buttonCommentClick()
-  })
+    buttonCommentClick()})
+
     function buttonCommentClick(){
     let modal
     let textAreaInDivInMain
@@ -563,7 +568,7 @@ $(document).ready(function(){
   var initial_y
   var y=0,s
   let q=0
-  let mess=new Array()
+  mess=new Array()
   let resps=new Array()
   let post = new Array()
   let profiles=new Array()
@@ -605,7 +610,7 @@ $(document).ready(function(){
       //var obj5_photo = obj.profile;
       //var user_post_parsed=JSON.parse(obj5_photo);
       //var user_pk=user_post_parsed.pk
-      var photoPost , photoResp
+      var photoResp
       //console.log(obj.data_l5)
 
       //console.log(obj.data_l7)
@@ -655,7 +660,7 @@ $(document).ready(function(){
 );
 
 // Metodo chiamato da post , resp e nuovo Post//
-function createPostArea(messOrResp,post){
+function createPostArea(messOrResp){
     paPostOrResp=new postArea(messOrResp)
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
