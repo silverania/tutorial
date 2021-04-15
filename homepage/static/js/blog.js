@@ -312,7 +312,7 @@ class postArea {
 
         $(button_risposta_post).animate({'width':'33%'},200);
         $(button_risposta_post).animate({'left':'33%'},200);
-        button_risposta_post.style.boxShadow="30 30 30px blu" //#719ECE"
+        button_risposta_post.style.boxShadow="0 0 0" //#719ECE"
       },
       function(){
         $(button_risposta_post).animate({'width':'100%'},200);
