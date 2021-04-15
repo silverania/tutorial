@@ -130,7 +130,7 @@ function createSectionDivSpan(){
 }
 
 class Resp{
-  constructor(author,body="",publish,post,photo,titolo,pk){
+  constructor(author,body="",publish,post,photo,titolo){
     this.sent=false
     this.author=author
     this.post=post
@@ -139,9 +139,7 @@ class Resp{
     this.publish=publish
     this.photo=photo
     this.titled=titolo
-    this.pk=pk
   }
-
 }
 
 class Profile{
@@ -306,16 +304,17 @@ class postArea {
       var url;
       $(button_risposta_post).click(function(e){
         alert('clicked'+e.target.id)
-        createPostArea(r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,mess.pk.toString()+resps_json[z2].pk.toString()))
+        createPostArea(r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled))
       })
       $(button_risposta_post).hover(function(){
 
         $(button_risposta_post).animate({'width':'33%'},200);
         $(button_risposta_post).animate({'left':'33%'},200);
-        button_risposta_post.style.boxShadow="0 0 0" //#719ECE"
+        $(button_risposta_post).css('box-shadow', '0 0 0 white' );//#719ECE"
       },
       function(){
         $(button_risposta_post).animate({'width':'100%'},200);
+          $(button_risposta_post).css('box-shadow', '10px 10px 10px #719ECE' );
         }
       )
       switch (mess.type){
@@ -584,6 +583,13 @@ $(document).ready(function(){
       alert()
       buttonCommentClick()
     })
+  $('.mybut').hover(function(e){
+      $('.mybut').css("box-shadow","0 0 0 white")
+      alert("dsfds")
+  },
+    function(){
+        $('.mybut').css("box-shadow","10px 10px 10px #719ECE")
+    })
   //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
@@ -640,7 +646,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled,(comments_json[i].pk).toString()+resps_json[z2].pk.toString()))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled))
                 mess[indexX].risposte.push(resps[q].body)
                 createPostArea(resps[q],mess[indexX])
               }

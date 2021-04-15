@@ -232,6 +232,7 @@ ul#ul_blog li{
   background-color: transparent;
   color:purple;
   border-color: cyan!important;
+  box-shadow: 10px 10px 10px #719ECE;
 }
 .mybut:hover{
   border:3px solid orange;
