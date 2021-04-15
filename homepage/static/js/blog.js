@@ -306,13 +306,13 @@ class postArea {
       var url;
       $(button_risposta_post).click(function(e){
         alert('clicked'+e.target.id)
-        createPostArea(r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,mess.pk.toString()+resps_json[z2].pk.toString()))))
+        createPostArea(r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,mess.pk.toString()+resps_json[z2].pk.toString()))
       })
       $(button_risposta_post).hover(function(){
 
         $(button_risposta_post).animate({'width':'33%'},200);
         $(button_risposta_post).animate({'left':'33%'},200);
-        button_risposta_post.style.boxShadow="0 0 10px #719ECE"
+        button_risposta_post.style.boxShadow="30 30 30px blu" //#719ECE"
       },
       function(){
         $(button_risposta_post).animate({'width':'100%'},200);
