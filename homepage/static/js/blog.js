@@ -265,7 +265,7 @@ class postArea {
       case "resp":
           //divUserBlog.setAttribute("class","resp_"+id)
           divUserBlog.setAttribute("id","divuserblog_"+id)
-          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Risponde"
+          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
           divUserBlog.setAttribute("style","margin-left:20%")
           console.log("is resp ")
           break
@@ -646,7 +646,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risposta a "+mess[indexX].titled))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risponde a "+mess[indexX].titled))
                 mess[indexX].risposte.push(resps[q].body)
                 createPostArea(resps[q],mess[indexX])
               }
