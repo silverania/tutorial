@@ -227,15 +227,16 @@ class postArea {
     }
   }
 
-  makeHeadBlog(mess,postarea){
+  makeHeadBlog(mess,postarea,elementToAppendPostArea){
     var id=mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
-    divUserBlog=document.createElement("DIV");
-    var spanUserName=document.createElement("SPAN");
+    /* la testarea non viene appesa sotto elementToAppendPostArea solo nel caso che esso sia null */
+    ! elementToAppendPostArea ?  divUserBlog = document.createElement( "DIV" ) : divUserBlog=elementToAppendPostArea
+    var spanUserName=document.createElement("SPAN")
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
-    var tagUserImg=document.createElement("IMG");
+    var tagUserImg=document.createElement("IMG")
     divContainerHead.setAttribute("id","d_head_blog_"+id)
     divContainerHead.setAttribute("style","width:100%")
     divContainerHead.setAttribute("style","height:auto")
@@ -296,6 +297,7 @@ class postArea {
 
 
     createButtonRispostaPost(mess,postarea){
+      var r;
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
       button_risposta_post.setAttribute('style','display:block')
@@ -303,11 +305,10 @@ class postArea {
       let id
       var url;
       $(button_risposta_post).click(function(e){
-        alert('clicked'+e.target.id)
-        createPostArea(r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled))
+        var elementToAppendArea = postarea
+        createPostArea ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
       })
       $(button_risposta_post).hover(function(){
-
         $(button_risposta_post).animate({'width':'33%'},200);
         $(button_risposta_post).animate({'left':'33%'},200);
         $(button_risposta_post).css('box-shadow', '0 0 0 white' );//#719ECE"
@@ -585,7 +586,6 @@ $(document).ready(function(){
     })
   $('.mybut').hover(function(e){
       $('.mybut').css("box-shadow","0 0 0 white")
-      alert("dsfds")
   },
     function(){
         $('.mybut').css("box-shadow","10px 10px 10px #719ECE")
@@ -648,7 +648,7 @@ $(document).ready(function(){
                 }
                 resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risponde a "+mess[indexX].titled))
                 mess[indexX].risposte.push(resps[q].body)
-                createPostArea(resps[q],mess[indexX])
+                createPostArea(resps[q])
               }
             }
           }
@@ -666,8 +666,8 @@ $(document).ready(function(){
 );
 
 // Metodo chiamato da post , resp e nuovo Post//
-function createPostArea(messOrResp){
-    paPostOrResp=new postArea(messOrResp)
+function createPostArea(messOrResp,elementToAppendArea){
+     (typeof elementToAppendArea === "undefined") ? paPostOrResp=new postArea(messOrResp) :paPostOrResp=elementToAppendArea
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
 }
