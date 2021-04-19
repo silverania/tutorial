@@ -1,14 +1,1 @@
-*
-!/homepage/models.py
-!/homepage/views.py
-!/homepage/urls.py
-!/blog/models.py
-!/blog/views.py
-!/blog/urls.py
-!/user/models.py
-!/user/views.py
-!/user/urls.py
-/tutorial/urls.py
-!requirements.txt
-!/homepage/templates/*
-!/static/{css,js,images,webfonts}/*
+settings.py
