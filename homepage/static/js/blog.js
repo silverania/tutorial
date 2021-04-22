@@ -232,7 +232,7 @@ class postArea {
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
     /* la testarea non viene appesa sotto elementToAppendPostArea solo nel caso che esso sia null */
-    ! elementToAppendPostArea ?  divUserBlog = document.createElement( "DIV" ) : divUserBlog=elementToAppendPostArea
+    divUserBlog = document.createElement( "DIV" )
     var spanUserName=document.createElement("SPAN")
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
@@ -291,7 +291,8 @@ class postArea {
           console.log(idWherePutElement)
         }
       }
-        divUserBlog.appendChild(postarea.create())
+        ! elementToAppendPostArea ?  divUserBlog.appendChild(postarea.create()) : divUserBlog=elementToAppendPostArea
+
         return $(divUserBlog)
     }
 
@@ -305,7 +306,7 @@ class postArea {
       let id
       var url;
       $(button_risposta_post).click(function(e){
-        var elementToAppendArea = divUserBlog
+        var elementToAppendArea = document.getElementById(e.target.id).parentElement.id
         createPostArea ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
       })
       $(button_risposta_post).hover(function(){
@@ -356,12 +357,14 @@ class postArea {
           id="but_resp"
           break
       }
-        setButton(id)
+        setButtonAndFormAttribute(id)
 
-        function setButton(type){
+        function setButtonAndFormAttribute(type){
           button_risposta_post.setAttribute("type","button")
           button_risposta_post.setAttribute("id",type+"_"+postarea.id)
           button_risposta_post.setAttribute("class",type+"_"+postarea.id)
+          form_risposta_post.setAttribute("id","form_"+type+"_"+postarea.id)
+          form_risposta_post.setAttribute("class","form_"+type+"_"+postarea.id)
         }
       }
 
