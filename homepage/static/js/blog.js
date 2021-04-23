@@ -228,11 +228,13 @@ class postArea {
   }
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
-    var id=mess.pk
+    var id
+    mess.type == "resp" ? id = mess.post.pk : id = mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
-    /* la testarea non viene appesa sotto elementToAppendPostArea solo nel caso che esso sia null */
+
     divUserBlog = document.createElement( "DIV" )
+
     var spanUserName=document.createElement("SPAN")
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
@@ -291,8 +293,7 @@ class postArea {
           console.log(idWherePutElement)
         }
       }
-        ! elementToAppendPostArea ?  divUserBlog.appendChild(postarea.create()) : divUserBlog=elementToAppendPostArea
-
+      ! elementToAppendPostArea ?  divUserBlog.appendChild(postarea.create()) : divUserBlog=document.getElementById(elementToAppendPostArea)
         return $(divUserBlog)
     }
 
@@ -306,8 +307,9 @@ class postArea {
       let id
       var url;
       $(button_risposta_post).click(function(e){
-        var elementToAppendArea = document.getElementById(e.target.id).parentElement.id
-        createPostArea ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
+        var elementToAppendArea = document.getElementById("divuserblog_"+mess.pk)
+        createPostArea
+         ( r=new Resp(loginis,"", new Date().toLocaleString(),"resp",BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
       })
       $(button_risposta_post).hover(function(){
         $(button_risposta_post).animate({'width':'33%'},200);

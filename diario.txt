@@ -1,1 +1,2 @@
-il divuserblog di risposta in seguito al click su rispondi deve eswsere appeso al divusserblog da cui è generato il click
+in makeheadblog bisogna distinguere due casi , uno in cui esiste elementToAppendArea , e un altro in cui non esiste . se non faccio cio
+il divuserblog di risposta viene costruito nei nodi errati 

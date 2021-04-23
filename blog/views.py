@@ -67,9 +67,8 @@ def getPost(request):
         print("tut=" + str(tutorial))
         tu = Site.objects.get(title=tutorial)
         aggiornato = formatted_datetime
-        all_comments_for_page = Comment.objects.filter(site=tu).order_by("-publish")[
-            :5
-        ]  # tutti i commenti sul tutorial
+        all_comments_for_page = Comment.objects.filter(site=tu).order_by("-publish")
+        # tutti i commenti sul tutorial
         datac = list(all_comments_for_page)
         userLogged = list(userLogged)
         userLogged = serializer(userLogged)
@@ -78,15 +77,14 @@ def getPost(request):
         print("data comment Json format=" + str(datac))
         print("comment_model_serialized=" + str(comment_model_serialized))
         for comment in all_comments_for_page:
-            print("body Comment" + str(comment.body))
+            print("body Comment" + str(comment))
             print()
-            print("Comm=" + str(comment))
             t = list(comment.risposte.all())
+            print("Resp=" + str(t))
             try:
                 t2 = t2 + t
             except UnboundLocalError:
                 t2 = t
-                break
         try:
             print(
                 "RISPOSTE JSON SERIALIZED :"
