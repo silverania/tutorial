@@ -130,12 +130,12 @@ function createSectionDivSpan(){
 }
 
 class Resp{
-  constructor(author,body="",publish,post,photo,titolo,pk,type){
+  constructor(author,body="",publish,post,photo,titolo,pk){
     this.sent=false
     this.author=author
     this.post=post
     this.body=body
-    this.type=type
+    this.type="resp"
     this.publish=publish
     this.photo=photo
     this.titled=titolo
@@ -230,12 +230,11 @@ class postArea {
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
     var id
-    mess.type == "resp" ? id = mess.post.pk+"_"+mess.pk : id = mess.pk
+    mess.type == "resp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
+    mess.pk = id
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
-
     divUserBlog = document.createElement( "DIV" )
-
     var spanUserName=document.createElement("SPAN")
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
@@ -302,7 +301,7 @@ class postArea {
     createButtonRispostaPost(mess,postarea){
       var r
       var id
-      mess.type == "resp" ? id = mess.post.pk+"_"+mess.pk : id = mess.pk
+      mess.type == "resp" ? id = mess.post.pk + "_" + (mess.post.risposte.length+1) : id = mess.pk
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
       button_risposta_post.setAttribute('style','display:block')
@@ -311,7 +310,7 @@ class postArea {
       $(button_risposta_post).click(function(e){
         var elementToAppendArea = document.getElementById("divuserblog_"+id)
         createPostArea
-         ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
+         ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,),elementToAppendArea)
       })
       $(button_risposta_post).hover(function(){
         $(button_risposta_post).animate({'width':'33%'},200);
