@@ -1,7 +1,7 @@
 BASE_URL="http://127.0.0.1:8000"
 URL_NEW_POST="/post/sendpost"
 const MAX_TEXTAREA_NUMBER=21
-const BASE_PHOTO_DIR=""
+const BASE_PHOTO_DIR="media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
 var paPostOrResp;
@@ -228,11 +228,13 @@ class postArea {
   }
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
-    var id=mess.pk
+    var id
+    mess.type == "resp" ? id = mess.post.pk : id = mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
-    /* la testarea non viene appesa sotto elementToAppendPostArea solo nel caso che esso sia null */
-    ! elementToAppendPostArea ?  divUserBlog = document.createElement( "DIV" ) : divUserBlog=elementToAppendPostArea
+
+    divUserBlog = document.createElement( "DIV" )
+
     var spanUserName=document.createElement("SPAN")
     var bH5=document.createElement("span")
     var divContainerHead=document.createElement("DIV")
@@ -291,7 +293,7 @@ class postArea {
           console.log(idWherePutElement)
         }
       }
-        divUserBlog.appendChild(postarea.create())
+      ! elementToAppendPostArea ?  divUserBlog.appendChild(postarea.create()) : divUserBlog=document.getElementById(elementToAppendPostArea)
         return $(divUserBlog)
     }
 
@@ -305,8 +307,9 @@ class postArea {
       let id
       var url;
       $(button_risposta_post).click(function(e){
-        var elementToAppendArea = postarea
-        createPostArea ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
+        var elementToAppendArea = document.getElementById("divuserblog_"+mess.pk)
+        createPostArea
+         ( r=new Resp(loginis,"", new Date().toLocaleString(),"resp",BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
       })
       $(button_risposta_post).hover(function(){
         $(button_risposta_post).animate({'width':'33%'},200);
@@ -323,7 +326,7 @@ class postArea {
           divUserBlog.setAttribute('style','width:700px')
           divUserBlog.setAttribute('style','max-width:700px')
           //button_risposta_post.setAttribute("method","get")
-          button_risposta_post.textContent="Crea Post"
+          button_risposta_post.textContent="Rispondi"
           id="but_crea_post"
           var objectToAppendChild="new_divuserblog_"+postarea.id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
@@ -356,12 +359,14 @@ class postArea {
           id="but_resp"
           break
       }
-        setButton(id)
+        setButtonAndFormAttribute(id)
 
-        function setButton(type){
+        function setButtonAndFormAttribute(type){
           button_risposta_post.setAttribute("type","button")
           button_risposta_post.setAttribute("id",type+"_"+postarea.id)
           button_risposta_post.setAttribute("class",type+"_"+postarea.id)
+          form_risposta_post.setAttribute("id","form_"+type+"_"+postarea.id)
+          form_risposta_post.setAttribute("class","form_"+type+"_"+postarea.id)
         }
       }
 
@@ -667,7 +672,7 @@ $(document).ready(function(){
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,elementToAppendArea){
-     (typeof elementToAppendArea === "undefined") ? paPostOrResp=new postArea(messOrResp) :paPostOrResp=elementToAppendArea
-      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp)
+      paPostOrResp=new postArea(messOrResp)
+      paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,elementToAppendArea)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
 }

@@ -130,15 +130,16 @@ function createSectionDivSpan(){
 }
 
 class Resp{
-  constructor(author,body="",publish,post,photo,titolo){
+  constructor(author,body="",publish,post,photo,titolo,pk,type){
     this.sent=false
     this.author=author
     this.post=post
     this.body=body
-    this.type=post
+    this.type=type
     this.publish=publish
     this.photo=photo
     this.titled=titolo
+    this.pk=pk
   }
 }
 
@@ -229,7 +230,7 @@ class postArea {
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
     var id
-    mess.type == "resp" ? id = mess.post.pk : id = mess.pk
+    mess.type == "resp" ? id = mess.post.pk+"_"+mess.pk : id = mess.pk
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
 
@@ -299,17 +300,18 @@ class postArea {
 
 
     createButtonRispostaPost(mess,postarea){
-      var r;
+      var r
+      var id
+      mess.type == "resp" ? id = mess.post.pk+"_"+mess.pk : id = mess.pk
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
       button_risposta_post.setAttribute('style','display:block')
       form_risposta_post.appendChild(button_risposta_post)
-      let id
       var url;
       $(button_risposta_post).click(function(e){
-        var elementToAppendArea = document.getElementById("divuserblog_"+mess.pk)
+        var elementToAppendArea = document.getElementById("divuserblog_"+id)
         createPostArea
-         ( r=new Resp(loginis,"", new Date().toLocaleString(),"resp",BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
+         ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled),elementToAppendArea)
       })
       $(button_risposta_post).hover(function(){
         $(button_risposta_post).animate({'width':'33%'},200);
@@ -352,7 +354,7 @@ class postArea {
           id="but_post"
           break
         case "resp":
-          var objectToAppendChild="divuserblog_"+postarea.id
+          var objectToAppendChild="divuserblog_"+id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
@@ -363,10 +365,10 @@ class postArea {
 
         function setButtonAndFormAttribute(type){
           button_risposta_post.setAttribute("type","button")
-          button_risposta_post.setAttribute("id",type+"_"+postarea.id)
-          button_risposta_post.setAttribute("class",type+"_"+postarea.id)
-          form_risposta_post.setAttribute("id","form_"+type+"_"+postarea.id)
-          form_risposta_post.setAttribute("class","form_"+type+"_"+postarea.id)
+          button_risposta_post.setAttribute("id",type+"_"+id)
+          button_risposta_post.setAttribute("class",type+"_"+id)
+          form_risposta_post.setAttribute("id","form_"+type+"_"+id)
+          form_risposta_post.setAttribute("class","form_"+type+"_"+id)
         }
       }
 
@@ -651,7 +653,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),"resp",photoResp,"risponde a "+mess[indexX].titled))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),mess[indexX],photoResp,"risponde a "+mess[indexX].titled,resps_json[y].pk,"resp"))
                 mess[indexX].risposte.push(resps[q].body)
                 createPostArea(resps[q])
               }
