@@ -1,1 +1,4 @@
 settings.py
+.gitignore
+{homepage,blog,user}/migrations/*
+
