@@ -328,7 +328,6 @@ class postArea {
           divUserBlog.setAttribute('style','max-width:700px')
           //button_risposta_post.setAttribute("method","get")
           button_risposta_post.textContent="Rispondi"
-          id="but_crea_post"
           var objectToAppendChild="new_divuserblog_"+postarea.id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(button_risposta_post)
@@ -350,24 +349,22 @@ class postArea {
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
-          id="but_post"
           break
         case "resp":
           var objectToAppendChild="divuserblog_"+id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(form_risposta_post)
           button_risposta_post.textContent="Rispondi"
-          id="but_resp"
           break
       }
         setButtonAndFormAttribute(id)
 
         function setButtonAndFormAttribute(type){
+          let buttonID="but_"+mess.type+"_"+type
           button_risposta_post.setAttribute("type","button")
-          button_risposta_post.setAttribute("id",type+"_"+id)
-          button_risposta_post.setAttribute("class",type+"_"+id)
-          form_risposta_post.setAttribute("id","form_"+type+"_"+id)
-          form_risposta_post.setAttribute("class","form_"+type+"_"+id)
+          button_risposta_post.setAttribute("id",buttonID)
+          form_risposta_post.setAttribute("id","form_"+mess.type+"_"+id)
+          form_risposta_post.setAttribute("class","form_"+mess.type+"_"+id)
         }
       }
 
@@ -497,7 +494,7 @@ function makeModalWindow(mess){
         mess.type="newpost"
         mess.publish=getDateFromDjangoDate()
         mess.author=loginis
-        mess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
+        userLogged[0].fields.photo == "undefined" ? alert  ("non ho la photo dell user !") :  mess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
         mess.pk=newPostId
         if(mess.titled){
           $('#myModal').remove()
@@ -652,7 +649,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),mess[indexX],photoResp,"risponde a "+mess[indexX].titled,resps_json[y].pk,"resp"))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),mess[indexX],photoResp," risponde a "+mess[indexX].titled,resps_json[y].pk,"resp"))
                 mess[indexX].risposte.push(resps[q].body)
                 createPostArea(resps[q])
               }

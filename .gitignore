@@ -1,4 +1,6 @@
+
 settings.py
 .gitignore
 {homepage,blog,user}/migrations/*
-
+__pycache__
+requirements.txt
