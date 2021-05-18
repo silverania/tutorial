@@ -49,6 +49,7 @@ var tutorial
 var bbutton2=new Object();
 var exist=false
 var newPostId=0
+var elementToAppendPostArea;
 
 function createSectionDivSpan(){
   bForm.setAttribute("action","post/getpost");
@@ -130,12 +131,12 @@ function createSectionDivSpan(){
 }
 
 class Resp{
-  constructor(author,body="",publish,post,photo,titolo,pk){
+  constructor(author,body="",publish,post,photo,titolo,pk,resptype){
     this.sent=false
     this.author=author
     this.post=post
     this.body=body
-    this.type="resp"
+    this.type=resptype
     this.publish=publish
     this.photo=photo
     this.titled=titolo
@@ -222,6 +223,9 @@ class postArea {
       var elToAppend=document.getElementById('clone_button')
       $ ( postarea ).insertAfter(elToAppend)
     }
+    else if (mess.type=="newresp") {
+      $ ( postarea ).insertAfter( elementToAppendPostArea )
+    }
     else{
       bdiv.appendChild(postarea)
       postarea.disabled="true"
@@ -231,7 +235,7 @@ class postArea {
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
     var id
     mess.type == "resp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
-    mess.pk = id
+    if (!(id=="undefined")) mess.pk = id
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
     divUserBlog = document.createElement( "DIV" )
@@ -277,6 +281,8 @@ class postArea {
           divUserBlog.setAttribute("class","post_"+id)
           areaNotResp()
           break
+        case "newresp" :
+          elementToAppendPostArea=elementToAppendPostArea
       default:
         console.log("def")
         areaNotResp()
@@ -293,7 +299,7 @@ class postArea {
           console.log(idWherePutElement)
         }
       }
-      ! elementToAppendPostArea ?  divUserBlog.appendChild(postarea.create()) : divUserBlog=document.getElementById(elementToAppendPostArea)
+      divUserBlog.appendChild(postarea.create())
         return $(divUserBlog)
     }
 
@@ -308,9 +314,10 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       var url;
       $(button_risposta_post).click(function(e){
-        var elementToAppendArea = document.getElementById("divuserblog_"+id)
+        mess.type="newresp"
+        elementToAppendPostArea = document.getElementById("divuserblog_"+id)
         createPostArea
-         ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,),elementToAppendArea)
+         ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,"0","newresp"),elementToAppendPostArea)
       })
       $(button_risposta_post).hover(function(){
         $(button_risposta_post).animate({'width':'33%'},200);
@@ -346,17 +353,14 @@ class postArea {
           break
         case "post":
           var objectToAppendChild=divUserBlog.id
-          var elementToAppendButton=document.getElementById(objectToAppendChild)
-          elementToAppendButton.appendChild(form_risposta_post)
-          button_risposta_post.textContent="Rispondi"
           break
-        case "resp":
+        case "resp" || "newresp" :
           var objectToAppendChild="divuserblog_"+id
-          var elementToAppendButton=document.getElementById(objectToAppendChild)
-          elementToAppendButton.appendChild(form_risposta_post)
-          button_risposta_post.textContent="Rispondi"
           break
-      }
+        }
+        var elementToAppendButton=document.getElementById(objectToAppendChild)
+        elementToAppendButton.appendChild(form_risposta_post)
+        button_risposta_post.textContent="Rispondi"
         setButtonAndFormAttribute(id)
 
         function setButtonAndFormAttribute(type){
@@ -397,13 +401,13 @@ class postArea {
   }
 
 
-  function instancePostarea(mess){
+  /*function instancePostarea(mess){
     if(mess.titled){
       post=new postArea() // passo post come argomento
       value=post.makeHeadBlog(mess,data.photo,post,data.username)
       return post
     }
-  }
+  }*/
 
 
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
