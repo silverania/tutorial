@@ -199,23 +199,20 @@ class postArea {
   constructor(post){
     this.post=post
     this.postarea=document.createElement("TEXTAREA");
-    this.id=post.pk
     //var mess=""
     switch (post.type){
       case "newpost":
-      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
       break
       case "post":
-      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
       this.postarea.value=post.body
       this.empty=true
       break
       case "resp":
-      this.postarea.setAttribute("id",post.type+loginis+"_"+this.id)
       this.postarea.value=post.body
       this.empty=true
       break
     }
+    this.postarea.removeAttribute("disabled")
   }
 
   appendPostArea(mess,postarea){
@@ -230,11 +227,12 @@ class postArea {
       bdiv.appendChild(postarea)
       postarea.disabled="true"
     }
+    //postarea.postarea.setAttribute("id","postarea_"+postarea.pk)
   }
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
     var id
-    mess.type == "resp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
+    mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
     if (!(id=="undefined")) mess.pk = id
     var divPostTitle=document.createElement("DIV");
     var spanInDivPostTitle=document.createElement("SPAN")
@@ -285,6 +283,7 @@ class postArea {
           divUserBlog.setAttribute("id","divuserblog_"+id)
           divUserBlog.setAttribute("style","margin-left:20%")
           elementToAppendPostArea=elementToAppendPostArea
+          postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
       default:
         console.log("def")
         areaNotResp()
@@ -316,6 +315,7 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       var url;
       $(button_risposta_post).click(function(e){
+        postarea.postarea
         mess.type="newresp"
         elementToAppendPostArea = document.getElementById("divuserblog_"+id)
         createPostArea
