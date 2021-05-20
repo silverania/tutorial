@@ -315,12 +315,14 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       var url;
       $(button_risposta_post).click(function(e){
-        postarea.postarea
+        if (!(mess.type=="newpost")) {
         mess.type="newresp"
         elementToAppendPostArea = document.getElementById("divuserblog_"+id)
         createPostArea
          ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,"0","newresp"),elementToAppendPostArea)
-      })
+      }
+    }
+    )
       $(button_risposta_post).hover(function(){
         $(button_risposta_post).animate({'width':'33%'},200);
         $(button_risposta_post).animate({'left':'33%'},200);
@@ -336,36 +338,43 @@ class postArea {
           divUserBlog.setAttribute('style','width:700px')
           divUserBlog.setAttribute('style','max-width:700px')
           //button_risposta_post.setAttribute("method","get")
-          button_risposta_post.textContent="Rispondi"
-          var objectToAppendChild="new_divuserblog_"+postarea.id
+          button_risposta_post.textContent="Inserisci Nuovo Post"
+          var objectToAppendChild="new_divuserblog_"+id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(button_risposta_post)
           $(button_risposta_post).click(function(){
             //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
             let ids='#'+postarea.postarea.id
             let txts=$(ids).val()
-            if (!(txts===""))
+            if (!(txts==="")){
             console.log("comparazione del tipo e valore = vera in:"+txts)
             //form_risposta_post.setAttribute("action",url)
             mess.body=txts
             url=BASE_URL+URL_NEW_POST
             //button_risposta_post.setAttribute('action','url')
             mess.sendToServer(mess,url)
-            });
+            }
+            else {
+              throw launchException ('l area di testo  vuota , il messaggio non verrà inviato al server')
+            }
+          }
+          );
           break
         case "post":
           var objectToAppendChild=divUserBlog.id
+          button_risposta_post.textContent="Rispondi"
           break
         case "resp" :
           var objectToAppendChild="divuserblog_"+id
+          button_risposta_post.textContent="Rispondi"
           break
         case "newresp" :
           var objectToAppendChild="divuserblog_"+id
+          button_risposta_post.textContent="Rispondi"
           break
         }
         var elementToAppendButton=document.getElementById(objectToAppendChild)
         elementToAppendButton.appendChild(form_risposta_post)
-        button_risposta_post.textContent="Rispondi"
         setButtonAndFormAttribute(id)
 
         function setButtonAndFormAttribute(type){
@@ -682,4 +691,9 @@ function createPostArea(messOrResp,elementToAppendArea){
       paPostOrResp=new postArea(messOrResp)
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,elementToAppendArea)
     paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
+}
+
+function launchException(message) {
+  this.message = message;
+  this.name = 'launchException';
 }
