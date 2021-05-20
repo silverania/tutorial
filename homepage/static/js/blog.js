@@ -261,6 +261,7 @@ class postArea {
     this.appendPostArea(mess,divUserBlog)
     tagUserImg.setAttribute("id","img_user_"+id)
     spanUserName.setAttribute("id","span_user_"+id)
+    postarea.postarea.setAttribute("id",mess.type+loginis+"_"+mess.pk)
     switch (mess.type){
       case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
