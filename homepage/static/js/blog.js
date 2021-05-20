@@ -282,6 +282,8 @@ class postArea {
           areaNotResp()
           break
         case "newresp" :
+          divUserBlog.setAttribute("id","divuserblog_"+id)
+          divUserBlog.setAttribute("style","margin-left:20%")
           elementToAppendPostArea=elementToAppendPostArea
       default:
         console.log("def")
@@ -354,7 +356,10 @@ class postArea {
         case "post":
           var objectToAppendChild=divUserBlog.id
           break
-        case "resp" || "newresp" :
+        case "resp" :
+          var objectToAppendChild="divuserblog_"+id
+          break
+        case "newresp" :
           var objectToAppendChild="divuserblog_"+id
           break
         }
