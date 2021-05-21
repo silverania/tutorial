@@ -353,7 +353,11 @@ class postArea {
             mess.body=txts
             url=BASE_URL+URL_NEW_POST
             //button_risposta_post.setAttribute('action','url')
-            mess.sendToServer(mess,url)
+            $(postarea.postarea).css("box-shadow","0 0 0 0")
+              button_risposta_post.textContent="Post Inserito"
+              button_risposta_post.setAttribute("disabled","")
+              postarea.postarea.setAttribute("disabled","")
+          //  mess.sendToServer(mess,url)
             }
             else {
               throw new launchException ('l area di testo  vuota , il messaggio non verrà inviato al server')
