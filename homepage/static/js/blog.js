@@ -356,7 +356,7 @@ class postArea {
             mess.sendToServer(mess,url)
             }
             else {
-              throw launchException ('l area di testo  vuota , il messaggio non verrà inviato al server')
+              throw new launchException ('l area di testo  vuota , il messaggio non verrà inviato al server')
             }
           }
           );
@@ -697,4 +697,5 @@ function createPostArea(messOrResp,elementToAppendArea){
 function launchException(message) {
   this.message = message;
   this.name = 'launchException';
+  alert ("non puoi inserire un messaggio vuoto !")
 }
