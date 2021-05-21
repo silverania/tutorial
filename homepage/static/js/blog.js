@@ -168,10 +168,6 @@ class Post{
     return this.titled
   }
 
-  disable(){
-    this.disabled=true
-  }
-
   sendToServer(post=Object(),url){
     if(post.type=="newpost"){
       let content=tutorial;
@@ -200,32 +196,36 @@ class postArea {
     this.post=post
     this.postarea=document.createElement("TEXTAREA");
     //var mess=""
-    switch (post.type){
+    switch (this.post.type){
       case "newpost":
+      this.postarea.removeAttribute("disabled","")
+      break
+      case "newresp":
+      this.postarea.removeAttribute("disabled","")
       break
       case "post":
       this.postarea.value=post.body
       this.empty=true
+      this.postarea.setAttribute("disabled","")
       break
       case "resp":
       this.postarea.value=post.body
       this.empty=true
+      this.postarea.setAttribute("disabled","")
       break
     }
-    this.postarea.removeAttribute("disabled")
   }
 
-  appendPostArea(mess,postarea){
+  appendPostArea(mess,divuserblog){
     if(mess.type=="newpost"){
       var elToAppend=document.getElementById('clone_button')
-      $ ( postarea ).insertAfter(elToAppend)
+      $ ( divuserblog ).insertAfter(elToAppend)
     }
     else if (mess.type=="newresp") {
-      $ ( postarea ).insertAfter( elementToAppendPostArea )
+      $ ( divuserblog ).insertAfter( elementToAppendPostArea )
     }
     else{
-      bdiv.appendChild(postarea)
-      postarea.disabled="true"
+      bdiv.appendChild(divuserblog)
     }
     //postarea.postarea.setAttribute("id","postarea_"+postarea.pk)
   }
