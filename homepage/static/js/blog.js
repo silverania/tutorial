@@ -37,7 +37,7 @@ var spanBlogEsci=document.createElement("SPAN");
 //var bH5=document.createElement("span")
 //var spanUserName=document.createElement("SPAN");
 var post,post2=new Object();
-var empty;
+var isOpen=false
 var bSection=document.createElement("SECTION");
 //var bSpan=document.createElement("SPAN");
 //var bSpanChild=document.createElement("SPAN");
@@ -169,7 +169,7 @@ class Post{
   }
 
   sendToServer(post=Object(),url){
-    if(post.type=="newpost"){
+    if(post.type=="newpost" || post.type=="newresp"){
       let content=tutorial;
       $.ajax({
         url: url,
@@ -179,13 +179,13 @@ class Post{
         dataType: 'json',
         success: function (data) {
           var userPhoto=data.photo
-          makeHeadBlog(data.type,data.photo,this,data.aggiornato)
+          post.type=="newpost" ? makeHeadBlog(data.type,data.photo,this,data.aggiornato) : isOpen=false
         }
       }
     );
     console.log("ajax call finished");
-  return 0
   }
+  return 0
 }
 
 }
@@ -195,6 +195,7 @@ class postArea {
   constructor(post){
     this.post=post
     this.postarea=document.createElement("TEXTAREA");
+    this.isOpen
     //var mess=""
     switch (this.post.type){
       case "newpost":
@@ -205,12 +206,10 @@ class postArea {
       break
       case "post":
       this.postarea.value=post.body
-      this.empty=true
       this.postarea.setAttribute("disabled","")
       break
       case "resp":
       this.postarea.value=post.body
-      this.empty=true
       this.postarea.setAttribute("disabled","")
       break
     }
@@ -231,6 +230,7 @@ class postArea {
   }
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
+    if(isOpen==false) {
     var id
     mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
     if (!(id=="undefined")) mess.pk = id
@@ -304,7 +304,7 @@ class postArea {
       divUserBlog.appendChild(postarea.create())
         return $(divUserBlog)
     }
-
+  }
 
     createButtonRispostaPost(mess,postarea){
       var r
@@ -319,8 +319,8 @@ class postArea {
         if (!(mess.type=="newpost")) {
         mess.type="newresp"
         elementToAppendPostArea = document.getElementById("divuserblog_"+id)
-        createPostArea
-         ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,"0","newresp"),elementToAppendPostArea)
+          createPostArea
+            ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,"0","newresp"),elementToAppendPostArea)
       }
     }
     )
@@ -335,7 +335,7 @@ class postArea {
         }
       )
       switch (mess.type){
-        case "newpost":
+        case "newpost" || "newresp" :
           divUserBlog.setAttribute('style','width:700px')
           divUserBlog.setAttribute('style','max-width:700px')
           //button_risposta_post.setAttribute("method","get")
@@ -347,21 +347,27 @@ class postArea {
             //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
             let ids='#'+postarea.postarea.id
             let txts=$(ids).val()
-            if (!(txts==="")){
+             try{
+              if (txts==="") throw  "l area di testo e vuot ";
+           }
+           catch (err){
+             alert(err)
+             console.log("area di testo vuota . Exit code -1 !")
+             return -1
+           }
             console.log("comparazione del tipo e valore = vera in:"+txts)
             //form_risposta_post.setAttribute("action",url)
-            mess.body=txts
             url=BASE_URL+URL_NEW_POST
+            mess.body=txts
+            if (mess.sendToServer(mess,url)==0){
+              isOpen=false
+            }
+            alert("dati inviati")
             //button_risposta_post.setAttribute('action','url')
             $(postarea.postarea).css("box-shadow","0 0 0 0")
               button_risposta_post.textContent="Post Inserito"
               button_risposta_post.setAttribute("disabled","")
               postarea.postarea.setAttribute("disabled","")
-          //  mess.sendToServer(mess,url)
-            }
-            else {
-              throw new launchException ('l area di testo  vuota , il messaggio non verrà inviato al server')
-            }
           }
           );
           break
@@ -693,13 +699,19 @@ $(document).ready(function(){
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,elementToAppendArea){
+  if(isOpen==false) {
       paPostOrResp=new postArea(messOrResp)
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,elementToAppendArea)
-    paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
+      paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
+    }
+    if(messOrResp.type == "newresp" || messOrResp.type=="newpost") {
+       isOpen=true
+     }
+    return 0
 }
 
-function launchException(message) {
+/*function launchException(message) {
   this.message = message;
   this.name = 'launchException';
   alert ("non puoi inserire un messaggio vuoto !")
-}
+}*/
