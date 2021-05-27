@@ -425,20 +425,15 @@ class postArea {
     createSectionDivSpan(idis);
   }
 
-
-  /*function instancePostarea(mess){
-    if(mess.titled){
-      post=new postArea() // passo post come argomento
-      value=post.makeHeadBlog(mess,data.photo,post,data.username)
-      return post
-    }
-  }*/
-
-
   /* Primo funzione eseguita nel flusso di codice , ...... l' entrypoint.... */
-  $(bbutton).click(function(){
-    buttonCommentClick()})
-
+  $(bbutton).click(function() {
+    if(isOpen==false) {
+      buttonCommentClick()
+      }
+    else {
+      msgIsTexareaOpen()
+      }
+    })
     function buttonCommentClick(){
     let modal
     let textAreaInDivInMain
@@ -463,9 +458,6 @@ class postArea {
       post=instancePost()
     }
   }
-
-
-/* MODAL WINDOW */
 
 function makeModalWindow(mess){
   newPostId=newPostId+1
@@ -494,26 +486,6 @@ function makeModalWindow(mess){
   else{
     modal.style.display = "block";
   }
-  /*document.getElementById('but_confirm_title').onclick = function(event) {
-    try{
-      if (!(textAreaInDivInMain.value=="Titolo Post ?")){
-        validity=true
-        newMess.titled=textAreaInDivInMain.value
-        newMess.type="newpost"
-        newMess.publish=getDateFromDjangoDate("")
-        newMess.author=loginis
-        newMess.photo=BASE_PHOTO_DIR+userLogged[0].fields.photo
-        //return newMess ;
-      }
-      else{
-        alert("Devi inserire un titolo Valido")
-        validity=false
-      }
-    }
-    catch(Error){
-      console.log("qualcosa è andatobody storto nel recupero del titolo")
-    }
-  }*/
 
   $('#but_confirm_title').click(function() {
     try{
@@ -529,9 +501,7 @@ function makeModalWindow(mess){
           $('#myModal').remove()
           createPostArea(mess)
           exist=false
-          //modal.style.display = "none";
         }
-        //return newMess ;
       }
       else{
         alert("Devi inserire un titolo Valido")
@@ -613,8 +583,12 @@ $(document).ready(function(){
   bdiv.appendChild(cln)[2];
   butcloned = document.getElementById('clone_button')
   $(butcloned).click(function(){
-      alert()
-      buttonCommentClick()
+      if(isOpen==false) {
+        buttonCommentClick()
+      }
+      else {
+        msgIsTexareaOpen()
+      }
     })
   $('.mybut').hover(function(e){
       $('.mybut').css("box-shadow","0 0 0 white")
@@ -622,7 +596,6 @@ $(document).ready(function(){
     function(){
         $('.mybut').css("box-shadow","10px 10px 10px #719ECE")
     })
-  //bForm.setAttribute("action","post/showposts");
   $.ajax({
     url: '/post/showposts',
     data: {
@@ -641,18 +614,7 @@ $(document).ready(function(){
       catch(SyntaxError){
         console.log("error in json!")
       }
-      //alert("from ajax dat.post.msg,user,data"+obj.data_l5+obj.tu_serialized+"SSSSS===")
-
-      //alert(obj3);
-      //var obj4 = obj.photos
-      //var obj5_photo = obj.profile;
-      //var user_post_parsed=JSON.parse(obj5_photo);
-      //var user_pk=user_post_parsed.pk
       var photoResp
-      //console.log(obj.data_l5)
-
-      //console.log(obj.data_l7)
-      //console.log(obj.data_l5)
       var i=0
       //initial_y=(parseInt(obj3.length))-1
       for (i;i<=comments_json.length-1;i=i+1){
@@ -688,13 +650,10 @@ $(document).ready(function(){
         y=0
         indexX=indexX+1
       }
-
-
     }
   }
 );
 }
-
 );
 
 // Metodo chiamato da post , resp e nuovo Post//
@@ -709,6 +668,10 @@ function createPostArea(messOrResp,elementToAppendArea){
      }
     return 0
 }
+
+function msgIsTexareaOpen(){
+  alert("Hai un post/risposta aperto ! se vuoi chiuderlo aggiorna la pagina con F5 , altrimenti completa prima il post/risposta in sospeso !")
+  }
 
 /*function launchException(message) {
   this.message = message;
