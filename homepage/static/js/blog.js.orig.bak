@@ -316,9 +316,6 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       var url;
       $(button_risposta_post).click(function(e){
-        if(isOpen==true) {
-          msgIsTexareaOpen()
-        }
         if (!(mess.type=="newpost")) {
         mess.type="newresp"
         elementToAppendPostArea = document.getElementById("divuserblog_"+id)
