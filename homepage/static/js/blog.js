@@ -196,6 +196,7 @@ class postArea {
     this.post=post
     this.postarea=document.createElement("TEXTAREA");
     this.isOpen
+    this.isActive=false
     //var mess=""
     switch (this.post.type){
       case "newpost":
@@ -266,7 +267,6 @@ class postArea {
       case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
         divUserBlog.setAttribute("class","new_post_"+id)
-        areaNotResp()
         break
       case "resp":
           //divUserBlog.setAttribute("class","resp_"+id)
@@ -278,7 +278,6 @@ class postArea {
         case "post":
           divUserBlog.setAttribute("id","divuserblog_"+id)
           divUserBlog.setAttribute("class","post_"+id)
-          areaNotResp()
           break
         case "newresp" :
           divUserBlog.setAttribute("id","divuserblog_"+id)
@@ -287,11 +286,11 @@ class postArea {
           postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
       default:
         console.log("def")
-        areaNotResp()
       }
       this.mess=mess
-      function areaNotResp(){
+      if(mess.type=="post" || mess.type=="newpost"){
         if(!(postarea.disabled==true)){
+          postarea.isActive=true
           spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta :"
           spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
           console.log("thispost.disabled")
@@ -302,6 +301,11 @@ class postArea {
         }
       }
       divUserBlog.appendChild(postarea.create())
+      if(mess.type=="newpost") {
+        if(postarea.isActive==true){
+          $("#"+postarea.postarea.id).css("border","4px solid blue")
+          }
+        }
         return $(divUserBlog)
     }
   }
@@ -338,7 +342,7 @@ class postArea {
         }
       )
       switch (mess.type){
-        case "newpost" || "newresp" :
+        case "newpost"  :
           divUserBlog.setAttribute('style','width:700px')
           divUserBlog.setAttribute('style','max-width:700px')
           //button_risposta_post.setAttribute("method","get")
