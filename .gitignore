@@ -4,3 +4,6 @@ settings.py
 {homepage,blog,user}/migrations/*
 __pycache__
 requirements.txt
+*.pyc
+tutorial/settings.py
+*/migrations/*

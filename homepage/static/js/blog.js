@@ -5,6 +5,7 @@ const BASE_PHOTO_DIR="media/"
 var borderPost="none";
 var borderResponse="1px solid grey";
 var paPostOrResp;
+var postarea=Object()
 var el
 var mess;
 var padre
@@ -37,7 +38,7 @@ var spanBlogEsci=document.createElement("SPAN");
 //var bH5=document.createElement("span")
 //var spanUserName=document.createElement("SPAN");
 var post,post2=new Object();
-var isOpen=false
+var isOpen=false;
 var bSection=document.createElement("SECTION");
 //var bSpan=document.createElement("SPAN");
 //var bSpanChild=document.createElement("SPAN");
@@ -195,7 +196,7 @@ class postArea {
   constructor(post){
     this.post=post
     this.postarea=document.createElement("TEXTAREA");
-    this.isOpen
+    this.isOpen=false
     this.isActive=false
     //var mess=""
     switch (this.post.type){
@@ -232,65 +233,66 @@ class postArea {
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
     if(isOpen==false) {
-    var id
-    mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
-    if (!(id=="undefined")) mess.pk = id
-    var divPostTitle=document.createElement("DIV");
-    var spanInDivPostTitle=document.createElement("SPAN")
-    divUserBlog = document.createElement( "DIV" )
-    var spanUserName=document.createElement("SPAN")
-    var bH5=document.createElement("span")
-    var divContainerHead=document.createElement("DIV")
-    var tagUserImg=document.createElement("IMG")
-    divContainerHead.setAttribute("id","d_head_blog_"+id)
-    divContainerHead.setAttribute("style","width:100%")
-    divContainerHead.setAttribute("style","height:auto")
-    tagUserImg.setAttribute("style","border-radius:50%")
-    tagUserImg.setAttribute("src",mess.photo)
-    divUserBlog.appendChild(divContainerHead)
-    divContainerHead.appendChild(tagUserImg)
-    //bH5.textContent="il "+mess.publish
-    spanUserName.setAttribute("style","color:grey;display:inline;")
-    spanInDivPostTitle.setAttribute("id","post_title_"+id)
-    divPostTitle.setAttribute("id","d_post_title_"+id)
-    divPostTitle.appendChild(spanInDivPostTitle)
-    bH5.setAttribute("style","margin-left:3%;color:blue;")
-    bH5.setAttribute("id","bh5_span_"+id)
-    bH5.appendChild(spanUserName)
-    divContainerHead.appendChild(bH5)
-    divUserBlog.appendChild(divPostTitle)
-    this.appendPostArea(mess,divUserBlog)
-    tagUserImg.setAttribute("id","img_user_"+id)
-    spanUserName.setAttribute("id","span_user_"+id)
-    postarea.postarea.setAttribute("id",mess.type+loginis+"_"+mess.pk)
-    switch (mess.type){
-      case "newpost":
+      var id
+      mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
+      if (!(id=="undefined")) mess.pk = id
+      var divPostTitle=document.createElement("DIV");
+      var spanInDivPostTitle=document.createElement("SPAN")
+      divUserBlog = document.createElement( "DIV" )
+      var spanUserName=document.createElement("SPAN")
+      var bH5=document.createElement("span")
+      var divContainerHead=document.createElement("DIV")
+      var tagUserImg=document.createElement("IMG")
+      divContainerHead.setAttribute("id","d_head_blog_"+id)
+      divContainerHead.setAttribute("style","width:100%")
+      divContainerHead.setAttribute("style","height:auto")
+      tagUserImg.setAttribute("style","border-radius:50%")
+      tagUserImg.setAttribute("src",mess.photo)
+      divUserBlog.appendChild(divContainerHead)
+      divContainerHead.appendChild(tagUserImg)
+      //bH5.textContent="il "+mess.publish
+      spanUserName.setAttribute("style","color:grey;display:inline;")
+      spanInDivPostTitle.setAttribute("id","post_title_"+id)
+      divPostTitle.setAttribute("id","d_post_title_"+id)
+      divPostTitle.appendChild(spanInDivPostTitle)
+      bH5.setAttribute("style","margin-left:3%;color:blue;")
+      bH5.setAttribute("id","bh5_span_"+id)
+      bH5.appendChild(spanUserName)
+      divContainerHead.appendChild(bH5)
+      divUserBlog.appendChild(divPostTitle)
+      this.appendPostArea(mess,divUserBlog)
+      tagUserImg.setAttribute("id","img_user_"+id)
+      spanUserName.setAttribute("id","span_user_"+id)
+      postarea.postarea.setAttribute("id",mess.type+loginis+"_"+mess.pk)
+      switch (mess.type){
+        case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
         divUserBlog.setAttribute("class","new_post_"+id)
         break
-      case "resp":
-          //divUserBlog.setAttribute("class","resp_"+id)
-          divUserBlog.setAttribute("id","divuserblog_"+id)
-          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
-          divUserBlog.setAttribute("style","margin-left:20%")
-          console.log("is resp ")
-          break
+        case "resp":
+        //divUserBlog.setAttribute("class","resp_"+id)
+        divUserBlog.setAttribute("id","divuserblog_"+id)
+        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
+        divUserBlog.setAttribute("style","margin-left:20%")
+        console.log("is resp ")
+        break
         case "post":
-          divUserBlog.setAttribute("id","divuserblog_"+id)
-          divUserBlog.setAttribute("class","post_"+id)
-          break
+        divUserBlog.setAttribute("id","divuserblog_"+id)
+        divUserBlog.setAttribute("class","post_"+id)
+        break
         case "newresp" :
-          divUserBlog.setAttribute("id","divuserblog_"+id)
-          divUserBlog.setAttribute("style","margin-left:20%")
-          elementToAppendPostArea=elementToAppendPostArea
-          postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
-      default:
+        postarea.isActive=true
+        divUserBlog.setAttribute("id","divuserblog_"+id)
+        divUserBlog.setAttribute("style","margin-left:20%")
+        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
+        elementToAppendPostArea=elementToAppendPostArea
+        postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
+        default:
         console.log("def")
       }
       this.mess=mess
-      if(mess.type=="post" || mess.type=="newpost"){
+      if(mess.type=="post" || mess.type=="newpost" ) {
         if(!(postarea.disabled==true)){
-          postarea.isActive=true
           spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta :"
           spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
           console.log("thispost.disabled")
@@ -302,11 +304,12 @@ class postArea {
       }
       divUserBlog.appendChild(postarea.create())
       if(mess.type=="newpost") {
+        postarea.isActive=true
         if(postarea.isActive==true){
           $("#"+postarea.postarea.id).css("border","4px solid blue")
-          }
         }
-        return $(divUserBlog)
+      }
+      return $(divUserBlog)
     }
   }
 
@@ -320,14 +323,16 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       var url;
       $(button_risposta_post).click(function(e){
-        if(isOpen==true) {
-          msgIsTexareaOpen()
-        }
         if (!(mess.type=="newpost")) {
+          if(isOpen==false) {
         mess.type="newresp"
         elementToAppendPostArea = document.getElementById("divuserblog_"+id)
           createPostArea
             ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,"0","newresp"),elementToAppendPostArea)
+          }
+          else {
+            msgIsTexareaOpen()
+          }
       }
     }
     )
@@ -389,6 +394,8 @@ class postArea {
         case "newresp" :
           var objectToAppendChild="divuserblog_"+id
           button_risposta_post.textContent="Rispondi"
+          postarea.isActive=true
+          $("#"+postarea.postarea.id).css("border","4px solid blue")
           break
         }
         var elementToAppendButton=document.getElementById(objectToAppendChild)
@@ -665,14 +672,18 @@ $(document).ready(function(){
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,elementToAppendArea){
+  if(messOrResp.type == "newresp" || messOrResp.type=="newpost") {
+     paPostOrResp.isOpen=isOpen
+   }
   if(isOpen==false) {
       paPostOrResp=new postArea(messOrResp)
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,elementToAppendArea)
       paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
     }
     if(messOrResp.type == "newresp" || messOrResp.type=="newpost") {
-       isOpen=true
-     }
+      paPostOrResp.isOpen=true
+      isOpen=true
+    }
     return 0
 }
 
