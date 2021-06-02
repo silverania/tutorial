@@ -358,7 +358,7 @@ class postArea {
         mess.type="newresp"
         elementToAppendPostArea = document.getElementById("divuserblog_"+id)
           createPostArea
-            ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo,"risposta a "+mess.titled,"0","newresp"),elementToAppendPostArea)
+            ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo," risponde a "+mess.author,"0","newresp"),elementToAppendPostArea)
           }
           else {
             msgIsTexareaOpen()
@@ -388,7 +388,7 @@ class postArea {
             divUserBlog.setAttribute('style','max-width:700px')
           }
           //button_risposta_post.setAttribute("method","get")
-          button_risposta_post.textContent="Inserisci Messaggio"
+          button_risposta_post.textContent="Invia"
           var objectToAppendChild="divuserblog_"+id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(button_risposta_post)
