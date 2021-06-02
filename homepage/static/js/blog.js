@@ -14,6 +14,7 @@ var loginis
 var lastUpdate
 var userLoggedPhoto
 var butcloned
+var isChanged=false
 var bbutton=document.createElement("Button");
 //var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
@@ -198,6 +199,26 @@ class postArea {
     this.postarea=document.createElement("TEXTAREA");
     this.isOpen=false
     this.isActive=false
+    this.isChanged=isChanged
+    this.postarea.onkeyup = function(){
+      var callcount = 0;
+      var action = function(){
+        isChanged=true
+        }
+      var delayAction = function(action, time){
+        var expectcallcount = callcount;
+        var delay = function(){
+          if(callcount == expectcallcount){
+            action();
+          }
+        }
+        setTimeout(delay, time);
+      }
+      return function(eventtrigger){
+        ++callcount;
+        delayAction(action, 200);
+      }
+    }();
     //var mess=""
     switch (this.post.type){
       case "newpost":
@@ -289,8 +310,10 @@ class postArea {
         postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
         $(document).on('mouseup', function(e){
         if ($(e.target).closest("#divuserblog_"+id).length === 0) {
+          if (isChanged==false) {
             let val=$("#divuserblog_"+id).fadeOut()
              isOpen = false
+           }
           }
         //  $('#button_risposta_post').click()
         })
