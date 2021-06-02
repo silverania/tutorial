@@ -289,10 +289,10 @@ class postArea {
         postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
         $(document).on('mouseup', function(e){
         if ($(e.target).closest("#divuserblog_"+id).length === 0) {
-            let val=$(divUserBlog).fadeOut()
+            let val=$("#divuserblog_"+id).fadeOut()
              isOpen = false
           }
-          $('#button_risposta_post').click()
+        //  $('#button_risposta_post').click()
         })
         default:
         console.log("def")
@@ -354,12 +354,19 @@ class postArea {
         }
       )
       switch (mess.type){
-        case "newpost"  :
-          divUserBlog.setAttribute('style','width:700px')
-          divUserBlog.setAttribute('style','max-width:700px')
+        case "newpost" , "newresp" :
+          if(mess.type=="newresp") {
+            //button_risposta_post.textContent="Rispondi"
+            postarea.isActive=true
+            $("#"+postarea.postarea.id).css("border","4px solid blue")
+          }
+          else {
+            divUserBlog.setAttribute('style','width:700px')
+            divUserBlog.setAttribute('style','max-width:700px')
+          }
           //button_risposta_post.setAttribute("method","get")
-          button_risposta_post.textContent="Inserisci Nuovo Post"
-          var objectToAppendChild="new_divuserblog_"+id
+          button_risposta_post.textContent="Inserisci Messaggio"
+          var objectToAppendChild="divuserblog_"+id
           var elementToAppendButton=document.getElementById(objectToAppendChild)
           elementToAppendButton.appendChild(button_risposta_post)
           $(button_risposta_post).click(function(){
@@ -397,12 +404,6 @@ class postArea {
         case "resp" :
           var objectToAppendChild="divuserblog_"+id
           button_risposta_post.textContent="Rispondi"
-          break
-        case "newresp" :
-          var objectToAppendChild="divuserblog_"+id
-          button_risposta_post.textContent="Rispondi"
-          postarea.isActive=true
-          $("#"+postarea.postarea.id).css("border","4px solid blue")
           break
         }
         var elementToAppendButton=document.getElementById(objectToAppendChild)
@@ -679,9 +680,6 @@ $(document).ready(function(){
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,elementToAppendArea){
-  if(messOrResp.type == "newresp" || messOrResp.type=="newpost") {
-     paPostOrResp.isOpen=isOpen
-   }
   if(isOpen==false) {
       paPostOrResp=new postArea(messOrResp)
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,elementToAppendArea)
