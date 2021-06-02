@@ -287,6 +287,13 @@ class postArea {
         spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
         elementToAppendPostArea=elementToAppendPostArea
         postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
+        $(document).on('mouseup', function(e){
+        if ($(e.target).closest("#divuserblog_"+id).length === 0) {
+            let val=$(divUserBlog).fadeOut()
+             isOpen = false
+          }
+          $('#button_risposta_post').click()
+        })
         default:
         console.log("def")
       }
