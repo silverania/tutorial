@@ -349,6 +349,7 @@ class postArea {
       mess.type == "resp" ? id = mess.post.pk + "_" + (mess.post.risposte.length+1) : id = mess.pk
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
+      var objectToAppendChild=divUserBlog.id
       button_risposta_post.setAttribute('style','display:block')
       form_risposta_post.appendChild(button_risposta_post)
       var url;
@@ -377,21 +378,9 @@ class postArea {
         }
       )
       switch (mess.type){
-        case "newpost" , "newresp" :
-          if(mess.type=="newresp") {
-            //button_risposta_post.textContent="Rispondi"
+        case "newpost" : case "newresp" :
             postarea.isActive=true
-            $("#"+postarea.postarea.id).css("border","4px solid blue")
-          }
-          else {
-            divUserBlog.setAttribute('style','width:700px')
-            divUserBlog.setAttribute('style','max-width:700px')
-          }
-          //button_risposta_post.setAttribute("method","get")
           button_risposta_post.textContent="Invia"
-          var objectToAppendChild="divuserblog_"+id
-          var elementToAppendButton=document.getElementById(objectToAppendChild)
-          elementToAppendButton.appendChild(button_risposta_post)
           $(button_risposta_post).click(function(){
             //autorizzo la creazione del nuovo post solo se è valido: contiene testo ecc..
             let ids='#'+postarea.postarea.id
