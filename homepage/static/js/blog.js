@@ -143,6 +143,7 @@ class Resp{
     this.photo=photo
     this.titled=titolo
     this.pk=pk
+    this.thisTutorialTitle=tutorial
   }
 }
 
@@ -169,30 +170,6 @@ class Post{
   getTitle(){
     return this.titled
   }
-
-  sendToServer(post=Object(),url){
-    if(post.type=="newpost" || post.type=="newresp"){
-      let content=tutorial;
-      $.ajax({
-        url: url,
-        data: {
-          'type':post.type,'tutorial':post.thisTutorialTitle,'username':loginis,'title': post.titled,'body':post.body,
-        },
-        dataType: 'json',
-        success: function (data) {
-          var userPhoto=data.photo
-          if( post.type=="newpost" || post.type=="newresp") {
-            isOpen=false
-            makeHeadBlog(data.type,data.photo,this,data.aggiornato)
-           }
-        }
-      }
-    );
-    console.log("ajax call finished");
-  }
-  return 0
-}
-
 }
 
 
@@ -364,7 +341,7 @@ class postArea {
           createPostArea
             ( r=new Resp(loginis,"", new Date().toLocaleString(),mess,BASE_PHOTO_DIR+userLogged[0].fields.photo," risponde a "+mess.author,"0","newresp"),elementToAppendPostArea)
           }
-          else {
+          else if ( button_risposta_post.textContent=="Rispondi" && isOpen==true ){
             msgIsTexareaOpen()
           }
       }
@@ -389,7 +366,9 @@ class postArea {
             let ids='#'+postarea.postarea.id
             let txts=$(ids).val()
              try{
-              if (txts==="") throw  "l area di testo e vuot ";
+              if (txts==""){
+               throw  "l area di testo e vuot ";
+             }
            }
            catch (err){
              alert(err)
@@ -400,7 +379,7 @@ class postArea {
             //form_risposta_post.setAttribute("action",url)
             url=BASE_URL+URL_NEW_POST
             mess.body=txts
-            if (mess.sendToServer(mess,url)==0){
+            if (sendToServer(mess,url)==0){
               isOpen=false
             }
             alert("dati inviati")
@@ -718,6 +697,28 @@ function msgIsTexareaOpen(){
   alert("Hai un post/risposta aperto ! se vuoi chiuderlo aggiorna la pagina con F5 , altrimenti completa prima il post/risposta in sospeso !")
   }
 
+  function sendToServer(post=Object(),url){
+    if(post.type=="newpost" || post.type=="newresp"){
+      let content=tutorial;
+      $.ajax({
+        url: url,
+        data: {
+          'type':post.type,'tutorial':post.thisTutorialTitle,'username':loginis,'title': post.titled,'body':post.body,
+        },
+        dataType: 'json',
+        success: function (data) {
+          var userPhoto=data.photo
+          if( post.type=="newpost" || post.type=="newresp") {
+            isOpen=false
+            makeHeadBlog(data.type,data.photo,this,data.aggiornato)
+           }
+        }
+      }
+    );
+    console.log("ajax call finished");
+  }
+  return 0
+  }
 /*function launchException(message) {
   this.message = message;
   this.name = 'launchException';
