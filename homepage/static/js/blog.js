@@ -38,9 +38,9 @@ var aBlogEsci=document.createElement("A");
 var spanBlogEsci=document.createElement("SPAN");
 //var bH5=document.createElement("span")
 //var spanUserName=document.createElement("SPAN");
-var post,post2=new Object();
-var isOpen=false;
-var bSection=document.createElement("SECTION");
+var post,post2=new Object()
+var isOpen
+var bSection=document.createElement("SECTION")
 //var bSpan=document.createElement("SPAN");
 //var bSpanChild=document.createElement("SPAN");
 var bIcon=document.createElement("IMG");
@@ -181,7 +181,10 @@ class Post{
         dataType: 'json',
         success: function (data) {
           var userPhoto=data.photo
-          post.type=="newpost" ? makeHeadBlog(data.type,data.photo,this,data.aggiornato) : isOpen=false
+          if( post.type=="newpost" || post.type=="newresp") {
+            isOpen=false
+            makeHeadBlog(data.type,data.photo,this,data.aggiornato)
+           }
         }
       }
     );
@@ -197,7 +200,6 @@ class postArea {
   constructor(post){
     this.post=post
     this.postarea=document.createElement("TEXTAREA");
-    this.isOpen=false
     this.isActive=false
     this.isChanged=isChanged
     this.postarea.onkeyup = function(){
@@ -253,7 +255,7 @@ class postArea {
   }
 
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
-    if(isOpen==false) {
+    if(!(isOpen==true)) {
       var id
       mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
       if (!(id=="undefined")) mess.pk = id
@@ -308,11 +310,11 @@ class postArea {
         spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
         elementToAppendPostArea=elementToAppendPostArea
         postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
-        $(document).on('mouseup', function(e){
+        $(document).on('click', function(e){
         if ($(e.target).closest("#divuserblog_"+id).length === 0) {
           if (isChanged==false) {
             let val=$("#divuserblog_"+id).fadeOut()
-             isOpen = false
+            isOpen=false
            }
           }
         //  $('#button_risposta_post').click()
@@ -354,6 +356,7 @@ class postArea {
       form_risposta_post.appendChild(button_risposta_post)
       var url;
       $(button_risposta_post).click(function(e){
+        e.stopPropagation()
         if (!(mess.type=="newpost")) {
           if(isOpen==false) {
         mess.type="newresp"
@@ -692,14 +695,21 @@ $(document).ready(function(){
 
 // Metodo chiamato da post , resp e nuovo Post//
 function createPostArea(messOrResp,elementToAppendArea){
-  if(isOpen==false) {
+  if(!(isOpen==true)) {
       paPostOrResp=new postArea(messOrResp)
       paPostOrResp.makeHeadBlog(messOrResp,paPostOrResp,elementToAppendArea)
       paPostOrResp.createButtonRispostaPost(messOrResp,paPostOrResp)
     }
+    else{
+      msgIsTexareaOpen()
+    }
     if(messOrResp.type == "newresp" || messOrResp.type=="newpost") {
-      paPostOrResp.isOpen=true
       isOpen=true
+    }
+    else {
+        if(messOrResp.type == "post" || messOrResp.type == "resp") {
+          isOpen=false
+        }
     }
     return 0
 }
