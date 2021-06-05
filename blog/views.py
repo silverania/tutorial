@@ -114,25 +114,31 @@ def getPost(request):
 
 def newPost(request):
     # global formatted_datetime
+    postType = ""
     print("entrypoint to newPost")
     # thistutorial=Tutorial()
-    post = Comment()
+    if "type" in request.GET and request.GET["type"]:
+        postType = request.GET.get("type")
+    if "newpost" in postType:
+        post = Comment()
+    else:
+        post = Resp()
     myuser = Profile()
     myuser.firstname = getLoginName(request)
-    post.site = tu
+    if "newpost" in postType:
+        post.site = tu
+        if "title" in request.GET and request.GET["title"]:
+            title = request.GET.get("title")
+            post.title = title
+            post.slug = post.title.replace(" ", "_")
     post.publish = datetime.now()
     post.created = post.publish
-    if "type" in request.GET and request.GET["type"]:
-        post.postType = request.GET.get("type")
     if "username" in request.GET and request.GET["username"]:
         author = request.GET.get("username")
         myuser = Profile.objects.get(first_name=author)
         print("user MYUSER=" + str(myuser))
         post.author = myuser
-    if "title" in request.GET and request.GET["title"]:
-        title = request.GET.get("title")
-        post.title = title
-        post.slug = post.title.replace(" ", "_")
+
     if "body" in request.GET and request.GET["body"]:
         body = request.GET.get("body")
         post.body = body

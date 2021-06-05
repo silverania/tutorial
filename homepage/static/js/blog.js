@@ -325,7 +325,7 @@ class postArea {
     createButtonRispostaPost(mess,postarea){
       var r
       var id
-      mess.type == "resp" ? id = mess.post.pk + "_" + (mess.post.risposte.length+1) : id = mess.pk
+      mess.type == "newresp" ? id = mess.post.pk + "_" + (mess.post.risposte.length+1) : id = mess.pk
       var button_risposta_post=document.createElement("BUTTON")
       var form_risposta_post=document.createElement("FORM")
       var objectToAppendChild=divUserBlog.id
@@ -367,7 +367,7 @@ class postArea {
             let txts=$(ids).val()
              try{
               if (txts==""){
-               throw  "l area di testo e vuot ";
+               throw  "Post Vuoto ! ";
              }
            }
            catch (err){
@@ -698,13 +698,21 @@ function msgIsTexareaOpen(){
   }
 
   function sendToServer(post=Object(),url){
+    if (post.type=="newresp"){
+    data={
+      'commento':post.post.pk,'type':post.type,'tutorial':post.thisTutorialTitle,'username':loginis,'title': post.titled,'body':post.body,
+        }
+      }
+    else if (post.type=="newpost"){
+      data={
+        'type':post.type,'tutorial':post.thisTutorialTitle,'username':loginis,'title': post.titled,'body':post.body,
+        }
+      }
     if(post.type=="newpost" || post.type=="newresp"){
       let content=tutorial;
       $.ajax({
         url: url,
-        data: {
-          'type':post.type,'tutorial':post.thisTutorialTitle,'username':loginis,'title': post.titled,'body':post.body,
-        },
+        data: data,
         dataType: 'json',
         success: function (data) {
           var userPhoto=data.photo
