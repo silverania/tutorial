@@ -52,6 +52,7 @@ var bbutton2=new Object();
 var exist=false
 var newPostId=0
 var elementToAppendPostArea
+var json_resps
 
 function createSectionDivSpan(){
   bForm.setAttribute("action","post/getpost");
@@ -290,7 +291,7 @@ class postArea {
         $(document).on('click', function(e){
         if ($(e.target).closest("#divuserblog_"+id).length === 0) {
           if (isChanged==false) {
-            let val=$("#divuserblog_"+id).fadeOut()
+            $("#divuserblog_"+id).css('display',"none")
             isOpen=false
            }
           }
