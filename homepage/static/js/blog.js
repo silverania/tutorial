@@ -51,7 +51,7 @@ var tutorial
 var bbutton2=new Object();
 var exist=false
 var newPostId=0
-var elementToAppendPostArea;
+var elementToAppendPostArea
 
 function createSectionDivSpan(){
   bForm.setAttribute("action","post/getpost");
@@ -197,9 +197,9 @@ class postArea {
         ++callcount;
         delayAction(action, 200);
       }
-    }();
+    }
     //var mess=""
-    switch (this.post.type){
+    switch (post.type){
       case "newpost":
       this.postarea.removeAttribute("disabled","")
       break
@@ -554,7 +554,7 @@ function getDateFromDjangoDate(data=""){
     day=data.slice("8","10")
     month=data.slice("5","7")
     year=data.slice("0","4")
-    hour=data.slice("11","15")
+    hour=data.slice("11","16")
   }
   data=day+"-"+month+"-"+year+" alle "+hour
   newDate=data
@@ -580,17 +580,18 @@ $(document).on("load" ,function(){
   bdiv.appendChild(cln)[2];
 })
 
+
 $(document).ready(function(){
   var obj
-  let indexX=0
+  var indexX=0
   var initial_y
   var y=0,s
-  let q=0
   mess=new Array()
-  let resps=new Array()
-  let post = new Array()
+  var resps=new Array()
+  var post = new Array()
   let profiles=new Array()
   let z=0
+  var q=0
   let comments_json;
   var itm = document.getElementsByClassName("form_comment")[0];
   var cln = itm.cloneNode(true);
@@ -646,7 +647,7 @@ $(document).ready(function(){
         // creo la textarea per il post e con l head .
         z=0
         // NUOVO PUNTO DINSERIMENTO CICLO FOR PER RISPOSTE
-        for (y=resps_json.length-1,q=0;y>0,q<=resps_json.length-1;y=y-1,q=q+1){
+        for (y=resps_json.length-1; y>=0; y=y-1){
           if(comments_json[i].pk==resps_json[y].fields.commento){
             for (var z2=0;z2<=profiles_json.length-1;z2=z2+1){
               if(profiles_json[z2].pk==resps_json[y].fields.author){
@@ -657,8 +658,9 @@ $(document).ready(function(){
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
                 resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),mess[indexX],photoResp," risponde a "+mess[indexX].titled,resps_json[y].pk,"resp"))
-                mess[indexX].risposte.push(resps[q].body)
+                mess[indexX].risposte.push(resps[q])
                 createPostArea(resps[q])
+                q=q+1
               }
             }
           }

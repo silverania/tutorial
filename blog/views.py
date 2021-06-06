@@ -79,7 +79,7 @@ def getPost(request):
         for comment in all_comments_for_page:
             print("body Comment" + str(comment))
             print()
-            t = list(comment.risposte.all())
+            t = list(comment.risposte.all().order_by('publish'))
             print("Resp=" + str(t))
             try:
                 t2 = t2 + t
@@ -142,6 +142,10 @@ def newPost(request):
     if "body" in request.GET and request.GET["body"]:
         body = request.GET.get("body")
         post.body = body
+    if "commento" in request.GET and request.GET["commento"]:
+        commento = request.GET.get("commento")
+        comment = Comment.objects.get(pk=commento)
+        post.commento = comment
     tu.save()
     post.save()
     return HttpResponse("OK !")

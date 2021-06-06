@@ -32,6 +32,8 @@ a{
 }
 
 [id^=bh5_span]{
+  width:100%!important;
+  min-width:100%!important;
   font-size:.7rem;
 }
 
