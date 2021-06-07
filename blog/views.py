@@ -79,7 +79,9 @@ def getPost(request):
         for comment in all_comments_for_page:
             print("body Comment" + str(comment))
             print()
-            t = list(comment.risposte.all().order_by('publish'))
+            t_reverse_order = comment.risposte.all().order_by('publish')
+            # t_order = comment.risposte.all().order_by('-publish')
+            t = list(t_reverse_order)
             print("Resp=" + str(t))
             try:
                 t2 = t2 + t
