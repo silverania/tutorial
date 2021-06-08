@@ -241,6 +241,7 @@ class postArea {
       var spanInDivPostTitle=document.createElement("SPAN")
       divUserBlog = document.createElement( "DIV" )
       var spanUserName=document.createElement("SPAN")
+      var spanInUserName=document.createElement("SPAN")
       var bH5=document.createElement("span")
       var divContainerHead=document.createElement("DIV")
       var tagUserImg=document.createElement("IMG")
@@ -253,17 +254,20 @@ class postArea {
       divContainerHead.appendChild(tagUserImg)
       //bH5.textContent="il "+mess.publish
       spanUserName.setAttribute("style","color:grey;display:inline;")
+      spanInUserName.setAttribute("style","color:black;display:inline;")
       spanInDivPostTitle.setAttribute("id","post_title_"+id)
       divPostTitle.setAttribute("id","d_post_title_"+id)
       divPostTitle.appendChild(spanInDivPostTitle)
       bH5.setAttribute("style","margin-left:3%;color:blue;")
       bH5.setAttribute("id","bh5_span_"+id)
+      bH5.appendChild(spanInUserName)
       bH5.appendChild(spanUserName)
       divContainerHead.appendChild(bH5)
       divUserBlog.appendChild(divPostTitle)
       this.appendPostArea(mess,divUserBlog)
       tagUserImg.setAttribute("id","img_user_"+id)
       spanUserName.setAttribute("id","span_user_"+id)
+      spanInUserName.setAttribute("id","span_inuser_"+id)
       postarea.postarea.setAttribute("id",mess.type+loginis+"_"+mess.pk)
       switch (mess.type){
         case "newpost":
@@ -273,7 +277,8 @@ class postArea {
         case "resp":
         //divUserBlog.setAttribute("class","resp_"+id)
         divUserBlog.setAttribute("id","divuserblog_"+id)
-        spanUserName.textContent=mess.author[0].toUpperCase() +mess.author.slice("1")+" |" +mess.publish +" | "+mess.titled
+        spanInUserName.textContent=mess.author[0].toUpperCase() +mess.author.slice("1")
+        spanUserName.textContent=" | " +mess.publish +" | "+mess.titled
         divUserBlog.setAttribute("style","margin-left:20%")
         console.log("is resp ")
         break
@@ -285,7 +290,8 @@ class postArea {
         postarea.isActive=true
         divUserBlog.setAttribute("id","divuserblog_"+id)
         divUserBlog.setAttribute("style","margin-left:20%")
-        spanUserName.textContent=mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
+        spanInUserName.textContent=mess.author[0].toUpperCase() +mess.author.slice("1")
+        spanUserName.textContent=" | " +mess.publish +" | "+mess.titled
         elementToAppendPostArea=elementToAppendPostArea
         postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
         $(document).on('click', function(e){
@@ -303,7 +309,8 @@ class postArea {
       this.mess=mess
       if(mess.type=="post" || mess.type=="newpost" ) {
         if(!(postarea.disabled==true)){
-          spanUserName.textContent=mess.publish +" da "+mess.author[0].toUpperCase() +mess.author.slice("1")+""
+          spanUserName.textContent=mess.publish
+          spanInUserName.textContent=mess.author[0].toUpperCase() +mess.author.slice("1")+" , "
           spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
           console.log("thispost.disabled")
           $('#post_response').css("border", "1px solid grey")
@@ -611,7 +618,7 @@ function getDateFromDjangoDate(data=""){
   }
   function getMsg(){
     if (isNow(data)){
-      data="Postato Oggi alle"+" "+hour
+      data="Oggi alle"+" "+hour
     }
     else{
       day=day.replace("0","")
