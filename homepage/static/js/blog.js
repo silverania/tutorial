@@ -273,7 +273,7 @@ class postArea {
         case "resp":
         //divUserBlog.setAttribute("class","resp_"+id)
         divUserBlog.setAttribute("id","divuserblog_"+id)
-        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
+        spanUserName.textContent=mess.author[0].toUpperCase() +mess.author.slice("1")+" |" +mess.publish +" | "+mess.titled
         divUserBlog.setAttribute("style","margin-left:20%")
         console.log("is resp ")
         break
@@ -285,7 +285,7 @@ class postArea {
         postarea.isActive=true
         divUserBlog.setAttribute("id","divuserblog_"+id)
         divUserBlog.setAttribute("style","margin-left:20%")
-        spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
+        spanUserName.textContent=mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+mess.titled
         elementToAppendPostArea=elementToAppendPostArea
         postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
         $(document).on('click', function(e){
@@ -303,7 +303,7 @@ class postArea {
       this.mess=mess
       if(mess.type=="post" || mess.type=="newpost" ) {
         if(!(postarea.disabled==true)){
-          spanUserName.textContent="il "+mess.publish +" | "+mess.author[0].toUpperCase() +mess.author.slice("1")+" Posta :"
+          spanUserName.textContent=mess.publish +" da "+mess.author[0].toUpperCase() +mess.author.slice("1")+""
           spanInDivPostTitle.textContent=mess.titled[0].toUpperCase()+mess.titled.slice("1")
           console.log("thispost.disabled")
           $('#post_response').css("border", "1px solid grey")
@@ -548,22 +548,77 @@ function makeModalWindow(mess){
 }
 // se la variabile data non viene passata come parametro si presuppone che il client abbia creato un nuovo post , quindi //la data è now
 function getDateFromDjangoDate(data=""){
+  var dateNow = new Date()
+  //var dataDjango=new Date(data)
+  var dataDjango=new Date(data)
+  var data1
+  var data2
+  isNow = function(day) {
+    var returnedDate=day
+    data1 =dataDjango.getDate()
+    data2 = dateNow.getDate()
+    return data1==data2
+  }
   var newDate
   var day,month,year,hour
   if (  data==""){
     var today = new Date();
     day = String(today.getDate()).padStart(2, '0');
+    day=isNow(today)
     month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    month = getMonth(month)
     year = today.getFullYear();
     hour=today.getHours().toString()+":"+today.getMinutes().toString()
+    data=getMsg()
   }
   else {
     day=data.slice("8","10")
-    month=data.slice("5","7")
+      month=data.slice("5","7")
+      month=getMonth(month)
     year=data.slice("0","4")
     hour=data.slice("11","16")
+    data=getMsg()
   }
-  data=day+"-"+month+"-"+year+" alle "+hour
+  function getMonth(month){
+    var res
+    switch (month) {
+    case "01" : res="gennaio"
+    break
+    case "02" : res="febbraio"
+    break
+    case "03" : res="marzo"
+    break
+    case "04" : res="aprile"
+    break
+    case "05" : res="maggio"
+    break
+    case "06" : res="giugno"
+    break
+    case "07" : res="luglio"
+    break
+    case "08" : res="agosto"
+    break
+    case "09" : res="settembre"
+    break
+    case "10" : res="ottobre"
+    break
+    case "11" : res="novembre"
+    break
+    case "12" : res="dicembre"
+    break
+    }
+    return res
+  }
+  function getMsg(){
+    if (isNow(data)){
+      data="Postato Oggi alle"+" "+hour
+    }
+    else{
+      day=day.replace("0","")
+      data=day+" "+month+" "+year+" alle "+hour
+    }
+    return data
+  }
   newDate=data
   return newDate
 }
@@ -664,7 +719,7 @@ $(document).ready(function(){
                 else{
                   photoResp=BASE_PHOTO_DIR+profiles_json[z2].fields.photo
                 }
-                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),mess[indexX],photoResp," risponde a "+mess[indexX].titled,resps_json[y].pk,"resp"))
+                resps.push(new Resp(profiles_json[z2].fields.first_name,resps_json[y].fields.body,getDateFromDjangoDate(resps_json[y].fields.publish),mess[indexX],photoResp," risponde a "+mess[indexX].author,resps_json[y].pk,"resp"))
                 mess[indexX].risposte.push(resps[q])
                 createPostArea(resps[q])
                 q=q+1
