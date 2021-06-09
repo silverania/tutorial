@@ -16,6 +16,7 @@ var userLoggedPhoto
 var butcloned
 var isChanged=false
 var bbutton=document.createElement("Button");
+var resps
 //var bUserImg=document.createElement("IMG");
 var divFormChild=document.createElement("DIV");
 var bdiv=document.createElement("DIV");
@@ -135,15 +136,22 @@ function createSectionDivSpan(){
 
 class Resp{
   constructor(author,body="",publish,post,photo,titolo,pk,resptype){
-    this.sent=false
-    this.author=author
-    this.post=post
-    this.body=body
-    this.type=resptype
-    this.publish=publish
-    this.photo=photo
+    this.sent = false
+    this.author = author
+    this.post = post
+    this.body = body
+    this.type = resptype
+    this.publish = publish
+    this.photo = photo
     this.titled=titolo
-    this.pk=pk
+
+    if (resptype=="newresp") {
+      this.pk = parseInt(pk,"10")
+      this.pk=pk+1
+    }
+    else {
+      this.pk=pk
+    }
     this.thisTutorialTitle=tutorial
   }
 }
@@ -235,8 +243,8 @@ class postArea {
   makeHeadBlog(mess,postarea,elementToAppendPostArea){
     if(!(isOpen==true)) {
       var id
-      mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + ((mess.post.risposte.length+1).toString()): id = mess.pk
-      if (!(id=="undefined")) mess.pk = id
+      mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + mess.pk : id = mess.pk
+      //if (!(id=="undefined")) mess.pk = id
       var divPostTitle=document.createElement("DIV");
       var spanInDivPostTitle=document.createElement("SPAN")
       divUserBlog = document.createElement( "DIV" )
@@ -268,7 +276,7 @@ class postArea {
       tagUserImg.setAttribute("id","img_user_"+id)
       spanUserName.setAttribute("id","span_user_"+id)
       spanInUserName.setAttribute("id","span_inuser_"+id)
-      postarea.postarea.setAttribute("id",mess.type+loginis+"_"+mess.pk)
+      postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
       switch (mess.type){
         case "newpost":
         divUserBlog.setAttribute("id","new_divuserblog_"+id)
@@ -287,17 +295,19 @@ class postArea {
         divUserBlog.setAttribute("class","post_"+id)
         break
         case "newresp" :
+        var id_newresp = id.toString()
+        id_newresp="_new_"+id_newresp
         postarea.isActive=true
-        divUserBlog.setAttribute("id","divuserblog_"+id)
+        divUserBlog.setAttribute("id","divuserblog_"+id_newresp)
         divUserBlog.setAttribute("style","margin-left:20%")
         spanInUserName.textContent=mess.author[0].toUpperCase() +mess.author.slice("1")
         spanUserName.textContent=" | " +mess.publish +" | "+mess.titled
         elementToAppendPostArea=elementToAppendPostArea
-        postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
+        postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id_newresp)
         $(document).on('click', function(e){
-          if ($(e.target).closest("#divuserblog_"+id).length === 0) {
+          if ($(e.target).closest("#divuserblog_"+id_newresp).length === 0) {
             if (isChanged==false) {
-              $("#divuserblog_"+id).css('display',"none")
+              $("#divuserblog_"+id_newresp).remove()
               isOpen=false
             }
           }
@@ -333,7 +343,7 @@ class postArea {
   createButtonRispostaPost(mess,postarea){
     var r
     var id
-    mess.type == "newresp" ? id = mess.post.pk + "_" + (mess.post.risposte.length+1) : id = mess.pk
+    mess.type == "resp" || mess.type == "newresp" ? id = mess.post.pk + "_" + mess.pk : id = mess.pk
     var button_risposta_post=document.createElement("BUTTON")
     var form_risposta_post=document.createElement("FORM")
     var objectToAppendChild=divUserBlog.id
@@ -342,9 +352,8 @@ class postArea {
     var url;
     $(button_risposta_post).click(function(e){
       e.stopPropagation()
-      if (!(mess.type=="newpost")) {
+      if (mess.type=="resp" || mess.type=="post") {
         if(isOpen==false) {
-          mess.type="newresp"
           elementToAppendPostArea = document.getElementById("divuserblog_"+id)
           if(mess instanceof Resp) {
             var post=mess.post
@@ -352,8 +361,11 @@ class postArea {
           else if (mess instanceof Post) {
             var post=mess
           }
+          var ids = (resps.length)
+          ids = ids + 1
           createPostArea
-          ( r=new Resp(loginis,"", new Date().toLocaleString(),post,BASE_PHOTO_DIR+userLogged[0].fields.photo," risponde a "+mess.author,"0","newresp"),elementToAppendPostArea)
+          ( r=new Resp(loginis,"", new Date().toLocaleString(),post,BASE_PHOTO_DIR+userLogged[0].fields.photo," risponde a "+mess.author,ids,"newresp"),elementToAppendPostArea)
+          resps.push(r)
         }
         else if ( button_risposta_post.textContent=="Rispondi" && isOpen==true ){
           msgIsTexareaOpen()
@@ -557,11 +569,10 @@ function makeModalWindow(mess){
 function getDateFromDjangoDate(data=""){
   var dateNow = new Date()
   //var dataDjango=new Date(data)
-  var dataDjango=new Date(data)
+  var dataDjango
   var data1
   var data2
-  isNow = function(day) {
-    var returnedDate=day
+  isNow = function() {
     data1 =dataDjango.getDate()
     data2 = dateNow.getDate()
     return data1==data2
@@ -569,16 +580,19 @@ function getDateFromDjangoDate(data=""){
   var newDate
   var day,month,year,hour
   if (  data==""){
+    var dataDjango=new Date()
     var today = new Date();
     day = String(today.getDate()).padStart(2, '0');
-    day=isNow(today)
+    day=isNow()
     month = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     month = getMonth(month)
     year = today.getFullYear();
     hour=today.getHours().toString()+":"+today.getMinutes().toString()
     data=getMsg()
+    var dataDjango=new Date(data)
   }
   else {
+      var dataDjango=new Date(data)
     day=data.slice("8","10")
       month=data.slice("5","7")
       month=getMonth(month)
@@ -617,7 +631,7 @@ function getDateFromDjangoDate(data=""){
     return res
   }
   function getMsg(){
-    if (isNow(data)){
+    if (isNow()){
       data="Oggi alle"+" "+hour
     }
     else{
@@ -656,7 +670,7 @@ $(document).ready(function(){
   var initial_y
   var y=0,s
   mess=new Array()
-  var resps=new Array()
+  resps=new Array()
   var post = new Array()
   let profiles=new Array()
   let z=0
