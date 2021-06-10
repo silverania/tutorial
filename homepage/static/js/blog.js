@@ -279,8 +279,17 @@ class postArea {
       postarea.postarea.setAttribute("id",mess.type+loginis+"_"+id)
       switch (mess.type){
         case "newpost":
-        divUserBlog.setAttribute("id","new_divuserblog_"+id)
+        divUserBlog.setAttribute("id","divuserblog_"+id)
         divUserBlog.setAttribute("class","new_post_"+id)
+        $(document).on('click', function(e){
+          if ($(e.target).closest("#divuserblog_"+id).length === 0 && $(e.target).closest("#but_confirm_title").length === 0 ) {
+            if (isChanged==false) {
+              $("#divuserblog_"+id).remove()
+              isOpen=false
+            }
+          }
+          //  $('#button_risposta_post').click()
+        })
         break
         case "resp":
         //divUserBlog.setAttribute("class","resp_"+id)
