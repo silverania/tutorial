@@ -423,6 +423,9 @@ switch (mess.type){
     button_risposta_post.textContent="Post Inserito"
     button_risposta_post.setAttribute("disabled","")
     postarea.postarea.setAttribute("disabled","")
+    $(postarea.postarea).css("color" ,"rgba(0, 0, 0, 0.5)");
+    $(postarea.postarea).css("border" ,"2px solid grey");
+    $(button_risposta_post).css("color" ,"black");
   }
 );
 break

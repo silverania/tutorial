@@ -32,6 +32,8 @@ a{
 }
 
 [id^=bh5_span]{
+  width:100%!important;
+  min-width:100%!important;
   font-size:.7rem;
 }
 
@@ -41,6 +43,7 @@ a{
   border:2px solid orange;
   margin:15px auto;
   padding:2%;
+  box-shadow:10px 10px 10px #719ECE
 
 }
 
@@ -56,13 +59,13 @@ textarea {
   width:0;
   outline: none !important;
   border:1px solid red;
-  box-shadow: 0 0 10px #719ECE;
+  box-shadow: 10px 10px 10px #719ECE;
 }
 
-button,img{
+img{
   outline: none !important;
   border:2px solid orange;
-  box-shadow: 0 0 10px #719ECE;
+  box-shadow: 3px 3px 3px #719ECE;
 }
 
 button:disabled {
@@ -131,7 +134,7 @@ ul#ul_blog li{
 }
 
 #button_post,#clone_button{
-  margin:60px auto;
+  margin:100px auto;
 }
 
 [id^="divuserblog_"]{
@@ -231,6 +234,7 @@ ul#ul_blog li{
   background-color: transparent;
   color:purple;
   border-color: cyan!important;
+  box-shadow: 10px 10px 10px #719ECE;
 }
 .mybut:hover{
   border:3px solid orange;
