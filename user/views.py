@@ -34,12 +34,8 @@ def user_login(request):
                         return HttpResponse(html)
                     else:
                         return HttpResponse('Disabled account')
-                else:
-                        data = json.dumps({'password_error' : '<span class=\"tag tag-danger\">Password Errata!</span>'})
-                try:
-                    return JsonResponse(data, safe=False)
-                except UnboundLocalError:
-                    print("cahe sfcaccim")
+                ({'password_error' : '<span class=\"tag tag-danger\">Password Errata!</span>'})
+
     else:
         if request.user.is_authenticated:
             return HttpResponse( "Utente gia autenticato !!")
