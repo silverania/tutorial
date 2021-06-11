@@ -45,7 +45,7 @@
 					<div class="input-group">
 						<span class="input-group-addon"><span class="fas fa-user"></span></span>
             <label for="{{ form.username.id_for_label }}"></label>
-            <input type="input" class="form-control" name="username" id="inputEmail" placeholder="Username" required >
+            <input type="input" class="form-control" name="username" id="inputUsername" placeholder="Username" required >
             {{ form.username.errors }}
 					</div>
                     <hr />
@@ -56,7 +56,7 @@
             {{ form.password.errors }}
 
 					</div>
-                    <span class="tag tag-danger">Password Errata!</span> | <span class="tag tag-success">Login success!</span> | <span class="tag tag-warning">Some of password must not be empty!</span>
+                    data.span | <span class="tag tag-success">Login success!</span> | <span class="tag tag-warning">Some of password must not be empty!</span>
                     <hr />
 					<button class="btn btn-lg btn-outline-primary btn-block" type="submit"><i class="fa fa-sign-in"></i> Login</button>
 				</form>

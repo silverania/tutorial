@@ -1,14 +1,9 @@
-
 from django.http import HttpResponse
 from django.views import View
 from django.shortcuts import render, get_object_or_404
 from django.urls import path
-
 import os
-
-
 from django.contrib.auth import login, authenticate
-
 from .forms import UserEditForm, ProfileEditForm
 from .models import Profile
 from django.contrib.auth.decorators import login_required
@@ -16,12 +11,13 @@ from .forms import LoginForm, UserRegistrationForm
 from django.template import Template,Context
 from django.template.loader import get_template
 #from django.contrib.auth import get_user_model
-
+from django.core.serializers.json import DjangoJSONEncoder
+from django.http import HttpResponse, JsonResponse
+import json
 
 @login_required
 def dashboard(request):
-    return render(request,'user/dashboard.html',{'section': 'dashboard'})
-
+    return render( request , ' user/dashboard.html' , { 'section' : 'dashboard' } )
 
 
 def user_login(request):
@@ -31,9 +27,7 @@ def user_login(request):
                 t= get_template('login_success.html')
                 html=t.render()
                 cd = form.cleaned_data
-                user = authenticate(request,
-                username=cd['username'],
-                password=cd['password'])
+                user = authenticate(request, username=cd['username'], password=cd['password'])
                 if user is not None:
                     if user.is_active:
                         login(request, user)
@@ -41,12 +35,16 @@ def user_login(request):
                     else:
                         return HttpResponse('Disabled account')
                 else:
-                        return HttpResponse('I DATI NON SONO ESATTI , SE NON RIESCI A FARE IL LOGIN FATTI REINVIARE LA PASSWORD .')
+                        data = json.dumps({'password_error' : '<span class=\"tag tag-danger\">Password Errata!</span>'})
+                try:
+                    return JsonResponse(data, safe=False)
+                except UnboundLocalError:
+                    print("cahe sfcaccim")
     else:
         if request.user.is_authenticated:
             return HttpResponse( "Utente gia autenticato !!")
         form = LoginForm()
-    return render(request, 'user/login.html', {'form': form})
+        return render(request, 'user/login.html', {'form': form})
 
 class LogoutView():
     def logout(request):
