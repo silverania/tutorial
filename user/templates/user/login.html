@@ -9,7 +9,7 @@
         <h3 class="kpx_authTitle">Login or <a href="#">Sign up</a></h3>
         <div class="row kpx_row-sm-offset-3 kpx_socialButtons">
           <div class="col-xs-2 col-sm-2">
-            <a href="#" class="btn btn-lg btn-block kpx_btn-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
+            <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-lg btn-block kpx_btn-facebook" data-toggle="tooltip" data-placement="top" title="Facebook">
               <i class="fab fa-facebook fa-2x"></i>
               <span class="hidden-xs"></span>
             </a>
@@ -78,10 +78,6 @@
 					<a href="#">Password Dimenticata ?</a>
 				</p>
 			</div>
-
-            <div class="col-lg-12">
-                <p class="text-lg-center text-md-center text-sm-center text-xs-center">Created by <a href="http://www.koalapix.com" target="_blank">koalapix. studio</a>, for crazy developers...</p>
-            </div>
 		</div>
 	</div>
 
