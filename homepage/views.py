@@ -10,6 +10,8 @@ from .models import Category
 from user.models import Profile
 from django.conf import settings
 from blog.models import Comment
+from django.views.decorators.http import condition
+
 #User
 from django.contrib.auth.models import User
 import datetime
@@ -23,42 +25,44 @@ def getLink(title):
     template=tutorial.title.replace(" ","_").lower()+".html"
     return template
 
-#funzione per vedere se la request del client esiste gia, in questo caso non eseguo niente visto
-#che il client possiede tutto ciò che gli serve ....la lista dei post.
+# funzione per vedere se la request del client esiste gia, in questo caso non eseguo niente visto
+
+# che il client possiede tutto ciò che gli serve ....la lista dei post.
+
+
 def latest_entry(request,**kwargs):
     print(str(Comment.objects.latest("publish")))
     return Comment.objects.latest("publish").publish
 
-from django.views.decorators.http import condition
-@condition(last_modified_func=latest_entry)
 
+
+
+@condition ( last_modified_func = latest_entry)
 def tutorial_detail(request, **kwargs):
+    arguments = False
+    user_string = ''
+    author_tutorial = ''
     users=[]
-    arguments=False
-    user_string=''
-    author_tutorial=''
     print("entry in tutorial_detail view Kwargs="+str(kwargs.items()))
     if request.user.is_authenticated:
-        login=True
+        login = True
     else:
-        login=False
+        login = False
     tutorial_all = Tutorial.objects.all()
-    categorie=Category.objects.all()
+    categorie = Category.objects.all()
     #prendo user di cui esiste almeno un tutorial, per creare il leftmenu
     for tutorial in tutorial_all:
-        print("Tutorial author"+str(tutorial.author))
         author_tutorial=str(tutorial.author).replace(" ","")
         for profile in Profile.objects.all():
-            user_string=str(profile.first_name)
+            user_string=str(profile)
             user_string=user_string.replace(" ","")
-            if user_string==author_tutorial:
-                print("USER del Tutorial"+"mario")
-                if not profile in users:
-                    try:
-                        users.append(profile)
-                        print("APPESO PROFILE IN USERS="+str(users))
-                    except UnboundLocalError:
-                        print ("error add profile in user's list")
+            if user_string in author_tutorial:
+                print("USER del Tutorial"+author_tutorial)
+                users.append(profile)
+                print("APPESO PROFILE IN USERS="+str(users))
+                print ("error add profile in user's list")
+            else:
+                continue
         tutorials_user=users
         print("Users CON ALMENO U NN TUTORIAL:"+str(tutorials_user))
     #users=Profile.objects.all()

@@ -406,7 +406,6 @@ switch (mess.type){
       }
     }
     catch (err){
-      alert(err)
       console.log("area di testo vuota . Exit code -1 !")
       return -1
     }
@@ -417,7 +416,6 @@ switch (mess.type){
     if (sendToServer(mess,url)==0){
       isOpen=false
     }
-    alert("dati inviati")
     //button_risposta_post.setAttribute('action','url')
     $(postarea.postarea).css("box-shadow","0 0 0 0")
     button_risposta_post.textContent="Post Inserito"
