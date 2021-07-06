@@ -47,7 +47,7 @@
 </div>
 <div id="c_aside" class="container-fluid" style="margin-bottom:5%;" >
                        <div class="row justify-content-center">
-                         <div class="col-12 col-md-3"  id="section_left_navbar">
+                         <div class="col-12  col-md-3"  id="section_left_navbar">
         <section role="navigation">
           <aside>
           <nav id="nav_top">
@@ -146,7 +146,7 @@ function getIndex(e) {
             {% endfor %}
             </div>
          </div>
-       </nav>
+       </nav-->
      </aside>
        </section>
        </div>
@@ -167,7 +167,7 @@ function getIndex(e) {
           <span style="color:grey;opacity:0.5;" class="s_title"> , </span><span  class="s_title" style="color:orange;">{{tutorial.publish}}</span></h6>
        </div>
 </header>
-<div class="d_content">
+<div class="d_content col-sm-12 col-md-12">
 
 {% block content %}
   {% endblock content %}
@@ -209,7 +209,7 @@ function getIndex(e) {
 
 <script>
 let title=document.getElementsByTagName('title')[0].innerText
-initBlogSGang("{{request.user}}",title);
+//initBlogSGang("{{request.user}}",title);
 </script>
 </div>
 

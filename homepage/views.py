@@ -9,7 +9,7 @@ from django.urls import path
 from .models import Category
 from user.models import Profile
 from django.conf import settings
-from blog.models import Comment
+#from blog.models import Comment
 from django.views.decorators.http import condition
 
 #User
@@ -30,14 +30,14 @@ def getLink(title):
 # che il client possiede tutto ciò che gli serve ....la lista dei post.
 
 
-def latest_entry(request,**kwargs):
-    print(str(Comment.objects.latest("publish")))
-    return Comment.objects.latest("publish").publish
+#def latest_entry(request,**kwargs):
+#    print(str(Comment.objects.latest("publish")))
+#    return Comment.objects.latest("publish").publish
 
 
 
 
-@condition ( last_modified_func = latest_entry)
+#@condition ( last_modified_func = latest_entry)
 def tutorial_detail(request, **kwargs):
     arguments = False
     user_string = ''
