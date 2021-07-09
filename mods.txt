@@ -1,0 +1,43 @@
+Module                  Size  Used by
+iptable_nat            16384  0
+nf_nat                 49152  1 iptable_nat
+iptable_mangle         16384  0
+bnep                   24576  2
+iptable_filter         16384  0
+binfmt_misc            24576  1
+nls_ascii              16384  1
+nls_cp437              20480  1
+vfat                   20480  1
+fat                    81920  1 vfat
+iwlmvm                364544  0
+mac80211              815104  1 iwlmvm
+edac_mce_amd           32768  0
+crct10dif_pclmul       16384  1
+libarc4                16384  1 mac80211
+crc32_pclmul           16384  0
+ghash_clmulni_intel    16384  0
+iwlwifi               385024  1 iwlmvm
+aesni_intel           368640  0
+glue_helper            16384  1 aesni_intel
+crypto_simd            16384  1 aesni_intel
+cfg80211              815104  3 iwlmvm,iwlwifi,mac80211
+cryptd                 24576  2 crypto_simd,ghash_clmulni_intel
+btusb                  57344  0
+pcspkr                 16384  0
+btintel                32768  1 btusb
+fam15h_power           16384  0
+k10temp                16384  0
+ata_generic            16384  0
+pata_atiixp            16384  0
+sp5100_tco             20480  0
+acpi_cpufreq           28672  0
+ip_tables              28672  3 iptable_filter,iptable_nat,iptable_mangle
+hid_logitech_hidpp     45056  0
+hid_logitech_dj        28672  0
+hid_generic            16384  0
+usbhid                 61440  1 hid_logitech_dj
+hid                   139264  4 usbhid,hid_generic,hid_logitech_dj,hid_logitech_hidpp
+crc32c_intel           24576  5
+ahci                   40960  6
+libahci                45056  1 ahci
+evdev                  24576  12

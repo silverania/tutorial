@@ -308,11 +308,13 @@ font-weight:bold;
   background-color:orange;
   color:orange;
 }
+
 #p_content{
   margin:0 auto;
   padding:20px;
-  background-color: white;
+  background-color:#e6ffff;
 }
+
 a:hover{
   cursor:pointer;
 }

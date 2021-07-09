@@ -15,19 +15,16 @@
 {% block content %}
 
       <p  id="p_content">
-
-      Non sono in alcun modo responsabile per eventuali cattivi funzionamenti del vostro sistema .
-
-Questo tutorial usa una procedura generica che potrebbe non funzionare su alcune distribuzioni Linux.
-La compilazione del kernel è una procedura che può facilmente rendere un sistema inutilizzabile ,se non si sa quello che si sta facendo.
-Un buon consiglio affinchè ciò non accada , è di usare il kernel che compileremo come secondo kernel , e di non cancellare , il kernel della
-  distribuzione.
+      Nella guida verrà installato un <span title="Nell ambito dello sviluppo del kernel Linux, il kernel vanilla è il kernel ufficialmente distribuito da Linus Torvalds e dai progettisti Linux,
+       senza alcuna patch aggiuntiva."</span>
+      vanilla Kernel , quindi se configurato bene ,
+      funziona su tutte le distro GNU/Linux .
   </p>
   <p style="width:100%;max-width:100%;" id="p_content">
     <span class="badge badge-info s_title_paragraph">Installiamo Le Dipendenze</span><br><br>
+      Per compilare occorrono dei pacchetti , li scarichiamo e installiamo così :
 
-
-   <mark>Per installare i Pacchetti necessari alla Compilazione </mark> :<br>
+   <!--mark>Per installare i Pacchetti necessari alla Compilazione </mark> :<br-->
     <br>Su <code id="code_ubuntu_e_derivate">Debian/Ubuntu</code> e derivate :<br><br>
 
     <code id="apt_install_build" style="color:yellow;background-color:black;">mario@androgenic:~/Scaricati/linux-5.6.10 #<span style="color:white">apt install build-essential libncurses5-dev</span></code>
@@ -38,9 +35,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
 
 
 </p>
-<br><br>
-<p class="text-center">
-<span style="color:orange;">0.a</span></p>
+
 <!--table id="image_0a" class="table  table-dark" border="2" style="width:50%!important;height:auto;margin:0 auto!important;">
   <thead class="thead-dark">
     <tr>
@@ -159,17 +154,7 @@ Un buon consiglio affinchè ciò non accada , è di usare il kernel che compiler
 </table-->
 
 <p  id="p_content" style="margin-top:10%;font-weight:normal;" >
- Alcuni pensano ,  che in informatica , compilare significhi : selezionare un opzione piuttosto
-che un altra da una lista di opzioni , altri  che
- significhi scrivere(compilare) codice di programmazione . <b>Compilare , in informatica , identifica il processo svolto appunto da un compilatore di codice (cc, gcc, javac ,ecc..)
-che consiste nella conversione di un listato di codice informatico comprensibile ad un uomo ( normale codice di programmazione ) in una sequenza di: 0 1&nbsp,&nbspcomprensibili per un computer</b> . Quindi il Kernel che
-ora scaricheremo è codice comprensibile ad un uomo , ad esempio : <code> function scaricaKernel(link,os,version,) {
-  if (url.validate==True) {
-    .....
-  }
-}</code> che noi <b><mark>compileremo</mark></b> in codice comprensibile ad una macchina (linguaggio macchina) : <b> 0 1 0 0 1 </b> attraverso l' uso di un compilatore <code>C , C ++</code> , con l ' ausilio dello strumento MAKE.
-può sembrare compilcato , ma ricordo che un argomento è complicato finchè non lo si conosce , dal momento
-che lo si è appreso diventa semplice.<br><br><br>
+
 </p>
 <hr></hr>
 
@@ -179,11 +164,11 @@ che lo si è appreso diventa semplice.<br><br><br>
   Quindi dopo aver installato le dipendenze per la buona riuscita della compilazione ,<mark> scarichiamo il kernel
     <a href="https://kernel.org" title="download del kernel Linux" target="_blank"> qui</a>.</mark>
 
-   una versione del kernel uguale a quella in uso dal sistema è la scelta ottimale perchè useremo <code> localmodconfig </code> per scrivere il file <code>.config</code>
-   nella cartella del kernel .
+
   Il file scaricato dovrebbe essere compresso, quindi:
 <br><br>
-
+</p>
+<br><span class="badge badge-info s_title_paragraph">Decomprimiamo il Kernel </span><br><br>
   <div id="d_head"  style="width:50%!important;max-width:50%!important;display:inline-block!important;"><h4><b><span class=".s_unzip">decomprimiamolo cosi </span></b>:</h4>
   <code class="terminal"<> $ unxz linux-a.x.by.tar.xz</code>
 
