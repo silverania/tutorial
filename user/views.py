@@ -14,6 +14,16 @@ from django.template.loader import get_template
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import HttpResponse, JsonResponse
 import json
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+
+# Create your views here.
+def login(request):
+  return render(request, 'login.html')
+
+@login_required
+def home(request):
+  return render(request, 'compilare_il_kernel.html')
 
 @login_required
 def dashboard(request):
